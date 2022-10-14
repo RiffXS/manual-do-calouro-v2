@@ -1,11 +1,13 @@
 <tr>
-    <td>{{id}}</td>
+    <td scope="row">{{id}}</td>
     <td>{{nome}}</td>
     <td>{{email}}</td>
     <td>
-        <a href="{{URL}}/admin/users/{{id}}/edit">
-            <button class="btn btn-primary" type="button">Editar</button>
+        <a class="btn btn-warning btn-sm text-center" href="{{URL}}/admin/users/{{id}}/edit">
+            <i class="fa-solid fa-pen"></i>
         </a>
+    </td>
+    <td>
         <a href="{{URL}}/admin/users/{{id}}/delete">
             <button class="btn btn-danger" type="button">Excluir</button>
         </a>

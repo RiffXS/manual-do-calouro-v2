@@ -66,7 +66,7 @@ class Database {
 	 * @param  string  $pass
 	 * @param  integer $port
 	 */
-	public static function config($host, $name, $user, $pass, $port = 3306)	{
+	public static function config($host, $name, $user, $pass, $port = 5432)	{
 		self::$host = $host;
 		self::$name = $name;
 		self::$user = $user;
@@ -79,7 +79,7 @@ class Database {
 	 */
 	private function setConnection() {
 		try {
-			$this->connection = new PDO('mysql:host=' . self::$host . ';dbname=' . self::$name . ';port=' . self::$port, self::$user, self::$pass);
+			$this->connection = new PDO('pgsql:host=' . self::$host . ';dbname=' . self::$name . ';port=' . self::$port, self::$user, self::$pass);
 			$this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		} catch (PDOException $e) {
@@ -135,9 +135,9 @@ class Database {
 	 */
 	public function select($where = null, $order = null, $limit = null, $fields = '*') {
 		//DADOS DA QUERY
-		$where = strlen($where) ? 'WHERE ' . $where : '';
-		$order = strlen($order) ? 'ORDER BY ' . $order : '';
-		$limit = strlen($limit) ? 'LIMIT ' . $limit : '';
+		$where = !is_null($where) ? 'WHERE ' . $where : '';
+		$order = !is_null($order) ? 'ORDER BY ' . $order : '';
+		$limit = !is_null($limit) ? 'LIMIT ' . $limit : '';
 
 		//MONTA A QUERY
 		$query = 'SELECT ' . $fields . ' FROM ' . $this->table . ' ' . $where . ' ' . $order . ' ' . $limit;

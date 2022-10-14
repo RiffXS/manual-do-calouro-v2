@@ -29,14 +29,14 @@ class User extends Page {
         $obPagination = new Pagination($quantidadeTotal, $paginaAtual, 5);
 
         // RESULTADOS DA PAGINA
-        $results = EntityUser::getUsers(null, 'id DESC', $obPagination->getLimit());
+        $results = EntityUser::getUsers(null, 'id_usuario DESC', $obPagination->getLimit());
 
         // RENDENIZA O ITEM
         while ($obUser = $results->fetchObject(EntityUser::class)) {
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('admin/modules/users/item',[
-                'id'    => $obUser->id,
-                'nome'  => $obUser->nome,
+                'id'    => $obUser->id_usuario,
+                'nome'  => $obUser->nom_usuario,
                 'email' => $obUser->email
                 
             ]);
@@ -102,14 +102,14 @@ class User extends Page {
         
         // NOVA INSTANCIA DE USUARIO
         $obUser = new EntityUser;
-        $obUser->nome  = $nome;
+        $obUser->nom_usuario = $nome;
         $obUser->email = $email;
         $obUser->senha = password_hash($senha, PASSWORD_DEFAULT);
 
         $obUser->cadastrarUser();
 
         // REDIRECIONA O USUARIO
-        $request->getRouter()->redirect('/admin/users/'.$obUser->id.'/edit?status=created');
+        $request->getRouter()->redirect('/admin/users/'.$obUser->id_usuario.'/edit?status=created');
     }
 
     /**
@@ -124,21 +124,26 @@ class User extends Page {
         // QUERY PARAMS
         $queryParams = $request->getQueryParams();
 
+        // VERIFICA SE EXISTE UM STATUS
         if (!isset($queryParams['status'])) return $msg;
 
         // MENSAGENS DE STATUS
         switch ($queryParams['status']) {
             case 'created':
                 $msg = 'Usuario criado com sucesso!';
+                break;
             
             case 'updated':
                 $msg = 'Usuario atualizado com sucesso';
+                break;
                 
             case 'deleted':
                 $msg = 'Usuario excluido com sucesso';   
+                break;
 
             case 'duplicated':
-                $erro = 'O e-mail digitado já esta sendo utilizado por outro usuario';    
+                $erro = 'O e-mail digitado já esta sendo utilizado por outro usuario';
+                break;    
         }
         // EXIBE A MENSAGEM DE ERRO
         if (!empty($erro)) {
@@ -166,7 +171,7 @@ class User extends Page {
         // CONTEUDO DO FORMULARIO
         $content = View::render('admin/modules/users/form', [
             'tittle' => 'Editar usuario', 
-            'nome'   => $obUser->nome,
+            'nome'   => $obUser->nom_usuario,
             'email'  => $obUser->email,
             'status' => self::getStatus($request)
         ]);
@@ -199,17 +204,17 @@ class User extends Page {
         // VALIDA O EMAIL DO USUARIO
         $obUserEmail = EntityUser::getUserByEmail($email);
 
-        if ($obUserEmail instanceof EntityUser && $obUserEmail->id != $id) {
+        if ($obUserEmail instanceof EntityUser && $obUserEmail->id_usuario != $id) {
             $request->getRouter()->redirect('/admin/users/'.$id.'/edit?status=duplicated');
         }
         // ATUALIZA A INSTANCIA
-        $obUser->nome  = $nome;
+        $obUser->nom_usuario  = $nome;
         $obUser->email = $email;
         $obUser->senha = password_hash($senha, PASSWORD_DEFAULT);
         $obUser->atualizarUser();
 
         // REDIRECIONA O USUARIO
-        $request->getRouter()->redirect('/admin/users/'.$obUser->id.'/edit?status=updated');
+        $request->getRouter()->redirect('/admin/users/'.$obUser->id_usuario.'/edit?status=updated');
     }
 
     /**
@@ -229,7 +234,7 @@ class User extends Page {
 
         // CONTEUDO DO FORMULARIO
         $content = View::render('admin/modules/users/delete', [
-            'nome'  => $obUser->nome,
+            'nome'  => $obUser->nom_usuario,
             'email' => $obUser->email,
         ]);
 

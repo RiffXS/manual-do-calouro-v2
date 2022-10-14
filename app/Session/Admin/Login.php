@@ -25,9 +25,9 @@ class Login {
 
         // DEFINE A SESSÃO DO ADMIN
         $_SESSION['admin']['usuario'] = [
-            'id'    => $obUser->id,
-            'nome'  => $obUser->nome,
-            'email' => $obUser->email
+            'id_usuario'  => $obUser->id_usuario,
+            'nom_usuario' => $obUser->nom_usuario,
+            'email'       => $obUser->email
         ];
         // SUCESSO
         return true;
@@ -42,7 +42,7 @@ class Login {
         self::init();
 
         // RETORNA A VERIFICAÇÃO
-        return isset($_SESSION['admin']['usuario']['id']);
+        return isset($_SESSION['admin']['usuario']['id_usuario']);
     }
 
     /**

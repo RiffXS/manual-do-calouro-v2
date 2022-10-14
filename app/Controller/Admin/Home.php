@@ -16,6 +16,6 @@ class Home extends Page {
         $content = View::render('admin/modules/home/index', []);
 
         // RETORNA A PAGINA COMPLETA
-        return parent::getPanel('Home > WDEV', $content, 'home');
+        return parent::getPanel('Home > MDC', $content, 'home');
     }
 }

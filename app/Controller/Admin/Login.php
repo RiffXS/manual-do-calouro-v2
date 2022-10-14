@@ -24,7 +24,7 @@ class Login extends Page {
 
         ]);
         // RETORNA A PAGINA COMPLETA
-        return parent::getPage('Login -> WDEV', $content);
+        return parent::getPage('Login > MDC', $content);
 
     }
 
@@ -51,7 +51,6 @@ class Login extends Page {
         if (!password_verify($senha, $obUser->senha)) {
             return self::getLogin($request, $msg);
         }
-
         // CRIA A SESSÃO DE LOGIN
         SessionAdminLogin::Login($obUser);
 

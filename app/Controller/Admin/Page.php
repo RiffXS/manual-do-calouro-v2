@@ -51,7 +51,7 @@ class Page {
             $links .= View::render('admin/menu/link', [
                 'label'   => $module['label'],
                 'link'    => $module['link'],
-                'current' => $hash == $currentModule ? 'text-danger' : ''
+                'current' => $hash == $currentModule ? 'text-success' : ''
             ]);
         }
 
@@ -80,6 +80,28 @@ class Page {
     }
 
     /**
+     * Methodo responsavel por retornar um link da paginação
+     * @param array $queryParams
+     * @param array $page
+     * @param string $url
+     * @return
+     */
+    private static function getPaginationLink($queryParams, $page, $url, $label = null) {
+        // ALTERA PAGINA    
+        $queryParams['page'] = $page['page'];
+
+        // LINK
+        $link = $url.'?'.http_build_query($queryParams);
+
+        // VIEW
+        return View::render('pages/pagination/link',[
+            'page' => $label ?? $page['page'],
+            'link' => $link,
+            'active' => $page['current'] ? 'active' : ''
+        ]);
+    }
+    
+    /**
      * Methodo responsavel por rendenizar o layout de paginação
      * @param \App\Http\Request $request
      * @param \App\Utils\Pagination $obPagination
@@ -101,23 +123,45 @@ class Page {
         // GET
         $queryParams = $request->getQueryParams();
 
+        // PAGINA ATUAL
+        $currentPage = $queryParams['page'] ?? 1;
+
+        // LIMITE DE PAGINAS
+        $limit = getenv('PG_LIMIT');
+
+        // MEIO DA PAGINAÇÃO
+        $middle = ceil($limit / 2);
+
+        // INICIO DA PAGINAÇÃO
+        $start = $middle > $currentPage ? 0 : $currentPage - $middle;
+
+        // AJUSTA O FINAL DA PAGINAÇÃO
+        $limit += $start;
+
+        // AJUSTA O INICIO DA PAGINAÇÃO
+        if ($limit > count($pages)) {
+            $diff = $limit - count($pages);
+            $start -= $diff;
+        }
+        // LINK INICIAL
+        if ($start > 0) {
+            $links .= self::getPaginationLink($queryParams, reset($pages), $url, '<<'); 
+        }
+
         // RENDENIZA OS LINKS
         foreach ($pages as $page) {
-            // ALTERA PAGINA    
-            $queryParams['page'] = $page['page'];
+            // VERIFICA O STRAT DA PAGINAÇÃO
+            if ($page['page'] <= $start) continue;
 
-            // LINK
-            $link = $url.'?'.http_build_query($queryParams);
+            if ($page['page'] > $limit) {
+                $links .= self::getPaginationLink($queryParams, end($pages), $url, '>>'); 
 
-            // VIEW
-            $links .= View::render('admin/pagination/link',[
-                'page' => $page['page'],
-                'link' => $link,
-                'active' => $page['current'] ? 'active' : ''
-            ]);   
+                break;
+            }
+            $links .= self::getPaginationLink($queryParams, $page, $url);   
         }
         // RETORNA BOX DE PAGINAÇÃO
-        return View::render('admin/pagination/box',[
+        return View::render('pages/pagination/box',[
             'links' => $links
         ]); 
     }
