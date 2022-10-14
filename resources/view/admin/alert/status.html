@@ -1,0 +1,3 @@
+<div class="alert alert-{{tipo}}" role="alert">
+    {{mensagem}}
+</div>

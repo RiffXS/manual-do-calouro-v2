@@ -1,0 +1,4 @@
+<div class="card text-dark mb-3">
+    <h5 class="card-header">{{nome}} <small>{{data}}</small></h5>
+    <div class="card-body">{{mensagem}}</div>
+</div>
