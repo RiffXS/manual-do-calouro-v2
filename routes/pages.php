@@ -39,10 +39,17 @@ $obRouter->get('/schedule', [
     }
 ]);
 
-// ROTA HORARIO
-$obRouter->post('/schedule', [
-    function($request) {
-        return new Response(200, Pages\Schedule::getSchedule($request));
+// ROTA ROD
+$obRouter->get('/rod', [
+    function() {
+        return new Response(200, Pages\Rod::getRod());
+    }
+]);
+
+// ROTA FAQ
+$obRouter->get('/faq', [
+    function() {
+        return new Response(200, Pages\Faq::getFaq());
     }
 ]);
 
