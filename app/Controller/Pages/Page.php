@@ -109,7 +109,7 @@ class Page {
         $link = $url.'?'.http_build_query($queryParams);
 
         // VIEW
-        return View::render('pages/pagination/link',[
+        return View::render('pages/pagination/link', [
             'page' => $label ?? $page['page'],
             'link' => $link,
             'active' => $page['current'] ? 'text-danger' : ''
@@ -124,9 +124,9 @@ class Page {
     public static function getPage($title, $content) {
         
         return View::render('pages/page',[
-            'title' => $title,
+            'title'   => $title,
             'content' => $content,
-            'footer' => self::getFooter()
+            'footer'  => self::getFooter()
         ]);
     }
 

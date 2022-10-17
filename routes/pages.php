@@ -17,13 +17,29 @@ $obRouter->get('/about', [
     }
 ]);
 
-// ROTA SOBRE
+// ROTA CALENDARIO
 $obRouter->get('/calendar', [
     function() {
         return new Response(200, Pages\Calendar::getCalendar());
     }
 ]);
 
+// ROTA MAPA
+$obRouter->get('/map', [
+    function() {
+        return new Response(200, Pages\Map::getMap());
+    }
+]);
+
+
+// ROTA HORARIO
+$obRouter->get('/schedule', [
+    function() {
+        return new Response(200, Pages\Schedule::getSchedule());
+    }
+]);
+
+/*
 // ROTA DE DEPOIMENTOS
 $obRouter->get('/depoimentos', [
     'middlewares' => [
@@ -40,3 +56,4 @@ $obRouter->post('/depoimentos', [
         return new Response(200, Pages\Testimony::inserTestimony($request));
     }
 ]);
+*/

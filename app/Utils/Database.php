@@ -126,6 +126,15 @@ class Database {
 	}
 
 	/**
+	 * Metodo responsavel por executar uma consulta crua
+	 * @param string $query
+	 */
+	public function selectBySql($query) {
+		// EXECUTA A QUERY
+		return $this->execute($query);
+	}
+
+	/**
 	 * Método responsável por executar uma consulta no banco
 	 * @param  string $where
 	 * @param  string $order
