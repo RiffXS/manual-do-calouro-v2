@@ -7,43 +7,17 @@ use App\Utils\Database;
 class Schedule {
 
     /**
-     * 
-     * @var string
+     * Arrray com os horarios de uma turma
+     * @var Array
      */
-    public $sala;
-
-    /**
-     * 
-     * @var string
-     */
-    public $materia;
-
-    /**
-     * 
-     * @var string
-     */
-    public $professor;
-
-    /**
-     * Undocumented variable
-     *
-     * @var string
-     */
-    public $hora_inicio;
-
-    /**
-     * Undocumented variable
-     *
-     * @var string
-     */
-    public $hora_fim;
+    public $horarios;
 
     /**
      * Metodo responsavel por retornar todos os horarios de uma turma
      * @param integer $curso
      * @param integer $modulo
      */
-    public static function getSchedules($curso, $modulo) {
+    public function getSchedules($curso, $modulo) {
         // Seleciona todas as aulas, mesmo aquelas que não existem, e as coloca em um array
         $sql = "SELECT * FROM (
             (SELECT fk_dia_semana_id_dia_semana AS id_dia_semana,
@@ -91,8 +65,7 @@ class Schedule {
             AS COMPLETE_TABLE
             ORDER BY id_horario_aula, id_dia_semana";
 
-       
         // RETORNA OS DEPOIMENTOS
-        return (new Database('aula'))->selectBySql($sql)->fetchAll(\PDO::FETCH_ASSOC);
+        return $this->horarios = (new Database('aula'))->selectBySql($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
 }

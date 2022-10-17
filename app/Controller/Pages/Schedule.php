@@ -3,23 +3,30 @@
 namespace App\Controller\Pages;
 
 use App\Utils\View;
-use App\Utils\Database;
 use App\Models\Entity\Schedule as EntitySchedule;
 
 class Schedule extends Page {
     /**
      * Metodo responsavel por retornar o contéudo (view) da pagina horario
-     * 
+     * @param \App\Http\Request
      * @return string 
      */
-    public static function getSchedule() {
+    public static function getSchedule($request) {
         // VIEW DO HORÁRIO
         $content =  View::render('pages/schedule', [
             ''
         ]);
+        // QUERY PARAMS
+        $queryParams = $request->getQueryParams();
 
-        $horarios = EntitySchedule::getSchedules(1, 6);
-        echo '<pre>'; print_r($horarios); echo '</pre>'; exit;
+        $curso = $queryParams['curso'] ?? '';
+        $modulo = $queryParams['modulo'] ?? '';
+
+        // VERIFICA SE AMBOS NÃO ESTÃO VAZIOS
+        if (!empty($curso) and !empty($modulo)) {
+            // OBTEM OS DADOS PARA TABELA
+            Self::getTable($curso, $modulo);
+        }
 
         // RETORNA A VIEW DA PAGINA
         return parent::getPanel('Horários', $content, 'schedule');
@@ -29,11 +36,10 @@ class Schedule extends Page {
      * Metodo responsavel por retornar a view da tabela do horario
      * 
      */
-    public static function getTable($request) {
-        $queryParams = $request->getQueryParams();
+    public static function getTable($curso, $modulo) {
+        $obSchedule = new EntitySchedule;
+        $obSchedule->getSchedules($curso, $modulo);
 
-
-    }
-
-    
+        echo '<pre>'; print_r($obSchedule); echo '</pre>'; exit;
+    }  
 }

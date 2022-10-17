@@ -34,8 +34,15 @@ $obRouter->get('/map', [
 
 // ROTA HORARIO
 $obRouter->get('/schedule', [
-    function() {
-        return new Response(200, Pages\Schedule::getSchedule());
+    function($request) {
+        return new Response(200, Pages\Schedule::getSchedule($request));
+    }
+]);
+
+// ROTA HORARIO
+$obRouter->post('/schedule', [
+    function($request) {
+        return new Response(200, Pages\Schedule::getSchedule($request));
     }
 ]);
 
