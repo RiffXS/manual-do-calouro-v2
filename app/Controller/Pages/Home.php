@@ -3,16 +3,15 @@
 namespace App\Controller\Pages;
 
 use \App\Utils\View;
-use \App\Models\Entity\Organization;
 
-class Home extends Page{
+class Home extends Page {
 
     /**
      * Metodo responsavel por retornar o contéudo (view) da pagina home
      * 
      * @return string 
      */
-    public static function getHome(){
+    public static function getHome() {
         // VIEW DA HOME
         $content =  View::render('pages/home');
 
