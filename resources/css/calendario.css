@@ -73,13 +73,13 @@ body {
 
 .left {
   border-width: 7.5px 10px 7.5px 0;
-  border-color: transparent rgba(247, 167, 0, 1) transparent transparent;
+  border-color: transparent #FFB400 transparent transparent;
   left: 20px;
 }
 
 .right {
   border-width: 7.5px 0 7.5px 10px;
-  border-color: transparent transparent transparent rgba(247, 167, 0, 1);
+  border-color: transparent transparent transparent #FFB400;
   right: 20px;
 }
 
@@ -184,7 +184,7 @@ body {
 }
 
 .orange {
-  background: rgba(247, 167, 0, 1);
+  background: #FFB400;
 }
 
 .details {
@@ -302,21 +302,8 @@ body {
   left: 14px;
 }
 
-.entry.blue:after {
-  background: rgba(156, 202, 235, 1);
-}
 .entry.orange:after {
   background: rgba(247, 167, 0, 1);
-}
-.entry.green:after {
-  background: rgba(153, 198, 109, 1);
-}
-.entry.yellow:after {
-  background: rgba(249, 233, 0, 1);
-}
-
-.entry.red:after {
-  background: rgba(255, 0, 0, 1);
 }
 
 /* Animations are cool!  */

@@ -7,6 +7,16 @@ html {
     overflow-x: hidden;
 }
 
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    margin-top: auto;
+}
+
 nav.navbar,
 footer {
     background-color: #09681b;
@@ -94,6 +104,20 @@ td {
     max-width: 800px;
 }
 
-section {
-    margin-bottom: 4rem;
+.logo {
+    height: 35px;
+}
+
+ul.list-unstyled li {
+    padding: 1px 0;
+}
+
+footer li a {
+    color: white;
+    text-decoration: none;
+}
+
+footer li a:hover {
+    border-bottom: 1px dotted white;
+    color: lightgray;
 }

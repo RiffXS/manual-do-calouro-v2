@@ -1,7 +1,54 @@
-<hr>
 <!-- Rodapé da pagina -->
-<footer class="text-light p-2 fixed-bottom">
+<footer class="text-light p-2">
     <div class="container">
-        <small>&copy; Todos os direitos reservados 2022</small>
+        <div class="row pt-3">
+            <div class="col-md-6">
+                <img class="logo mb-3" src="{{URL}}/public/images/logo.png" alt="Logo">
+                
+                <div class="row">
+                    <div class="col-6">
+                        <ul class="list-unstyled">
+                            <li class="nav-item"><a  href="">Home</a></li>
+                            <li class="nav-item"><a  href="">Sobre</a></li>
+                            <li class="nav-item"><a  href="">Calendário</a></li>
+                            <li class="nav-item"><a  href="">Mapa</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="col-6">
+                        <ul class="list-unstyled">
+                            <li class="nav-item"><a  href="">Horários</a></li>
+                            <li class="nav-item"><a  href="">Contatos</a></li>
+                            <li class="nav-item"><a  href="">ROD</a></li>
+                            <li class="nav-item"><a  href="">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <h5 class="text-md-right">Entre em contato</h5>
+                <hr>
+                <form>
+                    <!-- EMAIL -->
+                    <fieldset class="form-group mb-2">
+                        <input type="email" class="form-control" id="email" placeholder="Ex: fulano@gmail.com">
+                    </fieldset>
+
+                    <!-- MENSAGEM -->
+                    <fieldset class="form-group">
+                        <textarea class="form-control" id="mensagem" placeholder="Messagem"></textarea>
+                    </fieldset>
+
+                    <!-- SUBMIT -->
+                    <fieldset class="form-group text-xs-right">
+                        <button type="button" class="btn btn-outline-light btn-lg p-2 mt-2 text-light">Enviar</button>
+                    </fieldset>
+                </form>
+            </div>
+
+            <small class="mt-3 mt-md-0">&copy; Todos os direitos reservados 2022</small>
+        </div>
     </div>
 </footer>
+
