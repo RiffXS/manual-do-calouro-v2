@@ -49,7 +49,7 @@ class Page {
      * @param  string $currentModule
      * @return string
      */
-    private static function getHeader($currentModule) {
+    private static function getlinks($currentModule) {
         // LINKS DO MENU
         $links = '';
 
@@ -75,10 +75,10 @@ class Page {
      * @param  string $currentModule
      * @return string
      */
-    public static function getPanel($tittle, $content, $currentModule) {
+    public static function getHeader($tittle, $content, $currentModule) {
         // RENDENIZA A VIEW DO PAINEL
         $contentPanel = View::render('pages/header', [
-            'menu' => self::getHeader($currentModule),
+            'menu' => self::getLinks($currentModule),
             'content' => $content
         ]);
 
@@ -94,29 +94,7 @@ class Page {
         return View::render('pages/footer');
     }
 
-    /**
-     * Methodo responsavel por retornar um link da paginação
-     * @param array $queryParams
-     * @param array $page
-     * @param string $url
-     * @return
-     */
-    private static function getPaginationLink($queryParams, $page, $url, $label = null) {
-        // ALTERA PAGINA    
-        $queryParams['page'] = $page['page'];
-
-        // LINK
-        $link = $url.'?'.http_build_query($queryParams);
-
-        // VIEW
-        return View::render('pages/pagination/link', [
-            'page' => $label ?? $page['page'],
-            'link' => $link,
-            'active' => $page['current'] ? 'text-danger' : ''
-        ]);
-    }
-    
-    /**
+     /**
      * Metodo responsavel por retornar o contéudo (view) da pagina generica
      * 
      * @return string 
@@ -193,5 +171,27 @@ class Page {
         return View::render('pages/pagination/box',[
             'links' => $links
         ]); 
+    } 
+
+    /**
+     * Methodo responsavel por retornar um link da paginação
+     * @param array $queryParams
+     * @param array $page
+     * @param string $url
+     * @return
+     */
+    private static function getPaginationLink($queryParams, $page, $url, $label = null) {
+        // ALTERA PAGINA    
+        $queryParams['page'] = $page['page'];
+
+        // LINK
+        $link = $url.'?'.http_build_query($queryParams);
+
+        // VIEW
+        return View::render('pages/pagination/link', [
+            'page' => $label ?? $page['page'],
+            'link' => $link,
+            'active' => $page['current'] ? 'text-danger' : ''
+        ]);
     }
 }

@@ -16,6 +16,6 @@ class Rod extends Page {
         $content =  View::render('pages/rod');
 
         // RETORNA A VIEW DA PAGINA
-        return parent::getPanel('Rod', $content, 'rod');
+        return parent::getHeader('Rod', $content, 'rod');
     }
 }

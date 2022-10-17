@@ -15,6 +15,6 @@ class About extends Page {
         $content =  View::render('pages/about');
 
         // RETORNA A VIEW DA PAGINA
-        return parent::getPanel('Sobre', $content, 'about');
+        return parent::getHeader('Sobre', $content, 'about');
     }
 }

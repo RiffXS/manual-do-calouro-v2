@@ -29,7 +29,7 @@ class Schedule extends Page {
         }
 
         // RETORNA A VIEW DA PAGINA
-        return parent::getPanel('Horários', $content, 'schedule');
+        return parent::getHeader('Horários', $content, 'schedule');
     }
 
     /**
