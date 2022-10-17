@@ -51,7 +51,7 @@ class Page {
             $links .= View::render('admin/menu/link', [
                 'label'   => $module['label'],
                 'link'    => $module['link'],
-                'current' => $hash == $currentModule ? 'text-success' : ''
+                'current' => $hash == $currentModule ? 'text-danger' : ''
             ]);
         }
 

@@ -13,7 +13,7 @@ class Organization{
      * Nome da organização
      * @var string
      */
-    public $name = 'Canal WDEV';
+    public $name = '- Manual do Calouro';
 
     /**
      * Site da organização

@@ -10,3 +10,4 @@ include __DIR__.'/admin/testimonies.php';
 
 // INCLUI AS ROTAS DE USUARIOS
 include __DIR__.'/admin/users.php';
+?>

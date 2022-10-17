@@ -11,9 +11,16 @@ $obRouter->get('/', [
 ]);
 
 // ROTA SOBRE
-$obRouter->get('/sobre', [
+$obRouter->get('/about', [
     function() {
         return new Response(200, Pages\About::getAbout());
+    }
+]);
+
+// ROTA SOBRE
+$obRouter->get('/calendar', [
+    function() {
+        return new Response(200, Pages\Calendar::getCalendar());
     }
 ]);
 

@@ -7,15 +7,87 @@ use \App\Utils\View;
 class Page {
 
     /**
-     * Méthodo responsavel por rendenizar o topo da pagina
+     * Módulos disponíveis no painel
+     */
+    private static $paginas = [
+        'home' => [
+            'label' => 'Home',
+            'link'  => URL
+        ],
+        'about' => [
+            'label' => 'Sobre',
+            'link'  => URL.'/about'
+        ],
+        'calendar' => [
+            'label' => 'Calendário',
+            'link'  => URL.'/calendar'
+        ],
+        'map' => [
+            'label' => 'Mapa',
+            'link'  => URL.'/map'
+        ],
+        'schedule' => [
+            'label' => 'Horários',
+            'link'  => URL.'/schedule'
+        ],
+        'contact' => [
+            'label' => 'Contatos',
+            'link'  => URL.'/contact'
+        ],
+        'rod' => [
+            'label' => 'ROD',
+            'link'  => URL.'/rod'
+        ],
+        'faq' => [
+            'label' => 'FAQ',
+            'link'  => URL.'/faq'
+        ]
+    ];
+
+    /**
+     * Methodo responsavel por rendenizar a view do painel
+     * @param  string $currentModule
      * @return string
      */
-    private static function getHeader() {
-        return View::render('pages/header');
+    private static function getHeader($currentModule) {
+        // LINKS DO MENU
+        $links = '';
+
+        // ITERA OS MODULOS
+        foreach (self::$paginas as $hash=>$module) {
+            $links .= View::render('pages/header/link', [
+                'label'   => $module['label'],
+                'link'    => $module['link'],
+                'current' => $hash == $currentModule ? 'active' : ''
+            ]);
+        }
+
+        // RETORNA A RENDENIZAÇÃO DO MENU
+        return View::render('pages/header/box', [
+            'links' => $links
+        ]); 
     }
 
     /**
-     * Méthodo responsavel por rendenizar o rodape da pagina
+     * Methodo responsavel por rendenizar a view do painel com conteudos dinamicos
+     * @param  string $title
+     * @param  string $contenct
+     * @param  string $currentModule
+     * @return string
+     */
+    public static function getPanel($tittle, $content, $currentModule) {
+        // RENDENIZA A VIEW DO PAINEL
+        $contentPanel = View::render('pages/header', [
+            'menu' => self::getHeader($currentModule),
+            'content' => $content
+        ]);
+
+        // RETORNA A PAGINA RENDENIZADA
+        return self::getPage($tittle, $contentPanel);
+    }
+
+    /**
+     * Méthodo responsavel por rendenizar o rodapé da pagina
      * @return string
      */
     private static function getFooter() {
@@ -40,7 +112,21 @@ class Page {
         return View::render('pages/pagination/link',[
             'page' => $label ?? $page['page'],
             'link' => $link,
-            'active' => $page['current'] ? 'active' : ''
+            'active' => $page['current'] ? 'text-danger' : ''
+        ]);
+    }
+    
+    /**
+     * Metodo responsavel por retornar o contéudo (view) da pagina generica
+     * 
+     * @return string 
+     */
+    public static function getPage($title, $content) {
+        
+        return View::render('pages/page',[
+            'title' => $title,
+            'content' => $content,
+            'footer' => self::getFooter()
         ]);
     }
 
@@ -107,20 +193,5 @@ class Page {
         return View::render('pages/pagination/box',[
             'links' => $links
         ]); 
-    }
-    
-    /**
-     * Metodo responsavel por retornar o contéudo (view) da pagina generica
-     * 
-     * @return string 
-     */
-    public static function getPage($title, $content) {
-        
-        return View::render('pages/page',[
-            'title' => $title,
-            'header' => self::getHeader(),
-            'content' => $content,
-            'footer' => self::getFooter()
-        ]);
     }
 }

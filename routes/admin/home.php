@@ -9,6 +9,6 @@ $obRouter->get('/admin', [
         'require-admin-login'
     ],
     function($request) {
-        return new Response(200, Admin\Home::getHome($request));
+        return new Response(200, Admin\Home::getHome());
     }
 ]);
