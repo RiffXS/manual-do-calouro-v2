@@ -55,11 +55,12 @@ class User {
 
     /**
      * Metodo responsavel por verificar verificar se o nome de entrada esta nos parametros do site
+     * @param  string $nome
      * @return boolean
      */
     public static function validateUserName($nome) {
         // VERIFICA SE A STRING POSSUI NUMEROS OU CARACTER ESPECIAIS
-        if (!preg_match('/^[a-zA-Z\s]+$/', $nome)){
+        if (preg_match('/^[a-zA-Z\s]+$/', $nome)){
             return false;
         }
         return true;
@@ -67,6 +68,7 @@ class User {
 
     /**
      * Metodo responsavel por verificar se o email de entrada é válido
+     * @param  string $email
      * @return boolean
      */
     public static function validateUserEmail($email) {
@@ -81,26 +83,29 @@ class User {
     }
 
     /**
-     * Metodo responsavel por verificar se as senhas conicidem
+     * Metodo responsavel por verificar se a senha atende os requisitos de segurança
+     * @param  string $password
      * @return boolean
      */
-    public static function validateUserPassword($password, $confirm) {
-        // VERIFICA SE AS SENHAS SÃO IGUAIS
-        if ($password !== $confirm) {
+    public static function verifyUserPassword($password) {
+        // MÍNIMO DE SEIS CARACTERES, PELO MENOS UMA LETRA, UM NÚMERO E UM CARACTERE ESPECIAL
+        $parameters = "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?])[A-Za-z\d@$!%*#?]{6,36}$";
+
+        if (preg_match($parameters, $password)) {
             return false;
         }
         return true;
     }
 
     /**
-     * Metodo responsavel por verificar se a senha atende os requisitos de segurança
+     * Metodo responsavel por verificar se as senhas conicidem
+     * @param  string $password
+     * @param  string $confirm
      * @return boolean
      */
-    public static function verifyUserPassword($password) {
-        // Mínimo de seis caracteres, pelo menos uma letra, um número e um caractere especial
-        $parameters = "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?])[A-Za-z\d@$!%*#?]{6,36}$";
-
-        if (preg_match($parameters, $password)) {
+    public static function validateUserPassword($password, $confirm) {
+        // VERIFICA SE AS SENHAS SÃO IGUAIS
+        if ($password !== $confirm) {
             return false;
         }
         return true;

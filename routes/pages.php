@@ -61,8 +61,8 @@ $obRouter->get('/faq', [
 
 // ROTA LOGIN
 $obRouter->get('/singin', [
-    function() {
-        return new Response(200, Pages\Singin::getSingin());
+    function($request) {
+        return new Response(200, Pages\Singin::getSingin($request));
     }
 ]);
 
@@ -75,8 +75,8 @@ $obRouter->post('/singin', [
 
 // ROTA CADASTRO
 $obRouter->get('/singup', [
-    function() {
-        return new Response(200, Pages\SingUp::getSingUp());
+    function($request) {
+        return new Response(200, Pages\SingUp::getSingUp($request));
     }
 ]);
 

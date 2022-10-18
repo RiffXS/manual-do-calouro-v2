@@ -11,13 +11,10 @@ class SingUp extends Page {
      * Metodo responsavel por retornar o contéudo (view) da pagina cadastro
      * @return string 
      */
-    public static function getSingUp($errorMessage = null) {
-        // STATUS
-        $status = !is_null($errorMessage) ? Alert::getError($errorMessage) : '';
-
+    public static function getSingUp($request) {
         // CONTEUDO DA PAGINA DE LOGIN
         $content = View::render('pages/singup', [
-            'status' => $status
+            'status' => self::getStatus($request)
         ]);
         // RETORNA A VIEW DA PAGINA
         return parent::getHeader('Cadastro', $content);
@@ -36,18 +33,22 @@ class SingUp extends Page {
         if (EntityUser::validateUserName($nome)) {
             $request->getRouter()->redirect('/singup?status=invalidname');
         }
+
         // VALIDA O EMAIL
         if (EntityUser::validateUserEmail($email)) {
             $request->getRouter()->redirect('/singup?status=invalidemail');
         }
-        // VALIDA A SENHA
-        if (EntityUser::validateUserPassword($password, $confirm)) {
-            $request->getRouter()->redirect('/singup?status=passnotagree');
-        }
+
         // VERIFICA A SENHA
         if (EntityUser::verifyUserPassword($password)) {
             $request->getRouter()->redirect('/singup?status=invalidpass');
         }
+
+        // VALIDA A SENHA
+        if (EntityUser::validateUserPassword($password, $confirm)) {
+            $request->getRouter()->redirect('/singup?status=passnotagree');
+        }
+
         // VERIFICA O EMAIL DO USUÁRIO
         $obUser = EntityUser::getUserByEmail($email);
 
@@ -55,13 +56,14 @@ class SingUp extends Page {
         if ($obUser instanceof EntityUser) {
             $request->getRouter()->redirect('/singup?status=duplicated');
         }
+
         // NOVA INSTÂNCIA DE USUARIO
         $obUser = new EntityUser;
         $obUser->nom_usuario = $nome;
         $obUser->email = $email;
         $obUser->senha = password_hash($password, PASSWORD_DEFAULT);
 
-        // CADASTRANDO O USUÁRIO
+        // CADASTRA O USUÁRIO
         $obUser->insertUser();
 
         // REDIRECIONA O USUARIO
