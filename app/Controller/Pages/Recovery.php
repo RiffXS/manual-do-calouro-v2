@@ -18,4 +18,8 @@ class Recovery extends Page {
         // RETORNA A VIEW DA PAGINA
         return parent::getHeader('Recuperar Senha', $content);
     }
+
+    public static function setRecovery($request) {
+
+    }
 }

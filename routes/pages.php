@@ -94,6 +94,13 @@ $obRouter->get('/recovery', [
     }
 ]);
 
+// ROTA RECUPERAR SENHA
+$obRouter->post('/recovery', [
+    function($request) {
+        return new Response(200, Pages\Recovery::setRecovery($request));
+    }
+]);
+
 /*
 // ROTA DE DEPOIMENTOS
 $obRouter->get('/depoimentos', [
