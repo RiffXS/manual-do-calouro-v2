@@ -8,18 +8,6 @@ use App\Models\Entity\Schedule as EntitySchedule;
 class Schedule extends Page {
     
     /**
-     * Instancia de Schedule
-     * @param EntitySchedule
-     */
-    public $obSchedule;
-
-    /**
-     * Contador
-     * @var integer
-     */
-    public $count;
-
-    /**
      * Metodo responsavel por retornar o contéudo (view) da pagina horario
      * @param \App\Http\Request
      * @return string 
@@ -63,16 +51,12 @@ class Schedule extends Page {
 
         for ($i = 0; $i < count($obTime); $i++) {
 
-            $content .= View::render('pages/schedule/time', [
-                'hora_inicio' => $obTime[$i]['hora_aula_inicio'],
-                'hora_fim'    => $obTime[$i]['hora_aula_fim']
-            ]);
-
             $content .= View::render('pages/schedule/row', [
-                'linha' => self::getRow($obSchedule, $count)
+                'hora_inicio' => $obTime[$i]['hora_aula_inicio'],
+                'hora_fim'    => $obTime[$i]['hora_aula_fim'],
+                'aulas'       => self::getRow($obSchedule, $count)
             ]);
         }
-
         // RETORNA O CONTEÚDO DA PÁGINA
         return $content;
     }
@@ -87,15 +71,10 @@ class Schedule extends Page {
         
         // Loop para cada aula
         for ($i = 0; $i < 6; $i++) { 
-    
             // VIEW DO HORÁRIO
-            $content .= View::render('pages/schedule/line', [
-                'horario' => '',
-                'aula'    => self::getItem($obSchedule[$count])
-            ]);
+            $content = self::getItem($obSchedule[$count]);
             $count++;
         }
-
         return $content;
     }
 
@@ -105,7 +84,7 @@ class Schedule extends Page {
      */ 
     public static function getItem($class) {
         // VIEW DA COLUNA
-        return View::render('pages/schedule/item', [
+        return View::render('pages/schedule/colum', [
             'sala'      => $class['sala'],
             'materia'   => $class['materia'],
             'professor' => $class['professor']
