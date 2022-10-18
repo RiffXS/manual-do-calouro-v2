@@ -3,8 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Utils\View;
+use App\Utils\Session;
 use App\Models\Entity\User;
-use App\Session\Admin\Login as SessionAdminLogin;
 
 class Login extends Page {
 
@@ -52,7 +52,7 @@ class Login extends Page {
             return self::getLogin($request, $msg);
         }
         // CRIA A SESSÃO DE LOGIN
-        SessionAdminLogin::Login($obUser);
+        Session::Login($obUser);
 
         // REDIRECIONA O USUARIO PARA HOME DO ADMIN
         $request->getRouter()->redirect('/admin');
@@ -64,7 +64,7 @@ class Login extends Page {
      */
     public static function setLogout($request) {
         // DESTROI A SESSÃO DE LOGIN
-        SessionAdminLogin::logout();
+        Session::logout();
 
         // REDIRECIONA O USUARIO PARA TELA DE LOGIN
         $request->getRouter()->redirect('/admin/login');
