@@ -75,7 +75,7 @@ class Page {
      * @param  string $currentModule
      * @return string
      */
-    public static function getHeader($tittle, $content, $currentModule) {
+    public static function getHeader($tittle, $content, $currentModule = '') {
         // RENDENIZA A VIEW DO PAINEL
         $contentPanel = View::render('pages/header', [
             'menu' => self::getLinks($currentModule),

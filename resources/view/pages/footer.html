@@ -8,31 +8,31 @@
                 <div class="row">
                     <div class="col-6">
                         <ul class="list-unstyled">
-                            <li class="nav-item"><a  href="">Home</a></li>
-                            <li class="nav-item"><a  href="">Sobre</a></li>
-                            <li class="nav-item"><a  href="">Calendário</a></li>
-                            <li class="nav-item"><a  href="">Mapa</a></li>
+                            <li class="nav-item"><a  href="{{URL}}/">Home</a></li>
+                            <li class="nav-item"><a  href="{{URL}}/about">Sobre</a></li>
+                            <li class="nav-item"><a  href="{{URL}}/calendar">Calendário</a></li>
+                            <li class="nav-item"><a  href="{{URL}}/map">Mapa</a></li>
                         </ul>
                     </div>
                     
                     <div class="col-6">
                         <ul class="list-unstyled">
-                            <li class="nav-item"><a  href="">Horários</a></li>
-                            <li class="nav-item"><a  href="">Contatos</a></li>
-                            <li class="nav-item"><a  href="">ROD</a></li>
-                            <li class="nav-item"><a  href="">FAQ</a></li>
+                            <li class="nav-item"><a  href="{{URL}}/schedule">Horários</a></li>
+                            <li class="nav-item"><a  href="{{URL}}/contact">Contatos</a></li>
+                            <li class="nav-item"><a  href="{{URL}}/rod">ROD</a></li>
+                            <li class="nav-item"><a  href="{{URL}}/faq">FAQ</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-6">
-                <h5 class="text-md-right">Entre em contato</h5>
+                <h5 class="text-md-right">Depoimento</h5>
                 <hr>
-                <form>
-                    <!-- EMAIL -->
+                <form method="GET">
+                    <!-- NOME -->
                     <fieldset class="form-group mb-2">
-                        <input type="email" class="form-control" id="email" placeholder="Ex: fulano@gmail.com">
+                        <input type="text" class="form-control" id="nome" placeholder="Ex: Fulano Ciclano">
                     </fieldset>
 
                     <!-- MENSAGEM -->
@@ -42,7 +42,7 @@
 
                     <!-- SUBMIT -->
                     <fieldset class="form-group text-xs-right">
-                        <button type="button" class="btn btn-outline-light btn-lg p-2 mt-2 text-light">Enviar</button>
+                        <button type="submit" class="btn btn-outline-light btn-lg p-2 mt-2 text-light">Enviar</button>
                     </fieldset>
                 </form>
             </div>

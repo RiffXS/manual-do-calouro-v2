@@ -31,7 +31,6 @@ $obRouter->get('/map', [
     }
 ]);
 
-
 // ROTA HORARIO
 $obRouter->get('/schedule', [
     function($request) {
@@ -57,6 +56,41 @@ $obRouter->get('/rod', [
 $obRouter->get('/faq', [
     function() {
         return new Response(200, Pages\Faq::getFaq());
+    }
+]);
+
+// ROTA LOGIN
+$obRouter->get('/singin', [
+    function() {
+        return new Response(200, Pages\Singin::getSingin());
+    }
+]);
+
+// ROTA LOGIN
+$obRouter->post('/singin', [
+    function($request) {
+        return new Response(200, Pages\SingIn::setSingIn($request));
+    }
+]);
+
+// ROTA CADASTRO
+$obRouter->get('/singup', [
+    function() {
+        return new Response(200, Pages\SingUp::getSingUp());
+    }
+]);
+
+// ROTA CADASTRO
+$obRouter->post('/singup', [
+    function($request) {
+        return new Response(200, Pages\SingUp::setSingUp($request));
+    }
+]);
+
+// ROTA RECUPERAR SENHA
+$obRouter->get('/recovery', [
+    function() {
+        return new Response(200, Pages\Recovery::getRecovery());
     }
 ]);
 
