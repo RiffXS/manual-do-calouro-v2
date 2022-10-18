@@ -7,12 +7,11 @@
                 <div class="card-body">
                     <h1 class="h1 text-center">Cadastro</h1>
 
-                    <form id="cadastro" action="../php/post/cadastrar.php" method="POST" autocomplete="on" enctype="multipart/form-data">
+                    <div class="mb-1">
+                        {{status}}
+                    </div>
 
-                        <div class="mb-1">
-                            {{status}}
-                        </div>
-
+                    <form id="cadastro" method="POST" autocomplete="on">
                         <!-- Nome -->
                         <div class="mb-3">
                             <label class="form-label" for="nome">Nome:</label>

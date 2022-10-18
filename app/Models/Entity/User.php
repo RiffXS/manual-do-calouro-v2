@@ -96,11 +96,11 @@ class User {
      * Metodo responsavel por verificar se a senha atende os requisitos de segurança
      * @return boolean
      */
-    public function verifyUserPassword() {
+    public static function verifyUserPassword($password) {
         // Mínimo de seis caracteres, pelo menos uma letra, um número e um caractere especial
         $parameters = "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?])[A-Za-z\d@$!%*#?]{6,36}$";
 
-        if (preg_match($parameters, $this->senha)) {
+        if (preg_match($parameters, $password)) {
             return false;
         }
         return true;
