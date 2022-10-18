@@ -106,7 +106,7 @@ class User extends Page {
         $obUser->email = $email;
         $obUser->senha = password_hash($senha, PASSWORD_DEFAULT);
 
-        $obUser->cadastrarUser();
+        $obUser->insertUser();
 
         // REDIRECIONA O USUARIO
         $request->getRouter()->redirect('/admin/users/'.$obUser->id_usuario.'/edit?status=created');
@@ -211,7 +211,7 @@ class User extends Page {
         $obUser->nom_usuario  = $nome;
         $obUser->email = $email;
         $obUser->senha = password_hash($senha, PASSWORD_DEFAULT);
-        $obUser->atualizarUser();
+        $obUser->updateUser();
 
         // REDIRECIONA O USUARIO
         $request->getRouter()->redirect('/admin/users/'.$obUser->id_usuario.'/edit?status=updated');
@@ -257,7 +257,7 @@ class User extends Page {
         }
 
         // EXCLUIR DEPOIMENTO
-        $obUser->excluirUser();
+        $obUser->deleteUser();
 
         // REDIRECIONA O USUARIO
         $request->getRouter()->redirect('/admin/users?status=deleted');

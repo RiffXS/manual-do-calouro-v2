@@ -54,10 +54,75 @@ class User {
     public $fk_acesso_id_acesso;
 
     /**
+     * Metodo responsavel por verificar verificar se o nome de entrada esta nos parametros do site
+     * @return boolean
+     */
+    public static function validateUserName($nome) {
+        // VERIFICA SE A STRING POSSUI NUMEROS OU CARACTER ESPECIAIS
+        if (!preg_match('/^[a-zA-Z\s]+$/', $nome)){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Metodo responsavel por verificar se o email de entrada é válido
+     * @return boolean
+     */
+    public static function validateUserEmail($email) {
+        // SANITIZA O EMAIL
+        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+
+        // VALIDA O FORMATO DO EMAIL
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Metodo responsavel por verificar se as senhas conicidem
+     * @return boolean
+     */
+    public static function validateUserPassword($password, $confirm) {
+        // VERIFICA SE AS SENHAS SÃO IGUAIS
+        if ($password !== $confirm) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Metodo responsavel por verificar se a senha atende os requisitos de segurança
+     * @return boolean
+     */
+    public function verifyUserPassword() {
+        // Mínimo de seis caracteres, pelo menos uma letra, um número e um caractere especial
+        $parameters = "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?])[A-Za-z\d@$!%*#?]{6,36}$";
+
+        if (preg_match($parameters, $this->senha)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Metodo responsavel por verificar se o usuario esta ativo
+     * @return boolean
+     */
+    public function verifyUserIsActive() {
+        // VERIFICA SE O USUARIO ESTA ATIVO
+        if ($this->ativo == 0) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Methodo responsavel por cadastrar a istancia atual no banco de dados
      * @return boolean
      */
-    public function cadastrarUser() {
+    public function insertUser() {
         // INSERE A ISTANCIA NO BANCO
         $this->id_usuario = (new Database('usuario'))->insert([
             'nom_usuario' => $this->nom_usuario,
@@ -72,7 +137,7 @@ class User {
      * Methodo responsavel por atualizar os dados no banco
      * @return boolean
      */
-    public function atualizarUser() {
+    public function updateUser() {
         return (new Database('usuario'))->update("id_usuario = {$this->id_usuario}", [
             'nom_usuario' => $this->nom_usuario,
             'email'       => $this->email,
@@ -84,7 +149,7 @@ class User {
      * Methodo responsavel por excluir um usuario do banco
      * @return boolean
      */
-    public function excluirUser() {
+    public function deleteUser() {
         return (new Database('usuario'))->delete("id_usuario = {$this->id_usuario}");
     }
 

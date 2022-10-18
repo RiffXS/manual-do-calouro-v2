@@ -20,8 +20,7 @@ class Login extends Page {
 
         // CONTEUDO DA PAGINA DE LOGIN
         $content = View::render('admin/login', [
-            'status' => $status,
-
+            'status' => $status
         ]);
         // RETORNA A PAGINA COMPLETA
         return parent::getPage('Login > MDC', $content);
