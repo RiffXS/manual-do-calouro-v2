@@ -8,16 +8,52 @@ class Schedule {
 
     /**
      * Arrray com os horarios de uma turma
-     * @var Array
+     * @var string
      */
-    public $horarios;
+    public $hora_inicio;
+
+    /**
+     * 
+     * 
+     */
+    public $hora_fim;
+
+    /**
+     * 
+     * 
+     */
+    public $sala;
+
+    /**
+     * 
+     * 
+     */
+    public $materia;
+
+    /**
+     * 
+     * 
+     */
+    public $professor;
+
+    /**
+     * Méthodo responsavel por retornar usuario
+     * @param  string $where
+     * @param  string $order
+     * @param  string $limit
+     * @param  string $fields
+     * @return mixed
+     */
+    public static function getScheduleTime($where = null, $order = null, $limit = null, $fields = '*') {
+        return (new Database('horario_aula'))->select($where, $order, $limit, $fields)->fetchAll(\PDO::FETCH_ASSOC);
+    }
 
     /**
      * Metodo responsavel por retornar todos os horarios de uma turma
      * @param integer $curso
      * @param integer $modulo
      */
-    public function getSchedules($curso, $modulo) {
+    public static function getSchedule($curso, $modulo) {
         // Seleciona todas as aulas, mesmo aquelas que não existem, e as coloca em um array
         $sql = "SELECT * FROM (
             (SELECT fk_dia_semana_id_dia_semana AS id_dia_semana,
@@ -66,6 +102,6 @@ class Schedule {
             ORDER BY id_horario_aula, id_dia_semana";
 
         // RETORNA OS DEPOIMENTOS
-        return $this->horarios = (new Database('aula'))->selectBySql($sql)->fetchAll(\PDO::FETCH_ASSOC);
+        return (new Database('aula'))->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
 }

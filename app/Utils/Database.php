@@ -129,7 +129,7 @@ class Database {
 	 * Metodo responsavel por executar uma consulta crua
 	 * @param string $query
 	 */
-	public function selectBySql($query) {
+	public function query($query) {
 		// EXECUTA A QUERY
 		return $this->execute($query);
 	}
