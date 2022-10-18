@@ -24,11 +24,7 @@ class Login {
         self::init();
 
         // DEFINE A SESSÃO DO ADMIN
-        $_SESSION['admin']['usuario'] = [
-            'id_usuario'  => $obUser->id_usuario,
-            'nom_usuario' => $obUser->nom_usuario,
-            'email'       => $obUser->email
-        ];
+        $_SESSION['admin']['usuario'] = ['id_usuario' => $obUser->id_usuario];
         // SUCESSO
         return true;
     }

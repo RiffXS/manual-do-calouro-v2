@@ -1,27 +1,37 @@
-<div class="d-flex justify-content-center">
+<section>
+    <div class="mb-4">
+        <div class="container">
+            <div class="d-flex justify-content-center">
+                <div class="card border rounded shadow-sm px-sm-2 px-md-4 pt-2 mb-5 bg-light">
 
-    <div class="card mt-3 text-dark text-center">
+                    <div class="card-body">
+                        <h1 class="h1 text-center">Login</h1>
 
-        <div class="card-header">
-            <h1>Login</h1>
-        </div>
+                        <form method="POST" autocomplete="on">
 
-        <div class="card-body">
-            {{status}}
+                            <div class="mb-1">
+                                {{status}}
+                            </div>
 
-            <form method="post">
-                <div class="form-group">
-                    <label for="email">E-mail</label>
-                    <input class="form-control" type="email" name="email" placeholder="email@teste.com" required autofocus>
+                            <!-- Email -->
+                            <div class="mb-3">
+                                <label class="form-label" for="email">Email:</label>
+                                <input id="email" name="email" class="form-control" type="email" aria-describedby="ajudaEmail" placeholder="Seu email" autocomplete="on" required>
+                            </div>
+
+                            <!-- Senha -->
+                            <div class="mb-4">
+                                <label class="form-label" for="senha">Senha:</label>
+                                <input type="password" id="senha" name="senha" class="form-control" placeholder="Senha" required>
+                            </div>
+
+                            <div class="d-flex justify-content-center">
+                                <button id="btnLogar" name="btnLogar" class="btn btn-primary" type="submit">Login</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                
-                <div class="form-group my-3">
-                    <label for="senha">Senha</label>
-                    <input class="form-control" type="password" name="senha" placeholder="********" required>
-                </div>
-
-                <button class="btn btn-lg btn-danger" type="submit">Entrar</button>
-            </form>
+            </div>
         </div>
     </div>
-</div>
+</section>

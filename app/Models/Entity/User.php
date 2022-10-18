@@ -30,6 +30,30 @@ class User {
     public $senha;
 
     /**
+     * Codigo da foto do usuario
+     * @var string
+     */
+    public $img_perfil;
+
+    /**
+     * Identificador de status do usuario
+     * @var string
+     */
+    public $ativo;
+
+    /**
+     * Data de criação do usuario
+     * @var string
+     */
+    public $add_data;
+
+    /**
+     * Nivel de acesso do usuario
+     * @var integer
+     */
+    public $fk_acesso_id_acesso;
+
+    /**
      * Methodo responsavel por cadastrar a istancia atual no banco de dados
      * @return boolean
      */
@@ -65,6 +89,18 @@ class User {
     }
 
     /**
+     * Méthodo responsavel por retornar usuario
+     * @param  string $where
+     * @param  string $order
+     * @param  string $limit
+     * @param  string $fields
+     * @return mixed
+     */
+    public static function getUsers($where = null, $order = null, $limit = null, $fields = '*') {
+        return (new Database('usuario'))->select($where, $order, $limit, $fields);
+    }
+
+    /**
      * Methodo responsavel por retornar uma istancia com base no ID
      * @param  integer $id
      * @return User
@@ -80,18 +116,5 @@ class User {
      */
     public static function getUserByEmail($email) {
         return self::getUsers("email = '$email'")->fetchObject(self::class);
-    }
-
-    /**
-     * Méthodo responsavel por retornar usuario
-     * @param  string $where
-     * @param  string $order
-     * @param  string $limit
-     * @param  string $fields
-     * @return mixed
-     */
-    public static function getUsers($where = null, $order = null, $limit = null, $fields = '*') {
-        return (new Database('usuario'))->select($where, $order, $limit, $fields);
-    }
-    
+    }   
 }

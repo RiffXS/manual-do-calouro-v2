@@ -2,8 +2,7 @@
 
 namespace App\Utils;
 
-class Environment
-{
+class Environment {
 
 	/**
 	 * Método responsável por carregar as variáveis de ambiente do projeto

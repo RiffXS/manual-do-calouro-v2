@@ -42,15 +42,13 @@ class Schedule extends Page {
      * 
      */
     public static function getTable($curso, $modulo) {
-        
         $obSchedule = EntitySchedule::getSchedule($curso, $modulo);
         $obTime     = EntitySchedule::getScheduleTime();
 
-        $content = '';
         $count = 0;
-
+        $content = '';
+        
         for ($i = 0; $i < count($obTime); $i++) {
-
             $content .= View::render('pages/schedule/row', [
                 'hora_inicio' => $obTime[$i]['hora_aula_inicio'],
                 'hora_fim'    => $obTime[$i]['hora_aula_fim'],
@@ -72,7 +70,7 @@ class Schedule extends Page {
         // Loop para cada aula
         for ($i = 0; $i < 6; $i++) { 
             // VIEW DO HORÁRIO
-            $content = self::getItem($obSchedule[$count]);
+            $content .= self::getItem($obSchedule[$count]);
             $count++;
         }
         return $content;
@@ -81,12 +79,13 @@ class Schedule extends Page {
     /**
      * Metodo responsavel
      * @param array $class
+     * @return string
      */ 
     public static function getItem($class) {
         // VIEW DA COLUNA
-        return View::render('pages/schedule/colum', [
-            'sala'      => $class['sala'],
-            'materia'   => $class['materia'],
+        return View::render('pages/schedule/item', [
+            'sala' => $class['sala'],
+            'materia' => $class['materia'],
             'professor' => $class['professor']
         ]);
     }
