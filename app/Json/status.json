@@ -1,0 +1,26 @@
+{
+    "invalid_name": {
+        "type": "danger",
+        "text": "Nome invalido!"  
+    },
+    "invalid_email": {
+        "type": "danger",
+        "text": "E-mail invalido!"
+    },
+    "invalid_pass": {
+        "type": "danger",
+        "text": "Senha invalida!"
+    },
+    "invalid_data": {
+        "type": "danger",
+        "text": "E-mail ou senha inválidos!"
+    },
+    "duplicated_email": {
+        "type": "danger",
+        "text": "E-mail já cadastradp"
+    },
+    "user_registered": {
+        "type": "success",
+        "text": "Cadastrado com sucesso!"
+    }
+}

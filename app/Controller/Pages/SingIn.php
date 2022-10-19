@@ -12,13 +12,10 @@ class SingIn extends Page {
      * Metodo responsavel por retornar o contéudo (view) da pagina login
      * @return string 
      */
-    public static function getSingIn($errorMessage = null) {
-        // STATUS
-        $status = !is_null($errorMessage) ? Alert::getError($errorMessage) : '';
-
+    public static function getSingIn($request) {
         // CONTEUDO DA PAGINA DE LOGIN
         $content = View::render('pages/singin', [
-            'status' => $status
+            'status' => Alert::getStatus($request)
         ]);
         // RETORNA A VIEW DA PAGINA
         return parent::getHeader('Login', $content);
@@ -35,19 +32,16 @@ class SingIn extends Page {
         $email = $postVars['email'];
         $senha = $postVars['senha'];
 
-        // MENSAGEM DE ERRO
-        $msg = 'E-mail ou senha inválidos!';
-
         // VALIDA O EMAIL
         $obUser = EntityUser::getUserByEmail($email);
 
         // VALIDA A INSTANCIA, VERIFICANDO SE HOUVE RESULTADO
         if (!$obUser instanceof EntityUser) {
-            return self::getSingIn($msg);
+            $request->getRouter()->redirect('/singup?status=invalid_data');
         }
         // VERIFICA A SENHA DO USUARIO CONINCIDE COM A DO BANCO
         if (!password_verify($senha, $obUser->senha)) {
-            return self::getSingIn($msg);
+            $request->getRouter()->redirect('/singup?status=invalid_data');
         }
         // CRIA A SESSÃO DE LOGIN
         Session::Login($obUser);

@@ -14,7 +14,7 @@ class SingUp extends Page {
     public static function getSingUp($request) {
         // CONTEUDO DA PAGINA DE LOGIN
         $content = View::render('pages/singup', [
-            'status' => self::getStatus($request)
+            'status' => Alert::getStatus($request)
         ]);
         // RETORNA A VIEW DA PAGINA
         return parent::getHeader('Cadastro', $content);
@@ -31,22 +31,16 @@ class SingUp extends Page {
 
         // VALIDA O NOME
         if (EntityUser::validateUserName($nome)) {
-            $request->getRouter()->redirect('/singup?status=invalidname');
+            $request->getRouter()->redirect('/singup?status=invalid_name');
         }
 
         // VALIDA O EMAIL
         if (EntityUser::validateUserEmail($email)) {
-            $request->getRouter()->redirect('/singup?status=invalidemail');
+            $request->getRouter()->redirect('/singup?status=invalid_email');
         }
-
-        // VERIFICA A SENHA
-        if (EntityUser::verifyUserPassword($password)) {
-            $request->getRouter()->redirect('/singup?status=invalidpass');
-        }
-
         // VALIDA A SENHA
         if (EntityUser::validateUserPassword($password, $confirm)) {
-            $request->getRouter()->redirect('/singup?status=passnotagree');
+            $request->getRouter()->redirect('/singup?status=invalid_pass');
         }
 
         // VERIFICA O EMAIL DO USUÁRIO
@@ -54,7 +48,7 @@ class SingUp extends Page {
 
         // VERIFICA SE O EMAIL ESTA DISPONÍVEL
         if ($obUser instanceof EntityUser) {
-            $request->getRouter()->redirect('/singup?status=duplicated');
+            $request->getRouter()->redirect('/singup?status=duplicated_email');
         }
 
         // NOVA INSTÂNCIA DE USUARIO
@@ -67,56 +61,6 @@ class SingUp extends Page {
         $obUser->insertUser();
 
         // REDIRECIONA O USUARIO
-        $request->getRouter()->redirect('/singin?status=created');
-    }
-
-    /**
-     * Methodo responsavel por retornar a menagem de status
-     * @param \App\Http\Request
-     * @return string
-     */
-    private static function getStatus($request) {
-        // DECLARAÇÃO DE VARIÁVEL
-        $msg = '';
-
-        // QUERY PARAMS
-        $queryParams = $request->getQueryParams();
-
-        // VERIFICA SE EXISTE UM STATUS
-        if (!isset($queryParams['status'])) return $msg;
-
-        // MENSAGENS DE STATUS
-        switch ($queryParams['status']) {
-            // NOME INVÁLIDO
-            case 'invalidname':
-                $erro = 'Nome inválido!';
-                break;
-
-            // EMAIL INVÁLIDO
-            case 'invalidemail':
-                $erro = 'Email inválido!';
-                break;
-
-            // SENHAS NÃO IGUAIS
-            case 'passnotagree':
-                $erro = 'Senhas não indênticas!';
-                break;
-
-            // SENHA INVALIDA
-            case 'invalidpass':
-                $erro = 'Senha inválida!';
-                break;
-                
-            // EMAIL DUPLICADO
-            case 'duplicated':
-                $erro = 'O e-mail indisponivel!';
-                break;
-        }
-        // EXIBE A MENSAGEM DE ERRO
-        if (!empty($erro)) {
-            return Alert::getError($erro);
-        }
-        // EXIBE A MENSAGEM DE SUCESSO
-        return Alert::getSucess($msg);        
+        $request->getRouter()->redirect('/singin?status=user_registered');
     }
 }

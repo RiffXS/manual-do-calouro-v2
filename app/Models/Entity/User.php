@@ -59,8 +59,10 @@ class User {
      * @return boolean
      */
     public static function validateUserName($nome) {
+        $parameters = '/^[a-zA-Z\s]+$/';
+
         // VERIFICA SE A STRING POSSUI NUMEROS OU CARACTER ESPECIAIS
-        if (preg_match('/^[a-zA-Z\s]+$/', $nome)){
+        if (preg_match($parameters, $nome)){
             return false;
         }
         return true;
@@ -88,9 +90,9 @@ class User {
      * @return boolean
      */
     public static function verifyUserPassword($password) {
-        // MÍNIMO DE SEIS CARACTERES, PELO MENOS UMA LETRA, UM NÚMERO E UM CARACTERE ESPECIAL
-        $parameters = "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?])[A-Za-z\d@$!%*#?]{6,36}$";
+        $parameters = '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d].\S{6,36}$/';
 
+        // MÍNIMO DE SEIS CARACTERES, PELO MENOS UMA LETRA, UM NÚMERO E UM CARACTERE ESPECIAL
         if (preg_match($parameters, $password)) {
             return false;
         }
@@ -105,7 +107,7 @@ class User {
      */
     public static function validateUserPassword($password, $confirm) {
         // VERIFICA SE AS SENHAS SÃO IGUAIS
-        if ($password !== $confirm) {
+        if (!$password !== $confirm) {
             return false;
         }
         return true;
