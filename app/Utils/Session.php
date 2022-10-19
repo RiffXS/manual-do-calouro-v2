@@ -16,6 +16,18 @@ class Session {
     }
 
     /**
+     * Método responsável por devolver o ID do usuário logado
+     * @return integer
+     */
+    public static function getSessionId() {
+        // INICIA A SESSÃO
+        self::init();
+
+        // RETORNA O ID DO USUARIO NA SESSÃO
+        return $_SESSION['usuario']['id_usuario'];
+    }
+
+    /**
      * Methodo responsavel por criar o login do usuario
      * @param \App\Models\Entity\User @obUser
      * @param boolean

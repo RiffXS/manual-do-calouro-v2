@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Controller\Pages;
+namespace App\Utils\Tools;
 
 use App\Utils\View;
-use App\Utils\Json;
 
 class Alert {
 

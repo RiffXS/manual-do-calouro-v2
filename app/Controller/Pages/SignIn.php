@@ -3,18 +3,19 @@
 namespace App\Controller\Pages;
 
 use App\Utils\Session;
+use App\Utils\Tools\Alert;
 use \App\Utils\View;
 use App\Models\Entity\User as EntityUser;
 
-class SingIn extends Page {
+class SignIn extends Page {
 
     /**
      * Metodo responsavel por retornar o contéudo (view) da pagina login
      * @return string 
      */
-    public static function getSingIn($request) {
+    public static function getSignIn($request) {
         // CONTEUDO DA PAGINA DE LOGIN
-        $content = View::render('pages/singin', [
+        $content = View::render('pages/signin', [
             'status' => Alert::getStatus($request)
         ]);
         // RETORNA A VIEW DA PAGINA
@@ -25,7 +26,7 @@ class SingIn extends Page {
      * Metodo responsavel por realizar login no site
      * @param \App\Http\Request
      */
-    public static function setSingIn($request) {
+    public static function setSignIn($request) {
         // POST VARS
         $postVars = $request->getPostVars();
 
@@ -37,11 +38,11 @@ class SingIn extends Page {
 
         // VALIDA A INSTANCIA, VERIFICANDO SE HOUVE RESULTADO
         if (!$obUser instanceof EntityUser) {
-            $request->getRouter()->redirect('/singup?status=invalid_data');
+            $request->getRouter()->redirect('/signup?status=invalid_data');
         }
         // VERIFICA A SENHA DO USUARIO CONINCIDE COM A DO BANCO
         if (!password_verify($senha, $obUser->senha)) {
-            $request->getRouter()->redirect('/singup?status=invalid_data');
+            $request->getRouter()->redirect('/signup?status=invalid_data');
         }
         // CRIA A SESSÃO DE LOGIN
         Session::Login($obUser);

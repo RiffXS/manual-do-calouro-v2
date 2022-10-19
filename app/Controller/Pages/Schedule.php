@@ -25,12 +25,14 @@ class Schedule extends Page {
             $tableSchedule = self::getTable($curso, $modulo);
 
             $content = View::render('pages/schedule', [
-                'horarios' => $tableSchedule
+                'horarios' => $tableSchedule,
+                'hidden'   => ''
             ]);
         // RENDENIZA A O HORARIO SEM TABELA    
         } else {
             $content = View::render('pages/schedule', [
-                'horarios' => ''
+                'horarios' => '',
+                'hidden'   => 'd-none'
             ]);
         }
         // RETORNA A VIEW DA PAGINA

@@ -60,30 +60,37 @@ $obRouter->get('/faq', [
 ]);
 
 // ROTA LOGIN
-$obRouter->get('/singin', [
+$obRouter->get('/signin', [
     function($request) {
-        return new Response(200, Pages\Singin::getSingin($request));
+        return new Response(200, Pages\Signin::getSignin($request));
     }
 ]);
 
 // ROTA LOGIN
-$obRouter->post('/singin', [
+$obRouter->post('/signin', [
     function($request) {
-        return new Response(200, Pages\SingIn::setSingIn($request));
+        return new Response(200, Pages\SignIn::setSignIn($request));
+    }
+]);
+
+// ROTA LOGOUT
+$obRouter->get('/signout', [
+    function($request) {
+        return new Response(200, Pages\SignIn::setLogout($request));
     }
 ]);
 
 // ROTA CADASTRO
-$obRouter->get('/singup', [
+$obRouter->get('/signup', [
     function($request) {
-        return new Response(200, Pages\SingUp::getSingUp($request));
+        return new Response(200, Pages\SignUp::getSignUp($request));
     }
 ]);
 
 // ROTA CADASTRO
-$obRouter->post('/singup', [
+$obRouter->post('/signup', [
     function($request) {
-        return new Response(200, Pages\SingUp::setSingUp($request));
+        return new Response(200, Pages\SignUp::setSignUp($request));
     }
 ]);
 

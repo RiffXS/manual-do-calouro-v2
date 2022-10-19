@@ -130,11 +130,14 @@ class User {
      * @return boolean
      */
     public function insertUser() {
+        $this->add_data = date('Y-m-d H:i:s');
+
         // INSERE A ISTANCIA NO BANCO
         $this->id_usuario = (new Database('usuario'))->insert([
             'nom_usuario' => $this->nom_usuario,
             'email'       => $this->email,
-            'senha'       => $this->senha
+            'senha'       => $this->senha,
+            'add_data'    => $this->add_data
         ]);
         // SUCESSO
         return true;

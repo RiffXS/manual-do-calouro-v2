@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Utils;
+namespace App\Utils\Tools;
 
 use Exception;
 
@@ -11,7 +11,7 @@ class Json {
      * @return string
      */
     private static function getFilePath($name) {
-        return getenv('DIR').'/app/Json/'.$name.'.json';
+        return getenv('DIR').'/resources/json/'.$name.'.json';
     }
 
     /**
