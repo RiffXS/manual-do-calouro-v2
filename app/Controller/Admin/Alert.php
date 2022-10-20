@@ -12,7 +12,7 @@ class Alert {
      * @return string
      */
     public static function getSucess($message) {
-        return View::render('admin/alert/status', [
+        return View::render('shared/alert/status', [
             'tipo'     => 'success',
             'mensagem' => $message
         ]);
@@ -24,7 +24,7 @@ class Alert {
      * @return string
      */
     public static function getError($message) {
-        return View::render('admin/alert/status', [
+        return View::render('shared/alert/status', [
             'tipo'     => 'danger',
             'mensagem' => $message
         ]);

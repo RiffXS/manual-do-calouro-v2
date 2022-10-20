@@ -12,7 +12,7 @@ class Alert {
      * @return string
      */
     public static function getMessage($type, $text) {
-        return View::render('admin/alert/status', [
+        return View::render('shared/alert/status', [
             'tipo'     => $type,
             'mensagem' => $text
         ]);
