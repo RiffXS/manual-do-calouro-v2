@@ -2,6 +2,7 @@
 
 namespace App\Controller\Pages;
 
+use App\Models\Entity\User;
 use \App\Utils\Session;
 use \App\Utils\View;
 
@@ -13,7 +14,7 @@ class Page {
     private static $paginas = [
         'home' => [
             'label' => 'Home',
-            'link'  => URL
+            'link'  => URL.'/'
         ],
         'about' => [
             'label' => 'Sobre',
@@ -29,7 +30,7 @@ class Page {
         ],
         'schedule' => [
             'label' => 'Horários',
-            'link'  => URL.'/schedule'
+            'link'  => '/schedule'
         ],
         'contact' => [
             'label' => 'Contatos',
@@ -50,10 +51,18 @@ class Page {
      * @param  string $currentModule
      * @return string
      */
-    private static function getlinks($currentModule) {
+    private static function getLinks($currentModule) {
         // LINKS DO MENU
         $links = '';
 
+        // VERIFICA SE O USUÁRIO ESTÁ LOGADO
+        if (Session::isLogged()) {
+            // OBTEM O ID DA SESSÃO ATUAL
+            $id = Session::getSessionId();
+
+            // ATRIBUI O LINK À PÁGINA DE HORÁRIO
+            self::$paginas['schedule']['link'] = User::getUserClass($id);
+        }
         // ITERA OS MODULOS
         foreach (self::$paginas as $hash=>$module) {
             $links .= View::render('pages/header/link', [
@@ -62,7 +71,6 @@ class Page {
                 'current' => $hash == $currentModule ? 'active' : ''
             ]);
         }
-
         // RETORNA A RENDENIZAÇÃO DO MENU
         return View::render('pages/header/box', [
             'links' => $links
@@ -80,9 +88,8 @@ class Page {
             $id = Session::getSessionId();            
 
             // OBTÊM OS DADOS DO USUARIO
-            $obUser = \App\Models\Entity\User::getUserById($id);
+            $obUser = User::getUserById($id);
 
-            
             $obUser->img_perfil = !empty($obUser->img_perfil) ? $obUser->img_perfil : 'user.png';
 
             // RETORNA O DROPDOWN DO LOGIN

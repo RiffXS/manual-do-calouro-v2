@@ -54,6 +54,98 @@ class User {
     public $fk_acesso_id_acesso;
 
     /**
+     * Methodo responsavel por cadastrar a istancia atual no banco de dados
+     * @return boolean
+     */
+    public function insertUser() {
+        $this->add_data = date('Y-m-d H:i:s');
+
+        // INSERE A ISTANCIA NO BANCO
+        $this->id_usuario = (new Database('usuario'))->insert([
+            'nom_usuario' => $this->nom_usuario,
+            'email'       => $this->email,
+            'senha'       => $this->senha,
+            'add_data'    => $this->add_data
+        ]);
+        // SUCESSO
+        return true;
+    }
+
+    /**
+     * Methodo responsavel por atualizar os dados no banco
+     * @return boolean
+     */
+    public function updateUser() {
+        return (new Database('usuario'))->update("id_usuario = {$this->id_usuario}", [
+            'nom_usuario' => $this->nom_usuario,
+            'email'       => $this->email,
+            'senha'       => $this->senha
+        ]);
+    }
+
+    /**
+     * Methodo responsavel por excluir um usuario do banco
+     * @return boolean
+     */
+    public function deleteUser() {
+        return (new Database('usuario'))->delete("id_usuario = {$this->id_usuario}");
+    }
+
+    /**
+     * Méthodo responsavel por retornar usuario
+     * @param  string $where
+     * @param  string $order
+     * @param  string $limit
+     * @param  string $fields
+     * @return mixed
+     */
+    public static function getUsers($where = null, $order = null, $limit = null, $fields = '*') {
+        return (new Database('usuario'))->select($where, $order, $limit, $fields);
+    }
+
+    /**
+     * Methodo responsavel por retornar uma istancia com base no ID
+     * @param  integer $id
+     * @return User
+     */
+    public static function getUserById($id) {
+        return self::getUsers("id_usuario = $id")->fetchObject(self::class);
+    }
+
+    /**
+     * Methodo responsavel por retornar um usuario com base em seu email
+     * @param  string $email
+     * @return User
+     */
+    public static function getUserByEmail($email) {
+        return self::getUsers("email = '$email'")->fetchObject(self::class);
+    }
+    
+    /**
+     * Metodo responsavel por retornar o nivel de acesso do usuario 
+     * @param integer $id
+     * @return User
+     */
+    public static function getUserAcess($id) {
+        return self::getUsers("id_usuario = $id", null, 1, 'fk_acesso_id_acesso')->fetchObject(self::class);
+    }
+
+    /**
+     * 
+     * 
+     */
+    public static function getUserClass($id) {
+        $sql = "SELECT t.fk_curso_id_curso AS curso, t.num_modulo AS modulo 
+                FROM turma t JOIN aluno a
+                ON (t.id_turma = a.fk_turma_id_turma)
+                WHERE a.fk_usuario_id_usuario = $id";
+
+        $dados = (new Database('turma t'))->query($sql)->fetch(\PDO::FETCH_ASSOC);
+
+        return URL."/schedule?curso={$dados['curso']}&modulo={$dados['modulo']}";  
+    }
+
+    /**
      * Metodo responsavel por verificar verificar se o nome de entrada esta nos parametros do site
      * @param  string $nome
      * @return boolean
@@ -124,72 +216,4 @@ class User {
         }
         return true;
     }
-
-    /**
-     * Methodo responsavel por cadastrar a istancia atual no banco de dados
-     * @return boolean
-     */
-    public function insertUser() {
-        $this->add_data = date('Y-m-d H:i:s');
-
-        // INSERE A ISTANCIA NO BANCO
-        $this->id_usuario = (new Database('usuario'))->insert([
-            'nom_usuario' => $this->nom_usuario,
-            'email'       => $this->email,
-            'senha'       => $this->senha,
-            'add_data'    => $this->add_data
-        ]);
-        // SUCESSO
-        return true;
-    }
-
-    /**
-     * Methodo responsavel por atualizar os dados no banco
-     * @return boolean
-     */
-    public function updateUser() {
-        return (new Database('usuario'))->update("id_usuario = {$this->id_usuario}", [
-            'nom_usuario' => $this->nom_usuario,
-            'email'       => $this->email,
-            'senha'       => $this->senha
-        ]);
-    }
-
-    /**
-     * Methodo responsavel por excluir um usuario do banco
-     * @return boolean
-     */
-    public function deleteUser() {
-        return (new Database('usuario'))->delete("id_usuario = {$this->id_usuario}");
-    }
-
-    /**
-     * Méthodo responsavel por retornar usuario
-     * @param  string $where
-     * @param  string $order
-     * @param  string $limit
-     * @param  string $fields
-     * @return mixed
-     */
-    public static function getUsers($where = null, $order = null, $limit = null, $fields = '*') {
-        return (new Database('usuario'))->select($where, $order, $limit, $fields);
-    }
-
-    /**
-     * Methodo responsavel por retornar uma istancia com base no ID
-     * @param  integer $id
-     * @return User
-     */
-    public static function getUserById($id) {
-        return self::getUsers("id_usuario = $id")->fetchObject(self::class);
-    }
-
-    /**
-     * Methodo responsavel por retornar um usuario com base em seu email
-     * @param  string $email
-     * @return User
-     */
-    public static function getUserByEmail($email) {
-        return self::getUsers("email = '$email'")->fetchObject(self::class);
-    }   
 }

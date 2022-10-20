@@ -38,11 +38,11 @@ class SignIn extends Page {
 
         // VALIDA A INSTANCIA, VERIFICANDO SE HOUVE RESULTADO
         if (!$obUser instanceof EntityUser) {
-            $request->getRouter()->redirect('/signup?status=invalid_data');
+            $request->getRouter()->redirect('/signin?status=invalid_data');
         }
         // VERIFICA A SENHA DO USUARIO CONINCIDE COM A DO BANCO
         if (!password_verify($senha, $obUser->senha)) {
-            $request->getRouter()->redirect('/signup?status=invalid_data');
+            $request->getRouter()->redirect('/signin?status=invalid_data');
         }
         // CRIA A SESSÃO DE LOGIN
         Session::Login($obUser);
