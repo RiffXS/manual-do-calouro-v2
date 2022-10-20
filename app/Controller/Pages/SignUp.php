@@ -53,9 +53,9 @@ class SignUp extends Page {
         // NOVA INSTÂNCIA DE USUARIO
         $obUser = new EntityUser;
 
-        $obUser->nom_usuario = $nome;
-        $obUser->email = $email;
-        $obUser->senha = password_hash($password, PASSWORD_DEFAULT);
+        $obUser->setNomUser($nome);
+        $obUser->setEmail($email);
+        $obUser->setPass($password);
       
         // CADASTRA O USUÁRIO
         $obUser->insertUser();

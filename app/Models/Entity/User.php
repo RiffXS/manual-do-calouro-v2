@@ -9,49 +9,161 @@ class User {
      * ID do usuario
      * @var integer
      */
-    public $id_usuario;
+    private $id_usuario;
 
     /**
      * Nome do usuario
      * @var string
      */
-    public $nom_usuario;
+    private $nom_usuario;
 
     /**
      * Email do usuario
      * @var string
      */
-    public $email;
+    private $email;
 
     /**
      * Senha do usuario
      * @var string
      */
-    public $senha;
+    private $senha;
 
     /**
      * Codigo da foto do usuario
      * @var string
      */
-    public $img_perfil;
+    private $img_perfil;
 
     /**
      * Identificador de status do usuario
      * @var string
      */
-    public $ativo;
+    private $ativo;
 
     /**
      * Data de criação do usuario
      * @var string
      */
-    public $add_data;
+    private $add_data;
 
     /**
      * Nivel de acesso do usuario
      * @var integer
      */
-    public $fk_acesso_id_acesso;
+    private $fk_acesso_id_acesso;
+
+    /**
+     * Atribui o nome do usuario
+     * @param string $value
+     */
+    public function setNomUser($name) { 
+        $this->nom_usuario = $name;
+    }
+
+    /**
+     * Obtem o nome do usuario
+     * @return string
+     */
+    public function getNomUser() { 
+        return $this->nom_usuario;
+    }
+
+    /**
+     * Atribui o email do usuario
+     * @param string $email
+     */
+    public function setEmail($email) { 
+        $this->email = $email;
+    }
+
+    /**
+     * Obtem o email do usuario
+     * @return string
+     */
+    public function getEmail() { 
+        return $this->email;
+    }
+
+    /**
+     * Atribui a senha do usuario
+     * @param string $senha
+     */
+    public function setPass($senha) { 
+        $this->senha = password_hash($senha, PASSWORD_DEFAULT);
+    }
+
+    /**
+     * Obtem a senha do usuario
+     * @return string
+     */
+    public function getPass() { 
+        return $this->senha;
+    }
+
+    /**
+     * Atribui a imagem de perfil do usuario
+     * @param string $hash
+     */
+    public function setImgProfile($hash) { 
+        $this->img_perfil = $hash;
+    }
+
+    /**
+     * Obtem a imagem de perfil do usuario
+     * @return string
+     */
+    public function getImgPrfoile() { 
+        return $this->img_perfil;
+    }
+
+    /**
+     * Atribui o status de atividade do usuario
+     * @param integer
+     */
+    public function setActive($boleano) { 
+        $this->ativo = $boleano;
+    }
+
+    /**
+     * Obtem o status do usuario
+     * @return integer
+     */
+    public function getActive() { 
+        return $this->ativo;
+    }
+
+    /**
+     * Atribui a data de criação do usuario em timestamp
+     * @param string $data
+     */
+    public function setAddData($data) { 
+        $this->add_data = $data;
+    }
+
+    /**
+     * Obtem a data de criação do usuario legivel
+     * @return string 
+     */
+    public function getAddData() { 
+        return date('d/m/Y H:i:s', strtotime($this->add_data));
+    }
+
+    /**
+     * Atribui o nivel de acesso do usuario
+     * @param integer
+     */
+    public function setAcess($acesso = 2) { 
+        $this->fk_acesso_id_acesso = $acesso;
+    }
+
+    /**
+     * Obtem o nivel de acesso do usuario
+     * @return integer
+     */
+    public function getAcess() { 
+        return $this->fk_acesso_id_acesso;
+    }
 
     /**
      * Methodo responsavel por cadastrar a istancia atual no banco de dados
@@ -59,13 +171,16 @@ class User {
      */
     public function insertUser() {
         $this->add_data = date('Y-m-d H:i:s');
+        $this->ativo = 1; //1 true : 0 false 
 
         // INSERE A ISTANCIA NO BANCO
         $this->id_usuario = (new Database('usuario'))->insert([
             'nom_usuario' => $this->nom_usuario,
             'email'       => $this->email,
             'senha'       => $this->senha,
-            'add_data'    => $this->add_data
+            'add_data'    => $this->add_data,
+            'ativo'       => $this->ativo,
+            'fk_acesso_id_acesso' => 2
         ]);
         // SUCESSO
         return true;

@@ -20,6 +20,6 @@ class Recovery extends Page {
     }
 
     public static function setRecovery($request) {
-
+        exit('Em construção');
     }
 }

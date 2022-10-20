@@ -30,7 +30,7 @@ class Page {
         ],
         'schedule' => [
             'label' => 'Horários',
-            'link'  => '/schedule'
+            'link'  => URL.'/schedule'
         ],
         'contact' => [
             'label' => 'Contatos',
@@ -81,7 +81,7 @@ class Page {
      * Método responsável por renderizar a view do menu do login
      * @return string
      */
-    public static function getLogin() {
+    private static function getLogin() {
         // RETORNA O DROPDOWN CASO LOGADO
         if (Session::isLogged()) {
             // OBTEM O ID DA SESSÃO ATUAL
