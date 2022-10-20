@@ -104,4 +104,9 @@ class Schedule {
         // RETORNA OS DEPOIMENTOS
         return (new Database('aula'))->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    public static function getCursoById($id) {
+        // RETORNA O NOME DO CURSO
+        return (new Database('curso'))->select("id_curso = $id", null, null, 'dsc_curso')->fetch(\PDO::FETCH_ASSOC);
+    }
 }

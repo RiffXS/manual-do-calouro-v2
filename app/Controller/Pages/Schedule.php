@@ -26,13 +26,17 @@ class Schedule extends Page {
 
             $content = View::render('pages/schedule', [
                 'horarios' => $tableSchedule,
-                'hidden'   => ''
+                'hidden'   => '',
+                'curso'    => self::getCurso($curso),
+                'modulo'   => $modulo
             ]);
         // RENDENIZA A O HORARIO SEM TABELA    
         } else {
             $content = View::render('pages/schedule', [
                 'horarios' => '',
-                'hidden'   => 'd-none'
+                'hidden'   => 'd-none',
+                'curso'    => '',
+                'modulo'   => ''
             ]);
         }
         // RETORNA A VIEW DA PAGINA
@@ -90,5 +94,16 @@ class Schedule extends Page {
             'materia' => $class['materia'],
             'professor' => $class['professor']
         ]);
+    }
+
+    /**
+     * 
+     */
+    private static function getCurso($curso) {
+        // CURSO
+        $curso = EntitySchedule::getCursoById($curso);
+        
+        // RETORNA O NOME DO CURSO
+        return $curso['dsc_curso'];
     }
 }
