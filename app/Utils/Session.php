@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Utils;
+use App\Models\Entity\User;
 
 class Session {
 
@@ -38,7 +39,7 @@ class Session {
 
         // DEFINE A SESSÃO DO ADMIN
         $_SESSION['usuario'] = [
-            'id_usuario' => $obUser->id_usuario
+            'id_usuario' => $obUser->getUserId()
         ];
         // SUCESSO
         return true;
@@ -69,23 +70,5 @@ class Session {
 
         // SUCESSO
         return true;
-    }
-
-    /**
-     * 
-     * 
-     */
-    public static function getClass() {
-        if (self::isLogged()) {
-            // OBTEM O ID DA SESSÃO ATUAL
-            $id = self::getSessionId();
-            $dados = \App\Models\Entity\User::getUserClass($id);
-
-            // RETORNA O LINK COM PARÂMETROS
-            return URL."/schedule?curso={$dados['curso']}&modulo={$dados['modulo']}";   
-        }
-        
-        // RETORNA O LINK ORIGINAL DO HORÁRIO
-        return URL."/schedule";
     }
 }

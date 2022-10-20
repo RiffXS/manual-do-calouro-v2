@@ -10,29 +10,23 @@ class Schedule {
      * Arrray com os horarios de uma turma
      * @var string
      */
-    public $hora_inicio;
+    public $horario_aula;
 
     /**
-     * 
-     * 
-     */
-    public $hora_fim;
-
-    /**
-     * 
-     * 
+     * Numero da sala
+     * @var string
      */
     public $sala;
 
     /**
-     * 
-     * 
+     * Disciplina
+     * @var string
      */
     public $materia;
 
     /**
-     * 
-     * 
+     * Nome do professor
+     * @var string
      */
     public $professor;
 
@@ -44,10 +38,10 @@ class Schedule {
      * @param  string $fields
      * @return mixed
      */
-    public static function getScheduleTime($where = null, $order = null, $limit = null, $fields = '*') {
-        return (new Database('horario_aula'))->select($where, $order, $limit, $fields)->fetchAll(\PDO::FETCH_ASSOC);
+    public static function getScheduleTime() {
+        return (new Database('horario_aula'))->select()->fetchAll(\PDO::FETCH_ASSOC);
     }
-
+    
     /**
      * Metodo responsavel por retornar todos os horarios de uma turma
      * @param integer $curso

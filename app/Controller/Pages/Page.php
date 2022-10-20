@@ -60,8 +60,11 @@ class Page {
             // OBTEM O ID DA SESSÃO ATUAL
             $id = Session::getSessionId();
 
+            $turma = User::getUserClass($id);
+            $link = URL."/schedule?curso={$turma['curso']}&modulo={$turma['modulo']}";
+
             // ATRIBUI O LINK À PÁGINA DE HORÁRIO
-            self::$paginas['schedule']['link'] = User::getUserClass($id);
+            self::$paginas['schedule']['link'] = $link;  
         }
         // ITERA OS MODULOS
         foreach (self::$paginas as $hash=>$module) {
@@ -90,11 +93,14 @@ class Page {
             // OBTÊM OS DADOS DO USUARIO
             $obUser = User::getUserById($id);
 
-            $obUser->img_perfil = !empty($obUser->img_perfil) ? $obUser->img_perfil : 'user.png';
+            $img = $obUser->getImgPrfoile();
 
+            if (!empty($img)) {
+                $obUser->setImgProfile('user.png');
+            }
             // RETORNA O DROPDOWN DO LOGIN
             return View::render('pages/header/dropdown', [
-                'imagem' => $obUser->img_perfil
+                'imagem' => $img
             ]);
         }
         // RETORNA O BOTÃO DO LOGIN

@@ -36,7 +36,7 @@ class Testimony {
      */
     public function cadastrarTestimony() {
         // DEFINE A DATA    
-        $this->data = date('Y-m-d   H:i:s');
+        $this->data = date('Y-m-d H:i:s');
 
         // INSERE O DEPOIMENTO NO BANCO DE DADOS
         $this->id = (new Database('depoimentos'))->insert([

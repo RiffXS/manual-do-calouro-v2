@@ -41,7 +41,7 @@ class SignIn extends Page {
             $request->getRouter()->redirect('/signin?status=invalid_data');
         }
         // VERIFICA A SENHA DO USUARIO CONINCIDE COM A DO BANCO
-        if (!password_verify($senha, $obUser->senha)) {
+        if (!password_verify($senha, $obUser->getPass())) {
             $request->getRouter()->redirect('/signin?status=invalid_data');
         }
         // CRIA A SESSÃO DE LOGIN
