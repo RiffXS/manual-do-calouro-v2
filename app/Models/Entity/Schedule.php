@@ -93,7 +93,7 @@ class Schedule {
             WHERE turma.fk_curso_id_curso = $curso
             AND turma.num_modulo = $modulo
             except
-            SELECT fk_dia_semana_id_dia_semana AS id_dia_semana, fk_horario_aula_id_horario_aula AS id_horario_aula, fk_turma_id_turma FROM aula ORDER BY id_dia_semana)
+            SELECT fk_dia_semana_id_dia_semana AS id_dia_semana, fk_horario_aula_id_horario_aula AS id_horario_aula, fk_turma_id_turma AS id_turma FROM aula ORDER BY id_dia_semana)
             AS table1
             WHERE table1.id_dia_semana IN (2, 3, 4, 5, 6, 7)) AS table2) AS table3
             INNER JOIN horario_aula ha ON (ha.id_horario_aula = table3.id_horario_aula)
