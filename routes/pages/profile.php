@@ -18,7 +18,7 @@ $obRouter->post('/profile', [
     'middlewares' => [
         'user-login'
     ],
-    function() {
-        return new Response(200, Pages\Profile::setEditProfile());
+    function($request) {
+        return new Response(200, Pages\Profile::setEditProfile($request));
     }
 ]);

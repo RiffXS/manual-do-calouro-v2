@@ -17,16 +17,22 @@ class Request {
     private $httpMethod;
 
     /**
-     * URI da pagina
-     * @var string
-     */
-    private $uri;
-
-    /**
      * Parametros da URL ($_GET)
      * @var array
      */
     private $queryParams = [];
+
+    /**
+     * Arquivos recebidos no POST DA PAGINA ($_FILES)
+     * @var array
+     */
+    private $uploadFiles = [];
+
+    /**
+     * Cabeçalho da requisição
+     * @var array
+     */
+    private $headers = [];
 
     /**
      * Váriaveis recebidas no POST da pagina ($_POST)
@@ -34,11 +40,11 @@ class Request {
      */
     private $postVars = [];
 
-    /**
-     * Cabeçalho da requisição
-     * @var array
+     /**
+     * URI da pagina
+     * @var string
      */
-    private $headers = [];
+    private $uri;
 
     /**
      * Instancia de User
@@ -51,41 +57,12 @@ class Request {
      */
     public function __construct($router) {
         $this->router      = $router;
-        $this->queryParams = $_GET ?? [];
-        $this->headers     = getallheaders();
         $this->httpMethod  = $_SERVER['REQUEST_METHOD'] ?? '';
-        $this->setUri();
-        $this->setPostVars(); 
-    }
-
-    /**
-     * Methodo responsavel por definir as variaveis do post
-     */
-    private function setPostVars() {
-        // VERIFICA O METHODO DA REQUISIÇÃO
-        if ($this->httpMethod == 'GET') return false;
-
-        // POST PADRÃO
-        $this->postVars = $_POST ?? [];
-
-        // POST JSON
-        $inputRaw = file_get_contents('php://input');
-
-        // POST RAW
-        $this->postVars = strlen($inputRaw) && empty($_POST) ? 
-            json_decode($inputRaw, true) : $this->postVars;
-    }
-    
-    /**
-     * Methodo responsavel por definir a URI
-     */
-    private function setUri() {
-        // URI COMPLETA COM GETS    
-        $this->uri = $_SERVER['REQUEST_URI'] ?? '';
-
-        // REMOVE GETS DA URI
-        $xUri = explode('?', $this->uri);
-        $this->uri = $xUri[0];
+        $this->queryParams = $_GET ?? [];
+        $this->uploadFiles = $_FILES ?? [];
+        $this->headers     = getallheaders();
+        $this->setPostVars(); // POST
+        $this->setUri();      // URI
     }
 
     /**
@@ -105,11 +82,19 @@ class Request {
     }
 
     /**
-     * Méthodo responsavel por retornar a URI da requisição
-     * @return string
+     * Méthodo responsavel por retornar os parametros da url da requisição
+     * @return array
      */
-    public function getUri() {
-        return $this->uri;
+    public function getQueryParams() {
+        return $this->queryParams;
+    }
+
+    /**
+     * Metodo responsavel por retornar os arquivos recebidos no post
+     * @return array
+     */
+    public function getUploadFiles() {
+        return $this->uploadFiles;
     }
 
     /**
@@ -121,11 +106,21 @@ class Request {
     }
 
     /**
-     * Méthodo responsavel por retornar os parametros da url da requisição
-     * @return array
+     * Methodo responsavel por definir as variaveis do post
      */
-    public function getQueryParams() {
-        return $this->queryParams;
+    private function setPostVars() {
+        // VERIFICA O METHODO DA REQUISIÇÃO
+        if ($this->httpMethod == 'GET') return false;
+
+        // POST PADRÃO
+        $this->postVars = $_POST ?? [];
+
+        // POST JSON
+        $inputRaw = file_get_contents('php://input');
+
+        // POST RAW
+        $this->postVars = strlen($inputRaw) && empty($_POST) ? 
+            json_decode($inputRaw, true) : $this->postVars;
     }
 
     /**
@@ -134,5 +129,25 @@ class Request {
      */
     public function getPostVars() {
         return $this->postVars;
+    }
+
+    /**
+     * Methodo responsavel por definir a URI
+     */
+    private function setUri() {
+        // URI COMPLETA COM GETS    
+        $this->uri = $_SERVER['REQUEST_URI'] ?? '';
+
+        // REMOVE GETS DA URI
+        $xUri = explode('?', $this->uri);
+        $this->uri = $xUri[0];
+    }
+
+    /**
+     * Méthodo responsavel por retornar a URI da requisição
+     * @return string
+     */
+    public function getUri() {
+        return $this->uri;
     }
 }       

@@ -1,10 +1,7 @@
 <section>
     <div class="p-3 d-flex flex-column align-items-center container">
-        <form class="w-75" method="POST" enctype="multipart/form-data">
-            
+        <form class="w-75" method="POST" enctype="multipart/form-data">            
             {{status}}
-
-            <input type="hidden" id="acesso" name="acesso" value="<?php echo $userData['fk_acesso_id_acesso']; ?>">
 
             <div class="row">
                 <div class="col-6 text-center">
@@ -54,7 +51,7 @@
             <div class="row mt-3">
                 <div class="d-flex flex-column align-items-center justify-content-md-around flex-md-row">
                     <!-- SALVAR -->
-                    <button class="btn btn-primary me-2" type="submit" name="btnIncrement">Salvar alterações</button>
+                    <button class="btn btn-primary me-2" type="submit">Salvar alterações</button>
 
                     <!-- MUDAR SENHA -->
                     <a href="#" class="btn btn-danger mt-2" type="button">Redefinir senha</a>
