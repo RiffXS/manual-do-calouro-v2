@@ -7,30 +7,6 @@ use App\Utils\Database;
 class Schedule {
 
     /**
-     * Arrray com os horarios de uma turma
-     * @var string
-     */
-    public $horario_aula;
-
-    /**
-     * Numero da sala
-     * @var string
-     */
-    public $sala;
-
-    /**
-     * Disciplina
-     * @var string
-     */
-    public $materia;
-
-    /**
-     * Nome do professor
-     * @var string
-     */
-    public $professor;
-
-    /**
      * Méthodo responsavel por retornar usuario
      * @param  string $where
      * @param  string $order

@@ -127,11 +127,11 @@ class Database {
 
 	/**
 	 * Metodo responsavel por executar uma consulta crua
-	 * @param string $query
+	 * @param string $sql
 	 */
-	public function query($query) {
+	public function query($sql) {
 		// EXECUTA A QUERY
-		return $this->execute($query);
+		return $this->execute($sql);
 	}
 
 	/**

@@ -15,7 +15,7 @@
                     <!-- INFORMAÇÕES DE CONTATO -->
                     <div class="col-9 d-flex align-items-center">
                         <div class="card-body">
-                            <h5 class="card-title fw-bold text-break mb-1">{{nome}}</h5>
+                            <h5 class="card-title fw-bold text-break mb-1">{{setor}}</h5>
 
                             <div class="row">
                                 
@@ -27,7 +27,7 @@ for ($j = 0; $j < count($contato); $j++) {
         echo "
         <div class="col-12 py-1">
             <i class="fa-solid fa-phone"></i>
-            <span class="text-break">{$contato[$j]['dsc_contato']}</span>
+            <span class="text-break">{$contato[$j]['dsc_setor']}</span>
         </div>";
 
     } else if ($contato[$j]['dsc_tipo'] == 'E-mail') {
@@ -68,14 +68,9 @@ Fim do código de exemplo -->
                     <div class="d-flex flex-row align-items-baseline">
                         <h5 class="me-1">Horário de atendimento:</h5>
                         <p>
-                            {{horario}}
+                            {{hora_inicio}} - {{hora_fim}}
                         </p>
                     </div>
-                    
-                    <h5 class="me-1">Regras de sala:</h5>
-                    <p>
-                        {{regras}}
-                    </p>
 
                 </div>
             </div>

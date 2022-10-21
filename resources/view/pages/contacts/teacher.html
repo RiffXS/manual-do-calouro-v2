@@ -1,0 +1,84 @@
+<!-- CARD CONTATO PROFESSOR -->
+<div class="d-flex flex-column align-items-center">
+    <div class="accordion col-md-7 mb-2 w-100" id="contato{{contato_id}}">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="titulo{{contato_id}}">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#regras{{contato_id}}; ?>" aria-expanded="false" aria-controls="regras{{contato_id}}">
+                        
+                <!-- CONTEÚDO -->
+                <div class="row w-100">
+                    <!-- FOTO -->
+                    <div class="col-3 d-flex justify-content-center align-items-center" id="div-img-contato">
+                        <img class='img-contato' src='{{URL}}/public/{{imagem}}' alt='foto'>
+                    </div>
+
+                    <!-- INFORMAÇÕES DE CONTATO -->
+                    <div class="col-9 d-flex align-items-center">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold text-break mb-1">{{nome}}</h5>
+
+                            <div class="row">
+                                
+                                {{contato}}
+<!-- Parte de código de exemplo
+<?php
+for ($j = 0; $j < count($contato); $j++) {
+    if ($contato[$j]['dsc_tipo'] == 'Telefone') {
+        echo "
+        <div class="col-12 py-1">
+            <i class="fa-solid fa-phone"></i>
+            <span class="text-break">{$contato[$j]['dsc_contato']}</span>
+        </div>";
+
+    } else if ($contato[$j]['dsc_tipo'] == 'E-mail') {
+        echo "
+        <div class="col-12 py-1">
+            <i class="fa-solid fa-envelope"></i>
+            <span class="text-break">{$contato[$j]['dsc_contato']}</span>
+        </div>";
+
+    } else if ($contato[$j]['dsc_tipo'] == 'WhatsApp') {
+        <div class="col-12 py-1">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span class="text-break">{$contato[$j]['dsc_contato']}</span>
+        </div>";
+    }
+}
+?>
+Fim do código de exemplo -->
+    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                </button>
+            </h2>
+
+            <div id="regras{{contato_id}}" class="accordion-collapse collapse" aria-labelledby="titulo{{contato_id}}" data-bs-parent="#contato{{contato_id}}">
+                <div class="accordion-body">
+
+                    <div class="d-flex flex-row align-items-baseline"></div>
+                        <h5 class="me-1">Sala:</h5>
+                        <p>
+                            {{sala}}
+                        </p>
+                    </div>
+                    
+                    <div class="d-flex flex-row align-items-baseline">
+                        <h5 class="me-1">Horário de atendimento:</h5>
+                        <p>
+                            {{hora_inicio}} - {{hora_fim}}
+                        </p>
+                    </div>
+                    
+                    <h5 class="me-1">Regras de sala:</h5>
+                    <p>
+                        {{regras}}
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

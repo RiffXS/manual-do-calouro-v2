@@ -55,7 +55,7 @@ class User {
 
     
     /**
-     * Metodo responsavel por verificar verificar se o nome de entrada esta nos parametros do site
+     * Metodo responsavel por verificar se o nome de entrada esta nos parametros do site
      * @param  string $nome
      * @return boolean
      */
