@@ -30,8 +30,10 @@ MiddlewareQueue::setMap([
     'maintenence'          => \App\Http\Middleware\Maintenence::class,
     'require-admin-logout' => \App\Http\Middleware\RequireAdminLogout::class,
     'require-admin-login'  => \App\Http\Middleware\RequireAdminLogin::class,
-    'api'                  => \App\Http\Middleware\Api::class,
+    'require-user-login'   => \App\Http\Middleware\RequireUserLogin::class,
+    'require-user-logout'  => \App\Http\Middleware\RequireUserLogout::class,
     'user-basic-auth'      => \App\Http\Middleware\UserBasicAuth::class,
+    'api'                  => \App\Http\Middleware\Api::class,
     'cache'                => \App\Http\Middleware\Cache::class,
 ]);
 
