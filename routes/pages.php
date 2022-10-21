@@ -1,128 +1,36 @@
-<?php 
+<?php
 
-use App\Http\Response;
-use App\Controller\Pages;
+// ROTAS DE CADASTRO DA API
+include_once __DIR__.'/pages/cadastro.php';
 
-// ROTA HOME
-$obRouter->get('/', [
-    function() {
-        return new Response(200, Pages\Home::getHome());
-    }
-]);
+// ROTAS DO CALENDÁRIO DA API
+include_once __DIR__.'/pages/calendario.php';
 
-// ROTA SOBRE
-$obRouter->get('/about', [
-    function() {
-        return new Response(200, Pages\About::getAbout());
-    }
-]);
+// ROTAS DO CONTATO DA API
+include_once __DIR__.'/pages/contato.php';
 
-// ROTA CALENDARIO
-$obRouter->get('/calendar', [
-    function() {
-        return new Response(200, Pages\Calendar::getCalendar());
-    }
-]);
+// ROTAS DO FAQ DA API
+include_once __DIR__.'/pages/faq.php';
 
-// ROTA MAPA
-$obRouter->get('/map', [
-    function() {
-        return new Response(200, Pages\Map::getMap());
-    }
-]);
+// ROTAS DA HOME DA API
+include_once __DIR__.'/pages/home.php';
 
-// ROTA HORARIO
-$obRouter->get('/schedule', [
-    function($request) {
-        return new Response(200, Pages\Schedule::getSchedule($request));
-    }
-]);
+// ROTAS DO HORÁRIO DA API
+include_once __DIR__.'/pages/horario.php';
 
-// ROTA CONTATO
-$obRouter->get('/contact', [
-    function() {
-        return new Response(200, Pages\Contact::getContact());
-    }
-]);
+// ROTAS DE LOGIN DA API
+include_once __DIR__.'/pages/login.php';
 
-// ROTA ROD
-$obRouter->get('/rod', [
-    function() {
-        return new Response(200, Pages\Rod::getRod());
-    }
-]);
+// ROTAS DO MAPA DA API
+include_once __DIR__.'/pages/mapa.php';
 
-// ROTA FAQ
-$obRouter->get('/faq', [
-    function() {
-        return new Response(200, Pages\Faq::getFaq());
-    }
-]);
+// ROTAS DE RECUPERAÇÃO DE SENHA DA API
+include_once __DIR__.'/pages/recovery.php';
 
-// ROTA LOGIN
-$obRouter->get('/signin', [
-    function($request) {
-        return new Response(200, Pages\Signin::getSignin($request));
-    }
-]);
+// ROTAS DE ROD DA API
+include_once __DIR__.'/pages/rod.php';
 
-// ROTA LOGIN
-$obRouter->post('/signin', [
-    function($request) {
-        return new Response(200, Pages\SignIn::setSignIn($request));
-    }
-]);
+// ROTAS DE SOBRE DA API
+include_once __DIR__.'/pages/sobre.php';
 
-// ROTA LOGOUT
-$obRouter->get('/signout', [
-    function($request) {
-        return new Response(200, Pages\SignIn::setLogout($request));
-    }
-]);
-
-// ROTA CADASTRO
-$obRouter->get('/signup', [
-    function($request) {
-        return new Response(200, Pages\SignUp::getSignUp($request));
-    }
-]);
-
-// ROTA CADASTRO
-$obRouter->post('/signup', [
-    function($request) {
-        return new Response(200, Pages\SignUp::setSignUp($request));
-    }
-]);
-
-// ROTA RECUPERAR SENHA
-$obRouter->get('/recovery', [
-    function() {
-        return new Response(200, Pages\Recovery::getRecovery());
-    }
-]);
-
-// ROTA RECUPERAR SENHA
-$obRouter->post('/recovery', [
-    function($request) {
-        return new Response(200, Pages\Recovery::setRecovery($request));
-    }
-]);
-
-/*
-// ROTA DE DEPOIMENTOS
-$obRouter->get('/depoimentos', [
-    'middlewares' => [
-        'cache'
-    ],
-    function($request) {
-        return new Response(200, Pages\Testimony::getTestimonies($request));
-    }
-]);
-
-// ROTA DE DEPOIMENTOS INSERT
-$obRouter->post('/depoimentos', [
-    function($request) {
-        return new Response(200, Pages\Testimony::inserTestimony($request));
-    }
-]);
-*/
+?>

@@ -57,3 +57,5 @@ $obRouter->delete('/api/v1/testimonies/{id}', [
         return new Response(200, Api\Testimony::setDeleteTestimony($request, $id), 'application/json');
     }
 ]);
+
+?>

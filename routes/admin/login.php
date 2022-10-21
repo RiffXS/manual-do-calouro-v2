@@ -32,3 +32,5 @@ $obRouter->get('/admin/logout', [
         return new Response(200, Admin\Login::setLogout($request));
     }
 ]);
+
+?>

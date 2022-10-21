@@ -22,5 +22,9 @@
     "user_registered": {
         "type": "success",
         "text": "Cadastrado com sucesso!"
-    }
+    },
+    "require_login": {
+        "type": "danger",
+        "text": "Necessario login"
+    }   
 }

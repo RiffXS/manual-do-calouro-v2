@@ -73,3 +73,4 @@ $obRouter->post('/admin/users/{id}/delete', [
     }
 ]);
 
+?>
