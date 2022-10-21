@@ -1,0 +1,94 @@
+<section>
+    <div class="mb-4">
+        <div class="container">
+            <div class="d-flex justify-content-center">
+                <div class="card shadow-sm px-sm-4 py-2 mb-5 bg-light">
+                    <div class="card-body">
+                        <div class="h1 text-center">Fale conosco</div>
+                        <form method="POST">
+                            <input
+                                type="hidden"
+                                class="form-control"
+                                id="email"
+                                name="email"
+                                aria-describedby="ajudaEmail"
+                                placeholder="Seu email"
+                                required
+                                value="<?php echo $userData['email']; ?>"
+                            />
+
+                            <div class="mb-3">
+                                <label class="form-label" for="telefone">
+                                    Telefone (opcional):
+                                </label>
+                                <input
+                                    type="tel"
+                                    class="form-control"
+                                    id="telefone"
+                                    name="telefone"
+                                    placeholder="(99) 99999-9999"
+                                    minlength="8"
+                                    maxlength="15"
+                                    autocomplete="on"
+                                />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="assunto">
+                                    Assunto:
+                                </label>
+                                <select
+                                    class="form-select"
+                                    name="assunto"
+                                    id="assunto"
+                                    required
+                                >
+                                    <option value="" selected>
+                                        Selecione um assunto
+                                    </option>
+                                    <option value="conta">
+                                        Solicitar conta de professor ou servidor
+                                    </option>
+                                    <option value="calendario">
+                                        Calendário
+                                    </option>
+                                    <option value="horarios">Horários</option>
+                                    <option value="mapa">Mapa</option>
+                                    <option value="rod">ROD</option>
+                                    <option value="faq">Dúvida/Pergunta</option>
+                                    <option value="critica">
+                                        Crítica/Reclamação
+                                    </option>
+                                    <option value="outro">Outro</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-2">
+                                <label class="form-label" for="texto">
+                                    Escreva sua mensagem: </label
+                                ><br />
+                                <textarea
+                                    class="w-100"
+                                    id="texto"
+                                    name="texto"
+                                    required
+                                    rows="6"
+                                ></textarea>
+                            </div>
+
+                            <div class="d-flex justify-content-center">
+                                <button
+                                    name="btnFeedback"
+                                    class="btn btn-primary"
+                                    type="submit"
+                                >
+                                    Enviar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
