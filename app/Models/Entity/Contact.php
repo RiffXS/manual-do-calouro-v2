@@ -7,6 +7,34 @@ use App\Utils\Database;
 class Contact {
 
     /**
+     * Array com os dados dos professores
+     * @var array
+     */
+    private $professor;
+
+    /**
+     * Array com os dados dos servidores
+     * @var array
+     */
+    private $servidor;
+    
+    /**
+     * Método responsavel por construir o objeto
+     */
+    public function __construct() {
+        $this->professor = self::getContactTeacher();
+        $this->servidor  = self::getContactServer();
+    }
+
+    /**
+     * Método responsável por 
+     * @param array $key
+     */
+    public function __get($key) {
+        return $this->{$key};
+    }
+
+    /**
      * Método responsável por retornar os contatos dos professores
      * @return array
      */

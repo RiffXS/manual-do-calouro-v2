@@ -2,6 +2,7 @@
 
 namespace App\Controller\Pages;
 
+use App\Models\Entity\User;
 use \App\Utils\View;
 use \App\Models\Entity\Contact as EntityContact;
 
@@ -12,10 +13,16 @@ class Contact extends Page {
      * @return string 
      */
     public static function getContact() {
+        // CRIANDO NOVA INSTÂNCIA DE CONTATO
+        $obContact = new EntityContact;
+
+        // 
+        $views = self::getContacts($obContact);
+
         // VIEW DOS CONTATOS
-        $content =  View::render('pages/contact', [
-            'professores' => self::teste(),
-            'servidores'  => self::cardServer()
+        $content =  View::render('pages/contacts', [
+            'professores' => $views['professores'],
+            'servidores'  => $views['servidores']
         ]);
 
         // RETORNA A VIEW DA PAGINA
@@ -25,51 +32,111 @@ class Contact extends Page {
     /**
      * 
      */
-    public static function teste() {
-        $obContactTeacher = EntityContact::getContactTeacher();
+    public static function getContacts($obContact) {
+        // DECLARAÇÃO DE VARIÁVEIS
+        $contentTeacher = '';
+        $contentServers = '';
+        
+        // OBTENDO OS ARRAYS DOS CONTATOS
+        $teacher = $obContact->professor;
+        $servers = $obContact->servidor;
 
-        echo '<pre>'; print_r($obContactTeacher); echo '</pre>'; exit;
+        // LOOP PARA OBTER AS VIEWS DOS CARDS DOS PROFESSORES
+        for ($p = 0; $p < count($teacher); $p++) {
+            $contentTeacher .= self::cardTeacher($teacher[$p]);
+        }
 
+        // LOOP PARA OBTER AS VIEWS DOS CARDS DOS SERVIDORES
+        for ($s = 0; $s < count($servers); $s++) {
+            $contentServers .= self::cardServer($servers[$s]);
+        }
+
+        // RETORNA UM ARRAY COM AS VIEWS DOS PROFESSORES E SERVIORES
+        return [
+            'professores' => $contentTeacher,
+            'servidores'  => $contentServers
+        ];
+
+    }
+
+    /**
+     * Método responsável por renderizar os contatos
+     * @param  integer $id
+     * @return string
+     */
+    public static function getContactType($id) {
+        // DECLARAÇÃO DE VARIÁVEIS
+        $content = '';
+        
+        // OBTENDO AS INFORMAÇÕES DE CONTATO DO SERVIDOR
+        $typeContacts = User::getUserContact($id);
+
+        // LOOP PARA IMPRIMIR OS CONTATOS
+        for ($i = 0; $i < count($typeContacts); $i++) {
+            if ($typeContacts[$i]['dsc_tipo'] == 'Telefone') {
+                $icone = 'fa-solid fa-phone';
+
+            } else if ($typeContacts[$i]['dsc_tipo'] == 'E-mail') {
+                $icone = 'fa-solid fa-envelope';
+
+            } else if ($typeContacts[$i]['dsc_tipo'] == 'WhatsApp') {
+                $icone = 'fa-brands fa-whatsapp';
+            }
+            
+            // RENDENIZA A VIEW
+            $content .= View::render('pages/contacts/type_contact', [
+                'icone' => $icone,
+                'contato' => $typeContacts[$i]['dsc_contato']
+            ]);
+        }
+        
+        // RETORNA A VIEW DOS TIPOS DE CONTATO
+        return $content;
     }
 
     /**
      * Método responsável por renderizar os cards de contato dos professores
-     * @return string $content
+     * @param  array $contact
+     * @return string
      */
     public static function cardTeacher($contact) {
+        // ATRIBUIÇÃO DE VARIÁVEIS
+        $id = $contact['id_usuario'];
+        $imagem = !empty($contact['img_perfil']) ? "uploads/{$contact['img_perfil']}" : 'images/user.png';
+
         // VIEW DOS CONTATOS DE PROFESSORES
-        $content =  View::render('pages/contacts/teacher', [
-            'contato_id'  => $contact['id_usuario'],
+        return View::render('pages/contacts/teacher', [
+            'contato_id'  => $id,
+            'contato'     => self::getContactType($id),
             'nome'        => $contact['nom_usuario'],
             'regras'      => $contact['regras'],
-            'imagem'      => $contact['img_perfil'],
-            'contato'     => '',
+            'imagem'      => $imagem,
             'hora_inicio' => $contact['hora_inicio'],
             'hora_fim'    => $contact['hora_fim'],
             'sala'        => $contact['num_sala']
         ]);
-
-        // RETORNA A VIEW RENDERIZADA
-        return $content;
     }
 
     /**
      * Método responsável por renderizar os cards de contato dos servidores
-     * @return string $content
+     * @param  string $contact
+     * @return string
      */
     public static function cardServer($contact) {
-        // VIEW DOS CONTATOS DE SERVIDORES
-        $content =  View::render('pages/contacts/server', [
-            'contato_id' => '',
-            'imagem'     => '',
-            'setor'      => '',
-            'contato'    => '',
-            'sala'       => '',
-            'horario'    => ''
-        ]);
+        // ATRIBUIÇÃO DE VARIÁVEIS
+        $id = $contact['id_usuario'];
+        $imagem = !empty($contact['img_perfil']) ? "uploads/{$contact['img_perfil']}" : 'images/user.png';
 
-        // RETORNA A VIEW RENDERIZADA
-        return $content;
+        // VIEW DOS CONTATOS DE SERVIDORES
+        return View::render('pages/contacts/server', [
+            'contato_id'  => $id,
+            'contato'     => self::getContactType($id),
+            'setor'       => $contact['dsc_setor'],
+            'imagem'      => $imagem,
+            'hora_inicio' => $contact['hora_inicio'],
+            'hora_fim'    => $contact['hora_fim'],
+            'sala'        => $contact['num_sala']
+        ]);
     }
 
 }

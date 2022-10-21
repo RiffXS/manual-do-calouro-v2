@@ -217,6 +217,18 @@ class User {
 
         return (new Database($table))->select($where, null, null, $fields)->fetch(\PDO::FETCH_ASSOC);
     }
+
+    /**
+     * 
+     * 
+     */
+    public static function getUserContact($id) {
+        $table = "usuario u JOIN servidor s ON (u.id_usuario = s.fk_usuario_id_usuario) JOIN contato c ON (s.fk_usuario_id_usuario = c.fk_servidor_fk_usuario_id_usuario) JOIN tipo_contato tc ON (c.fk_tipo_contato_id_tipo = tc.id_tipo)";
+        $where = "id_usuario = $id";
+        $fields = "nom_usuario, dsc_contato, dsc_tipo";
+
+        return (new Database($table))->select($where, null, null, $fields)->fetchAll(\PDO::FETCH_ASSOC);
+    }
     
     /**
      * Atribui um id ao usuario manualmente
