@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use \App\Utils\Session;
 
-class RequireAdminLogout {
+class UserLogout {
 
     /**
      * Methodo responsavel por executar o middleware
@@ -15,7 +15,7 @@ class RequireAdminLogout {
     public function handle($request, $next) { 
         // VERIFICA SE O USUARIO ESTA LOGADO
         if (Session::isLogged()) {
-            $request->getRouter()->redirect('/admin');
+            $request->getRouter()->redirect('/');
         }
         // CONTINUA A EXECUÇÃO
         return $next($request);

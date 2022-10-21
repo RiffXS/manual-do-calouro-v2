@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use \App\Utils\Session;
 
-class RequireUserLogout {
+class UserLogin {
 
     /**
      * Methodo responsavel por executar o middleware
@@ -14,8 +14,8 @@ class RequireUserLogout {
      */
     public function handle($request, $next) { 
         // VERIFICA SE O USUARIO ESTA LOGADO
-        if (Session::isLogged()) {
-            $request->getRouter()->redirect('/');
+        if (!Session::isLogged()) {
+            $request->getRouter()->redirect('/signin?status=require_login');
         }
         // CONTINUA A EXECUÇÃO
         return $next($request);

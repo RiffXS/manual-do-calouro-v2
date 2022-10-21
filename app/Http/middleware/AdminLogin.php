@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use \App\Utils\Session;
 
-class RequireAdminLogin {
+class AdminLogin {
 
     /**
      * Methodo responsavel por executar o middleware

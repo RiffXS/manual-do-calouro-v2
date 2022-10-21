@@ -6,7 +6,7 @@ use App\Controller\Pages;
 // ROTA LOGIN
 $obRouter->get('/signin', [
     'middlewares' => [
-        'require-user-logout'
+        'user-logout'
     ],
     function($request) {
         return new Response(200, Pages\Signin::getSignin($request));
@@ -23,7 +23,7 @@ $obRouter->post('/signin', [
 // ROTA LOGOUT
 $obRouter->get('/signout', [
     'middlewares' => [
-        'require-user-login'
+        'user-login'
     ],
     function($request) {
         return new Response(200, Pages\SignIn::setLogout($request));

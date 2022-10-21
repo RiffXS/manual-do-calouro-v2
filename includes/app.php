@@ -27,14 +27,14 @@ View::init([
 
 // DEFINE O MAPEAMENTO DE MIDDLEWARES
 MiddlewareQueue::setMap([
-    'maintenence'          => \App\Http\Middleware\Maintenence::class,
-    'require-admin-logout' => \App\Http\Middleware\RequireAdminLogout::class,
-    'require-admin-login'  => \App\Http\Middleware\RequireAdminLogin::class,
-    'require-user-login'   => \App\Http\Middleware\RequireUserLogin::class,
-    'require-user-logout'  => \App\Http\Middleware\RequireUserLogout::class,
-    'user-basic-auth'      => \App\Http\Middleware\UserBasicAuth::class,
-    'api'                  => \App\Http\Middleware\Api::class,
-    'cache'                => \App\Http\Middleware\Cache::class,
+    'maintenence'     => \App\Http\Middleware\Maintenence::class,
+    'admin-logout'    => \App\Http\Middleware\AdminLogout::class,
+    'admin-login'     => \App\Http\Middleware\AdminLogin::class,
+    'user-login'      => \App\Http\Middleware\UserLogin::class,
+    'user-logout'     => \App\Http\Middleware\UserLogout::class,
+    'user-basic-auth' => \App\Http\Middleware\UserBasicAuth::class,
+    'api'             => \App\Http\Middleware\Api::class,
+    'cache'           => \App\Http\Middleware\Cache::class,
 ]);
 
 // DEFINE O MAPEAMENTO DE MIDDLEWARES EM TODAS AS ROTAS
