@@ -5,13 +5,19 @@ use App\Controller\Pages;
 
 // ROTA PERFIL
 $obRouter->get('/profile', [
-    function() {
-        return new Response(200, Pages\Profile::setEditProfile());
+    'middlewares' => [
+        'user-login'
+    ],
+    function($request) {
+        return new Response(200, Pages\Profile::getEditProfile($request));
     }
 ]);
 
 // ROTA PERFIL
 $obRouter->post('/profile', [
+    'middlewares' => [
+        'user-login'
+    ],
     function() {
         return new Response(200, Pages\Profile::setEditProfile());
     }

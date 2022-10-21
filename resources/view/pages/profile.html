@@ -1,10 +1,8 @@
 <section>
     <div class="p-3 d-flex flex-column align-items-center container">
-        <form class="w-75" action="../php/post/update.php" method="POST" enctype="multipart/form-data">
-            <div class="mb-1">
-                <?php exibirErros(); ?>
-                <?php exibirSucesso(); ?>
-            </div>
+        <form class="w-75" method="POST" enctype="multipart/form-data">
+            
+            {{status}}
 
             <input type="hidden" id="acesso" name="acesso" value="<?php echo $userData['fk_acesso_id_acesso']; ?>">
 
@@ -14,7 +12,7 @@
                 </div>
                 <!-- TEXTO CAMPO -->
                 <div class='col-6 text-center'>
-                    <?php textoTipoUsuario(); ?>
+                    <label class='form-label fw-bold h5'>Editar {{texto}}</label>
                 </div>
             </div>
 
@@ -23,15 +21,15 @@
                 <div class="col-6">
                     <!-- IMAGEM DE PERFIL -->
                     <div class="d-flex flex-column align-items-center p-3">
-                        <?php exibirFoto(); ?>
-                    
+                        <img id='foto-editar-perfil' class='img-fluid' alt='user-pic' src='{{URL}}/public/{{foto}}'>
+                        
                         <input type="hidden" name="MAX_FILE_SIZE" value="33554432">
                         <input class="mt-4 form-control form-control-sm" id="nova-foto-perfil" name="foto" type="file" accept="image/*">
                     </div>
                 </div>
 
                 <div class="col-6 d-flex flex-column justify-content-center">
-                    <?php campoTipoUsuario(); ?>
+                    {{campo}}
                 </div>
             </div>
 
@@ -41,14 +39,14 @@
                 <div class="mb-3">
                     <label for="nome" class="form-label fw-bold">Nome</label>
                     <input required type="text" class="form-control" id="nome" name="nome"
-                        value="<?php echo $userData['nom_usuario']; ?>">
+                        value="{{nome}}">
                 </div>
 
                 <!-- EMAIL -->
                 <div class="mb-3">
                     <label for="email" class="form-label fw-bold">Email</label>
                     <input required type="email" class="form-control" id="email" name="email" 
-                        value="<?php echo $userData['email']; ?>">
+                        value="{{email}}">
                 </div>
             </div>
 
@@ -56,7 +54,7 @@
             <div class="row mt-3">
                 <div class="d-flex flex-column align-items-center justify-content-md-around flex-md-row">
                     <!-- SALVAR -->
-                    <button class="btn btn-primary me-2" name="btnIncrement" type="submit">Salvar alterações</button>
+                    <button class="btn btn-primary me-2" type="submit" name="btnIncrement">Salvar alterações</button>
 
                     <!-- MUDAR SENHA -->
                     <a href="#" class="btn btn-danger mt-2" type="button">Redefinir senha</a>

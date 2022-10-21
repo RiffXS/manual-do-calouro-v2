@@ -219,8 +219,8 @@ class User {
     }
 
     /**
-     * 
-     * 
+     * Metodo responsavel por retornar um contato de um usuario pelo id
+     * @return array
      */
     public static function getUserContact($id) {
         $table = "usuario u JOIN servidor s ON (u.id_usuario = s.fk_usuario_id_usuario) JOIN contato c ON (s.fk_usuario_id_usuario = c.fk_servidor_fk_usuario_id_usuario) JOIN tipo_contato tc ON (c.fk_tipo_contato_id_tipo = tc.id_tipo)";
@@ -228,6 +228,10 @@ class User {
         $fields = "nom_usuario, dsc_contato, dsc_tipo";
 
         return (new Database($table))->select($where, null, null, $fields)->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public static function getUserImage($img) {
+        return !empty($img) ? "uploads/$img" : 'images/user.png';
     }
     
     /**
@@ -306,8 +310,8 @@ class User {
      * Obtem a imagem de perfil do usuario
      * @return string
      */
-    public function getImgPrfoile() { 
-        return $this->img_perfil;
+    public function getImgPrfoile() {
+        return !empty($this->img_perfil) ? "uploads/{$this->img_perfil}" : 'images/user.png' ;
     }
 
     /**

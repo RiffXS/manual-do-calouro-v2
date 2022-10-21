@@ -93,14 +93,9 @@ class Page {
             // OBTÊM OS DADOS DO USUARIO
             $obUser = User::getUserById($id);
 
-            // VERIFICA SE EXISTE UMA IMAGEM DE PERFIL
-            $img = $obUser->getImgPrfoile();
-            if (empty($img)) {
-                $img = 'user.png';
-            }
             // RETORNA O DROPDOWN DO LOGIN
             return View::render('pages/header/dropdown', [
-                'imagem' => $img
+                'imagem' => $obUser->getImgPrfoile()
             ]);
         }
         // RETORNA O BOTÃO DO LOGIN
