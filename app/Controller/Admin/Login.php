@@ -47,7 +47,7 @@ class Login extends Page {
             return self::getLogin($request, $msg);
         }
         // VERIFICA A SENHA DO USUARIO
-        if (!password_verify($senha, $obUser->senha)) {
+        if (!password_verify($senha, $obUser->getPass())) {
             return self::getLogin($request, $msg);
         }
         // CRIA A SESSÃO DE LOGIN

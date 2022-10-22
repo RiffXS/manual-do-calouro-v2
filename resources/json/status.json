@@ -26,5 +26,9 @@
     "require_login": {
         "type": "danger",
         "text": "Necessario login"
+    },
+    "exceeded_size": {
+        "type": "danger",
+        "text": "Tamanho limite do arquivo execedido"
     }   
 }

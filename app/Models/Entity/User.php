@@ -310,7 +310,7 @@ class User {
      * Obtem a imagem de perfil do usuario
      * @return string
      */
-    public function getImgPrfoile() {
+    public function getImgProfile() {
         return !empty($this->img_perfil) ? "uploads/{$this->img_perfil}" : 'images/user.png' ;
     }
 

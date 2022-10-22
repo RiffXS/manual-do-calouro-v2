@@ -14,10 +14,6 @@ class Page {
             'label' => 'Home',
             'link'  => URL.'/admin'
         ],
-        'testimonies' => [
-            'label' => 'Depoimentos',
-            'link'  => URL.'/admin/testimonies'
-        ],
         'users' => [
             'label' => 'Usuários',
             'link'  => URL.'/admin/users'

@@ -95,7 +95,7 @@ class Page {
 
             // RETORNA O DROPDOWN DO LOGIN
             return View::render('pages/header/dropdown', [
-                'imagem' => $obUser->getImgPrfoile()
+                'imagem' => $obUser->getImgProfile()
             ]);
         }
         // RETORNA O BOTÃO DO LOGIN

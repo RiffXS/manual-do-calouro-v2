@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Utils;
-use App\Models\Entity\User;
 
 class Session {
 
