@@ -33,11 +33,16 @@ class User extends Page {
 
         // RENDENIZA O ITEM
         while ($obUser = $results->fetchObject(EntityUser::class)) {
+            $modal = View::render('admin/modules/users/delete',[
+                'id' => $obUser->getUserId()
+            ]);
+
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('admin/modules/users/item',[
                 'id'    => $obUser->getUserId(),
                 'nome'  => $obUser->getNomUser(),
-                'email' => $obUser->getEmail()
+                'email' => $obUser->getEmail(),
+                'modal' => $modal
             ]);
         }
         // RETORNA OS DEPOIMENTOS
@@ -244,9 +249,12 @@ class User extends Page {
      * @param \App\Http\Request
      * @param integer $id
      */
-    public static function setDeleteUser($request, $id) {
+    public static function setDeleteUser($request) {
+        // POST VARS
+        $postVars = $request->getPostVars();
+       
         // OBTENDO O USUARIO DO BANCO DE DADOS
-        $obUser = EntityUser::getUserById($id);
+        $obUser = EntityUser::getUserById($postVars['id']);
 
         // VALIDA A INSTANCIA
         if (!$obUser instanceof EntityUser) {
