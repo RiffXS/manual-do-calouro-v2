@@ -75,6 +75,10 @@ class Schedule {
         return (new Database('aula'))->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Metodo responsavel por obter o curso de um usuario 
+     * @return array
+     */
     public static function getCursoById($id) {
         // RETORNA O NOME DO CURSO
         return (new Database('curso'))->select("id_curso = $id", null, null, 'dsc_curso')->fetch(\PDO::FETCH_ASSOC);

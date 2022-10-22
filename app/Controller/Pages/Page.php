@@ -136,7 +136,6 @@ class Page {
      * @return string 
      */
     public static function getPage($title, $content) {
-        
         return View::render('pages/page',[
             'title'   => $title,
             'content' => $content,

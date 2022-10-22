@@ -45,7 +45,7 @@ class Schedule extends Page {
 
     /**
      * Metodo responsavel por retornar a view da tabela do horario
-     * 
+     * @return string
      */
     public static function getTable($curso, $modulo) {
         $obSchedule = EntitySchedule::getSchedule($curso, $modulo);
@@ -69,6 +69,7 @@ class Schedule extends Page {
      * Metodo responsavel por rendenizar a linha de items do horario
      * @param array $obSchedule
      * @param integer $count
+     * @return string
      */
     public static function getRow($obSchedule, &$count) {        
         $content = '';
@@ -97,7 +98,7 @@ class Schedule extends Page {
     }
 
     /**
-     * 
+     *
      */
     private static function getCurso($curso) {
         // CURSO
