@@ -61,10 +61,11 @@ class Page {
             $id = Session::getSessionId();
 
             $turma = User::getUserClass($id);
-            $link = URL."/schedule?curso={$turma['curso']}&modulo={$turma['modulo']}";
 
-            // ATRIBUI O LINK À PÁGINA DE HORÁRIO
-            self::$paginas['schedule']['link'] = $link;  
+            if (!empty($turma)) {
+                // ATRIBUI O LINK À PÁGINA DE HORÁRIO
+                self::$paginas['schedule']['link'] = URL."/schedule?curso={$turma['curso']}&modulo={$turma['modulo']}";  
+            }
         }
         // ITERA OS MODULOS
         foreach (self::$paginas as $hash=>$module) {

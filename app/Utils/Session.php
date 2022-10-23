@@ -21,9 +21,28 @@ class Session {
      * Método responsavel por retornar um objeto usuario
      * @return User
      */
-    public static function getUserInSession() {
+    public static function getSessionUser() {
         // RETORNA OS DADOS DE UM USUÁRIO NA SESSÃO
         return User::getUserById(self::getSessionId());
+    }
+
+
+    /**
+     * Método responsével por criar o login do usuário
+     * @param \App\Models\Entity\User @obUser
+     * @param boolean
+     */
+    public static function login($obUser) {
+        // INICIA A SESSÃO
+        self::init();
+
+        // DEFINE A SESSÃO DO ADMIN
+        $_SESSION['usuario'] = [
+            'id_usuario' => $obUser->getUserId(),
+            'lv_acesso'  => $obUser->getAcess()
+        ];
+        // SUCESSO
+        return true;
     }
 
     /**
@@ -39,21 +58,15 @@ class Session {
     }
 
     /**
-     * Método responsével por criar o login do usuário
-     * @param \App\Models\Entity\User @obUser
-     * @param boolean
+     * Método responsavel por devolve o LV de acesso do usuario
+     * @return integer
      */
-    public static function login($obUser) {
+    public static function getSessionLv() {
         // INICIA A SESSÃO
         self::init();
 
-        // DEFINE A SESSÃO DO ADMIN
-        $_SESSION['usuario'] = [
-            'id_usuario' => $obUser->getUserId()
-        ];
-        
-        // SUCESSO
-        return true;
+        // RETORNA O ID DO USUÁRIO NA SESSÃO
+        return $_SESSION['usuario']['lv_acesso'];
     }
 
     /**
@@ -82,5 +95,4 @@ class Session {
         // SUCESSO
         return true;
     }
-     
 }

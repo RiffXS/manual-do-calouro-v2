@@ -16,7 +16,10 @@ class AdminLogin {
         // VERIFICA SE O USUARIO ESTA LOGADO
         if (!Session::isLogged()) {
             $request->getRouter()->redirect('/admin/login');
-        }
+        } 
+        if (Session::getSessionLv() != 1) {
+            $request->getRouter()->redirect('/');
+        } 
         // CONTINUA A EXECUÇÃO
         return $next($request);
     }

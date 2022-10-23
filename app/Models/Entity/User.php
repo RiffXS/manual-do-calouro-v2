@@ -294,7 +294,7 @@ class User {
      * @param string $senha
      */
     public function setPass($senha) { 
-        $this->senha = password_hash($senha, PASSWORD_DEFAULT);
+        !empty($senha) ? $this->senha = password_hash($senha, PASSWORD_DEFAULT) : $this->senha; 
     }
 
     /**
@@ -327,7 +327,6 @@ class User {
      */
     public function setActive($ativo) {
         $ativo = $ativo == 't' ? 1 : 0;
-
         $this->ativo = $ativo;
     }
 
