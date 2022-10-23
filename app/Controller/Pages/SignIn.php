@@ -44,6 +44,11 @@ class SignIn extends Page {
         if (!password_verify($senha, $obUser->getPass())) {
             $request->getRouter()->redirect('/signin?status=invalid_data');
         }
+        // VERIFICA SE O USUÁRIO ESTÁ ATIVO
+        if (!$obUser->getActive() != 0) {
+            $request->getRouter()->redirect('/signin?status=inactive_user');
+        }
+
         // CRIA A SESSÃO DE LOGIN
         Session::Login($obUser);
 

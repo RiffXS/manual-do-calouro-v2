@@ -29,4 +29,5 @@ class Alert {
             'mensagem' => $message
         ]);
     }
+    
 }

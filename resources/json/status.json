@@ -1,15 +1,15 @@
-{
+{         
     "invalid_name": {
         "type": "danger",
-        "text": "Nome invalido!"  
+        "text": "Nome inválido!"
     },
     "invalid_email": {
         "type": "danger",
-        "text": "E-mail invalido!"
+        "text": "E-mail inválido!"
     },
     "invalid_pass": {
         "type": "danger",
-        "text": "Senha invalida!"
+        "text": "Senha inválida!"
     },
     "invalid_data": {
         "type": "danger",
@@ -17,18 +17,30 @@
     },
     "duplicated_email": {
         "type": "danger",
-        "text": "E-mail já cadastradp"
+        "text": "E-mail já cadastrado!"
     },
     "user_registered": {
         "type": "success",
         "text": "Cadastrado com sucesso!"
     },
+    "user_updated": {
+        "type": "success",
+        "text": "Atualizado com sucesso!"
+    },
+    "user_deleted": {
+        "type": "success",
+        "text": "Excluído com sucesso!"
+    },
     "require_login": {
         "type": "danger",
-        "text": "Necessario login"
+        "text": "Necessário login!"
     },
     "exceeded_size": {
         "type": "danger",
         "text": "Tamanho limite do arquivo execedido"
-    }   
+    },
+    "inactive_user": {
+        "type": "danger",
+        "text": "Usuário invativo!"
+    }
 }

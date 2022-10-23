@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Utils\View;
+use App\Utils\Tools\Alert;
 use \App\Utils\Pagination;
 use App\Models\Entity\User as EntityUser;
 
@@ -45,6 +46,7 @@ class User extends Page {
                 'modal' => $modal
             ]);
         }
+
         // RETORNA OS DEPOIMENTOS
         return $itens;
     }
@@ -59,7 +61,7 @@ class User extends Page {
         $content = View::render('admin/modules/users/index', [
             'itens'      => self::getUsersItems($request, $obPagination),
             'pagination' => parent::getPagination($request, $obPagination),
-            'status'     => self::getStatus($request)
+            'status'     => Alert::getStatus($request)
         ]);
 
         // RETORNA A PAGINA COMPLETA
@@ -78,7 +80,9 @@ class User extends Page {
             'nome'     => '',
             'email'    => '',
             'botao'    => 'Cadastrar',
-            'status'   => self::getStatus($request)
+            'status'   => Alert::getStatus($request),
+            'ativo'    => 'checked',
+            'acesso'   => '2'
         ]);
 
         // RETORNA A PAGINA COMPLETA
@@ -93,67 +97,30 @@ class User extends Page {
         // POST VARS
         $postVars = $request->getPostVars();
 
-        $nome  = $postVars['nome'] ?? '';
-        $email = $postVars['email'] ?? '';
-        $senha = $postVars['senha'] ?? '';
+        $nome   = $postVars['nome'] ?? '';
+        $email  = $postVars['email'] ?? '';
+        $senha  = $postVars['senha'] ?? '';
+        $status = $postVars['status'] ?? '';
+        $ativo  = $postVars['ativo'] ?? '';
 
         // VALIDA O EMAIL DO USUARIO
         $obUser = EntityUser::getUserByEmail($email);
 
         if ($obUser instanceof EntityUser) {
-            $request->getRouter()->redirect('/admin/users/new?status=duplicated');
+            $request->getRouter()->redirect('/admin/users/new?status=duplicated_email');
         }
         // NOVA INSTANCIA DE USUARIO
         $obUser = new EntityUser;
         $obUser->setNomUser($nome);
         $obUser->setEmail($email);
         $obUser->setPass($senha);
+        $obUser->setAcess($status);
+        $obUser->setActive($ativo);
 
         $obUser->insertUser();
 
         // REDIRECIONA O USUARIO
-        $request->getRouter()->redirect('/admin/users/'.$obUser->getUserId().'/edit?status=created');
-    }
-
-    /**
-     * Methodo responsavel por retornar a menagem de status
-     * @param \App\Http\Request
-     * @return string
-     */
-    private static function getStatus($request) {
-        // DECLARAÇÃO DE VARIAVEL
-        $msg = '';
-
-        // QUERY PARAMS
-        $queryParams = $request->getQueryParams();
-
-        // VERIFICA SE EXISTE UM STATUS
-        if (!isset($queryParams['status'])) return $msg;
-
-        // MENSAGENS DE STATUS
-        switch ($queryParams['status']) {
-            case 'created':
-                $msg = 'Usuario criado com sucesso!';
-                break;
-            
-            case 'updated':
-                $msg = 'Usuario atualizado com sucesso';
-                break;
-                
-            case 'deleted':
-                $msg = 'Usuario excluido com sucesso';   
-                break;
-
-            case 'duplicated':
-                $erro = 'O e-mail digitado já esta sendo utilizado por outro usuario';
-                break;    
-        }
-        // EXIBE A MENSAGEM DE ERRO
-        if (!empty($erro)) {
-            return Alert::getError($erro);
-        }
-        // EXIBE A MENSAGEM DE SUCESSO
-        return Alert::getSucess($msg);        
+        $request->getRouter()->redirect('/admin/users/'.$obUser->getUserId().'/edit?status=user_registered');
     }
 
     /**
@@ -163,6 +130,12 @@ class User extends Page {
      * @return string
      */
     public static function getEditUser($request, $id) {
+        // DECLARAÇÃO DE VARIÁVEIS
+        $status = [
+            'ativo'   => '',
+            'inativo' => ''
+        ];
+        
         // OBTENDO O USUARIO DO BANCO DE DADOS
         $obUser = EntityUser::getUserById($id);
 
@@ -170,14 +143,18 @@ class User extends Page {
         if (!$obUser instanceof EntityUser) {
             $request->getRouter()->redirect('/admin/users');
         }
+        $obUser->getActive() == 1 ? $status['ativo'] = 'checked' : $status['inativo'] = 'checked';
 
         // CONTEUDO DO FORMULARIO
         $content = View::render('admin/modules/users/form', [
-            'tittle' => 'Editar usuario', 
-            'nome'   => $obUser->getNomUser(),
-            'email'  => $obUser->getEmail(),
-            'botao'    => 'Atualizar',
-            'status' => self::getStatus($request)
+            'tittle'  => 'Editar usuario',
+            'nome'    => $obUser->getNomUser(),
+            'email'   => $obUser->getEmail(),
+            'botao'   => 'Atualizar',
+            'status'  => Alert::getStatus($request),
+            'ativo'   => $status['ativo'],
+            'inativo' => $status['inativo'],
+            'acesso'  => $obUser->getAcess()
         ]);
 
         // RETORNA A PAGINA COMPLETA
@@ -200,25 +177,29 @@ class User extends Page {
         // POST VARS
         $postVars = $request->getPostVars();
 
-        $nome  = $postVars['nome'] ?? '';
-        $email = $postVars['email'] ?? '';
-        $senha = $postVars['senha'] ?? '';
+        $nome   = $postVars['nome'] ?? '';
+        $email  = $postVars['email'] ?? '';
+        $senha  = $postVars['senha'] ?? '';
+        $active = $postVars['active'] ?? '';
+        $status = $postVars['status'] ?? '';
 
         // VALIDA O EMAIL DO USUARIO
         $obUserEmail = EntityUser::getUserByEmail($email);
 
         if ($obUserEmail instanceof EntityUser && $obUserEmail->getUserId() != $id) {
-            $request->getRouter()->redirect('/admin/users/'.$id.'/edit?status=duplicated');
+            $request->getRouter()->redirect('/admin/users/'.$id.'/edit?status=duplicated_email');
         }
         // ATUALIZA A INSTANCIA
         $obUser->setNomUser($nome);
         $obUser->setEmail($email);
         $obUser->setPass($senha);
+        $obUser->setActive($active);
+        $obUser->setAcess($status);
 
         $obUser->updateUser();
 
         // REDIRECIONA O USUARIO
-        $request->getRouter()->redirect('/admin/users/'.$id.'/edit?status=updated');
+        $request->getRouter()->redirect('/admin/users/'.$id.'/edit?status=user_updated');
     }
 
     /**
@@ -235,11 +216,13 @@ class User extends Page {
         if (!$obUser instanceof EntityUser) {
             $request->getRouter()->redirect('/admin/users');
         }
+
         // CONTEUDO DO FORMULARIO
         $content = View::render('admin/modules/users/delete', [
             'nome'  => $obUser->getNomUser(),
             'email' => $obUser->getEmail(),
         ]);
+
         // RETORNA A PAGINA COMPLETA
         return parent::getPanel('Excluir usuario  > WDEV', $content, 'users');
     }
@@ -260,10 +243,12 @@ class User extends Page {
         if (!$obUser instanceof EntityUser) {
             $request->getRouter()->redirect('/admin/users');
         }
+
         // EXCLUIR DEPOIMENTO
         $obUser->deleteUser();
 
         // REDIRECIONA O USUARIO
-        $request->getRouter()->redirect('/admin/users?status=deleted');
+        $request->getRouter()->redirect('/admin/users?status=user_deleted');
     }
+    
 }

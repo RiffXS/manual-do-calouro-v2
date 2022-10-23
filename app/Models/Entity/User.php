@@ -36,23 +36,22 @@ class User {
     private $img_perfil;
 
     /**
-     * Identificador de status do usuario
-     * @var string
-     */
-    private $ativo;
-
-    /**
      * Data de criação do usuario
      * @var string
      */
     private $add_data;
 
     /**
+     * Identificador de status do usuario
+     * @var string
+     */
+    private $ativo = 1;
+
+    /**
      * Nivel de acesso do usuario
      * @var integer
      */
-    private $fk_acesso_id_acesso;
-
+    private $fk_acesso_id_acesso = 2;
     
     /**
      * Metodo responsavel por verificar se o nome de entrada esta nos parametros do site
@@ -66,6 +65,7 @@ class User {
         if (preg_match($parameters, $nome)){
             return false;
         }
+
         return true;
     }
 
@@ -82,6 +82,7 @@ class User {
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return false;
         }
+
         return true;
     }
 
@@ -97,6 +98,7 @@ class User {
         if (preg_match($parameters, $password)) {
             return false;
         }
+
         return true;
     }
 
@@ -111,6 +113,7 @@ class User {
         if (!$password !== $confirm) {
             return false;
         }
+
         return true;
     }
 
@@ -123,6 +126,7 @@ class User {
         if ($this->ativo == 0) {
             return false;
         }
+
         return true;
     }
 
@@ -131,8 +135,7 @@ class User {
      * @return boolean
      */
     public function insertUser() {
-        $this->add_data = date('Y-m-d H:i:s');
-        $this->ativo = 1; //1 true : 0 false 
+        $this->add_data = date('Y-m-d H:i:s'); 
 
         // INSERE A ISTANCIA NO BANCO
         $this->id_usuario = (new Database('usuario'))->insert([
@@ -141,8 +144,9 @@ class User {
             'senha'       => $this->senha,
             'add_data'    => $this->add_data,
             'ativo'       => $this->ativo,
-            'fk_acesso_id_acesso' => 2
+            'fk_acesso_id_acesso' => $this->fk_acesso_id_acesso
         ]);
+
         // SUCESSO
         return true;
     }
@@ -155,7 +159,10 @@ class User {
         return (new Database('usuario'))->update("id_usuario = {$this->id_usuario}", [
             'nom_usuario' => $this->nom_usuario,
             'email'       => $this->email,
-            'senha'       => $this->senha
+            'senha'       => $this->senha,
+            'add_data'    => $this->add_data,
+            'ativo'       => $this->ativo,
+            'fk_acesso_id_acesso' => $this->fk_acesso_id_acesso
         ]);
     }
 
@@ -316,10 +323,12 @@ class User {
 
     /**
      * Atribui o status de atividade do usuario
-     * @param integer
+     * @param string $ativo
      */
-    public function setActive($boleano) { 
-        $this->ativo = $boleano;
+    public function setActive($ativo) {
+        $ativo = $ativo == 't' ? 1 : 0;
+
+        $this->ativo = $ativo;
     }
 
     /**
@@ -361,4 +370,5 @@ class User {
     public function getAcess() { 
         return $this->fk_acesso_id_acesso;
     }
+    
 }

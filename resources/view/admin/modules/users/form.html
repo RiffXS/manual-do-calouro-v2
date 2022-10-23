@@ -28,11 +28,11 @@
                 <div class="me-5">
                     <label for="user_adm_ativo" class="form-label">Status</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" id="user_adm_ativoTrue" name="status" value="t">
+                        <input class="form-check-input" type="radio" id="user_adm_ativoTrue" name="active" value="t" {{ativo}}>
                         <label class="form-check-label" for="user_adm_ativoTrue"> Ativo </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" id="user_adm_ativoFalse" name="status" value="f">
+                        <input class="form-check-input" type="radio" id="user_adm_ativoFalse" name="active" value="f" {{inativo}}>
                         <label class="form-check-label" for="user_adm_ativoFalse"> Inativo </label>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                 <!-- ACESSO -->
                 <div class="me-3">
                     <label class="form-label" for="user_adm_acesso">Acesso</label>
-                    <input class="form-control" type="number" id="user_adm_acesso" name="acesso" min="1" max="5" value="{{acesso}}">
+                    <input class="form-control" type="number" id="user_adm_acesso" name="status" min="1" max="5" value="{{acesso}}">
                 </div>
 
                 <div class="form-text">

@@ -2,17 +2,28 @@
 
 namespace App\Utils;
 
+use App\Models\Entity\User;
+
 class Session {
 
     /**
-     * Methodo responsavel por iniciar a sessão
+     * Método responsável por iniciar a sessão
      */
     private static function init() {
-        // VERIFICA SE A SESSÃO NÃO ESTA ATIVA
+        // VERIFICA SE A SESSÃO NÃO ESTÁ ATIVA
         if (session_status() != PHP_SESSION_ACTIVE) {
             // INICIA A SESSÃO
             session_start();
         }
+    }
+
+    /**
+     * Método responsavel por retornar um objeto usuario
+     * @return User
+     */
+    public static function getUserInSession() {
+        // RETORNA OS DADOS DE UM USUÁRIO NA SESSÃO
+        return User::getUserById(self::getSessionId());
     }
 
     /**
@@ -23,12 +34,12 @@ class Session {
         // INICIA A SESSÃO
         self::init();
 
-        // RETORNA O ID DO USUARIO NA SESSÃO
+        // RETORNA O ID DO USUÁRIO NA SESSÃO
         return $_SESSION['usuario']['id_usuario'];
     }
 
     /**
-     * Methodo responsavel por criar o login do usuario
+     * Método responsével por criar o login do usuário
      * @param \App\Models\Entity\User @obUser
      * @param boolean
      */
@@ -40,12 +51,13 @@ class Session {
         $_SESSION['usuario'] = [
             'id_usuario' => $obUser->getUserId()
         ];
+        
         // SUCESSO
         return true;
     }
 
     /**
-     * Methodo responsavel por verificar se o usuario esta logado
+     * Método responsável por verificar se o usuário está logado
      * @return boolean
      */
     public static function isLogged() {
@@ -57,17 +69,18 @@ class Session {
     }
 
     /**
-     * Methodo responsavel por executar o logout do usuario
+     * Método responsável por executar o logout do usuário
      * @return boolean
      */
     public static function logout() {
         // INICIA A SESSÃO
         self::init();
 
-        // DESLOGA O USUARIO
+        // DESLOGA O USUÁRIO
         unset($_SESSION['usuario']);
 
         // SUCESSO
         return true;
     }
+     
 }
