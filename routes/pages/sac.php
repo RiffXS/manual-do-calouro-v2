@@ -9,3 +9,11 @@ $obRouter->get('/sac', [
         return new Response(200, Pages\Sac::getSac());
     }
 ]);
+
+// ROTA CONTATO
+$obRouter->post('/sac', [
+    function($request) {
+        return new Response(200, Pages\Sac::setSac($request));
+    }
+]);
+
