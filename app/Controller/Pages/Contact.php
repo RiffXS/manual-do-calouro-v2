@@ -102,7 +102,7 @@ class Contact extends Page {
     public static function cardTeacher($contact) {
         // ATRIBUIÇÃO DE VARIÁVEIS
         $id = $contact['id_usuario'];
-        $imagem = !empty($contact['img_perfil']) ? "uploads/{$contact['img_perfil']}" : 'images/user.png';
+        $imagem = !empty($contact['img_perfil']) ? "{$contact['img_perfil']}" : 'user.png';
 
         // VIEW DOS CONTATOS DE PROFESSORES
         return View::render('pages/contacts/teacher', [
@@ -125,7 +125,7 @@ class Contact extends Page {
     public static function cardServer($contact) {
         // ATRIBUIÇÃO DE VARIÁVEIS
         $id = $contact['id_usuario'];
-        $imagem = !empty($contact['img_perfil']) ? "uploads/{$contact['img_perfil']}" : 'images/user.png';
+        $imagem = !empty($contact['img_perfil']) ? "{$contact['img_perfil']}" : 'user.png';
 
         // VIEW DOS CONTATOS DE SERVIDORES
         return View::render('pages/contacts/server', [

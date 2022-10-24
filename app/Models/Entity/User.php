@@ -131,6 +131,30 @@ class User {
     }
 
     /**
+     * Metodo responsavel por retornar a turma pelo id
+     * @return array
+     */
+    public static function getUserClass($id) {
+        $table  = "turma t JOIN aluno a ON (t.id_turma = a.fk_turma_id_turma)";
+        $where  = "a.fk_usuario_id_usuario = $id";
+        $fields = "t.fk_curso_id_curso AS curso, t.num_modulo AS modulo";
+
+        return (new Database($table))->select($where, null, null, $fields)->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Metodo responsavel por retornar um contato de um usuario pelo id
+     * @return array
+     */
+    public static function getUserContact($id) {
+        $table = "usuario u JOIN servidor s ON (u.id_usuario = s.fk_usuario_id_usuario) JOIN contato c ON (s.fk_usuario_id_usuario = c.fk_servidor_fk_usuario_id_usuario) JOIN tipo_contato tc ON (c.fk_tipo_contato_id_tipo = tc.id_tipo)";
+        $where = "id_usuario = $id";
+        $fields = "nom_usuario, dsc_contato, dsc_tipo";
+
+        return (new Database($table))->select($where, null, null, $fields)->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    /**
      * Methodo responsavel por cadastrar a istancia atual no banco de dados
      * @return boolean
      */
@@ -215,34 +239,6 @@ class User {
     }
 
     /**
-     * Metodo responsavel por retornar a turma pelo id
-     * @return array
-     */
-    public static function getUserClass($id) {
-        $table  = "turma t JOIN aluno a ON (t.id_turma = a.fk_turma_id_turma)";
-        $where  = "a.fk_usuario_id_usuario = $id";
-        $fields = "t.fk_curso_id_curso AS curso, t.num_modulo AS modulo";
-
-        return (new Database($table))->select($where, null, null, $fields)->fetch(\PDO::FETCH_ASSOC);
-    }
-
-    /**
-     * Metodo responsavel por retornar um contato de um usuario pelo id
-     * @return array
-     */
-    public static function getUserContact($id) {
-        $table = "usuario u JOIN servidor s ON (u.id_usuario = s.fk_usuario_id_usuario) JOIN contato c ON (s.fk_usuario_id_usuario = c.fk_servidor_fk_usuario_id_usuario) JOIN tipo_contato tc ON (c.fk_tipo_contato_id_tipo = tc.id_tipo)";
-        $where = "id_usuario = $id";
-        $fields = "nom_usuario, dsc_contato, dsc_tipo";
-
-        return (new Database($table))->select($where, null, null, $fields)->fetchAll(\PDO::FETCH_ASSOC);
-    }
-
-    public static function getUserImage($img) {
-        return !empty($img) ? "uploads/$img" : 'images/user.png';
-    }
-    
-    /**
      * Atribui um id ao usuario manualmente
      * @param integer $id
      */
@@ -310,8 +306,8 @@ class User {
      * Atribui a imagem de perfil do usuario
      * @param string $hash
      */
-    public function setImgProfile($hash) { 
-        $this->img_perfil = $hash;
+    public function setImgProfile($img) { 
+        $this->img_perfil = $img;
     }
 
     /**
@@ -319,7 +315,7 @@ class User {
      * @return string
      */
     public function getImgProfile() {
-        return !empty($this->img_perfil) ? "uploads/{$this->img_perfil}" : 'images/user.png';
+        return !empty($this->img_perfil) ? $this->img_perfil : 'user.png';
     }
 
     /**

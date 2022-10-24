@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Utils\Tools;
+namespace App\Utils;
 
 class Upload {
 
@@ -47,7 +47,7 @@ class Upload {
     private $duplicates = 0;
 
     /**
-     * Coonstrutor da calsse
+     * Coonstrutor da classe
      * @param array file $_FILE['campo']
      */
     public function __construct($file) {

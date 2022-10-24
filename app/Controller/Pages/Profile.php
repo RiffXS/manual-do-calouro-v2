@@ -4,18 +4,18 @@ namespace App\Controller\Pages;
 
 use \App\Utils\View;
 use \App\Utils\Session;
+use \App\Utils\Upload;
 use \App\Utils\Tools\Alert;
-use \App\Utils\Tools\Upload;
-use \App\Models\Entity\Grade;
-use \App\Models\Entity\Student;
-use \App\Models\Entity\Teacher;
+use \App\Models\Entity\Grade as EntityGrade;
+use \App\Models\Entity\Student as EntityStudent;
+use \App\Models\Entity\Teacher as EntityTeacher;
 use \App\Models\Entity\User as EntityUser;
 
 class Profile extends Page {
 
     /**
      * Metodo responsavel por retornar o contéudo (view) da pagina perfil
-     * @param  Request $request
+     * @param  \App\Http\Request $request
      * @return string 
      */
     public static function getEditProfile($request) {
@@ -40,48 +40,58 @@ class Profile extends Page {
     }
 
     /**
-     * @param Request $request
+     * @param \App\Http\Request $request
      */
     public static function setEditProfile($request) {
         // OBTEM A IMAGEM DO USUARIO
         $obUser = Session::getSessionUser();
+        $acesso = Session::getSessionLv();
 
         // POST VARS    
         $postVars = $request->getPostVars(); 
         $files    = $request->getUploadFiles();
 
+        $nome = $postVars['nome'];
+        $email = $postVars['email'];
+        $photo = '';
+
         $obUpload = new Upload($files['foto']);
 
+        // VERIFICA SE HOUVE UPLOAD DE FOTO
         if (is_uploaded_file($obUpload->tmpName)) { 
-
+            // VERIFICA SE O ARQUIVO E MENOR DO QUE O ACEITO
             if ($postVars['MAX_FILE_SIZE'] > $obUpload->size) {
-                
-                $name = $obUser->getImgProfile();
+                // OBTEM A IMAGEM DO USUARIO
+                $photo = $obUser->getImgProfile();
 
-                if ($name == 'images/user.png') {
-                    $obUpload->generateNewName();
-                    $name = $obUpload->getBasename();
-                }
+                // VARIFICA SE O USUARIO POSSUI UMA FOTO
+                if ($photo == 'user.png') {
+                    $obUpload->generateNewName();      // GERA UM NOME NOVO
+                    $photo = $obUpload->getBasename(); // OBTEM O NOME NOVO
 
-                if ($obUpload->upload(getenv('DIR').'/public/uploads/')) {
-                    $obUser->setImgProfile($name);
+                } else {
+                    // ATRIBUI O NOME AO JA EXISTENTE DO USUARIO
+                    $obUpload->name = pathinfo($photo, PATHINFO_FILENAME);
                 }
+                // FAZ O UPLOAD DA FOTO PARA PASTA DE UPLOADS
+                $obUpload->upload(getenv('DIR').'/public/uploads/');
             }
         }  
-        
-        $acesso = Session::getSessionLv();
-
+        // REALIZA UMA AÇÃO DEPENDENDO DO TIPO DE USUARIO
         switch ($acesso) {
             case 2:
                 $matricula = $postVars['matricula'] ?? '';
 
+                // VERIFICA SE A MATRICULA ESTA VAZIA
                 if (!empty($matricula)) {
-
-                    $obStudent = new Student($obUser->getUserId(), $matricula);
+                    // NOVA INSTANCIA
+                    $obStudent = new EntityStudent($obUser->getUserId(), $matricula);
                 
+                    // VERIFICA SE A MATRICULA ESTA DISPONIVEL
                     if ($obStudent->verifyEnrollment()) {
+                        // INSERE O USUARIO NA TABELA DE ALUNOS
                         $obStudent->insertStudent();
-                        $obUser->setAcess(3);
+                        $obUser->setAcess(3); // ALTERA O NIVEL DE ACESSO PARA 3 (ALUNO)
                     }
                 }
                 break;
@@ -90,31 +100,31 @@ class Profile extends Page {
                 $curso  = $postVars['curso'] ?? '';
                 $modulo = $postVars['modulo'] ?? '';
 
+                // VERIFICA SE O CURSO E O MODULO FORAM RECEBIDOS
                 if (!empty($modulo) && !empty($curso)) {
-                    $gradeId = Grade::getGradeId($curso, $modulo);
+                    // BUSCA O ID DA TURMA POR CURSO E MODULO
+                    $gradeId = EntityGrade::getGradeId($curso, $modulo);
 
-                   
-                    $obStudent = new Student($obUser->getUserId());
+                    // NOVA INSTANCIA
+                    $obStudent = new EntityStudent($obUser->getUserId());
                     $obStudent->fk_turma_id_turma = $gradeId['id_turma'];
 
-                    $obStudent->updateStudent();
+                    $obStudent->updateStudent(); // ATUALIZA A TURMA DO ALUNO
                 }
                 break;
                 
             case 4:
                 $regras = $postVars['regras'] ?? '';
 
+                // VERIFICA SE O CAMPO ESTA VAZIO
                 if (!empty($regras)) {
-                    $obTeacher = new Teacher($obUser->getUserId(), $regras);
-                    $obTeacher->updateRules();
-                }
-                
+                    // NOVA INSTANCIA
+                    $obTeacher = new EntityTeacher($obUser->getUserId(), $regras);
+
+                    $obTeacher->updateRules(); // ATUALIZA AS REGRAS DO PROFESSOR
+                }                
                 break;
         }
-
-        $nome = $postVars['nome'];
-        $email = $postVars['email'];
-
         // VALIDA O NOME
         if (EntityUser::validateUserName($nome)) {
             $request->getRouter()->redirect('/profile?status=invalid_name');
@@ -129,10 +139,10 @@ class Profile extends Page {
         if ($obUserEmail instanceof EntityUser && $obUserEmail->getUserId() != $obUser->getUserId()) {
             $request->getRouter()->redirect('/profile?status=duplicated_email');
         }
-        
         // ATUALIZA A INSTÂNCIA
         $obUser->setNomUser($nome);
         $obUser->setEmail($email);
+        $obUser->setImgProfile($photo);
         
         // ATUALIZA O USUÁRIO
         $obUser->updateUser();
