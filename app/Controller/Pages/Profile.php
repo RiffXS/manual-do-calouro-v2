@@ -53,23 +53,20 @@ class Profile extends Page {
 
         $nome = $postVars['nome'];
         $email = $postVars['email'];
-        $photo = '';
+        $photo = $obUser->getImgProfile();
 
         $obUpload = new Upload($files['foto']);
 
         // VERIFICA SE HOUVE UPLOAD DE FOTO
-        if (is_uploaded_file($obUpload->tmpName)) { 
+        if (is_uploaded_file($obUpload->tmpName) && $obUpload->error != 4) { 
             // VERIFICA SE O ARQUIVO E MENOR DO QUE O ACEITO
             if ($postVars['MAX_FILE_SIZE'] > $obUpload->size) {
-                // OBTEM A IMAGEM DO USUARIO
-                $photo = $obUser->getImgProfile();
-
                 // VARIFICA SE O USUARIO POSSUI UMA FOTO
                 if ($photo == 'user.png') {
                     $obUpload->generateNewName();      // GERA UM NOME NOVO
                     $photo = $obUpload->getBasename(); // OBTEM O NOME NOVO
-
-                } else {
+                } 
+                else {
                     // ATRIBUI O NOME AO JA EXISTENTE DO USUARIO
                     $obUpload->name = pathinfo($photo, PATHINFO_FILENAME);
                 }
