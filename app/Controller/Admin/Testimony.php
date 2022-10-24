@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Utils\View;
 use \App\Utils\Pagination;
 use App\Models\Entity\Testimony as EntityTestimony;
+use App\Utils\Tools\Alert;
 
 class Testimony extends Page {
 
@@ -57,7 +58,7 @@ class Testimony extends Page {
         $content = View::render('admin/modules/testimonies/index', [
             'itens'      => self::getTetimoniesItems($request, $obPagination),
             'pagination' => parent::getPagination($request, $obPagination),
-            'status'     => self::getStatus($request)
+            'status'     => Alert::getStatus($request)
         ]);
 
         // RETORNA A PAGINA COMPLETA
@@ -101,32 +102,6 @@ class Testimony extends Page {
     }
 
     /**
-     * Methodo responsavel por retornar a menagem de status
-     * @param \App\Http\Request
-     * @return string
-     */
-    private static function getStatus($request) {
-        // QUERY PARAMS
-        $queryParams = $request->getQueryParams();
-
-        if (!isset($queryParams['status'])) return '';
-
-        // MENSAGENS DE STATUS
-        switch ($queryParams['status']) {
-            case 'created':
-                $msg = 'Depoimento criado com sucesso!';
-                break;
-            
-            case 'updated':
-                $msg = 'Depoimento atualizado com sucesso';
-                break;
-            case 'deleted':
-                $msg = 'Depoimento excluido com sucesso';
-        }
-        return Alert::getSucess($msg);
-    }
-
-    /**
      * Methodo responsavel por retornar o formulario edição de um depoimento
      * @param \App\Http\Request
      * @param integer $id
@@ -146,7 +121,7 @@ class Testimony extends Page {
             'tittle'   => 'Editar depoimento', 
             'nome'     => $obTestimony->nome,
             'mensagem' => $obTestimony->mensagem,
-            'status'   => self::getStatus($request)
+            'status'   => Alert::getStatus($request)
         ]);
 
         // RETORNA A PAGINA COMPLETA

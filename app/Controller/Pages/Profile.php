@@ -40,13 +40,31 @@ class Profile extends Page {
      */
     public static function setEditProfile($request) {
         // OBTEM A IMAGEM DO USUARIO
-        $obUser = User::getUserById(Session::getSessionId());
+        $obUser = Session::getSessionUser();
 
         // POST VARS    
         $postVars = $request->getPostVars(); 
         $files = $request->getUploadFiles();
 
         $obUpload = new Upload($files['foto']);
+
+        if (is_uploaded_file($obUpload->tmpName)) { 
+
+            if ($postVars['MAX_FILE_SIZE'] > $obUpload->size) {
+                
+                $name = $obUser->getImgProfile();
+
+                if ($name == 'images/user.png') {
+                    $obUpload->generateNewName();
+                    $name = $obUpload->getBasename();
+                }
+
+                if ($obUpload->upload(getenv('DIR').'/public/uploads/')) {
+                    $obUser->setImgProfile($name);
+                }
+            }
+        }  
+        echo '<pre>'; print_r($obUser); echo '</pre>'; exit;
     }
 
     /**

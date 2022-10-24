@@ -9,5 +9,3 @@ $obRouter->get('/rod', [
         return new Response(200, Pages\Rod::getRod());
     }
 ]);
-
-?>

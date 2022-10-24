@@ -9,5 +9,3 @@ $obRouter->get('/map', [
         return new Response(200, Pages\Map::getMap());
     }
 ]);
-
-?>

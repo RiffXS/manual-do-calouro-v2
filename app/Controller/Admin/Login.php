@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Utils\View;
+use App\Utils\Tools\Alert;
 use App\Utils\Session;
 use App\Models\Entity\User;
 
@@ -14,17 +15,13 @@ class Login extends Page {
      * @param  string $errorMessage
      * @return string
      */
-    public static function getLogin($request, $errorMessage = null) {
-        // STATUS
-        $status = !is_null($errorMessage) ? Alert::getError($errorMessage) : '';
-
+    public static function getLogin($request) {
         // CONTEUDO DA PAGINA DE LOGIN
         $content = View::render('admin/login', [
-            'status' => $status
+            'status' => Alert::getStatus($request)
         ]);
         // RETORNA A PAGINA COMPLETA
-        return parent::getPage('Login > MDC', $content);
-
+        return parent::getPage('Login > MDC', $content); 
     }
 
     /**
@@ -44,11 +41,11 @@ class Login extends Page {
         $obUser = User::getUserByEmail($email);
 
         if (!$obUser instanceof User) {
-            return self::getLogin($request, $msg);
+            $request->getRouter()->redirect('/admin/login?status=invalid_data');
         }
         // VERIFICA A SENHA DO USUARIO
         if (!password_verify($senha, $obUser->getPass())) {
-            return self::getLogin($request, $msg);
+            $request->getRouter()->redirect('/admin/login?status=invalid_data');
         }
         // CRIA A SESSÃO DE LOGIN
         Session::Login($obUser);

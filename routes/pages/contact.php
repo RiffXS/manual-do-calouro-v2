@@ -9,5 +9,3 @@ $obRouter->get('/contact', [
         return new Response(200, Pages\Contact::getContact());
     }
 ]);
-
-?>

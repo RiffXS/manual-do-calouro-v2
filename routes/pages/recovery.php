@@ -16,5 +16,3 @@ $obRouter->post('/recovery', [
         return new Response(200, Pages\Recovery::setRecovery($request));
     }
 ]);
-
-?>

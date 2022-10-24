@@ -16,5 +16,3 @@ $obRouter->post('/signup', [
         return new Response(200, Pages\SignUp::setSignUp($request));
     }
 ]);
-
-?>

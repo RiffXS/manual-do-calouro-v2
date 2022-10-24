@@ -9,4 +9,3 @@ $obRouter->get('/schedule', [
         return new Response(200, Pages\Schedule::getSchedule($request));
     }
 ]);
-?>

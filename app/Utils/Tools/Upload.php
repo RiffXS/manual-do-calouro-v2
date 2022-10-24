@@ -54,19 +54,25 @@ class Upload {
         $info = pathinfo($file['name']);
 
         $this->name      = $info['filename'];
-        $this->extension = $info['extension'];
+        $this->extension = $info['extension'] ?? '';
         $this->type      = $file['type'];
-        $this->tmpName   = $file['tpm_name'];
+        $this->tmpName   = $file['tmp_name'];
         $this->error     = $file['error'];
         $this->size      = $file['size'];
     }
 
     /**
-     * Metodo responsavel por alterar o nome do arquivo
-     * @param string $name
+     * Metodo responsavel por obter o valor atributo do objeto
      */
-    public function setName($name) {
-        $this->name = $name;
+    public function __get($name) {
+        return $this->{$name};
+    }
+
+    /**
+     * Metodo responsavel por setar um atributo do objeto
+     */
+    public function __set($name, $value) {
+        $this->{$name} = $value;
     }
 
     /**

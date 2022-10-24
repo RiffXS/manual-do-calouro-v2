@@ -9,5 +9,3 @@ $obRouter->get('/sac', [
         return new Response(200, Pages\Sac::getSac());
     }
 ]);
-
-?>

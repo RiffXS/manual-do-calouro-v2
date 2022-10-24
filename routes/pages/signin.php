@@ -29,5 +29,3 @@ $obRouter->get('/signout', [
         return new Response(200, Pages\SignIn::setLogout($request));
     }
 ]);
-
-?>
