@@ -1,21 +1,13 @@
-<section>
+<section class="my-5">
     <div class="p-3 d-flex flex-column align-items-center container">
         <form class="w-75" method="POST" enctype="multipart/form-data">            
             {{status}}
 
+            <!-- Primeira row -->
             <div class="row">
-                <div class="col-6 text-center">
+                <div class="col-md-6 col-12 text-center">
                     <label for="foto-editar-perfil" class="form-label fw-bold h5">Editar foto de perfil</label>
-                </div>
-                <!-- TEXTO CAMPO -->
-                <div class='col-6 text-center'>
-                    <label class='form-label fw-bold h5'>Editar {{texto}}</label>
-                </div>
-            </div>
 
-            <!--Primeira row-->
-            <div class="row mb-4">
-                <div class="col-6">
                     <!-- IMAGEM DE PERFIL -->
                     <div class="d-flex flex-column align-items-center p-3">
                         <img id='foto-editar-perfil' class='img-fluid' alt='user-pic' src='{{URL}}/public/{{foto}}'>
@@ -25,13 +17,18 @@
                     </div>
                 </div>
 
-                <div class="col-6 d-flex flex-column justify-content-center">
-                    {{campo}}
+                <!-- TEXTO CAMPO -->
+                <div class='col-md-6 col-12 text-center'>
+                    <label class='form-label fw-bold h5'>Editar {{texto}}</label>
+
+                    <div class="col-6 d-flex flex-column justify-content-center">
+                        {{campo}}
+                    </div>
                 </div>
             </div>
 
             <!--Segunda row-->
-            <div class="row">
+            <div class="row mt-2">
                 <!-- NOME -->
                 <div class="mb-3">
                     <label for="nome" class="form-label fw-bold">Nome</label>
@@ -51,10 +48,13 @@
             <div class="row mt-3">
                 <div class="d-flex flex-column align-items-center justify-content-md-around flex-md-row">
                     <!-- SALVAR -->
-                    <button class="btn btn-primary me-2" type="submit">Salvar alterações</button>
+                    <button class="btn btn-primary me-md-3" type="submit">Salvar alterações</button>
 
                     <!-- MUDAR SENHA -->
-                    <a href="#" class="btn btn-danger mt-2" type="button">Redefinir senha</a>
+                    <a href="#" class="btn btn-warning mt-md-0 mt-3" type="button">Redefinir senha</a>
+
+                    <!-- EXCLUIR CONTA -->
+                    <a href="#" class="btn btn-danger mt-md-0 mt-3" type="button">Excluir conta</a>
                 </div>
             </div>
         </form>

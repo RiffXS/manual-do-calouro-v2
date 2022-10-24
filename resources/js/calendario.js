@@ -293,6 +293,8 @@
     
             //Create the arrow
             var arrow = createElement("div", "arrow");
+            arrow.classList.add("d-none");
+            arrow.classList.add("d-sm-block");
     
             //Create the event wrapper
     
@@ -324,7 +326,9 @@
             var div = createElement("div", "event");
             var square = createElement("div", "event-category " + ev.color);
             var data = new Date(ev.eventTime);
-            data = `${data.getHours()}:${(data.getMinutes()<10?'0':'') + data.getMinutes()}`;
+
+            data = `${(data.getDate()<10?'0':'') + data.getDate()}/${(data.getMonth()<9?'0':'') + (data.getMonth() + 1)} às ${data.getHours()}:${(data.getMinutes()<10?'0':'') + data.getMinutes()}`;
+
             var span = createElement("span", "", `${data} - ${ev.eventName}`);
     
             div.appendChild(square);
@@ -416,7 +420,7 @@
             eventTime: "2022-10-10 18:00:00"
         },
         {
-            eventName: "Lunch Meeting w/ Mark",
+            eventName: "Lunch Meeting w/ Mark jfddfjfdsjhfdsfsdfsdjhdfsdfsfsdsdf",
             eventTime: "2022-10-24 16:03:00"
         },
         {

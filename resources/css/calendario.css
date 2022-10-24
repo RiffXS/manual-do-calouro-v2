@@ -24,7 +24,8 @@ body {
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
-  width: 420px;
+  max-width: 420px;
+  min-width: 300px;
   height: 100%;
   overflow: hidden;
   margin:0 auto;
@@ -86,6 +87,7 @@ body {
 .month {
   /*overflow: hidden;*/
   opacity: 0;
+  background: whitesmoke;
 }
 
 .month.new {
@@ -123,6 +125,7 @@ body {
 
 .week {
   background: whitesmoke;
+  display: inline;
 }
 
 .day {
@@ -263,16 +266,11 @@ body {
 }
 
 .event-category {
-  height: 10px;
-  width: 10px;
-  display: inline-block;
-  margin: 6px 0 0;
-  vertical-align: top;
+  display: none;
 }
 
 .event span {
   display: inline-block;
-  padding: 0 0 0 7px;
 }
 
 .legend {
