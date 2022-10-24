@@ -2,23 +2,26 @@
 
 namespace App\Controller\Pages;
 
-use App\Models\Entity\User;
-use App\Utils\Session;
-use App\Utils\Tools\Alert;
-use App\Utils\Tools\Upload;
 use \App\Utils\View;
+use \App\Utils\Session;
+use \App\Utils\Tools\Alert;
+use \App\Utils\Tools\Upload;
+use \App\Models\Entity\Grade;
+use \App\Models\Entity\Student;
+use \App\Models\Entity\Teacher;
+use \App\Models\Entity\User as EntityUser;
 
 class Profile extends Page {
 
     /**
      * Metodo responsavel por retornar o contéudo (view) da pagina perfil
-     * @param \App\Http\Request
+     * @param  Request $request
      * @return string 
      */
     public static function getEditProfile($request) {
         // OBTEM A IMAGEM DO USUARIO
         $id = Session::getSessionId();
-        $obUser = User::getUserById($id);
+        $obUser = EntityUser::getUserById($id);
 
         $view = self::getTextType($obUser);
 
@@ -31,12 +34,13 @@ class Profile extends Page {
             'texto'  => $view['text'],
             'campo'  => $view['colum']
         ]);
+        
         // RETORNA A VIEW DA PAGINA
         return parent::getHeader('Perfil', $content);
     }
 
     /**
-     * @param \App\Http\Request
+     * @param Request $request
      */
     public static function setEditProfile($request) {
         // OBTEM A IMAGEM DO USUARIO
@@ -44,7 +48,7 @@ class Profile extends Page {
 
         // POST VARS    
         $postVars = $request->getPostVars(); 
-        $files = $request->getUploadFiles();
+        $files    = $request->getUploadFiles();
 
         $obUpload = new Upload($files['foto']);
 
@@ -64,12 +68,82 @@ class Profile extends Page {
                 }
             }
         }  
-        echo '<pre>'; print_r($obUser); echo '</pre>'; exit;
+        
+        $acesso = Session::getSessionLv();
+
+        switch ($acesso) {
+            case 2:
+                $matricula = $postVars['matricula'] ?? '';
+
+                if (!empty($matricula)) {
+
+                    $obStudent = new Student($obUser->getUserId(), $matricula);
+                
+                    if ($obStudent->verifyEnrollment()) {
+                        $obStudent->insertStudent();
+                        $obUser->setAcess(3);
+                    }
+                }
+                break;
+
+            case 3:
+                $curso  = $postVars['curso'] ?? '';
+                $modulo = $postVars['modulo'] ?? '';
+
+                if (!empty($modulo) && !empty($curso)) {
+                    $gradeId = Grade::getGradeId($curso, $modulo);
+
+                   
+                    $obStudent = new Student($obUser->getUserId());
+                    $obStudent->fk_turma_id_turma = $gradeId['id_turma'];
+
+                    $obStudent->updateStudent();
+                }
+                break;
+                
+            case 4:
+                $regras = $postVars['regras'] ?? '';
+
+                if (!empty($regras)) {
+                    $obTeacher = new Teacher($obUser->getUserId(), $regras);
+                    $obTeacher->updateRules();
+                }
+                
+                break;
+        }
+
+        $nome = $postVars['nome'];
+        $email = $postVars['email'];
+
+        // VALIDA O NOME
+        if (EntityUser::validateUserName($nome)) {
+            $request->getRouter()->redirect('/profile?status=invalid_name');
+        }
+        // VALIDA O EMAIL
+        if (EntityUser::validateUserEmail($email)) {
+            $request->getRouter()->redirect('/profile?status=invalid_email');
+        }
+        // VALIDA O EMAIL DO USUARIO
+        $obUserEmail = EntityUser::getUserByEmail($email);
+
+        if ($obUserEmail instanceof EntityUser && $obUserEmail->getUserId() != $obUser->getUserId()) {
+            $request->getRouter()->redirect('/profile?status=duplicated_email');
+        }
+        
+        // ATUALIZA A INSTÂNCIA
+        $obUser->setNomUser($nome);
+        $obUser->setEmail($email);
+        
+        // ATUALIZA O USUÁRIO
+        $obUser->updateUser();
+
+        // REDIRECIONA O USUÁRIO
+        $request->getRouter()->redirect('/profile?status=profile_updated');
     }
 
     /**
-     * Metodo responsavel por definir o texto de acordo com o tipo de usuario
-     * @param User
+     * Método responsável por definir o texto de acordo com o tipo de usuário
+     * @param EntityUser $obUser
      */
     public static function getTextType($obUser) {
         $text = '';
@@ -79,13 +153,13 @@ class Profile extends Page {
             case 2:
                 $text = 'Matricula';
                 $colum = 'enrollment';
-
                 break;
-            case 3:
 
+            case 3:
                 $text = 'Turma';
                 $colum = 'class';
                 break;
+                
             case 4:
                 $text = 'Regras';
                 $colum = 'rules';

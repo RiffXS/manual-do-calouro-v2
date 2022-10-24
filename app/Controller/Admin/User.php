@@ -82,6 +82,7 @@ class User extends Page {
             'botao'    => 'Cadastrar',
             'status'   => Alert::getStatus($request),
             'ativo'    => 'checked',
+            'inativo'  => '',
             'acesso'   => '2'
         ]);
 
@@ -189,6 +190,7 @@ class User extends Page {
         if ($obUserEmail instanceof EntityUser && $obUserEmail->getUserId() != $id) {
             $request->getRouter()->redirect('/admin/users/'.$id.'/edit?status=duplicated_email');
         }
+        
         // ATUALIZA A INSTANCIA
         $obUser->setNomUser($nome);
         $obUser->setEmail($email);

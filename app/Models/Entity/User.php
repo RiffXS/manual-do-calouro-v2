@@ -139,11 +139,11 @@ class User {
 
         // INSERE A ISTANCIA NO BANCO
         $this->id_usuario = (new Database('usuario'))->insert([
-            'nom_usuario' => $this->nom_usuario,
-            'email'       => $this->email,
-            'senha'       => $this->senha,
-            'add_data'    => $this->add_data,
-            'ativo'       => $this->ativo,
+            'nom_usuario'         => $this->nom_usuario,
+            'email'               => $this->email,
+            'senha'               => $this->senha,
+            'add_data'            => $this->add_data,
+            'ativo'               => $this->ativo,
             'fk_acesso_id_acesso' => $this->fk_acesso_id_acesso
         ]);
 
@@ -157,11 +157,12 @@ class User {
      */
     public function updateUser() {
         return (new Database('usuario'))->update("id_usuario = {$this->id_usuario}", [
-            'nom_usuario' => $this->nom_usuario,
-            'email'       => $this->email,
-            'senha'       => $this->senha,
-            'add_data'    => $this->add_data,
-            'ativo'       => $this->ativo,
+            'nom_usuario'         => $this->nom_usuario,
+            'email'               => $this->email,
+            'senha'               => $this->senha,
+            'add_data'            => $this->add_data,
+            'img_perfil'          => $this->img_perfil,
+            'ativo'               => $this->ativo,
             'fk_acesso_id_acesso' => $this->fk_acesso_id_acesso
         ]);
     }
@@ -318,7 +319,7 @@ class User {
      * @return string
      */
     public function getImgProfile() {
-        return !empty($this->img_perfil) ? "uploads/{$this->img_perfil}" : 'images/user.png' ;
+        return !empty($this->img_perfil) ? "uploads/{$this->img_perfil}" : 'images/user.png';
     }
 
     /**

@@ -42,5 +42,9 @@
     "inactive_user": {
         "type": "danger",
         "text": "Usuário invativo!"
+    },
+    "profile_updated": {
+        "type": "success",
+        "text": "Perfil atualizado com sucesso!"
     }
 }
