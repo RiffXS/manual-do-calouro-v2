@@ -60,7 +60,7 @@ class SignUp extends Page {
         // CADASTRA O USUÁRIO
         $obUser->insertUser();
 
-        // REDIRECIONA O USUARIO
+        // REDIRECIONA AO LOGIN
         $request->getRouter()->redirect('/signin?status=user_registered');
     }
 }

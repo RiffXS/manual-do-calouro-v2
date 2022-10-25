@@ -5,8 +5,8 @@ use App\Controller\Pages;
 
 // ROTA RECUPERAR SENHA
 $obRouter->get('/recovery', [
-    function() {
-        return new Response(200, Pages\Recovery::getRecovery());
+    function($request) {
+        return new Response(200, Pages\Recovery::getRecovery($request));
     }
 ]);
 

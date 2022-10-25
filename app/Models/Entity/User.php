@@ -65,7 +65,6 @@ class User {
         if (preg_match($parameters, $nome)){
             return false;
         }
-
         return true;
     }
 
@@ -82,7 +81,6 @@ class User {
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return false;
         }
-
         return true;
     }
 
@@ -98,7 +96,6 @@ class User {
         if (preg_match($parameters, $password)) {
             return false;
         }
-
         return true;
     }
 
@@ -113,7 +110,6 @@ class User {
         if (!$password !== $confirm) {
             return false;
         }
-
         return true;
     }
 
@@ -126,7 +122,6 @@ class User {
         if ($this->ativo == 0) {
             return false;
         }
-
         return true;
     }
 

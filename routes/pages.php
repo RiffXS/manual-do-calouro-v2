@@ -23,6 +23,9 @@ include_once __DIR__.'/pages/profile.php';
 // ROTAS DA PAGINA RECUPERAR SENHA
 include_once __DIR__.'/pages/recovery.php';
 
+// ROTAS DA PAGINA REDEFINIR SENHA
+include_once __DIR__.'/pages/redefine.php';
+
 // ROTAS DA PAGINA ROD
 include_once __DIR__.'/pages/rod.php';
 

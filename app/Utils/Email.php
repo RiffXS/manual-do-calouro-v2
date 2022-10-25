@@ -11,11 +11,11 @@ class Email {
      * Credencias de acesso ao SMTP
      * @var string
      */
-    const HOSTSMTP = 'smtp.gmail.com';
-    const USERMAIL = 'manualdocalouro.ifes@gmail.com';
+    const HOST = 'smtp.gmail.com';
+    const USERNAME = 'manualdocalouro.ifes@gmail.com';
     const PASSWORD = 'srjboszkjzmqbysg';
     const SECURITY = 'TLS';
-    const PORTCONN = 587;
+    const PORT = 587;
     const CHARSET  = 'UTF-8';
 
     /**
@@ -59,12 +59,12 @@ class Email {
         try {
             // CREDENCIAIS DE ACESSO AO SMTP
             $obMail->isSMTP();
-            $obMail->Host       = self::HOSTSMTP;
+            $obMail->Host       = self::HOST;
             $obMail->SMTPAuth   = true;
             $obMail->SMTPSecure = self::SECURITY;
-            $obMail->Username   = self::USERMAIL;
+            $obMail->Username   = self::USERNAME;
             $obMail->Password   = self::PASSWORD; 
-            $obMail->Port       = self::PORTCONN;
+            $obMail->Port       = self::PORT;
             $obMail->CharSet    = self::CHARSET;
 
             // REMETENTE
@@ -96,7 +96,7 @@ class Email {
 
             // CONTEUDO DO EMAIL
             $obMail->isHTML();
-            $obMail->$subject = $subject;
+            $obMail->Subject = $subject;
             $obMail->Body = $body;
 
             // ENVIA O EMAIL

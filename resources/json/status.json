@@ -15,6 +15,10 @@
         "type": "danger",
         "text": "E-mail ou senha inválidos!"
     },
+    "invalid_hash": {
+        "type": "danger",
+        "text": "Chave de recuperação invalida!"
+    },
     "duplicated_email": {
         "type": "danger",
         "text": "E-mail já cadastrado!"
@@ -46,5 +50,21 @@
     "profile_updated": {
         "type": "success",
         "text": "Perfil atualizado com sucesso!"
+    },
+    "email_sent": {
+        "type": "info",
+        "text": "E-mail enviado com sucesso!"
+    },
+    "email_erro": {
+        "type": "danger",
+        "text": "Erro! e-mail não enviado!"
+    },
+    "recovery_send": {
+        "type": "success",
+        "text": "Solicitação enviada, confira seu e-mail"
+    },
+    "pass_updated": {
+        "type": "success",
+        "text": "Senha atualizada!"
     }
 }
