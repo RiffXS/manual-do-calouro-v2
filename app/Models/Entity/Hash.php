@@ -19,20 +19,10 @@ class Hash {
     private $chave_confirma;
 
     /**
-     * Método responsavel por buscar uma chave por id
-     */
-    public static function verifyKey($id) {
-        if ((new Database('chave'))->select("fk_usuario_id_usuario = $id")->rowCount() == 0) {
-            return false;
-        }
-        return true;
-    }
-
-     /**
      * Metodo responsavel por verificar se uma chave existe
      * @return mixed
      */
-    public static function findKey($id = null, $chave = null) {
+    public static function findHash($id = null, $chave = null) {
         if (!is_null($id)) {
             return (new Database('chave'))->select("fk_usuario_id_usuario = $id")->fetchObject(self::class);
         } 
@@ -42,17 +32,14 @@ class Hash {
     /**
      * Metodo responsavel por inserir uma chave na tabela
      */
-    public function insertKey() {
-        (new Database('chave'))->insert([
-            'fk_usuario_id_usuario' => $this->fk_usuario_id_usuario,
-            'chave_confirma' => $this->chave_confirma
-        ]);
+    public function insertHash() {
+        return (new Database())->execute("INSERT INTO chave (fk_usuario_id_usuario, chave_confirma) VALUES ({$this->fk_usuario_id_usuario}, '{$this->chave_confirma}')");
     }
 
     /**
      * Metodo responsavel por atualizar uma chave na tabela
      */
-    public function updateKey() {
+    public function updateHash() {
         return (new Database('chave'))->update("fk_usuario_id_usuario = {$this->fk_usuario_id_usuario}", [
             'chave_confirma' => $this->chave_confirma
         ]);
@@ -61,15 +48,8 @@ class Hash {
     /**
      * Metodo responsavel por deleltar a chave
      */
-    public static function deleteKey($id) {
-        return (new Database('chave'))->delete("fk_usuario_id_usuario = $id");
-    }
-
-    /**
-     * Metodo responsavel por gerar uma chave unica
-     */
-    public function generateKey() {
-        $this->chave_confirma = sha1(uniqid(mt_rand()));
+    public function deleteHash() {
+        return (new Database('chave'))->delete("fk_usuario_id_usuario = {$this->fk_usuario_id_usuario}");
     }
 
     /**
@@ -89,10 +69,17 @@ class Hash {
     }
 
     /**
+     * Metodo responsavel por gerar uma chave unica
+     */
+    public function setHash() {
+        $this->chave_confirma = sha1(uniqid(mt_rand()));
+    }
+
+    /**
      * Método responsavel por retornar o atributo chave
      * @return string
      */
-    public function getKey() {
+    public function getHash() {
         return $this->chave_confirma;
     }
 }

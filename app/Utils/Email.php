@@ -14,7 +14,7 @@ class Email {
     const HOST = 'smtp.gmail.com';
     const USERNAME = 'manualdocalouro.ifes@gmail.com';
     const PASSWORD = 'srjboszkjzmqbysg';
-    const SECURITY = 'TLS';
+    const SECURITY = 'tls';
     const PORT = 587;
     const CHARSET  = 'UTF-8';
 

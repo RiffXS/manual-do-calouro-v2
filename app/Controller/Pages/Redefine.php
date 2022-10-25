@@ -21,7 +21,7 @@ class Redefine extends Page {
         $chave = $queryParams['chave'];
 
         // NOVA INSTANCIA
-        $obHash = EntityHash::findKey(null, $chave);
+        $obHash = EntityHash::findHash(null, $chave);
 
         // VALIDA A INSTANCIA, VERIFICANDO SE HOUVE RESULTADO 
         if (!$obHash instanceof EntityHash) {
@@ -46,25 +46,27 @@ class Redefine extends Page {
         // POST VARS
         $postVars = $request->getPostVars();    
         
-        $id = $postVars['id'];
         $password = $postVars['senha'];
         $confirma = $postVars['confirma'];
+        $id_user  = $postVars['id'];
 
-        // NOVA INSTANCIA DE USUARIO E CHAVE
-        $obUser = EntityUser::getUserById($id);
-        $obHash = EntityHash::findKey($id, null);
+        // NOVA INSTANCIA CHAVE
+        $obHash = EntityHash::findHash($id_user, null);
+
+        // NOVA INSTANCIA DE USUARIO
+        $obUser = EntityUser::getUserById($id_user);
 
         // VALIDA A SENHA
         if (EntityUser::validateUserPassword($password, $confirma)) {
-            $request->getRouter()->redirect("/redefine?status=invalid_pass&chave={$obHash->getKey()}");
+            $request->getRouter()->redirect("/redefine?chave={$obHash->getHash()}&status=invalid_pass");
         }
-        // EXCLUIR A CHAVE DO BANCO
-        EntityHash::deleteKey($id);
-
         // ATUALIZA O USUARIO
         $obUser->setPass($password);
         $obUser->updateUser();
         
+        // EXCLUI A CHAVE
+        $obHash->deleteHash();
+
         // REDIRECIONA PARA O LOGIN
         $request->getRouter()->redirect('/signin?status=pass_updated');        
     }

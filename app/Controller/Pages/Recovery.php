@@ -2,8 +2,8 @@
 
 namespace App\Controller\Pages;
 
-use App\Utils\Email;
 use App\Utils\View;
+use App\Utils\Email;
 use App\Utils\Tools\Alert;
 use App\Models\Entity\User as EntityUser;
 use App\Models\Entity\Hash as EntityHash;
@@ -37,7 +37,6 @@ class Recovery extends Page {
 
         // VALIDA O EMAIL DO USUARIO
         $obUser = EntityUser::getUserByEmail($email);
-
         $id = $obUser->getUserId();
 
         // VALIDA O EMAIL
@@ -48,32 +47,35 @@ class Recovery extends Page {
         if (!$obUser instanceof EntityUser) {
             $request->getRouter()->redirect('/recovery?status=invalid_email');
         }
-        // NOVAI NSTANCIA
+        // NOVA NSTANCIA
         $obHash = new EntityHash;
-
         $obHash->setFkId($id);
-        $obHash->generateKey();
+        $obHash->setHash();
 
         // VERIFICA SE A CHAVE JÁ EXISTE NO BANCO
-        if (EntityHash::verifyKey($id)) {
-            $obHash->insertKey(); // INSERE A CHAVE
+        if (EntityHash::findHash($id) instanceof EntityHash) {
+            $obHash->updateHash(); // ATUALIZA A CHAVE
         } else {
-            $obHash->updateKey(); // ATUALIZA A CHAVE
+            $obHash->insertHash(); // INSERE A CHAVE
         }
+        // NOVA INSTANCIA
+        $obEmail = new Email;
+
         // LINK HTML
-        $link = "<a href='http://localhost/mvc-mdc/redefine?chave={$obHash->getKey()}'>Clique aqui</a>";
+        $link = "<a href='http://localhost/mvc-mdc/redefine?chave={$obHash->getHash()}'>Clique aqui</a>";
 
         // ASSUNTO E MENSAGEM
         $subject = 'Recuperar senha';
         $message = 'Para recuperar sua senha, acesse este link: '.$link;
 
-        // NOVA INSTANCIA
-        $obEmail = new Email;
-
         // VERIFICA SE O PROCESSO DE ENVIO FOI EXECUTADO
-        //if ($obEmail->sendEmail($email, $subject, $message)) {
+        if ($obEmail->sendEmail($email, $subject, $message)) {
             // SUCESSO
-            //$request->getRouter()->redirect('/recovery?status=recovery_send'); 
-        //} 
+            $request->getRouter()->redirect('/recovery?status=recovery_send'); 
+        } else {
+            $obHash->deleteHash();
+            
+            $request->getRouter()->redirect('/recovery?status=recovery_erro'); 
+        }
     }
 }

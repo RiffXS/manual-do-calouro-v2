@@ -55,7 +55,7 @@ class Contact {
                     JOIN contato c ON (s.fk_usuario_id_usuario = c.fk_servidor_fk_usuario_id_usuario)";
 
         // RETORNA OS DEPOIMENTOS
-        return (new Database())->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+        return (new Database())->execute($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**
@@ -79,7 +79,7 @@ class Contact {
                     JOIN setor se ON (a.fk_setor_id_setor = se.id_setor)";
 
         // RETORNA OS DEPOIMENTOS
-        return (new Database())->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+        return (new Database())->execute($sql)->fetchAll(\PDO::FETCH_ASSOC);
         
     }
 }

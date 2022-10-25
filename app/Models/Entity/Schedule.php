@@ -72,7 +72,7 @@ class Schedule {
             ORDER BY id_horario_aula, id_dia_semana";
 
         // RETORNA OS DEPOIMENTOS
-        return (new Database('aula'))->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+        return (new Database('aula'))->execute($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**

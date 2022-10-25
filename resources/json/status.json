@@ -63,6 +63,10 @@
         "type": "success",
         "text": "Solicitação enviada, confira seu e-mail"
     },
+    "recovery_erro": {
+        "type": "danger",
+        "text": "Solicitação cancelada, erro ao enviar e-mail"
+    },
     "pass_updated": {
         "type": "success",
         "text": "Senha atualizada!"
