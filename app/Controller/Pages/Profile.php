@@ -34,16 +34,16 @@ class Profile extends Page {
             'texto'  => $view['text'],
             'campo'  => $view['colum']
         ]);
-        
         // RETORNA A VIEW DA PAGINA
         return parent::getHeader('Perfil', $content);
     }
 
     /**
+     * Método responsavel por atualizar o perfil do usuario
      * @param \App\Http\Request $request
      */
     public static function setEditProfile($request) {
-        // OBTEM A IMAGEM DO USUARIO
+        // OBTEM O USUARIO E O NIVEL DE ACESSO DA SESSÃO
         $obUser = Session::getSessionUser();
         $acesso = Session::getSessionLv();
 
@@ -55,6 +55,7 @@ class Profile extends Page {
         $email = $postVars['email'];
         $photo = $obUser->getImgProfile();
 
+        // NOVA INSTANCIA 
         $obUpload = new Upload($files['foto']);
 
         // VERIFICA SE HOUVE UPLOAD DE FOTO

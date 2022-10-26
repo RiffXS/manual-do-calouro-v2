@@ -10,7 +10,7 @@ use App\Utils\View;
 class Redefine extends Page {
 
     /**
-     * Metodo responsavel por retornar o contéudo (view) da pagina sobre
+     * Metodo responsavel por retornar o contéudo (view) da pagina redefinir senha
      * @param \App\Http\Request
      * @return string 
      */

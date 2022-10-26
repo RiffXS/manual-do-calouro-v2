@@ -8,7 +8,6 @@ class Map extends Page {
 
     /**
      * Metodo responsavel por retornar o contéudo (view) da pagina mapa
-     * 
      * @return string 
      */
     public static function getMap() {

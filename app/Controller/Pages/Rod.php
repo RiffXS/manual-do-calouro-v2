@@ -7,8 +7,7 @@ use \App\Utils\View;
 class Rod extends Page {
 
     /**
-     * Metodo responsavel por retornar o contéudo (view) da pagina home
-     * 
+     * Metodo responsavel por retornar o contéudo (view) da pagina rod
      * @return string 
      */
     public static function getRod() {
@@ -16,6 +15,6 @@ class Rod extends Page {
         $content = View::render('pages/rod');
 
         // RETORNA A VIEW DA PAGINA
-        return parent::getHeader('Rod', $content, 'rod');
+        return parent::getHeader('ROD', $content, 'rod');
     }
 }

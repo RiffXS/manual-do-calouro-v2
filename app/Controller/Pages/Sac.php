@@ -10,7 +10,7 @@ use App\Utils\Tools\Alert;
 class Sac extends Page {
 
     /**
-     * Metodo responsavel por retornar o contéudo (view) da pagina home
+     * Metodo responsavel por retornar o contéudo (view) da pagina fale conosco
      * @return string 
      */
     public static function getSac($request) {
@@ -24,6 +24,7 @@ class Sac extends Page {
     }
 
     /**
+     * Método responsavel por enviar o formulario e ancaminhar o email
      * @param \App\Http\Request
      */
     public static function setSac($request) {

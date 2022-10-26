@@ -7,7 +7,7 @@ use App\Utils\View;
 class Calendar extends Page {
 
     /**
-     * Metodo responsavel por retornar o contéudo (view) da pagina home
+     * Metodo responsavel por retornar o contéudo (view) da pagina calendario
      * @return string 
      */
     public static function getCalendar() {

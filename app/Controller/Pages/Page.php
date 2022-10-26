@@ -3,8 +3,8 @@
 namespace App\Controller\Pages;
 
 use App\Models\Entity\User as EntityUser;
-use \App\Utils\Session;
-use \App\Utils\View;
+use App\Utils\Session;
+use App\Utils\View;
 
 class Page {
 
@@ -20,13 +20,13 @@ class Page {
             'label' => 'Sobre',
             'link'  => URL.'/about'
         ],
-        'calendar' => [
-            'label' => 'Calendário',
-            'link'  => URL.'/calendar'
-        ],
         'map' => [
             'label' => 'Mapa',
             'link'  => URL.'/map'
+        ],
+        'calendar' => [
+            'label' => 'Calendário',
+            'link'  => URL.'/calendar'
         ],
         'schedule' => [
             'label' => 'Horários',
@@ -47,7 +47,7 @@ class Page {
     ];
 
     /**
-     * Methodo responsavel por rendenizar a view do painel
+     * Methodo responsavel por rendenizar a view do header
      * @param  string $currentModule
      * @return string
      */
@@ -117,7 +117,6 @@ class Page {
             'content' => $content,
             'login'   => self::getLogin()
         ]);
-
         // RETORNA A PAGINA RENDENIZADA
         return self::getPage($tittle, $contentPanel);
     }
@@ -133,7 +132,6 @@ class Page {
 
     /**
      * Metodo responsavel por retornar o contéudo (view) da pagina generica
-     * 
      * @return string 
      */
     public static function getPage($title, $content) {
@@ -146,10 +144,10 @@ class Page {
     
     /**
      * Methodo responsavel por retornar um link da paginação
-     * @param array $queryParams
-     * @param array $page
-     * @param string $url
-     * @return
+     * @param  array  $queryParams
+     * @param  array  $page
+     * @param  string $url
+     * @return string
      */
     private static function getPaginationLink($queryParams, $page, $url, $label = null) {
         // ALTERA PAGINA    
@@ -168,7 +166,7 @@ class Page {
 
     /**
      * Methodo responsavel por rendenizar o layout de paginação
-     * @param \App\Http\Request $request
+     * @param \App\Http\Request     $request
      * @param \App\Utils\Pagination $obPagination
      * @return string
      */

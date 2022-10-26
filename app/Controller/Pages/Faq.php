@@ -7,8 +7,7 @@ use App\Utils\View;
 class Faq extends Page {
 
     /**
-     * Metodo responsavel por retornar o contéudo (view) da pagina home
-     * 
+     * Metodo responsavel por retornar o contéudo (view) da pagina fale duvidas frequentes
      * @return string 
      */
     public static function getFaq() {
@@ -16,6 +15,6 @@ class Faq extends Page {
         $content = View::render('pages/faq');
 
         // RETORNA A VIEW DA PAGINA
-        return parent::getHeader('Faq', $content, 'faq');
+        return parent::getHeader('FAQ', $content, 'faq');
     }
 }

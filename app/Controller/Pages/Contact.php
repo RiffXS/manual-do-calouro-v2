@@ -30,7 +30,8 @@ class Contact extends Page {
     }
     
     /**
-     * 
+     * Metodo responsavel por rendenizar os contatos
+     * @param EntityContact $obContacat
      */
     public static function getContacts($obContact) {
         // DECLARAÇÃO DE VARIÁVEIS
@@ -56,11 +57,10 @@ class Contact extends Page {
             'professores' => $contentTeacher,
             'servidores'  => $contentServers
         ];
-
     }
 
     /**
-     * Método responsável por renderizar os contatos
+     * Método responsável por renderizar o contato
      * @param  integer $id
      * @return string
      */
@@ -89,7 +89,6 @@ class Contact extends Page {
                 'contato' => $typeContacts[$i]['dsc_contato']
             ]);
         }
-        
         // RETORNA A VIEW DOS TIPOS DE CONTATO
         return $content;
     }
@@ -138,5 +137,4 @@ class Contact extends Page {
             'sala'        => $contact['num_sala']
         ]);
     }
-
 }

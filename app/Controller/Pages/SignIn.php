@@ -7,7 +7,6 @@ use App\Utils\Session;
 use App\Utils\Tools\Alert;
 use App\Utils\View;
 
-
 class SignIn extends Page {
 
     /**

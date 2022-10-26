@@ -11,8 +11,7 @@ use App\Utils\Tools\Alert;
 class Recovery extends Page {
 
     /**
-     * Metodo responsavel por retornar o contéudo (view) da pagina home
-     * 
+     * Metodo responsavel por retornar o contéudo (view) da pagina recuperação da senha
      * @return string 
      */
     public static function getRecovery($request) {

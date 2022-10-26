@@ -98,7 +98,9 @@ class Schedule extends Page {
     }
 
     /**
-     *
+     * Metodo responsavel por retornar o curso
+     * @param integer $curso
+     * @return integer
      */
     private static function getCurso($curso) {
         // CURSO
