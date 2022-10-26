@@ -1,14 +1,16 @@
 <?php
+// LOAD COMPOSER
 require __DIR__.'/../vendor/autoload.php';
 
 use App\Utils\View;
-use App\Utils\Environment;
 use App\Utils\Database;
+use App\Utils\Environment;
 use App\Http\Middleware\Queue as MiddlewareQueue;
 
 // CARREGA VARIAVEIS DE AMBIENTE
 Environment::load(__DIR__.'/../');
 
+// DADOS DE CONEXÃO COM O BANCO
 Database::config(
     getenv('DB_HOST'),
     getenv('DB_NAME'),
@@ -25,15 +27,15 @@ View::init([
     'URL' => URL
 ]);
 
-// DEFINE O MAPEAMENTO DE MIDDLEWARES
+// DEFINE O MAPEAMENTO DE MIDDLEWARES DISPONIVEIS
 MiddlewareQueue::setMap([
     'maintenence'     => \App\Http\Middleware\Maintenence::class,
     'admin-logout'    => \App\Http\Middleware\AdminLogout::class,
     'admin-login'     => \App\Http\Middleware\AdminLogin::class,
+    'api'             => \App\Http\Middleware\Api::class,
     'user-login'      => \App\Http\Middleware\UserLogin::class,
     'user-logout'     => \App\Http\Middleware\UserLogout::class,
     'user-basic-auth' => \App\Http\Middleware\UserBasicAuth::class,
-    'api'             => \App\Http\Middleware\Api::class,
     'cache'           => \App\Http\Middleware\Cache::class,
 ]);
 

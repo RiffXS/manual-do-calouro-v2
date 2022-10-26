@@ -13,7 +13,7 @@ $obRouter->get('/profile', [
     }
 ]);
 
-// ROTA PERFIL
+// ROTA UPDATE DO PERFIL
 $obRouter->post('/profile', [
     'middlewares' => [
         'user-login'

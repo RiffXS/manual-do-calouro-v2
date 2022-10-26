@@ -9,5 +9,3 @@ $obRouter->get('/about', [
         return new Response(200, Pages\About::getAbout());
     }
 ]);
-
-?>

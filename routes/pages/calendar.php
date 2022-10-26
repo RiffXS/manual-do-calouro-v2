@@ -9,5 +9,3 @@ $obRouter->get('/calendar', [
         return new Response(200, Pages\Calendar::getCalendar());
     }
 ]);
-
-?>

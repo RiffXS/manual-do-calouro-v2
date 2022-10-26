@@ -48,7 +48,6 @@ class SignIn extends Page {
         if (!$obUser->getActive() != 0) {
             $request->getRouter()->redirect('/signin?status=inactive_user');
         }
-
         // CRIA A SESSÃO DE LOGIN
         Session::Login($obUser);
 

@@ -40,4 +40,3 @@ include_once __DIR__.'/pages/signin.php';
 
 // ROTAS DA PAGINA CADASTRO
 include_once __DIR__.'/pages/signup.php';
-?>

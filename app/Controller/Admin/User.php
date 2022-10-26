@@ -69,6 +69,29 @@ class User extends Page {
     }
 
     /**
+     * Methodo responsavel por excluir um usuario
+     * @param \App\Http\Request
+     */
+    public static function setDeleteUser($request) {
+        // POST VARS
+        $postVars = $request->getPostVars();
+       
+        // OBTENDO O USUARIO DO BANCO DE DADOS
+        $obUser = EntityUser::getUserById($postVars['id']);
+
+        // VALIDA A INSTANCIA
+        if (!$obUser instanceof EntityUser) {
+            $request->getRouter()->redirect('/admin/users');
+        }
+
+        // EXCLUIR DEPOIMENTO
+        $obUser->deleteUser();
+
+        // REDIRECIONA O USUARIO
+        $request->getRouter()->redirect('/admin/users?status=user_deleted');
+    }
+
+    /**
      * Methodo responsavel por retornar o formulario de cadastro de um novo usuario
      * @param \App\Http\Request
      * @return string
@@ -203,54 +226,4 @@ class User extends Page {
         // REDIRECIONA O USUARIO
         $request->getRouter()->redirect('/admin/users/'.$id.'/edit?status=user_updated');
     }
-
-    /**
-     * Methodo responsavel por retornar o formulario exclusão de um usuario
-     * @param \App\Http\Request
-     * @param integer $id
-     * @return string
-     */
-    public static function getDeleteUser($request, $id) {
-        // OBTENDO O USUARIO DO BANCO DE DADOS
-        $obUser = EntityUser::getUserById($id);
-
-        // VALIDA A INSTANCIA
-        if (!$obUser instanceof EntityUser) {
-            $request->getRouter()->redirect('/admin/users');
-        }
-
-        // CONTEUDO DO FORMULARIO
-        $content = View::render('admin/modules/users/delete', [
-            'nome'  => $obUser->getNomUser(),
-            'email' => $obUser->getEmail(),
-        ]);
-
-        // RETORNA A PAGINA COMPLETA
-        return parent::getPanel('Excluir usuario  > WDEV', $content, 'users');
-    }
-
-    /**
-     * Methodo responsavel por excluir um usuario
-     * @param \App\Http\Request
-     * @param integer $id
-     */
-    public static function setDeleteUser($request) {
-        // POST VARS
-        $postVars = $request->getPostVars();
-       
-        // OBTENDO O USUARIO DO BANCO DE DADOS
-        $obUser = EntityUser::getUserById($postVars['id']);
-
-        // VALIDA A INSTANCIA
-        if (!$obUser instanceof EntityUser) {
-            $request->getRouter()->redirect('/admin/users');
-        }
-
-        // EXCLUIR DEPOIMENTO
-        $obUser->deleteUser();
-
-        // REDIRECIONA O USUARIO
-        $request->getRouter()->redirect('/admin/users?status=user_deleted');
-    }
-    
 }

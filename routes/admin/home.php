@@ -12,5 +12,3 @@ $obRouter->get('/admin', [
         return new Response(200, Admin\Home::getHome());
     }
 ]);
-
-?>
