@@ -2,7 +2,7 @@
 
 namespace App\Utils;
 
-use App\Models\Entity\User;
+use App\Models\Entity\User as EntityUser; 
 
 class Session {
 
@@ -19,11 +19,11 @@ class Session {
 
     /**
      * Método responsavel por retornar um objeto usuario
-     * @return User
+     * @return EntityUser
      */
     public static function getSessionUser() {
         // RETORNA OS DADOS DE UM USUÁRIO NA SESSÃO
-        return User::getUserById(self::getSessionId());
+        return EntityUser::getUserById(self::getSessionId());
     }
 
 

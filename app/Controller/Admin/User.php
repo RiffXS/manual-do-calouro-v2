@@ -2,10 +2,10 @@
 
 namespace App\Controller\Admin;
 
+use App\Models\Entity\User as EntityUser;
 use App\Utils\View;
 use App\Utils\Tools\Alert;
-use \App\Utils\Pagination;
-use App\Models\Entity\User as EntityUser;
+use App\Utils\Pagination;
 
 class User extends Page {
 

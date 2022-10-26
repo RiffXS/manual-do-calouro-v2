@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use \App\Utils\View;
+use App\Utils\View;
 
 class Page {
 

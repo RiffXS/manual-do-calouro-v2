@@ -2,9 +2,9 @@
 
 namespace App\Controller\Admin;
 
-use App\Utils\View;
-use \App\Utils\Pagination;
 use App\Models\Entity\Testimony as EntityTestimony;
+use App\Utils\View;
+use App\Utils\Pagination;
 use App\Utils\Tools\Alert;
 
 class Testimony extends Page {

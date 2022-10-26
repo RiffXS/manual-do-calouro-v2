@@ -12,7 +12,7 @@ class Calendar extends Page {
      */
     public static function getCalendar() {
         // VIEW DA HOME
-        $content =  View::render('pages/calendar');
+        $content = View::render('pages/calendar');
 
         // RETORNA A VIEW DA PAGINA
         return parent::getHeader('Calendario', $content, 'calendar');

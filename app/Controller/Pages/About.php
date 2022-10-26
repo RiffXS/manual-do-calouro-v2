@@ -12,7 +12,7 @@ class About extends Page {
      */
     public static function getAbout() {
         // VIEW DO SOBRE
-        $content =  View::render('pages/about');
+        $content = View::render('pages/about');
 
         // RETORNA A VIEW DA PAGINA
         return parent::getHeader('Sobre', $content, 'about');
