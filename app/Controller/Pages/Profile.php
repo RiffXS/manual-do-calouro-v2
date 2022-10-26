@@ -2,14 +2,14 @@
 
 namespace App\Controller\Pages;
 
-use \App\Utils\View;
-use \App\Utils\Session;
-use \App\Utils\Upload;
-use \App\Utils\Tools\Alert;
-use \App\Models\Entity\Grade as EntityGrade;
-use \App\Models\Entity\Student as EntityStudent;
-use \App\Models\Entity\Teacher as EntityTeacher;
-use \App\Models\Entity\User as EntityUser;
+use App\Models\Entity\Grade as EntityGrade;
+use App\Models\Entity\Student as EntityStudent;
+use App\Models\Entity\Teacher as EntityTeacher;
+use App\Models\Entity\User as EntityUser;
+use App\Utils\View;
+use App\Utils\Session;
+use App\Utils\Upload;
+use App\Utils\Tools\Alert;
 
 class Profile extends Page {
 
@@ -26,7 +26,7 @@ class Profile extends Page {
         $view = self::getTextType($obUser);
 
         // VIEW DA HOME
-        $content =  View::render('pages/profile', [
+        $content = View::render('pages/profile', [
             'status' => Alert::getStatus($request),
             'foto'   => $obUser->getImgProfile(),
             'nome'   => $obUser->getNomUser(),

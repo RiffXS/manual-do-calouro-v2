@@ -2,7 +2,7 @@
 
 namespace App\Controller\Pages;
 
-use App\Utils\Email;
+use App\Models\Email;
 use App\Utils\Session;
 use App\Utils\View;
 use App\Utils\Tools\Alert;
@@ -15,7 +15,7 @@ class Sac extends Page {
      */
     public static function getSac($request) {
         // VIEW DA HOME
-        $content =  View::render('pages/sac', [
+        $content = View::render('pages/sac', [
             'status' => Alert::getStatus($request),
             'email'  => Session::getSessionUser()->getEmail()
         ]);

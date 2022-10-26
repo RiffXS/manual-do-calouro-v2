@@ -2,8 +2,8 @@
 
 namespace App\Controller\Pages;
 
-use App\Utils\View;
 use App\Models\Entity\Schedule as EntitySchedule;
+use App\Utils\View;
 
 class Schedule extends Page {
     

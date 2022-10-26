@@ -2,11 +2,11 @@
 
 namespace App\Controller\Pages;
 
-use App\Utils\View;
-use App\Utils\Email;
-use App\Utils\Tools\Alert;
 use App\Models\Entity\User as EntityUser;
 use App\Models\Entity\Hash as EntityHash;
+use App\Models\Email;
+use App\Utils\View;
+use App\Utils\Tools\Alert;
 
 class Recovery extends Page {
 
@@ -17,7 +17,7 @@ class Recovery extends Page {
      */
     public static function getRecovery($request) {
         // VIEW DA HOME
-        $content =  View::render('pages/recovery', [
+        $content = View::render('pages/recovery', [
             'status' => Alert::getStatus($request)
         ]);
 

@@ -2,7 +2,7 @@
 
 namespace App\Controller\Pages;
 
-use App\Models\Entity\User;
+use App\Models\Entity\User as EntityUser;
 use \App\Utils\Session;
 use \App\Utils\View;
 
@@ -60,7 +60,7 @@ class Page {
             // OBTEM O ID DA SESSÃO ATUAL
             $id = Session::getSessionId();
 
-            $turma = User::getUserClass($id);
+            $turma = EntityUser::getUserClass($id);
 
             if (!empty($turma)) {
                 // ATRIBUI O LINK À PÁGINA DE HORÁRIO
@@ -92,7 +92,7 @@ class Page {
             $id = Session::getSessionId();            
 
             // OBTÊM OS DADOS DO USUARIO
-            $obUser = User::getUserById($id);
+            $obUser = EntityUser::getUserById($id);
 
             // RETORNA O DROPDOWN DO LOGIN
             return View::render('pages/header/dropdown', [

@@ -2,9 +2,9 @@
 
 namespace App\Controller\Pages;
 
+use App\Models\Entity\User as EntityUser;
 use App\Utils\Tools\Alert;
-use \App\Utils\View;
-use \App\Models\Entity\User as EntityUser;
+use App\Utils\View;
 
 class SignUp extends Page {
 

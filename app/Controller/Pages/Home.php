@@ -2,7 +2,7 @@
 
 namespace App\Controller\Pages;
 
-use \App\Utils\View;
+use App\Utils\View;
 
 class Home extends Page {
 
@@ -13,7 +13,7 @@ class Home extends Page {
      */
     public static function getHome() {
         // VIEW DA HOME
-        $content =  View::render('pages/home');
+        $content = View::render('pages/home');
 
         // RETORNA A VIEW DA PAGINA
         return parent::getHeader('Home', $content, 'home');

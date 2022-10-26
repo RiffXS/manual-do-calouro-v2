@@ -2,7 +2,7 @@
 
 namespace App\Controller\Pages;
 
-use \App\Utils\View;
+use App\Utils\View;
 
 class Map extends Page {
 
@@ -13,7 +13,7 @@ class Map extends Page {
      */
     public static function getMap() {
         // VIEW DA HOME
-        $content =  View::render('pages/map');
+        $content = View::render('pages/map');
 
         // RETORNA A VIEW DA PAGINA
         return parent::getHeader('Mapa', $content, 'map');

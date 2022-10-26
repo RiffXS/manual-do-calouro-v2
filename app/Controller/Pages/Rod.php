@@ -13,7 +13,7 @@ class Rod extends Page {
      */
     public static function getRod() {
         // VIEW DA HOME
-        $content =  View::render('pages/rod');
+        $content = View::render('pages/rod');
 
         // RETORNA A VIEW DA PAGINA
         return parent::getHeader('Rod', $content, 'rod');

@@ -5,7 +5,7 @@ namespace App\Controller\Pages;
 use App\Models\Entity\Hash as EntityHash;
 use App\Models\Entity\User as EntityUser;
 use App\Utils\Tools\Alert;
-use \App\Utils\View;
+use App\Utils\View;
 
 class Redefine extends Page {
 
@@ -29,7 +29,7 @@ class Redefine extends Page {
             $request->getRouter()->redirect('/recovery?status=invalid_hash');
         }
         // VIEW DO SOBRE
-        $content =  View::render('pages/redefine', [
+        $content = View::render('pages/redefine', [
             'id' => $obHash->getFkId(),
             'status' => Alert::getStatus($request)
         ]);

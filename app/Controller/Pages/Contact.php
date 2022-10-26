@@ -2,9 +2,9 @@
 
 namespace App\Controller\Pages;
 
-use App\Models\Entity\User;
-use \App\Utils\View;
-use \App\Models\Entity\Contact as EntityContact;
+use App\Models\Entity\Contact as EntityContact;
+use App\Models\Entity\User as EntityUser;
+use App\Utils\View;
 
 class Contact extends Page {
 
@@ -20,7 +20,7 @@ class Contact extends Page {
         $views = self::getContacts($obContact);
 
         // VIEW DOS CONTATOS
-        $content =  View::render('pages/contacts', [
+        $content = View::render('pages/contacts', [
             'professores' => $views['professores'],
             'servidores'  => $views['servidores']
         ]);
@@ -69,7 +69,7 @@ class Contact extends Page {
         $content = '';
         
         // OBTENDO AS INFORMAÇÕES DE CONTATO DO SERVIDOR
-        $typeContacts = User::getUserContact($id);
+        $typeContacts = EntityUser::getUserContact($id);
 
         // LOOP PARA IMPRIMIR OS CONTATOS
         for ($i = 0; $i < count($typeContacts); $i++) {

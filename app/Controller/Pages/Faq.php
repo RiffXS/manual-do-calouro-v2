@@ -2,7 +2,7 @@
 
 namespace App\Controller\Pages;
 
-use \App\Utils\View;
+use App\Utils\View;
 
 class Faq extends Page {
 
@@ -13,7 +13,7 @@ class Faq extends Page {
      */
     public static function getFaq() {
         // VIEW DA HOME
-        $content =  View::render('pages/faq');
+        $content = View::render('pages/faq');
 
         // RETORNA A VIEW DA PAGINA
         return parent::getHeader('Faq', $content, 'faq');
