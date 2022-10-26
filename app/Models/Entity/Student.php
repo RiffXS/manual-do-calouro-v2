@@ -81,7 +81,7 @@ class Student {
      * @return boolean
      */
     public function verifyEnrollment() {
-        $result = (new Database('aluno'))->select("num_matricula = {$this->num_matricula}");
+        $result = (new Database('aluno'))->select("num_matricula = '{$this->num_matricula}'");
         
         // VERIFICA SE HOUVE RESULTADO
         if ($result->rowCount() > 0) {

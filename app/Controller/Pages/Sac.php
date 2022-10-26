@@ -31,7 +31,7 @@ class Sac extends Page {
         // POST VARS
         $postVars = $request->getPostVars();
 
-        $emailTarget = $postVars['email'] ?? 'Não informado';
+        $emailTarget = 'manualdocalouro.ifes@gmail.com';
         $phoneNumber = $postVars['telefone'];
         $subjectText = $postVars['assunto'];
         $messageText = $postVars['texto'];

@@ -90,6 +90,8 @@ class Profile extends Page {
                         // INSERE O USUARIO NA TABELA DE ALUNOS
                         $obStudent->insertStudent();
                         $obUser->setAcess(3); // ALTERA O NIVEL DE ACESSO PARA 3 (ALUNO)
+                    } else {
+                        $request->getRouter()->redirect('/profile?status=enrollment_duplicated');
                     }
                 }
                 break;

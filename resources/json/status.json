@@ -70,5 +70,9 @@
     "pass_updated": {
         "type": "success",
         "text": "Senha atualizada!"
+    },
+    "enrollment_duplicated": {
+        "type": "danger",
+        "text": "Matricula ja registrada!"
     }
 }

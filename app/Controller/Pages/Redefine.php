@@ -35,7 +35,7 @@ class Redefine extends Page {
         ]);
 
         // RETORNA A VIEW DA PAGINA
-        return parent::getHeader('Redefinir', $content);
+        return parent::getHeader('Redefinir Senha', $content);
     }
 
     /**
