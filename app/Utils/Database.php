@@ -78,12 +78,13 @@ class Database {
 	 * Método responsável por criar uma conexão com o banco de dados
 	 */
 	private function setConnection() {
+		// TENTA CRIAR UMA NOVA CONEXÃO PDO
 		try {
-			$this->connection = new PDO('pgsql:host=' . self::$host . ';dbname=' . self::$name . ';port=' . self::$port, self::$user, self::$pass);
+			$this->connection = new PDO('pgsql:host='.self::$host.';dbname='.self::$name.';port='.self::$port, self::$user, self::$pass);
 			$this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		} catch (PDOException $e) {
-			die('ERROR: ' . $e->getMessage());
+			die('ERROR: '.$e->getMessage());
 		}
 	}
 
@@ -94,6 +95,7 @@ class Database {
 	 * @return \PDOStatement|bool
 	 */
 	public function execute($query, $params = []) {
+		// TENTA EXECUTAR A QUERY
 		try {
 			$statement = $this->connection->prepare($query);
 			$statement->execute($params);
@@ -101,7 +103,7 @@ class Database {
 			return $statement;
 
 		} catch (PDOException $e) {
-			die('ERROR: ' . $e->getMessage());
+			die('ERROR: '.$e->getMessage());
 		}
 	}
 
@@ -116,7 +118,7 @@ class Database {
 		$binds  = array_pad([], count($fields), '?');
 
 		//MONTA A QUERY
-		$query = 'INSERT INTO ' . $this->table . ' (' . implode(',', $fields) . ') VALUES (' . implode(',', $binds) . ')';
+		$query = 'INSERT INTO '.$this->table.'('.implode(',', $fields).') VALUES ('.implode(',', $binds).')';
 
 		//EXECUTA O INSERT
 		$this->execute($query, array_values($values));
@@ -135,12 +137,12 @@ class Database {
 	 */
 	public function select($where = null, $order = null, $limit = null, $fields = '*') {
 		//DADOS DA QUERY
-		$where = !is_null($where) ? 'WHERE ' . $where : '';
-		$order = !is_null($order) ? 'ORDER BY ' . $order : '';
-		$limit = !is_null($limit) ? 'LIMIT ' . $limit : '';
+		$where = !is_null($where) ? 'WHERE '.$where : '';
+		$order = !is_null($order) ? 'ORDER BY '.$order : '';
+		$limit = !is_null($limit) ? 'LIMIT '.$limit : '';
 
 		//MONTA A QUERY
-		$query = 'SELECT ' . $fields . ' FROM ' . $this->table . ' ' . $where . ' ' . $order . ' ' . $limit;
+		$query = 'SELECT '.$fields.' FROM '.$this->table.' '.$where. ' '.$order.' '.$limit;
 
 		//EXECUTA A QUERY
 		return $this->execute($query);
@@ -157,7 +159,7 @@ class Database {
 		$fields = array_keys($values);
 
 		//MONTA A QUERY
-		$query = 'UPDATE ' . $this->table . ' SET ' . implode('=?,', $fields) . '=? WHERE ' . $where;
+		$query = 'UPDATE '.$this->table.' SET '.implode('=?,', $fields).'=? WHERE '.$where;
 
 		//EXECUTAR A QUERY
 		$this->execute($query, array_values($values));
@@ -173,7 +175,7 @@ class Database {
 	 */
 	public function delete($where) {
 		//MONTA A QUERY
-		$query = 'DELETE FROM ' . $this->table . ' WHERE ' . $where;
+		$query = 'DELETE FROM '.$this->table.' WHERE '.$where;
 
 		//EXECUTA A QUERY
 		$this->execute($query);

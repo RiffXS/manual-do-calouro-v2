@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Models\Entity\User;
+use App\Models\Entities\User;
 use App\Utils\View;
 use App\Utils\Tools\Alert;
 use App\Utils\Session;

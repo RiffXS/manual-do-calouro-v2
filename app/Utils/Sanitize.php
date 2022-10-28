@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Utils\Tools;
+namespace App\Utils;
 
 class Sanitize {
 
@@ -10,27 +10,27 @@ class Sanitize {
      * @return bool false se encontrar, true se passar
      */
     public static function validateForm($array) {
-        // Iniciando a variavel de controle
+        // VARIAVEL DE CONTROLE
         $ok = false;
 
-        // Percorre cada indice do array
         foreach ($array as $string) {
-            // Utiliza a esta função dectar caracters (<>, "', &)
+            // TRANSFORMA OS SEGUINTES CARACTERS (<>, "', &)
             $f_string = htmlspecialchars($string, ENT_QUOTES);
 
-            // Verifica se a string sanitizada e diferente da original
+            // VERIFICA SE A STRING SANITIZADA E IGUAL A ORIGINAL
             if ($f_string != $string) {
                 $ok = true;
                 break;
             }
         }
-        // Retorno da função
+        // RETORNA O CONTROLE
         return $ok;
     }
 
     /**
      * Metodo responsavel por sanitizar todos os indices de um array
-     * @param array $array a ser percorrido
+     * @param  array $array
+     * @return array
      */
     public static function sanitizeForm($array) {
         // Percorre cada indice do array
@@ -43,7 +43,7 @@ class Sanitize {
             // Sobreescreve o valor original
             $array[$key] = $value;
         }
-        // Retornando o array sanitizado
+        // RETORNA O ARRAY SANITIZADO
         return $array;
     }
 }

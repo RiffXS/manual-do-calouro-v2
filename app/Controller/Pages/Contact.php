@@ -2,8 +2,8 @@
 
 namespace App\Controller\Pages;
 
-use App\Models\Entity\Contact as EntityContact;
-use App\Models\Entity\User as EntityUser;
+use App\Models\Entities\Contact as EntityContact;
+use App\Models\Entities\User as EntityUser;
 use App\Utils\View;
 
 class Contact extends Page {

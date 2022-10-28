@@ -2,7 +2,7 @@
 
 namespace App\Controller\Pages;
 
-use App\Models\Email;
+use App\Models\Classes\Email;
 use App\Utils\Session;
 use App\Utils\View;
 use App\Utils\Tools\Alert;

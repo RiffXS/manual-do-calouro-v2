@@ -2,7 +2,7 @@
 
 namespace App\Utils;
 
-use App\Models\Entity\User as EntityUser; 
+use App\Models\Entities\User as EntityUser; 
 
 class Session {
 
@@ -29,7 +29,7 @@ class Session {
 
     /**
      * Método responsével por criar o login do usuário
-     * @param \App\Models\Entity\User @obUser
+     * @param \App\Models\Entities\User @obUser
      * @param boolean
      */
     public static function login($obUser) {

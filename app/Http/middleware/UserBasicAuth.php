@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Entity\User;
+use App\Models\Entities\User as EntityUser;
 use Exception;
 
 class UserBasicAuth {
@@ -17,10 +17,10 @@ class UserBasicAuth {
             return false;
         }
         // BUSCA USUARIO PELO EMAIL
-        $obUser = User::getUserByEmail($_SERVER['PHP_AUTH_USER']);
+        $obUser = EntityUser::getUserByEmail($_SERVER['PHP_AUTH_USER']);
 
         // VEIRIFICA INSTANCIA
-        if (!$obUser instanceof User) {
+        if (!$obUser instanceof EntityUser) {
             return false;
         }
         // VALIDA A SENHA E RETORNA O USUARIO

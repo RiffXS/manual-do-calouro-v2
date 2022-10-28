@@ -1,16 +1,13 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Classes;
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 class Email {
 
-    /**
-     * Credencias de acesso ao SMTP
-     * @var string
-     */
+    // CREDENCIAIS DO ACESSO SMTP
     const HOST = 'smtp.gmail.com';
     const USERNAME = 'manualdocalouro.ifes@gmail.com';
     const PASSWORD = 'srjboszkjzmqbysg';
@@ -18,10 +15,7 @@ class Email {
     const PORT = 587;
     const CHARSET  = 'UTF-8';
 
-    /**
-     * Dados do remetente
-     * @var string
-     */
+    // DADOS DO REMETENTE
     const FROM_EMAIL = 'manualdocalouro.ifes@gmail.com';
     const FROM_NAME  = 'Manual do Calouro';
 
@@ -72,24 +66,28 @@ class Email {
 
             // DESTINATARIOS
             $adresses = is_array($adresses) ? $adresses : [$adresses];
+
             foreach ($adresses as $adress) {
                 $obMail->addAddress($adress);
             }
 
             // ANEXOS
             $atachments = is_array($atachments) ? $atachments : [$atachments];
+
             foreach ($atachments as $atachment) {
                 $obMail->addAttachment($atachment);
             }
 
             // CC
             $css = is_array($css) ? $css : [$css];
+
             foreach ($css as $cc) {
                 $obMail->addCC($cc);
             }
 
             // BCC
             $bcss = is_array($bcss) ? $bcss : [$bcss];
+            
             foreach ($bcss as $bcc) {
                 $obMail->addBCC($bcc);
             }

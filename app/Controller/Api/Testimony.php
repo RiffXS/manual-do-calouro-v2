@@ -3,7 +3,7 @@
 namespace App\Controller\Api;
 
 use \App\Utils\Pagination;
-use App\Models\Entity\Testimony as EntityTestimony;
+use App\Models\Entities\Testimony as EntityTestimony;
 use Exception;
 
 class Testimony extends Api {

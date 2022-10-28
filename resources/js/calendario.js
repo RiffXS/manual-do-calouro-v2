@@ -1,4 +1,9 @@
 !(function() {
+    /**
+     * Função para traduzir o nome dos meses
+     * @param  {string} titulo 
+     * @return {string} 
+     */
     function traduzirMes(titulo) {
         if (titulo.includes('January')) {
             return 'Janeiro'
@@ -39,6 +44,11 @@
         }
     }
 
+    /**
+     * Função para traduiz o nome dos dias
+     * @param  {string} dia
+     * @return {string}
+     */
     function traduzirDia(dia) {
         switch (dia) {
             case 'Sun':
@@ -64,9 +74,9 @@
         }
     }
     
-        var today = moment();
+    var today = moment();
     
-        function Calendar(selector, events) {
+    function Calendar(selector, events) {
         this.el = document.querySelector(selector);
         this.events = events;
         this.current = moment().date(1);

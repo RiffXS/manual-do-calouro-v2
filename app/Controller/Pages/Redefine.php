@@ -2,8 +2,8 @@
 
 namespace App\Controller\Pages;
 
-use App\Models\Entity\Hash as EntityHash;
-use App\Models\Entity\User as EntityUser;
+use App\Models\Entities\Hash as EntityHash;
+use App\Models\Entities\User as EntityUser;
 use App\Utils\Tools\Alert;
 use App\Utils\View;
 
