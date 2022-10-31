@@ -18,7 +18,7 @@ class SignUp extends Page {
             'status' => Alert::getStatus($request)
         ]);
         // RETORNA A VIEW DA PAGINA
-        return parent::getHeader('Cadastro', $content);
+        return parent::getPage('Cadastro', $content);
     }
 
     public static function setSignUp($request) {

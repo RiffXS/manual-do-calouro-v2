@@ -21,7 +21,7 @@ class Recovery extends Page {
         ]);
 
         // RETORNA A VIEW DA PAGINA
-        return parent::getHeader('Recuperar Senha', $content);
+        return parent::getPage('Recuperar Senha', $content);
     }
 
     /**

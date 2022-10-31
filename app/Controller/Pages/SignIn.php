@@ -19,7 +19,7 @@ class SignIn extends Page {
             'status' => Alert::getStatus($request)
         ]);
         // RETORNA A VIEW DA PAGINA
-        return parent::getHeader('Login', $content);
+        return parent::getPage('Login', $content);
     }
 
     /**

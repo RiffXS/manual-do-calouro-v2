@@ -26,7 +26,7 @@ class Contact extends Page {
         ]);
 
         // RETORNA A VIEW DA PAGINA
-        return parent::getHeader('Contatos', $content, 'contact');
+        return parent::getPage('Contatos', $content, 'contact');
     }
     
     /**

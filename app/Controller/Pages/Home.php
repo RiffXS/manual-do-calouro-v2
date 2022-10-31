@@ -15,6 +15,6 @@ class Home extends Page {
         $content = View::render('pages/home');
 
         // RETORNA A VIEW DA PAGINA
-        return parent::getHeader('Home', $content, 'home');
+        return parent::getPage('Home', $content, 'home');
     }
 }

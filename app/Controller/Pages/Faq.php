@@ -15,6 +15,6 @@ class Faq extends Page {
         $content = View::render('pages/faq');
 
         // RETORNA A VIEW DA PAGINA
-        return parent::getHeader('FAQ', $content, 'faq');
+        return parent::getPage('FAQ', $content, 'faq');
     }
 }

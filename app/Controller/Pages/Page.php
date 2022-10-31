@@ -9,7 +9,8 @@ use App\Utils\View;
 class Page {
 
     /**
-     * Módulos disponíveis no painel
+     * Paginas disponíveis no navlink
+     * @var array
      */
     private static $paginas = [
         'home' => [
@@ -47,11 +48,11 @@ class Page {
     ];
 
     /**
-     * Methodo responsavel por rendenizar a view do header
+     * Método responsavel por rendenizar os links do header
      * @param  string $currentModule
      * @return string
      */
-    private static function getLinks($currentModule) {
+    private static function getLinks($currentModule) {  
         // LINKS DO MENU
         $links = '';
 
@@ -59,26 +60,26 @@ class Page {
         if (Session::isLogged()) {
             // OBTEM O ID DA SESSÃO ATUAL
             $id = Session::getSessionId();
-
             $turma = EntityUser::getUserClass($id);
 
             if (!empty($turma)) {
+                $curso  = $turma['curso'];
+                $modulo = $turma['modulo'];
+
                 // ATRIBUI O LINK À PÁGINA DE HORÁRIO
-                self::$paginas['schedule']['link'] = URL."/schedule?curso={$turma['curso']}&modulo={$turma['modulo']}";  
+                self::$paginas['schedule']['link'] = URL."/schedule?curso=$curso&modulo=$modulo";  
             }
         }
         // ITERA OS MODULOS
-        foreach (self::$paginas as $hash=>$module) {
+        foreach (self::$paginas as $hash => $module) {
             $links .= View::render('pages/header/link', [
                 'label'   => $module['label'],
                 'link'    => $module['link'],
                 'current' => $hash == $currentModule ? 'active' : ''
             ]);
         }
-        // RETORNA A RENDENIZAÇÃO DO MENU
-        return View::render('pages/header/box', [
-            'links' => $links
-        ]); 
+        // RETORNA A RENDENIZAÇÃO DOS LINKS
+        return $links;
     }
 
     /**
@@ -110,23 +111,20 @@ class Page {
      * @param  string $currentModule
      * @return string
      */
-    public static function getHeader($tittle, $content, $currentModule = '') {
-        // RENDENIZA A VIEW DO PAINEL
-        $contentPanel = View::render('pages/header', [
-            'menu'    => self::getLinks($currentModule),
-            'content' => $content,
+    public static function getHeader($module) {
+        // RENDENIZA A VIEW DO HEADER
+        return View::render('pages/header', [
+            'links'    => self::getLinks($module),
             'login'   => self::getLogin()
         ]);
-        // RETORNA A PAGINA RENDENIZADA
-        return self::getPage($tittle, $contentPanel);
     }
-
 
     /**
      * Méthodo responsavel por rendenizar o rodapé da pagina
      * @return string
      */
     private static function getFooter() {
+        // RENDENIZA A VIEW DO FOOTER
         return View::render('pages/footer');
     }
 
@@ -134,36 +132,16 @@ class Page {
      * Metodo responsavel por retornar o contéudo (view) da pagina generica
      * @return string 
      */
-    public static function getPage($title, $content) {
+    public static function getPage($title, $content, $module = '') {
+        // RENDENIZA A PAGINA
         return View::render('pages/page',[
             'title'   => $title,
+            'header'  => self::getHeader($module),
             'content' => $content,
             'footer'  => self::getFooter()
         ]);
     }
     
-    /**
-     * Methodo responsavel por retornar um link da paginação
-     * @param  array  $queryParams
-     * @param  array  $page
-     * @param  string $url
-     * @return string
-     */
-    private static function getPaginationLink($queryParams, $page, $url, $label = null) {
-        // ALTERA PAGINA    
-        $queryParams['page'] = $page['page'];
-
-        // LINK
-        $link = $url.'?'.http_build_query($queryParams);
-
-        // VIEW
-        return View::render('pages/pagination/link', [
-            'page' => $label ?? $page['page'],
-            'link' => $link,
-            'active' => $page['current'] ? 'text-danger' : ''
-        ]);
-    }
-
     /**
      * Methodo responsavel por rendenizar o layout de paginação
      * @param \App\Http\Request     $request
@@ -217,4 +195,26 @@ class Page {
             'links' => $links
         ]); 
     } 
+
+    /**
+     * Methodo responsavel por retornar um link da paginação
+     * @param  array  $queryParams
+     * @param  array  $page
+     * @param  string $url
+     * @return string
+     */
+    private static function getPaginationLink($queryParams, $page, $url, $label = null) {
+        // ALTERA PAGINA    
+        $queryParams['page'] = $page['page'];
+
+        // LINK
+        $link = $url.'?'.http_build_query($queryParams);
+
+        // VIEW
+        return View::render('pages/pagination/link', [
+            'page' => $label ?? $page['page'],
+            'link' => $link,
+            'active' => $page['current'] ? 'text-danger' : ''
+        ]);
+    }
 }

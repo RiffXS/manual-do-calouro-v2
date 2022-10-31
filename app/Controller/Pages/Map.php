@@ -15,6 +15,6 @@ class Map extends Page {
         $content = View::render('pages/map');
 
         // RETORNA A VIEW DA PAGINA
-        return parent::getHeader('Mapa', $content, 'map');
+        return parent::getPage('Mapa', $content, 'map');
     }
 }

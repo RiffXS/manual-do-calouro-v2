@@ -20,7 +20,7 @@ class Sac extends Page {
             'email'  => Session::getSessionUser()->getEmail()
         ]);
         // RETORNA A VIEW DA PAGINA
-        return parent::getHeader('Fale Conosco', $content);
+        return parent::getPage('Fale Conosco', $content);
     }
 
     /**

@@ -35,7 +35,7 @@ class Profile extends Page {
             'campo'  => $view['colum']
         ]);
         // RETORNA A VIEW DA PAGINA
-        return parent::getHeader('Perfil', $content);
+        return parent::getPage('Perfil', $content);
     }
 
     /**

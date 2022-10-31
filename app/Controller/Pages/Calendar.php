@@ -15,6 +15,6 @@ class Calendar extends Page {
         $content = View::render('pages/calendar');
 
         // RETORNA A VIEW DA PAGINA
-        return parent::getHeader('Calendario', $content, 'calendar');
+        return parent::getPage('Calendario', $content, 'calendar');
     }
 }
