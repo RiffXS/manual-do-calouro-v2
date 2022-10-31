@@ -2,7 +2,7 @@
 
 namespace App\Controller\Pages;
 
-use App\Models\Entities\Schedule as EntitySchedule;
+use App\Models\Schedule as EntitySchedule;
 use App\Utils\View;
 
 class Schedule extends Page {
@@ -12,7 +12,7 @@ class Schedule extends Page {
      * @param \App\Http\Request
      * @return string 
      */
-    public static function getSchedule($request) {
+    public static function getSchedule($request): string {
         // QUERY PARAMS
         $queryParams = $request->getQueryParams();
 
@@ -45,9 +45,11 @@ class Schedule extends Page {
 
     /**
      * Metodo responsavel por retornar a view da tabela do horario
+     * @param integer $curso
+     * @param integer $modulo
      * @return string
      */
-    public static function getTable($curso, $modulo) {
+    public static function getTable($curso, $modulo): string {
         $obSchedule = EntitySchedule::getSchedule($curso, $modulo);
         $obTime     = EntitySchedule::getScheduleTime();
 
@@ -71,7 +73,7 @@ class Schedule extends Page {
      * @param integer $count
      * @return string
      */
-    public static function getRow($obSchedule, &$count) {        
+    public static function getRow($obSchedule, &$count): string {        
         $content = '';
         
         // Loop para cada aula
@@ -80,16 +82,17 @@ class Schedule extends Page {
             $content .= self::getItem($obSchedule[$count]);
             $count++;
         }
+        // RETORNA A VIEW DA LINHA
         return $content;
     }
 
     /**
-     * Metodo responsavel
+     * Metodo responsavel por criar cada item de aula da tabela
      * @param array $class
      * @return string
      */ 
-    public static function getItem($class) {
-        // VIEW DA COLUNA
+    public static function getItem($class): string {
+        // RETORNA A VIEW DA COLUNA
         return View::render('pages/schedule/item', [
             'sala' => $class['sala'],
             'materia' => $class['materia'],
@@ -99,10 +102,10 @@ class Schedule extends Page {
 
     /**
      * Metodo responsavel por retornar o curso
-     * @param integer $curso
-     * @return integer
+     * @param  integer $curso
+     * @return string
      */
-    private static function getCurso($curso) {
+    private static function getCurso($curso): string {
         // CURSO
         $curso = EntitySchedule::getCursoById($curso);
         

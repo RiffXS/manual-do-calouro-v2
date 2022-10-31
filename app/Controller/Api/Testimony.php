@@ -2,8 +2,9 @@
 
 namespace App\Controller\Api;
 
-use \App\Utils\Pagination;
-use App\Models\Entities\Testimony as EntityTestimony;
+use App\Models\Testimony as EntityTestimony;
+use App\Utils\Pagination;
+
 use Exception;
 
 class Testimony extends Api {

@@ -2,8 +2,8 @@
 
 namespace App\Controller\Pages;
 
-use App\Models\Entities\Hash as EntityHash;
-use App\Models\Entities\User as EntityUser;
+use App\Models\Hash as EntityHash;
+use App\Models\User as EntityUser;
 use App\Utils\Tools\Alert;
 use App\Utils\View;
 
@@ -14,7 +14,7 @@ class Redefine extends Page {
      * @param \App\Http\Request
      * @return string 
      */
-    public static function getRedefine($request) {
+    public static function getRedefine($request): string {
         // QUERY PARAMS
         $queryParams = $request->getQueryParams();
 
@@ -42,7 +42,7 @@ class Redefine extends Page {
      * Método responsavel por atualizar
      * @param \App\Http\Request
      */
-    public static function setRedefine($request) {
+    public static function setRedefine($request): void {
         // POST VARS
         $postVars = $request->getPostVars();    
         

@@ -2,7 +2,7 @@
 
 namespace App\Controller\Pages;
 
-use App\Models\Entities\User as EntityUser;
+use App\Models\User as EntityUser;
 use App\Utils\Session;
 use App\Utils\View;
 
@@ -52,7 +52,7 @@ class Page {
      * @param  string $currentModule
      * @return string
      */
-    private static function getLinks($currentModule) {  
+    private static function getLinks($current_module) {  
         // LINKS DO MENU
         $links = '';
 
@@ -75,7 +75,7 @@ class Page {
             $links .= View::render('pages/header/link', [
                 'label'   => $module['label'],
                 'link'    => $module['link'],
-                'current' => $hash == $currentModule ? 'active' : ''
+                'current' => $hash == $current_module ? 'active' : ''
             ]);
         }
         // RETORNA A RENDENIZAÇÃO DOS LINKS

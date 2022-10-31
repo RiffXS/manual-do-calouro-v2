@@ -11,7 +11,7 @@ class Json {
      * @return string
      */
     private static function getFilePath($name) {
-        return getenv('DIR').'/resources/json/'.$name.'.json';
+        return getenv('DIR').'/app/Json/'.$name.'.json';
     }
 
     /**

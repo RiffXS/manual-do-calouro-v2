@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Classes;
+namespace App\Models\Mail;
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;

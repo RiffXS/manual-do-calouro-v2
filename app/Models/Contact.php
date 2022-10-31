@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Models\Entities;
+namespace App\Models;
 
 use App\Utils\Database;
 
@@ -79,7 +79,6 @@ class Contact {
                     JOIN setor se ON (a.fk_setor_id_setor = se.id_setor)";
 
         // RETORNA OS DEPOIMENTOS
-        return (new Database())->execute($sql)->fetchAll(\PDO::FETCH_ASSOC);
-        
+        return (new Database())->execute($sql)->fetchAll(\PDO::FETCH_ASSOC); 
     }
 }

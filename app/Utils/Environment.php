@@ -13,12 +13,19 @@ class Environment {
 		if (!file_exists($dir . '/.env')) {
 			return false;
 		}
+		// OBTEM AS VARIÁVEIS DE AMBIENTE
+		$lines = file($dir.'/.env');
 
-		//DEFINE AS VARIÁVEIS DE AMBIENTE
-		$lines = file($dir . '/.env');
+		// REMOVE AS LINHAS EM BRANCO
+		foreach ($lines as $key => $value) {
+			// VERIFICA O TAMANHO DA LINHA ('\n')
+			if (strlen($value) == 2) {
+				unset($lines[$key]);
+			}
+		}
+		// DEFINE AS VARIAVEIS DE AMBIENTE
 		foreach ($lines as $line) {
 			putenv(trim($line));
-		}
+		}	
 	}
 }
-?>

@@ -2,10 +2,10 @@
 
 namespace App\Controller\Pages;
 
-use App\Models\Entities\Grade as EntityGrade;
-use App\Models\Entities\Student as EntityStudent;
-use App\Models\Entities\Teacher as EntityTeacher;
-use App\Models\Entities\User as EntityUser;
+use App\Models\Grade as EntityGrade;
+use App\Models\Student as EntityStudent;
+use App\Models\Teacher as EntityTeacher;
+use App\Models\User as EntityUser;
 use App\Utils\View;
 use App\Utils\Session;
 use App\Utils\Upload;

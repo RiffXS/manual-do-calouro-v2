@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Entities;
+namespace App\Models;
 
 use \App\Utils\Database;
 
@@ -93,5 +93,3 @@ class Student {
     }
     
 }
-
-?>

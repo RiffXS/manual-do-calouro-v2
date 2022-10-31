@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Entities\User as EntityUser;
+use App\Models\User as EntityUser;
 use Exception;
 
 class UserBasicAuth {

@@ -2,7 +2,7 @@
 
 namespace App\Controller\Pages;
 
-use App\Models\Classes\Email;
+use App\Models\Mail\Email;
 use App\Utils\Session;
 use App\Utils\View;
 use App\Utils\Tools\Alert;
@@ -11,9 +11,10 @@ class Sac extends Page {
 
     /**
      * Metodo responsavel por retornar o contéudo (view) da pagina fale conosco
+     * @param \App\Http\Request $request
      * @return string 
      */
-    public static function getSac($request) {
+    public static function getSac($request): string {
         // VIEW DA HOME
         $content = View::render('pages/sac', [
             'status' => Alert::getStatus($request),
@@ -27,7 +28,7 @@ class Sac extends Page {
      * Método responsavel por enviar o formulario e ancaminhar o email
      * @param \App\Http\Request
      */
-    public static function setSac($request) {
+    public static function setSac($request): void {
         // POST VARS
         $postVars = $request->getPostVars();
 
@@ -45,6 +46,5 @@ class Sac extends Page {
             $request->getRouter()->redirect('/sac?status=email_sent'); 
         } 
         $request->getRouter()->redirect('/sac?status=email_erro'); 
-
     }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Controller\Pages;
 
-use App\Models\Entities\User as EntityUser;
-use App\Models\Entities\Hash as EntityHash;
-use App\Models\Classes\Email;
-use App\Utils\View;
+use App\Models\Mail\Email;
+use App\Models\User as EntityUser;
+use App\Models\Hash as EntityHash;
 use App\Utils\Tools\Alert;
+use App\Utils\View;
 
 class Recovery extends Page {
 
@@ -25,27 +25,29 @@ class Recovery extends Page {
     }
 
     /**
-     * @param \App\Http\Request
      * 
+     * @param \App\Http\Request
      */
-    public static function setRecovery($request) {
+    public static function setRecovery($request): void {
         // POST VARS
         $postVars = $request->getPostVars();
 
         $email = $postVars['email'];
 
-        // VALIDA O EMAIL DO USUARIO
-        $obUser = EntityUser::getUserByEmail($email);
-        $id = $obUser->getUserId();
-
         // VALIDA O EMAIL
         if (EntityUser::validateUserEmail($email)) {
             $request->getRouter()->redirect('/profile?status=invalid_email');
         }
-        // VERIFICA SE EXISTE UM USUARIO COM ESSE EMAIL
+        // BUSCA O USUARIO PELO EMAIL
+        $obUser = EntityUser::getUserByEmail($email);
+        
+        // VERIFICA SE OBTEVE UM USUARIO COM ESSE EMAIL
         if (!$obUser instanceof EntityUser) {
             $request->getRouter()->redirect('/recovery?status=invalid_email');
         }
+        // OBTEM ID DO USUARIO
+        $id = $obUser->getUserId();
+
         // NOVA NSTANCIA
         $obHash = new EntityHash;
         $obHash->setFkId($id);
@@ -69,12 +71,11 @@ class Recovery extends Page {
 
         // VERIFICA SE O PROCESSO DE ENVIO FOI EXECUTADO
         if ($obEmail->sendEmail($email, $subject, $message)) {
-            // SUCESSO
             $request->getRouter()->redirect('/recovery?status=recovery_send'); 
-        } else {
+        } 
+        else {
             $obHash->deleteHash();
-            
             $request->getRouter()->redirect('/recovery?status=recovery_erro'); 
-        }
+        }      
     }
 }

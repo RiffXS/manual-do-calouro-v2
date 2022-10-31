@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Entities;
+namespace App\Models;
 
 use \App\Utils\Database;
 
@@ -15,5 +15,4 @@ class Grade {
 
         return (new Database('turma'))->select($where, null, null, 'id_turma')->fetch(\PDO::FETCH_ASSOC);
     }
-
 }

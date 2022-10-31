@@ -2,7 +2,7 @@
 
 namespace App\Controller\Pages;
 
-use App\Models\Entities\User as EntityUser;
+use App\Models\User as EntityUser;
 use App\Utils\Session;
 use App\Utils\Tools\Alert;
 use App\Utils\View;
@@ -11,9 +11,10 @@ class SignIn extends Page {
 
     /**
      * Metodo responsavel por retornar o contéudo (view) da pagina login
+     * @param \App\Http\Request $request
      * @return string 
      */
-    public static function getSignIn($request) {
+    public static function getSignIn($request): string {
         // CONTEUDO DA PAGINA DE LOGIN
         $content = View::render('pages/signin', [
             'status' => Alert::getStatus($request)
@@ -26,7 +27,7 @@ class SignIn extends Page {
      * Metodo responsavel por realizar login no site
      * @param \App\Http\Request
      */
-    public static function setSignIn($request) {
+    public static function setSignIn($request): void {
         // POST VARS
         $postVars = $request->getPostVars();
 
@@ -59,7 +60,7 @@ class SignIn extends Page {
      * Mehtodo responsavel por deslogar o usuario
      * @param \App\Http\Request
      */
-    public static function setLogout($request) {
+    public static function setLogout($request): void {
         // DESTROI A SESSÃO DE LOGIN
         Session::logout();
 

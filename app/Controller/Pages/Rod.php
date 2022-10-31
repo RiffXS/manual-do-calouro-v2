@@ -8,9 +8,10 @@ class Rod extends Page {
 
     /**
      * Metodo responsavel por retornar o contéudo (view) da pagina rod
+     * @param \App\Http\Request $request
      * @return string 
      */
-    public static function getRod() {
+    public static function getRod(): string {
         // VIEW DA HOME
         $content = View::render('pages/rod');
 

@@ -2,7 +2,7 @@
 
 namespace App\Controller\Pages;
 
-use App\Models\Entities\Testimony as EntityTestimony;
+use App\Models\Testimony as EntityTestimony;
 use App\Utils\View;
 use App\Utils\Pagination;
 

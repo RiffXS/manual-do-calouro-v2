@@ -2,7 +2,7 @@
 
 namespace App\Controller\Pages;
 
-use App\Models\Entities\User as EntityUser;
+use App\Models\User as EntityUser;
 use App\Utils\Tools\Alert;
 use App\Utils\View;
 
@@ -10,9 +10,10 @@ class SignUp extends Page {
 
     /**
      * Metodo responsavel por retornar o contéudo (view) da pagina cadastro
-     * @return string 
+     * @param \App\Http\Request $request
+     * @return string
      */
-    public static function getSignUp($request) {
+    public static function getSignUp($request): string {
         // CONTEUDO DA PAGINA DE LOGIN
         $content = View::render('pages/signup', [
             'status' => Alert::getStatus($request)
@@ -21,7 +22,11 @@ class SignUp extends Page {
         return parent::getPage('Cadastro', $content);
     }
 
-    public static function setSignUp($request) {
+    /**
+     * Método responsavel por processar o formulario de cadastro
+     * @param \App\Http\Request $request
+     */
+    public static function setSignUp($request): void {
         // POST VARS
         $postVars = $request->getPostVars();
 
