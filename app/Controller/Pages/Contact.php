@@ -39,8 +39,8 @@ class Contact extends Page {
         $contentServers = '';
         
         // OBTENDO OS ARRAYS DOS CONTATOS
-        $teacher = $obContact->professor;
-        $servers = $obContact->servidor;
+        $teacher = $obContact->getProfessor();
+        $servers = $obContact->getServidor();
 
         // LOOP PARA OBTER AS VIEWS DOS CARDS DOS PROFESSORES
         for ($p = 0; $p < count($teacher); $p++) {
@@ -52,11 +52,13 @@ class Contact extends Page {
             $contentServers .= self::cardServer($servers[$s]);
         }
 
-        // RETORNA UM ARRAY COM AS VIEWS DOS PROFESSORES E SERVIORES
-        return [
+        $content = [
             'professores' => $contentTeacher,
             'servidores'  => $contentServers
         ];
+
+        // RETORNA UM ARRAY COM AS VIEWS DOS PROFESSORES E SERVIORES
+        return $content;
     }
 
     /**

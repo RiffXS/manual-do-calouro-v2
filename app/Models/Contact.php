@@ -27,14 +27,6 @@ class Contact {
     }
 
     /**
-     * Método responsável por 
-     * @param array $key
-     */
-    public function __get($key) {
-        return $this->{$key};
-    }
-
-    /**
      * Método responsável por retornar os contatos dos professores
      * @return array
      */
@@ -80,5 +72,21 @@ class Contact {
 
         // RETORNA OS DEPOIMENTOS
         return (new Database())->execute($sql)->fetchAll(\PDO::FETCH_ASSOC); 
+    }
+
+    /**
+     * Get array com os dados dos professores
+     * @return  array
+     */ 
+    public function getProfessor() {
+        return $this->professor;
+    }
+
+    /**
+     * Get array com os dados dos servidores
+     * @return  array
+     */ 
+    public function getServidor() {
+        return $this->servidor;
     }
 }

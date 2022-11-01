@@ -46,7 +46,7 @@ class Recovery extends Page {
             $request->getRouter()->redirect('/recovery?status=invalid_email');
         }
         // OBTEM ID DO USUARIO
-        $id = $obUser->getUserId();
+        $id = $obUser->getId_usuario();
 
         // NOVA NSTANCIA
         $obHash = new EntityHash;

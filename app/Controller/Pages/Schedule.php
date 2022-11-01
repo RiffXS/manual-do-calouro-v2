@@ -8,7 +8,7 @@ use App\Utils\View;
 class Schedule extends Page {
     
     /**
-     * Metodo responsavel por retornar o contéudo (view) da pagina horario
+     * Método responsavel por retornar o contéudo (view) da pagina horario
      * @param \App\Http\Request
      * @return string 
      */
@@ -22,25 +22,37 @@ class Schedule extends Page {
         // VERIFICA SE HOUVE EXISTE PARAMETROS PRA CONSULTA DE HORARIOS
         if (!empty($curso) and !empty($modulo)) {
             // OBTEM OS DADOS PARA TABELA
-            $tableSchedule = self::getTable($curso, $modulo);
+            $nome  = self::getCurso($curso);
+            $table = self::getTable($curso, $modulo);
 
             $content = View::render('pages/schedule', [
-                'horarios' => $tableSchedule,
-                'hidden'   => '',
-                'curso'    => self::getCurso($curso),
-                'modulo'   => $modulo
+                'curso'    => $nome,
+                'modulo'   => $modulo,
+                'horarios' => $table,
+                'hidden'   => ''
             ]);
         // RENDENIZA A O HORARIO SEM TABELA    
         } else {
             $content = View::render('pages/schedule', [
                 'horarios' => '',
-                'hidden'   => 'd-none',
                 'curso'    => '',
-                'modulo'   => ''
+                'modulo'   => '',
+                'hidden'   => 'd-none'
             ]);
         }
         // RETORNA A VIEW DA PAGINA
         return parent::getPage('Horários', $content, 'schedule');
+    }
+
+    /**
+     * Metodo responsavel por retornar o nome do curso
+     * @param  integer $curso
+     * @return string
+     */
+    private static function getCurso($curso): string {
+        // RETORNA O NOME DO CURSO
+        $curso = EntitySchedule::getCursoById($curso);
+        return $curso['dsc_curso'];
     }
 
     /**
@@ -50,17 +62,21 @@ class Schedule extends Page {
      * @return string
      */
     public static function getTable($curso, $modulo): string {
-        $obSchedule = EntitySchedule::getSchedule($curso, $modulo);
-        $obTime     = EntitySchedule::getScheduleTime();
-
+        // DECLARAÇÃO DE VARIAVEIS
         $count = 0;
         $content = '';
-        
-        for ($i = 0; $i < count($obTime); $i++) {
+
+        // NOVA INSTANCIA
+        $obSchedule = new EntitySchedule($curso, $modulo);
+
+        $horas = $obSchedule->getTimes();
+        $aulas = $obSchedule->getClass();
+
+        for ($i = 0; $i < count($horas); $i++) {
             $content .= View::render('pages/schedule/row', [
-                'hora_inicio' => $obTime[$i]['hora_aula_inicio'],
-                'hora_fim'    => $obTime[$i]['hora_aula_fim'],
-                'aulas'       => self::getRow($obSchedule, $count)
+                'hora_inicio' => $horas[$i]['hora_aula_inicio'],
+                'hora_fim'    => $horas[$i]['hora_aula_fim'],
+                'aulas'       => self::getRow($aulas, $count)
             ]);
         }
         // RETORNA O CONTEÚDO DA PÁGINA
@@ -69,17 +85,17 @@ class Schedule extends Page {
     
     /**
      * Metodo responsavel por rendenizar a linha de items do horario
-     * @param array $obSchedule
+     * @param array   $aulas
      * @param integer $count
      * @return string
      */
-    public static function getRow($obSchedule, &$count): string {        
+    public static function getRow($aulas, &$count): string {        
         $content = '';
         
         // Loop para cada aula
         for ($i = 0; $i < 6; $i++) { 
             // VIEW DO HORÁRIO
-            $content .= self::getItem($obSchedule[$count]);
+            $content .= self::getItem($aulas[$count]);
             $count++;
         }
         // RETORNA A VIEW DA LINHA
@@ -91,25 +107,12 @@ class Schedule extends Page {
      * @param array $class
      * @return string
      */ 
-    public static function getItem($class): string {
+    public static function getItem($aula): string {
         // RETORNA A VIEW DA COLUNA
         return View::render('pages/schedule/item', [
-            'sala' => $class['sala'],
-            'materia' => $class['materia'],
-            'professor' => $class['professor']
+            'sala' => $aula['sala'],
+            'materia' => $aula['materia'],
+            'professor' => $aula['professor']
         ]);
-    }
-
-    /**
-     * Metodo responsavel por retornar o curso
-     * @param  integer $curso
-     * @return string
-     */
-    private static function getCurso($curso): string {
-        // CURSO
-        $curso = EntitySchedule::getCursoById($curso);
-        
-        // RETORNA O NOME DO CURSO
-        return $curso['dsc_curso'];
     }
 }

@@ -34,23 +34,6 @@ class Student {
     }
 
     /**
-     * Método responsável por mudar os atributos da classe
-     * @param string $name
-     * @param mixed  $value
-     */
-    public function __set($name, $value) {
-        $this->{$name} = $value;
-    }
-
-    /**
-     * Método responsável por obter o valor de um atributo da classe
-     * @return mixed
-     */
-    public function __get($name) {
-        return $this->{$name};    
-    }
-
-    /**
      * Método responsável por cadastrar um usuário como aluno
      * @return boolean
      */
@@ -92,4 +75,11 @@ class Student {
         return true;
     }
     
+    /**
+     * Set iD da turma do aluno
+     * @param  integer  $fk_turma_id_turma  ID da turma do aluno
+     */ 
+    public function setFk_turma($fk_id) {
+        $this->fk_turma_id_turma = $fk_id;
+    }
 }

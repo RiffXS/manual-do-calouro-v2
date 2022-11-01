@@ -234,45 +234,36 @@ class User {
         return true;
     }
 
+    /**
+     * Obtem o id do usuario
+     * @return integer
+     */
+    public function getId_usuario() {
+        return $this->id_usuario;
+    }
 
     /**
      * Atribui um id ao usuario manualmente
      * @param integer $id
      */
-    public function setUserId($id) {
+    public function setId_usuario($id) {
         $this->id_usuario = $id;
-    }
-
-    /**
-     * Obtem o id do usuario
-     * @return integer
-     */
-    public function getUserId() {
-        return $this->id_usuario;
-    }
-
-    /**
-     * Atribui o nome do usuario
-     * @param string $value
-     */
-    public function setNomUser($name) { 
-        $this->nom_usuario = $name;
     }
 
     /**
      * Obtem o nome do usuario
      * @return string
      */
-    public function getNomUser() { 
+    public function getNom_usuario() { 
         return $this->nom_usuario;
     }
 
     /**
-     * Atribui o email do usuario
-     * @param string $email
+     * Atribui o nome do usuario
+     * @param string $value
      */
-    public function setEmail($email) { 
-        $this->email = $email;
+    public function setNom_usuario($name) { 
+        $this->nom_usuario = $name;
     }
 
     /**
@@ -284,84 +275,91 @@ class User {
     }
 
     /**
-     * Atribui a senha do usuario
-     * @param string $senha
+     * Atribui o email do usuario
+     * @param string $email
      */
-    public function setPass($senha) { 
-        !empty($senha) ? $this->senha = password_hash($senha, PASSWORD_DEFAULT) : $this->senha; 
+    public function setEmail($email) { 
+        $this->email = $email;
     }
 
     /**
      * Obtem a senha do usuario
      * @return string
      */
-    public function getPass() { 
+    public function getSenha() { 
         return $this->senha;
     }
 
     /**
-     * Atribui a imagem de perfil do usuario
-     * @param string $hash
+     * Atribui a senha do usuario
+     * @param string $senha
      */
-    public function setImgProfile($img) { 
-        $this->img_perfil = $img;
+    public function setSenha($senha) { 
+        !empty($senha) ? $this->senha = password_hash($senha, PASSWORD_DEFAULT) : $this->senha; 
     }
 
     /**
      * Obtem a imagem de perfil do usuario
      * @return string
      */
-    public function getImgProfile() {
+    public function getImg_perfil() {
         return !empty($this->img_perfil) ? $this->img_perfil : 'user.png';
     }
 
     /**
-     * Atribui o status de atividade do usuario
-     * @param string $ativo
+     * Atribui a imagem de perfil do usuario
+     * @param string $hash
      */
-    public function setActive($ativo) {
-        $ativo = $ativo == 't' ? 1 : 0;
-        $this->ativo = $ativo;
+    public function setImg_perfil($img) { 
+        $this->img_perfil = $img;
     }
 
     /**
      * Obtem o status do usuario
      * @return integer
      */
-    public function getActive() { 
+    public function getAtivo() { 
         return $this->ativo;
     }
 
     /**
-     * Atribui a data de criação do usuario em timestamp
-     * @param string $data
+     * Atribui o status de atividade do usuario
+     * @param string $ativo
      */
-    public function setAddData($data) { 
-        $this->add_data = $data;
+    public function setAtivo($ativo) {
+        $ativo = $ativo == 't' ? 1 : 0;
+        $this->ativo = $ativo;
     }
 
     /**
      * Obtem a data de criação do usuario legivel
      * @return string 
      */
-    public function getAddData() { 
+    public function getAdd_data() { 
         return date('d/m/Y H:i:s', strtotime($this->add_data));
+    }
+
+    /**
+     * Atribui a data de criação do usuario em timestamp
+     * @param string $data
+     */
+    public function setAdd_data($data) { 
+        $this->add_data = $data;
+    }
+ 
+    /**
+     * Obtem o nivel de acesso do usuario
+     * @return integer
+     */
+    public function getFk_acesso() { 
+        return $this->fk_acesso_id_acesso;
     }
 
     /**
      * Atribui o nivel de acesso do usuario
      * @param integer
      */
-    public function setAcess($acesso = 2) { 
+    public function setFk_acesso($acesso = 2) { 
         $this->fk_acesso_id_acesso = $acesso;
-    }
-
-    /**
-     * Obtem o nivel de acesso do usuario
-     * @return integer
-     */
-    public function getAcess() { 
-        return $this->fk_acesso_id_acesso;
-    }
-    
+    }  
 }

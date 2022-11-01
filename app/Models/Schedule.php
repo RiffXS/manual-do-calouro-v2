@@ -7,23 +7,45 @@ use App\Utils\Database;
 class Schedule {
 
     /**
-     * Méthodo responsavel por retornar usuario
-     * @param  string $where
-     * @param  string $order
-     * @param  string $limit
-     * @param  string $fields
-     * @return mixed
+     * Undocumented variable
+     *
+     * @var integer
      */
-    public static function getScheduleTime() {
-        return (new Database('horario_aula'))->select()->fetchAll(\PDO::FETCH_ASSOC);
+    private $curso;
+
+    /**
+     * Undocumented variable
+     *
+     * @var integer
+     */
+    private $modulo;
+
+    /**
+     * Undocumented variable
+     * @var array
+     */
+    private $horas;
+
+    /**
+     * Undocumented variable
+     * @var array
+     */
+    private $aulas;
+
+    public function __construct($curso, $modulo) {
+        $this->curso  = $curso;
+        $this->modulo = $modulo;
+        $this->horas  = self::getScheduleTimes();
+        $this->aulas  = self::getScheduleClass();
     }
-    
+
     /**
      * Metodo responsavel por retornar todos os horarios de uma turma
      * @param integer $curso
      * @param integer $modulo
+     * @return array
      */
-    public static function getSchedule($curso, $modulo) {
+    public function getScheduleClass() {
         // Seleciona todas as aulas, mesmo aquelas que não existem, e as coloca em um array
         $sql = "SELECT * FROM (
             (SELECT fk_dia_semana_id_dia_semana AS id_dia_semana,
@@ -44,8 +66,8 @@ class Schedule {
             JOIN turma t ON (au.fk_turma_id_turma = t.id_turma)
             LEFT JOIN horario_aula ha ON (ha.id_horario_aula = au.fk_horario_aula_id_horario_aula)
             WHERE au.fk_dia_semana_id_dia_semana IN (2, 3, 4, 5, 6, 7)
-            AND t.fk_curso_id_curso = $curso
-            AND t.num_modulo = $modulo)
+            AND t.fk_curso_id_curso = {$this->curso}
+            AND t.num_modulo = {$this->modulo})
 
             UNION
 
@@ -60,8 +82,8 @@ class Schedule {
             nom_usuario
             FROM (SELECT * , '-' AS num_sala_aula, '-' AS dsc_disciplina, '-' AS nom_usuario FROM (SELECT * FROM
             (SELECT id_dia_semana, id_horario_aula, id_turma FROM dia_semana, horario_aula, turma
-            WHERE turma.fk_curso_id_curso = $curso
-            AND turma.num_modulo = $modulo
+            WHERE turma.fk_curso_id_curso = {$this->curso}
+            AND turma.num_modulo = {$this->modulo}
             except
             SELECT fk_dia_semana_id_dia_semana AS id_dia_semana, fk_horario_aula_id_horario_aula AS id_horario_aula, fk_turma_id_turma AS id_turma FROM aula ORDER BY id_dia_semana)
             AS table1
@@ -76,11 +98,36 @@ class Schedule {
     }
 
     /**
+     * Méthodo responsavel os horarios
+     * @return array
+     */
+    public function getScheduleTimes() {
+        return (new Database('horario_aula'))->select()->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    /**
      * Metodo responsavel por obter o curso de um usuario 
      * @return array
      */
     public static function getCursoById($id) {
         // RETORNA O NOME DO CURSO
         return (new Database('curso'))->select("id_curso = $id", null, null, 'dsc_curso')->fetch(\PDO::FETCH_ASSOC);
+            
+    }
+
+    /**
+     * Undocumented function
+     * @return array
+     */
+    public function getTimes() {
+        return $this->horas;
+    }
+
+    /**
+     * Undocumented function
+     * @return array
+     */
+    public function getClass() {
+        return $this->aulas;
     }
 }

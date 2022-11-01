@@ -42,11 +42,11 @@ class SignIn extends Page {
             $request->getRouter()->redirect('/signin?status=invalid_data');
         }
         // VERIFICA A SENHA DO USUARIO CONINCIDE COM A DO BANCO
-        if (!password_verify($senha, $obUser->getPass())) {
+        if (!password_verify($senha, $obUser->getSenha())) {
             $request->getRouter()->redirect('/signin?status=invalid_data');
         }
         // VERIFICA SE O USUÁRIO ESTÁ ATIVO
-        if (!$obUser->getActive() != 0) {
+        if (!$obUser->getAtivo() != 0) {
             $request->getRouter()->redirect('/signin?status=inactive_user');
         }
         // CRIA A SESSÃO DE LOGIN

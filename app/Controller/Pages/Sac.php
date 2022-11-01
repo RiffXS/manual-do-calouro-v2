@@ -4,8 +4,8 @@ namespace App\Controller\Pages;
 
 use App\Models\Mail\Email;
 use App\Utils\Session;
-use App\Utils\View;
 use App\Utils\Tools\Alert;
+use App\Utils\View;
 
 class Sac extends Page {
 

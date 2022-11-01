@@ -74,5 +74,9 @@
     "enrollment_duplicated": {
         "type": "danger",
         "text": "Matricula ja registrada!"
+    },
+    "upload_error": {
+        "type": "danger",
+        "text": "Erro no upload da foto!"
     }
 }

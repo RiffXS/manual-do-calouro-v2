@@ -38,8 +38,8 @@ class Session {
 
         // DEFINE A SESSÃO DO ADMIN
         $_SESSION['usuario'] = [
-            'id_usuario' => $obUser->getUserId(),
-            'lv_acesso'  => $obUser->getAcess()
+            'id_usuario' => $obUser->getId_usuario(),
+            'lv_acesso'  => $obUser->getFk_acesso()
         ];
         // SUCESSO
         return true;

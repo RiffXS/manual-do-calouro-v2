@@ -135,16 +135,16 @@ class User extends Page {
         }
         // NOVA INSTANCIA DE USUARIO
         $obUser = new EntityUser;
-        $obUser->setNomUser($nome);
+        $obUser->setNom_usuario($nome);
         $obUser->setEmail($email);
-        $obUser->setPass($senha);
-        $obUser->setAcess($status);
-        $obUser->setActive($ativo);
+        $obUser->setSenha($senha);
+        $obUser->setFk_acesso($status);
+        $obUser->setAtivo($ativo);
 
         $obUser->insertUser();
 
         // REDIRECIONA O USUARIO
-        $request->getRouter()->redirect('/admin/users/'.$obUser->getUserId().'/edit?status=user_registered');
+        $request->getRouter()->redirect('/admin/users/'.$obUser->getId_usuario().'/edit?status=user_registered');
     }
 
     /**
@@ -167,18 +167,18 @@ class User extends Page {
         if (!$obUser instanceof EntityUser) {
             $request->getRouter()->redirect('/admin/users');
         }
-        $obUser->getActive() == 1 ? $status['ativo'] = 'checked' : $status['inativo'] = 'checked';
+        $obUser->getAtivo() == 1 ? $status['ativo'] = 'checked' : $status['inativo'] = 'checked';
 
         // CONTEUDO DO FORMULARIO
         $content = View::render('admin/modules/users/form', [
             'tittle'  => 'Editar usuario',
-            'nome'    => $obUser->getNomUser(),
+            'nome'    => $obUser->getNom_usuario(),
             'email'   => $obUser->getEmail(),
             'botao'   => 'Atualizar',
             'status'  => Alert::getStatus($request),
             'ativo'   => $status['ativo'],
             'inativo' => $status['inativo'],
-            'acesso'  => $obUser->getAcess()
+            'acesso'  => $obUser->getFk_acesso()
         ]);
 
         // RETORNA A PAGINA COMPLETA
@@ -210,16 +210,16 @@ class User extends Page {
         // VALIDA O EMAIL DO USUARIO
         $obUserEmail = EntityUser::getUserByEmail($email);
 
-        if ($obUserEmail instanceof EntityUser && $obUserEmail->getUserId() != $id) {
+        if ($obUserEmail instanceof EntityUser && $obUserEmail->getId_usuario() != $id) {
             $request->getRouter()->redirect('/admin/users/'.$id.'/edit?status=duplicated_email');
         }
         
         // ATUALIZA A INSTANCIA
-        $obUser->setNomUser($nome);
+        $obUser->setNom_usuario($nome);
         $obUser->setEmail($email);
-        $obUser->setPass($senha);
-        $obUser->setActive($active);
-        $obUser->setAcess($status);
+        $obUser->setSenha($senha);
+        $obUser->setAtivo($active);
+        $obUser->setFk_acesso($status);
 
         $obUser->updateUser();
 

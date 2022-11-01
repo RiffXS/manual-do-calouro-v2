@@ -6,10 +6,10 @@ use App\Models\Grade as EntityGrade;
 use App\Models\Student as EntityStudent;
 use App\Models\Teacher as EntityTeacher;
 use App\Models\User as EntityUser;
+use App\Utils\Tools\Alert;
 use App\Utils\View;
 use App\Utils\Session;
 use App\Utils\Upload;
-use App\Utils\Tools\Alert;
 
 class Profile extends Page {
 
@@ -28,8 +28,8 @@ class Profile extends Page {
         // VIEW DA HOME
         $content = View::render('pages/profile', [
             'status' => Alert::getStatus($request),
-            'foto'   => $obUser->getImgProfile(),
-            'nome'   => $obUser->getNomUser(),
+            'foto'   => $obUser->getImg_perfil(),
+            'nome'   => $obUser->getNom_usuario(),
             'email'  => $obUser->getEmail(),
             'texto'  => $view['text'],
             'campo'  => $view['colum']
@@ -53,7 +53,7 @@ class Profile extends Page {
 
         $nome = $postVars['nome'];
         $email = $postVars['email'];
-        $photo = $obUser->getImgProfile();
+        $photo = $obUser->getImg_perfil();
 
         // NOVA INSTANCIA 
         $obUpload = new Upload($files['foto']);
@@ -72,7 +72,9 @@ class Profile extends Page {
                     $obUpload->name = pathinfo($photo, PATHINFO_FILENAME);
                 }
                 // FAZ O UPLOAD DA FOTO PARA PASTA DE UPLOADS
-                $obUpload->upload(getenv('DIR').'/public/uploads/');
+                if (!$obUpload->upload(__DIR__.'/../../../public/uploads/')) {
+                    $request->getRouter()->redirect('/profile?status=upload_error');
+                }
             }
         }  
         // REALIZA UMA AÇÃO DEPENDENDO DO TIPO DE USUARIO
@@ -83,13 +85,13 @@ class Profile extends Page {
                 // VERIFICA SE A MATRICULA ESTA VAZIA
                 if (!empty($matricula)) {
                     // NOVA INSTANCIA
-                    $obStudent = new EntityStudent($obUser->getUserId(), $matricula);
+                    $obStudent = new EntityStudent($obUser->getId_usuario(), $matricula);
                 
                     // VERIFICA SE A MATRICULA ESTA DISPONIVEL
                     if ($obStudent->verifyEnrollment()) {
                         // INSERE O USUARIO NA TABELA DE ALUNOS
                         $obStudent->insertStudent();
-                        $obUser->setAcess(3); // ALTERA O NIVEL DE ACESSO PARA 3 (ALUNO)
+                        $obUser->setFk_acesso(3); // ALTERA O NIVEL DE ACESSO PARA 3 (ALUNO)
                     } else {
                         $request->getRouter()->redirect('/profile?status=enrollment_duplicated');
                     }
@@ -106,8 +108,8 @@ class Profile extends Page {
                     $gradeId = EntityGrade::getGradeId($curso, $modulo);
 
                     // NOVA INSTANCIA
-                    $obStudent = new EntityStudent($obUser->getUserId());
-                    $obStudent->fk_turma_id_turma = $gradeId['id_turma'];
+                    $obStudent = new EntityStudent($obUser->getId_usuario());
+                    $obStudent->setFk_turma($gradeId['id_turma']);
 
                     $obStudent->updateStudent(); // ATUALIZA A TURMA DO ALUNO
                 }
@@ -119,7 +121,7 @@ class Profile extends Page {
                 // VERIFICA SE O CAMPO ESTA VAZIO
                 if (!empty($regras)) {
                     // NOVA INSTANCIA
-                    $obTeacher = new EntityTeacher($obUser->getUserId(), $regras);
+                    $obTeacher = new EntityTeacher($obUser->getId_usuario(), $regras);
 
                     $obTeacher->updateRules(); // ATUALIZA AS REGRAS DO PROFESSOR
                 }                
@@ -136,13 +138,13 @@ class Profile extends Page {
         // VALIDA O EMAIL DO USUARIO
         $obUserEmail = EntityUser::getUserByEmail($email);
 
-        if ($obUserEmail instanceof EntityUser && $obUserEmail->getUserId() != $obUser->getUserId()) {
+        if ($obUserEmail instanceof EntityUser && $obUserEmail->getId_usuario() != $obUser->getId_usuario()) {
             $request->getRouter()->redirect('/profile?status=duplicated_email');
         }
         // ATUALIZA A INSTÂNCIA
-        $obUser->setNomUser($nome);
+        $obUser->setNom_usuario($nome);
         $obUser->setEmail($email);
-        $obUser->setImgProfile($photo);
+        $obUser->setImg_perfil($photo);
         
         // ATUALIZA O USUÁRIO
         $obUser->updateUser();
@@ -159,7 +161,7 @@ class Profile extends Page {
         $text = '';
         $colum = '';
 
-        switch ($obUser->getAcess()) {
+        switch ($obUser->getFk_acesso()) {
             case 2:
                 $text = 'Matricula';
                 $colum = 'enrollment';

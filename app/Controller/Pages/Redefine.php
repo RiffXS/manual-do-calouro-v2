@@ -61,7 +61,7 @@ class Redefine extends Page {
             $request->getRouter()->redirect("/redefine?chave={$obHash->getHash()}&status=invalid_pass");
         }
         // ATUALIZA O USUARIO
-        $obUser->setPass($password);
+        $obUser->setSenha($password);
         $obUser->updateUser();
         
         // EXCLUI A CHAVE

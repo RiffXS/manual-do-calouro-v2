@@ -44,7 +44,7 @@ class Login extends Page {
             $request->getRouter()->redirect('/admin/login?status=invalid_data');
         }
         // VERIFICA A SENHA DO USUARIO
-        if (!password_verify($senha, $obUser->getPass())) {
+        if (!password_verify($senha, $obUser->getSenha())) {
             $request->getRouter()->redirect('/admin/login?status=invalid_data');
         }
         // CRIA A SESSÃO DE LOGIN

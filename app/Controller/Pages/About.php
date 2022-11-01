@@ -2,7 +2,7 @@
 
 namespace App\Controller\Pages;
 
-use \App\Utils\View;
+use App\Utils\View;
 
 class About extends Page {
 
