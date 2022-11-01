@@ -27,7 +27,7 @@ class File {
      * @param mixed $content
      * @return boolean
      */
-    private static function storageCache($hash, $content) {
+    private static function SetStorageCache($hash, $content) {
         // SERIALIZA O RETORNO
         $serialize = serialize($content);
 
@@ -80,7 +80,7 @@ class File {
         $content = $function();
 
         // GRAVA O RETORNO NO CACHE
-        self::storageCache($hash, $content);
+        self::SetStorageCache($hash, $content);
 
         // RETORNA O CONTEUDO
         return $content;

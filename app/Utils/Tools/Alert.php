@@ -7,18 +7,6 @@ use App\Utils\View;
 class Alert {
 
     /**
-     * Methodo responsavel por retornar uma mensagem de erro
-     * @param  string $message
-     * @return string
-     */
-    public static function getMessage($type, $text) {
-        return View::render('shared/alert/status', [
-            'tipo'     => $type,
-            'mensagem' => $text
-        ]);
-    }
-
-    /**
      * Methodo responsavel por retornar a menagem de status
      * @param \App\Http\Request
      * @return string
@@ -39,9 +27,21 @@ class Alert {
             $texto = $mensagems[$codigo]['text']; // Texto da mensagem
 
             // RETORNA A VIEW 
-            return self::getMessage($tipo, $texto);
+            return self::getAlert($tipo, $texto);
         }
         // RETORNA UM VAZIO
         return '';
+    }
+
+    /**
+     * Methodo responsavel por retornar uma mensagem de erro
+     * @param  string $message
+     * @return string
+     */
+    public static function getAlert($type, $text) {
+        return View::render('shared/alert/status', [
+            'tipo'     => $type,
+            'mensagem' => $text
+        ]);
     }
 }

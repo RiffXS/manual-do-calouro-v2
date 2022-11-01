@@ -26,6 +26,7 @@ class View {
     private static function getContentView($view) {
         $file = __DIR__.'/../../resources/view/'.$view.'.html';
 
+        // RETORNA O CONTEUDO DO ARQUIVO SE ELE EXISTIR
         return file_exists($file) ? file_get_contents($file) : '';
     }
 

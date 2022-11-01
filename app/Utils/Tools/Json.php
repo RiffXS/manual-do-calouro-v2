@@ -11,7 +11,8 @@ class Json {
      * @return string
      */
     private static function getFilePath($name) {
-        return getenv('DIR').'/app/Json/'.$name.'.json';
+        // RETORNA O CAMINHO ATE O JSON
+        return __DIR__.'/../../controller/'.$name.'.json';
     }
 
     /**
