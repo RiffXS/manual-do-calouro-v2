@@ -1,4 +1,5 @@
 <?php
+
 // INCLUI AS ROTAS DE HOME
 include_once __DIR__.'/admin/home.php';
 

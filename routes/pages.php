@@ -1,4 +1,5 @@
 <?php
+
 // ROTAS DA PAGINA SOBRE
 include_once __DIR__.'/pages/about.php';
 
