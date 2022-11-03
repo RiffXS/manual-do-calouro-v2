@@ -6,6 +6,7 @@ use App\Models\Mail\Email;
 use App\Models\User as EntityUser;
 use App\Models\Hash as EntityHash;
 use App\Utils\Tools\Alert;
+use App\Utils\Sanitize;
 use App\Utils\View;
 
 class Recovery extends Page {
@@ -35,7 +36,7 @@ class Recovery extends Page {
         $email = $postVars['email'];
 
         // VALIDA O EMAIL
-        if (EntityUser::validateUserEmail($email)) {
+        if (Sanitize::validateEmail($email)) {
             $request->getRouter()->redirect('/profile?status=invalid_email');
         }
         // BUSCA O USUARIO PELO EMAIL

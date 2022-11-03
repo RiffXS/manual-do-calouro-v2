@@ -4,6 +4,7 @@ namespace App\Controller\Pages;
 
 use App\Models\User as EntityUser;
 use App\Utils\Tools\Alert;
+use App\Utils\Sanitize;
 use App\Utils\View;
 
 class SignUp extends Page {
@@ -36,15 +37,15 @@ class SignUp extends Page {
         $confirm  = $postVars['senhaConfirma'] ?? '';
 
         // VALIDA O NOME
-        if (EntityUser::validateUserName($nome)) {
+        if (Sanitize::validateName($nome)) {
             $request->getRouter()->redirect('/signup?status=invalid_name');
         }
         // VALIDA O EMAIL
-        if (EntityUser::validateUserEmail($email)) {
+        if (Sanitize::validateEmail($email)) {
             $request->getRouter()->redirect('/signup?status=invalid_email');
         }
         // VALIDA A SENHA
-        if (EntityUser::validateUserPassword($password, $confirm)) {
+        if (Sanitize::validatePassword($password, $confirm)) {
             $request->getRouter()->redirect('/signup?status=invalid_pass');
         }
 

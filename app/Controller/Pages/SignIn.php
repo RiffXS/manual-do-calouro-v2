@@ -3,6 +3,7 @@
 namespace App\Controller\Pages;
 
 use App\Models\User as EntityUser;
+use App\Utils\Sanitize;
 use App\Utils\Session;
 use App\Utils\Tools\Alert;
 use App\Utils\View;
@@ -35,6 +36,9 @@ class SignIn extends Page {
         $senha = $postVars['senha'];
 
         // VALIDA O EMAIL
+        if (Sanitize::validateEmail($email)) {
+            $request->getRouter()->redirect('/signin?status=invalid_email');
+        }
         $obUser = EntityUser::getUserByEmail($email);
 
         // VALIDA A INSTANCIA, VERIFICANDO SE HOUVE RESULTADO

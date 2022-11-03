@@ -5,6 +5,7 @@ namespace App\Controller\Pages;
 use App\Models\Hash as EntityHash;
 use App\Models\User as EntityUser;
 use App\Utils\Tools\Alert;
+use App\Utils\Sanitize;
 use App\Utils\View;
 
 class Redefine extends Page {
@@ -57,7 +58,7 @@ class Redefine extends Page {
         $obUser = EntityUser::getUserById($id_user);
 
         // VALIDA A SENHA
-        if (EntityUser::validateUserPassword($password, $confirma)) {
+        if (Sanitize::validatePassword($password, $confirma)) {
             $request->getRouter()->redirect("/redefine?chave={$obHash->getHash()}&status=invalid_pass");
         }
         // ATUALIZA O USUARIO

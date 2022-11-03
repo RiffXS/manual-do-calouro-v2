@@ -7,6 +7,7 @@ use App\Models\Student as EntityStudent;
 use App\Models\Teacher as EntityTeacher;
 use App\Models\User as EntityUser;
 use App\Utils\Tools\Alert;
+use App\Utils\Sanitize;
 use App\Utils\View;
 use App\Utils\Session;
 use App\Utils\Upload;
@@ -128,11 +129,11 @@ class Profile extends Page {
                 break;
         }
         // VALIDA O NOME
-        if (EntityUser::validateUserName($nome)) {
+        if (Sanitize::validateName($nome)) {
             $request->getRouter()->redirect('/profile?status=invalid_name');
         }
         // VALIDA O EMAIL
-        if (EntityUser::validateUserEmail($email)) {
+        if (Sanitize::validateEmail($email)) {
             $request->getRouter()->redirect('/profile?status=invalid_email');
         }
         // VALIDA O EMAIL DO USUARIO
