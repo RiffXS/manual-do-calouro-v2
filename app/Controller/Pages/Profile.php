@@ -40,6 +40,41 @@ class Profile extends Page {
     }
 
     /**
+     * Método responsável por definir o texto de acordo com o tipo de usuário
+     * @param EntityUser $obUser
+     */
+    public static function getTextType($obUser) {
+        $text = '';
+        $colum = '';
+
+        switch ($obUser->getFk_acesso()) {
+            case 2:
+                $text = 'Matricula';
+                $colum = 'enrollment';
+                break;
+
+            case 3:
+                $text = 'Turma';
+                $colum = 'class';
+                break;
+                
+            case 4:
+                $text = 'Regras';
+                $colum = 'rules';
+                break;
+
+            case 5:
+                $text = 'Setor';
+                $colum = 'sector';
+                break;
+        }
+        return [
+            'text' => $text,
+            'colum' => View::render("pages/profile/$colum")
+        ];
+    }
+
+    /**
      * Método responsavel por atualizar o perfil do usuario
      * @param \App\Http\Request $request
      */
@@ -81,51 +116,18 @@ class Profile extends Page {
         // REALIZA UMA AÇÃO DEPENDENDO DO TIPO DE USUARIO
         switch ($acesso) {
             case 2:
-                $matricula = $postVars['matricula'] ?? '';
-
-                // VERIFICA SE A MATRICULA ESTA VAZIA
-                if (!empty($matricula)) {
-                    // NOVA INSTANCIA
-                    $obStudent = new EntityStudent($obUser->getId_usuario(), $matricula);
+                self::registerStudent($request, $obUser, $postVars);
                 
-                    // VERIFICA SE A MATRICULA ESTA DISPONIVEL
-                    if ($obStudent->verifyEnrollment()) {
-                        // INSERE O USUARIO NA TABELA DE ALUNOS
-                        $obStudent->insertStudent();
-                        $obUser->setFk_acesso(3); // ALTERA O NIVEL DE ACESSO PARA 3 (ALUNO)
-                    } else {
-                        $request->getRouter()->redirect('/profile?status=enrollment_duplicated');
-                    }
-                }
                 break;
 
             case 3:
-                $curso  = $postVars['curso'] ?? '';
-                $modulo = $postVars['modulo'] ?? '';
+                self::updateStudent($obUser, $postVars);
 
-                // VERIFICA SE O CURSO E O MODULO FORAM RECEBIDOS
-                if (!empty($modulo) && !empty($curso)) {
-                    // BUSCA O ID DA TURMA POR CURSO E MODULO
-                    $gradeId = EntityGrade::getGradeId($curso, $modulo);
-
-                    // NOVA INSTANCIA
-                    $obStudent = new EntityStudent($obUser->getId_usuario());
-                    $obStudent->setFk_turma($gradeId['id_turma']);
-
-                    $obStudent->updateStudent(); // ATUALIZA A TURMA DO ALUNO
-                }
                 break;
                 
             case 4:
-                $regras = $postVars['regras'] ?? '';
-
-                // VERIFICA SE O CAMPO ESTA VAZIO
-                if (!empty($regras)) {
-                    // NOVA INSTANCIA
-                    $obTeacher = new EntityTeacher($obUser->getId_usuario(), $regras);
-
-                    $obTeacher->updateRules(); // ATUALIZA AS REGRAS DO PROFESSOR
-                }                
+                self::updateTeacher($obUser, $postVars);
+                              
                 break;
         }
         // VALIDA O NOME
@@ -154,38 +156,69 @@ class Profile extends Page {
         $request->getRouter()->redirect('/profile?status=profile_updated');
     }
 
+    
+
     /**
-     * Método responsável por definir o texto de acordo com o tipo de usuário
+     * Méthodo responsavel por atualizar os usuario comum para o tipo aluno
+     * @param \App\Http\Request 
      * @param EntityUser $obUser
+     * @param array $PostVars
      */
-    public static function getTextType($obUser) {
-        $text = '';
-        $colum = '';
+    private static function registerStudent($request, $obUser, $postVars) {
+        $matricula = $postVars['matricula'] ?? '';
 
-        switch ($obUser->getFk_acesso()) {
-            case 2:
-                $text = 'Matricula';
-                $colum = 'enrollment';
-                break;
-
-            case 3:
-                $text = 'Turma';
-                $colum = 'class';
-                break;
-                
-            case 4:
-                $text = 'Regras';
-                $colum = 'rules';
-                break;
-
-            case 5:
-                $text = 'Setor';
-                $colum = 'sector';
-                break;
+        // VERIFICA SE A MATRICULA ESTA VAZIA
+        if (!empty($matricula)) {
+            // NOVA INSTANCIA
+            $obStudent = new EntityStudent($obUser->getId_usuario(), $matricula);
+        
+            // VERIFICA SE A MATRICULA ESTA DISPONIVEL
+            if ($obStudent->verifyEnrollment()) {
+                // INSERE O USUARIO NA TABELA DE ALUNOS
+                $obStudent->insertStudent();
+                $obUser->setFk_acesso(3); // ALTERA O NIVEL DE ACESSO PARA 3 (ALUNO)
+            } else {
+                $request->getRouter()->redirect('/profile?status=enrollment_duplicated');
+            }
         }
-        return [
-            'text' => $text,
-            'colum' => View::render("pages/profile/$colum")
-        ];
+    }
+
+    /**
+     * Méthodo responsavel por atualizar a turma do usuario
+     * @param EntityUser $obUser
+     * @param array $postVars
+     */
+    private static function updateStudent($obUser, $postVars) {
+        $curso  = $postVars['curso'] ?? '';
+        $modulo = $postVars['modulo'] ?? '';
+
+        // VERIFICA SE O CURSO E O MODULO FORAM RECEBIDOS
+        if (!empty($modulo) && !empty($curso)) {
+            // BUSCA O ID DA TURMA POR CURSO E MODULO
+            $gradeId = EntityGrade::getGradeId($curso, $modulo);
+
+            // NOVA INSTANCIA
+            $obStudent = new EntityStudent($obUser->getId_usuario());
+            $obStudent->setFk_turma($gradeId['id_turma']);
+
+            $obStudent->updateStudent(); // ATUALIZA A TURMA DO ALUNO
+        }
+    }
+
+    /**
+     * Método responsavel por atualizar as regras do professor
+     * @param EntityUser $obUser
+     * @param array $postVars
+     */
+    private static function updateTeacher($obUser, $postVars) {
+        $regras = $postVars['regras'] ?? '';
+
+        // VERIFICA SE O CAMPO ESTA VAZIO
+        if (!empty($regras)) {
+            // NOVA INSTANCIA
+            $obTeacher = new EntityTeacher($obUser->getId_usuario(), $regras);
+
+            $obTeacher->updateRules(); // ATUALIZA AS REGRAS DO PROFESSOR
+        }  
     }
 }
