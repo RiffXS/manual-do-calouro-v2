@@ -9,7 +9,7 @@ use App\Utils\View;
 class Contact extends Page {
 
     /**
-     * Método responsavel por retornar o contéudo (view) da página contatos
+     * Método responsável por retornar o contéudo (view) da página contatos
      * @return string 
      */
     public static function getContact() {
@@ -30,7 +30,7 @@ class Contact extends Page {
     }
     
     /**
-     * Metodo responsavel por rendenizar os contatos
+     * Método responsável por rendenizar os contatos
      * @param EntityContact $obContacat
      */
     public static function getContacts($obContact) {

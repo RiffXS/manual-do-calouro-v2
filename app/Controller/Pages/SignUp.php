@@ -10,7 +10,7 @@ use App\Utils\View;
 class SignUp extends Page {
 
     /**
-     * Metodo responsavel por retornar o contéudo (view) da pagina cadastro
+     * Método responsável por retornar o contéudo (view) da página cadastro
      * @param \App\Http\Request $request
      * @return string
      */
@@ -24,7 +24,7 @@ class SignUp extends Page {
     }
 
     /**
-     * Método responsavel por processar o formulario de cadastro
+     * Método responsável por processar o formulário de cadastro
      * @param \App\Http\Request $request
      */
     public static function setSignUp($request): void {

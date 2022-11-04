@@ -11,7 +11,7 @@ use App\Utils\View;
 class SignIn extends Page {
 
     /**
-     * Metodo responsavel por retornar o contéudo (view) da pagina login
+     * Método responsável por retornar o contéudo (view) da página login
      * @param \App\Http\Request $request
      * @return string 
      */
@@ -25,7 +25,7 @@ class SignIn extends Page {
     }
 
     /**
-     * Metodo responsavel por realizar login no site
+     * Método responsável por realizar login no site
      * @param \App\Http\Request
      */
     public static function setSignIn($request): void {
@@ -61,7 +61,7 @@ class SignIn extends Page {
     }
 
     /**
-     * Mehtodo responsavel por deslogar o usuario
+     * Método responsável por deslogar o usuário
      * @param \App\Http\Request
      */
     public static function setLogout($request): void {

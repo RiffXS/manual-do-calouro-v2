@@ -10,7 +10,7 @@ use App\Utils\View;
 class Sac extends Page {
 
     /**
-     * Metodo responsavel por retornar o contéudo (view) da pagina fale conosco
+     * Método responsável por retornar o contéudo (view) da página fale conosco
      * @param \App\Http\Request $request
      * @return string 
      */
@@ -25,7 +25,7 @@ class Sac extends Page {
     }
 
     /**
-     * Método responsavel por enviar o formulario e ancaminhar o email
+     * Método responsável por enviar o formulário e encaminhar o email
      * @param \App\Http\Request
      */
     public static function setSac($request): void {

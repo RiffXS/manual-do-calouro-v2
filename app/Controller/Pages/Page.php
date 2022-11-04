@@ -9,7 +9,7 @@ use App\Utils\View;
 class Page {
 
     /**
-     * Paginas disponíveis no navlink
+     * Páginas disponíveis no navlink
      * @var array
      */
     private static $paginas = [
@@ -48,7 +48,7 @@ class Page {
     ];
 
     /**
-     * Método responsavel por rendenizar os links do header
+     * Método responsável por rendenizar os links do header
      * @param  string $currentModule
      * @return string
      */
@@ -105,7 +105,7 @@ class Page {
     }
 
     /**
-     * Methodo responsavel por rendenizar a view do painel com conteudos dinamicos
+     * Método responsável por rendenizar a view do painel com conteúdos dinâmicos
      * @param  string $title
      * @param  string $contenct
      * @param  string $currentModule
@@ -120,7 +120,7 @@ class Page {
     }
 
     /**
-     * Méthodo responsavel por rendenizar o rodapé da pagina
+     * Método responsável por rendenizar o rodapé da pagina
      * @return string
      */
     private static function getFooter() {
@@ -129,7 +129,7 @@ class Page {
     }
 
     /**
-     * Metodo responsavel por retornar o contéudo (view) da pagina generica
+     * Método responsável por retornar o contéudo (view) da página genérica
      * @return string 
      */
     public static function getPage($title, $content, $module = '') {
@@ -143,7 +143,7 @@ class Page {
     }
     
     /**
-     * Methodo responsavel por rendenizar o layout de paginação
+     * Método responsável por rendenizar o layout de paginação
      * @param \App\Http\Request     $request
      * @param \App\Utils\Pagination $obPagination
      * @return string
@@ -197,7 +197,7 @@ class Page {
     } 
 
     /**
-     * Methodo responsavel por retornar um link da paginação
+     * Método responsável por retornar um link da paginação
      * @param  array  $queryParams
      * @param  array  $page
      * @param  string $url

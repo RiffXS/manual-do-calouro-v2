@@ -9,7 +9,7 @@ use App\Utils\Pagination;
 class Testimony extends Page{
 
     /**
-     * Methodo responsavel por obter a rendenização dos items de depoimentos para página
+     * Método responsável por obter a renderização dos items de depoimentos para página
      * @param \App\Http\Request $request
      * @param Pagination $obPagination
      * @return string
@@ -46,7 +46,7 @@ class Testimony extends Page{
     }
 
     /**
-     * Metodo responsavel por retornar o contéudo (view) de depoimenots
+     * Método responsável por retornar o contéudo (view) de depoimenots
      * @param \App\Http\Request $request
      * @return string 
      */
@@ -63,7 +63,7 @@ class Testimony extends Page{
     }
 
     /**
-     * Methodo responsavel por cadastrar um depoimento
+     * Método responsável por cadastrar um depoimento
      * @param \App\Http\Request $request
      * @return string
      */

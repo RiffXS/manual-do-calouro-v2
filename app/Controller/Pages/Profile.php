@@ -15,7 +15,7 @@ use App\Utils\Upload;
 class Profile extends Page {
 
     /**
-     * Metodo responsavel por retornar o contéudo (view) da pagina perfil
+     * Método responsável por retornar o contéudo (view) da página perfil
      * @param  \App\Http\Request $request
      * @return string 
      */
@@ -75,7 +75,7 @@ class Profile extends Page {
     }
 
     /**
-     * Método responsavel por atualizar o perfil do usuario
+     * Método responsável por atualizar o perfil do usuário
      * @param \App\Http\Request $request
      */
     public static function setEditProfile($request) {
@@ -159,7 +159,7 @@ class Profile extends Page {
     
 
     /**
-     * Méthodo responsavel por atualizar os usuario comum para o tipo aluno
+     * Método responsável por atualizar os usuário comum para o tipo aluno
      * @param \App\Http\Request 
      * @param EntityUser $obUser
      * @param array $PostVars
@@ -184,7 +184,7 @@ class Profile extends Page {
     }
 
     /**
-     * Méthodo responsavel por atualizar a turma do usuario
+     * Método responsável por atualizar a turma do usuário
      * @param EntityUser $obUser
      * @param array $postVars
      */
@@ -206,7 +206,7 @@ class Profile extends Page {
     }
 
     /**
-     * Método responsavel por atualizar as regras do professor
+     * Método responsável por atualizar as regras do professor
      * @param EntityUser $obUser
      * @param array $postVars
      */

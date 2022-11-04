@@ -7,7 +7,7 @@ use App\Utils\View;
 class Rod extends Page {
 
     /**
-     * Metodo responsavel por retornar o contéudo (view) da pagina rod
+     * Método responsável por retornar o contéudo (view) da página rod
      * @param \App\Http\Request $request
      * @return string 
      */

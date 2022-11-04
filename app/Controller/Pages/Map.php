@@ -7,7 +7,7 @@ use App\Utils\View;
 class Map extends Page {
 
     /**
-     * Metodo responsavel por retornar o contéudo (view) da pagina mapa
+     * Método responsável por retornar o contéudo (view) da página mapa
      * @return string 
      */
     public static function getMap() {

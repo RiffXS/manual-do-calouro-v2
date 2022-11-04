@@ -8,7 +8,7 @@ use App\Utils\View;
 class Schedule extends Page {
     
     /**
-     * Método responsavel por retornar o contéudo (view) da pagina horario
+     * Método responsável por retornar o contéudo (view) da página horario
      * @param \App\Http\Request
      * @return string 
      */
@@ -45,7 +45,7 @@ class Schedule extends Page {
     }
 
     /**
-     * Metodo responsavel por retornar o nome do curso
+     * Método responsável por retornar o nome do curso
      * @param  integer $curso
      * @return string
      */
@@ -56,7 +56,7 @@ class Schedule extends Page {
     }
 
     /**
-     * Metodo responsavel por retornar a view da tabela do horario
+     * Método responsável por retornar a view da tabela do horário
      * @param integer $curso
      * @param integer $modulo
      * @return string
@@ -84,7 +84,7 @@ class Schedule extends Page {
     }
     
     /**
-     * Metodo responsavel por rendenizar a linha de items do horario
+     * Método responsável por rendenizar a linha de items do horário
      * @param array   $aulas
      * @param integer $count
      * @return string
@@ -93,7 +93,7 @@ class Schedule extends Page {
         $content = '';
         
         // Loop para cada aula
-        for ($i = 0; $i < 6; $i++) { 
+        for ($i = 0; $i < 6; $i++) {
             // VIEW DO HORÁRIO
             $content .= self::getItem($aulas[$count]);
             $count++;
@@ -103,7 +103,7 @@ class Schedule extends Page {
     }
 
     /**
-     * Metodo responsavel por criar cada item de aula da tabela
+     * Método responsável por criar cada item de aula da tabela
      * @param array $class
      * @return string
      */ 

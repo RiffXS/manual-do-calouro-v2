@@ -7,7 +7,7 @@ use App\Utils\View;
 class Faq extends Page {
 
     /**
-     * Metodo responsavel por retornar o contéudo (view) da pagina fale duvidas frequentes
+     * Método responsável por retornar o contéudo (view) da página fale dúvidas frequentes
      * @return string 
      */
     public static function getFaq() {

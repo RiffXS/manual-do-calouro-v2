@@ -11,7 +11,7 @@ use App\Utils\View;
 class Redefine extends Page {
 
     /**
-     * Metodo responsavel por retornar o contéudo (view) da pagina redefinir senha
+     * Método responsável por retornar o contéudo (view) da página redefinir senha
      * @param \App\Http\Request
      * @return string 
      */
@@ -40,7 +40,7 @@ class Redefine extends Page {
     }
 
     /**
-     * Método responsavel por atualizar
+     * Método responsável por atualizar
      * @param \App\Http\Request
      */
     public static function setRedefine($request): void {

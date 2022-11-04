@@ -13,11 +13,11 @@
     },
     "invalid_data": {
         "type": "danger",
-        "text": "E-mail ou senha inválidos!"
+        "text": "E-mail e/ou senha inválidos!"
     },
     "invalid_hash": {
         "type": "danger",
-        "text": "Chave de recuperação invalida!"
+        "text": "Chave de recuperação inválida!"
     },
     "duplicated_email": {
         "type": "danger",
@@ -37,11 +37,11 @@
     },
     "require_login": {
         "type": "danger",
-        "text": "Necessário login!"
+        "text": "Login necessário!"
     },
     "exceeded_size": {
         "type": "danger",
-        "text": "Tamanho limite do arquivo execedido"
+        "text": "Tamanho limite do arquivo execedido."
     },
     "inactive_user": {
         "type": "danger",
@@ -57,15 +57,15 @@
     },
     "email_erro": {
         "type": "danger",
-        "text": "Erro! e-mail não enviado!"
+        "text": "Erro! E-mail não enviado!"
     },
     "recovery_send": {
         "type": "success",
-        "text": "Solicitação enviada, confira seu e-mail"
+        "text": "Solicitação enviada, confira seu e-mail."
     },
     "recovery_erro": {
         "type": "danger",
-        "text": "Solicitação cancelada, erro ao enviar e-mail"
+        "text": "Solicitação cancelada, erro ao enviar e-mail."
     },
     "pass_updated": {
         "type": "success",
@@ -73,7 +73,7 @@
     },
     "enrollment_duplicated": {
         "type": "danger",
-        "text": "Matricula ja registrada!"
+        "text": "Matrícula já registrada!"
     },
     "upload_error": {
         "type": "danger",

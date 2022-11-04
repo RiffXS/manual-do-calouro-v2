@@ -12,7 +12,7 @@ use App\Utils\View;
 class Recovery extends Page {
 
     /**
-     * Metodo responsavel por retornar o contéudo (view) da pagina recuperação da senha
+     * Método responsável por retornar o contéudo (view) da página recuperação da senha
      * @return string 
      */
     public static function getRecovery($request) {
@@ -26,7 +26,7 @@ class Recovery extends Page {
     }
 
     /**
-     * 
+     * Método responsável por criar e enviar o link para recuperação de senha
      * @param \App\Http\Request
      */
     public static function setRecovery($request): void {

@@ -7,7 +7,7 @@ use App\Utils\View;
 class About extends Page {
 
     /**
-     * Metodo responsavel por retornar o contéudo (view) da pagina sobre
+     * Método responsável por retornar o contéudo (view) da página sobre
      * @return string 
      */
     public static function getAbout() {
