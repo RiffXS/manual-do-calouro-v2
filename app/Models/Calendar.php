@@ -22,7 +22,7 @@ class Calendar {
      * Método responsavel por obter os eventos do banco de dados
      * @return array
      */
-    private static function setEvents(): array {
+    public static function setEvents(): array {
         return (new Database('evento'))->select(null, null, null, 'dsc_evento, dat_evento')->fetchAll(\PDO::FETCH_ASSOC);
     }
 

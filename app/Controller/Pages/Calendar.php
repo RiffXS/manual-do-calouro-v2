@@ -29,11 +29,13 @@ class Calendar extends Page {
     private static function setEventsCookie(): void {
         // NOVA INSTANCIA
         $obCalendar = new EntityCalendar;
-        
-        // TRANFORMA O ARRAY PARA O FORMATO JSON
-        $mdcEvents = json_encode($obCalendar->getEvents());
+
+        $events = $obCalendar->getEvents();
+
+        // TRANSFORMA O ARRAY PARA JSON
+        $cookieContent = json_encode($events, JSON_UNESCAPED_UNICODE);
 
         // DEFINE O COOKIE DE EVENTOS
-        setcookie('mdc-calendario', $mdcEvents);
+        setcookie('mdc-calendario', $cookieContent); 
     }
 }
