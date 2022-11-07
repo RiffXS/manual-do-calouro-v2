@@ -52,6 +52,7 @@ class Page {
     /**
      * Método responsável por rendenizar os links do header
      * @param  string $currentModule
+     * 
      * @return string
      * 
      * @author @SimpleR1ick @RiffXS
@@ -112,9 +113,8 @@ class Page {
 
     /**
      * Método responsável por rendenizar a view do painel com conteúdos dinâmicos
-     * @param  string $title
-     * @param  string $contenct
-     * @param  string $currentModule
+     * @param  string $module
+     * 
      * @return string
      * 
      * @author @SimpleR1ick @RiffXS
@@ -133,7 +133,7 @@ class Page {
      * 
      * @author @SimpleR1ick
      */
-    private static function getFooter() {
+    private static function getFooter(): string {
         // RENDENIZA A VIEW DO FOOTER
         return View::render('pages/footer');
     }
@@ -158,6 +158,7 @@ class Page {
      * Método responsável por rendenizar o layout de paginação
      * @param \App\Http\Request     $request
      * @param \App\Utils\Pagination $obPagination
+     * 
      * @return string
      * 
      * @author @SimpleR1ick
@@ -215,6 +216,7 @@ class Page {
      * @param  array  $queryParams
      * @param  array  $page
      * @param  string $url
+     * 
      * @return string
      * 
      * @author @SimpleR1ick

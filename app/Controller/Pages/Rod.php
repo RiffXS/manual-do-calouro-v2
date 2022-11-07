@@ -9,6 +9,8 @@ class Rod extends Page {
     /**
      * Método responsável por retornar o contéudo (view) da página rod
      * @return string 
+     * 
+     * @author @SimpleR1ick
      */
     public static function getRod(): string {
         // VIEW DA HOME

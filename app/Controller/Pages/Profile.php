@@ -3,10 +3,10 @@
 namespace App\Controller\Pages;
 
 use App\Http\Request;
-use App\Models\Grade as EntityGrade;
+use App\Models\Grade   as EntityGrade;
 use App\Models\Student as EntityStudent;
 use App\Models\Teacher as EntityTeacher;
-use App\Models\User as EntityUser;
+use App\Models\User    as EntityUser;
 use App\Utils\Tools\Alert;
 use App\Utils\Sanitize;
 use App\Utils\View;
@@ -17,7 +17,8 @@ class Profile extends Page {
 
     /**
      * Método responsável por retornar o contéudo (view) da página perfil
-     * @param  \App\Http\Request $request
+     * @param \App\Http\Request $request
+     * 
      * @return string 
      * 
      * @author @SimpleR1ick
@@ -45,8 +46,12 @@ class Profile extends Page {
     /**
      * Método responsável por definir o texto de acordo com o tipo de usuário
      * @param \App\Models\User $obUser
+     * 
+     * @return array
+     * 
+     * @author @SimpleR1ick
      */
-    public static function getTextType(EntityUser $obUser) {
+    public static function getTextType(EntityUser $obUser): array {
         $text = '';
         $colum = '';
 
@@ -80,8 +85,12 @@ class Profile extends Page {
     /**
      * Método responsável por atualizar o perfil do usuário
      * @param \App\Http\Request $request
+     * 
+     * @return void
+     * 
+     * @author @SimpleR1ick
      */
-    public static function setEditProfile(Request $request) {
+    public static function setEditProfile(Request $request): void {
         // OBTEM O USUARIO E O NIVEL DE ACESSO DA SESSÃO
         $obUser = Session::getSessionUser();
         $acesso = Session::getSessionLv();
@@ -99,38 +108,23 @@ class Profile extends Page {
 
         // VERIFICA SE HOUVE UPLOAD DE FOTO
         if (is_uploaded_file($obUpload->tmpName) && $obUpload->error != 4) { 
-            // VERIFICA SE O ARQUIVO E MENOR DO QUE O ACEITO
-            if ($postVars['MAX_FILE_SIZE'] > $obUpload->size) {
-                // VARIFICA SE O USUARIO POSSUI UMA FOTO
-                if ($photo == 'user.png') {
-                    $obUpload->generateNewName();      // GERA UM NOME NOVO
-                    $photo = $obUpload->getBasename(); // OBTEM O NOME NOVO
-                } 
-                else {
-                    // ATRIBUI O NOME AO JA EXISTENTE DO USUARIO
-                    $obUpload->name = pathinfo($photo, PATHINFO_FILENAME);
-                }
-                // FAZ O UPLOAD DA FOTO PARA PASTA DE UPLOADS
-                if (!$obUpload->upload(__DIR__.'/../../../public/uploads/')) {
-                    $request->getRouter()->redirect('/profile?status=upload_error');
-                }
+            // VERIFICA SE O PROCESSO DE UPLOAD FOI REALIZADO
+            if (self::uploadProfilePicture($request, $obUpload, $photo)) {
+                $request->getRouter()->redirect('/profile?status=upload_error');
             }
-        }  
+        }
         // REALIZA UMA AÇÃO DEPENDENDO DO TIPO DE USUARIO
         switch ($acesso) {
             case 2:
                 self::registerStudent($request, $obUser, $postVars);
-                
                 break;
 
             case 3:
                 self::updateStudent($obUser, $postVars);
-
                 break;
                 
             case 4:
-                self::updateTeacher($obUser, $postVars);
-                              
+                self::updateTeacher($obUser, $postVars);           
                 break;
         }
         // VALIDA O NOME
@@ -159,13 +153,44 @@ class Profile extends Page {
         $request->getRouter()->redirect('/profile?status=profile_updated');
     }
 
-    
+    /**
+     * Método responsavel por realizar o upload da imagem enviada pelo usuario
+     * @param \App\Http\Request $request
+     * @param \App\Utils\Upload $obUpload
+     * @param string $photo
+     * 
+     * @return boolean
+     * 
+     * @author @SimpleR1ick
+     */
+    private static function uploadProfilePicture(Request $request, Upload $obUpload, string $photo): bool {
+        // VERIFICA SE O ARQUIVO E MENOR DO QUE O ACEITO
+        if ($_POST['MAX_FILE_SIZE'] > $obUpload->size) {
+        // VARIFICA SE O USUARIO POSSUI UMA FOTO
+            if ($photo == 'user.png') {
+                $obUpload->generateNewName();      // GERA UM NOME NOVO
+                $photo = $obUpload->getBasename(); // OBTEM O NOME NOVO
+            } 
+            else {
+                // ATRIBUI O NOME AO JA EXISTENTE DO USUARIO
+                $obUpload->name = pathinfo($photo, PATHINFO_FILENAME);
+            }
+            // FAZ O UPLOAD DA FOTO PARA PASTA DE UPLOADS
+            if (!$obUpload->upload(__DIR__.'/../../../public/uploads/')) {
+                return false;
+            }
+        } else {
+            $request->getRouter()->redirect('/profile?status=exceeded_size');
+            exit;
+        }
+        return true;  
+    }  
 
     /**
      * Método responsável por atualizar os usuário comum para o tipo aluno
      * @param \App\Http\Request $request
      * @param \App\Models\User  $obUser
-     * @param array $PostVars
+     * @param array $postVars
      * 
      * @return void
      * 
@@ -199,7 +224,7 @@ class Profile extends Page {
      * 
      * @author @SimpleR1ick
      */
-    private static function updateStudent(EntityUser $obUser, $postVars): void {
+    private static function updateStudent(EntityUser $obUser, array $postVars): void {
         $curso  = $postVars['curso'] ?? '';
         $modulo = $postVars['modulo'] ?? '';
 

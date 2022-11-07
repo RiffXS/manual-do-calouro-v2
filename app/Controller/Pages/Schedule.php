@@ -10,7 +10,7 @@ class Schedule extends Page {
     
     /**
      * Método responsável por retornar o contéudo (view) da página horario
-     * @param  Request
+     * @param \App\Http\Request
      * 
      * @return string
      * 
@@ -51,7 +51,9 @@ class Schedule extends Page {
     /**
      * Método responsável por retornar o nome do curso
      * @param  integer $curso
+     * 
      * @return string
+     * 
      * @author @SimpleR1ick @RiffXS
      */
     private static function getCurso(int $curso): string {
@@ -64,7 +66,9 @@ class Schedule extends Page {
      * Método responsável por retornar a view da tabela do horário
      * @param integer $curso
      * @param integer $modulo
+     * 
      * @return string
+     * 
      * @author @SimpleR1ick @RiffXS
      */
     public static function getTable(int $curso, int $modulo): string {
@@ -93,7 +97,9 @@ class Schedule extends Page {
      * Método responsável por rendenizar a linha de items do horário
      * @param  array   $aulas
      * @param  integer $count
+     * 
      * @return string
+     * 
      * @author @SimpleR1ick @RiffXS
      */
     public static function getRow(array $aulas, int &$count): string {        
@@ -112,7 +118,9 @@ class Schedule extends Page {
     /**
      * Método responsável por criar cada item de aula da tabela
      * @param  array $class
+     * 
      * @return string
+     * 
      * @author @SimpleR1ick @RiffXS
      */ 
     public static function getItem(array $aula): string {

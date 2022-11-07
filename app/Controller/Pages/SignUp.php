@@ -13,8 +13,10 @@ class SignUp extends Page {
     /**
      * Método responsável por retornar o contéudo (view) da página cadastro
      * @param \App\Http\Request $request
+     * 
      * @return string
-     * @author @SimpleR1ick @RiffXS 
+     * 
+     * @author @SimpleR1ick
      */
     public static function getSignUp($request): string {
         // CONTEUDO DA PAGINA DE LOGIN
@@ -27,8 +29,11 @@ class SignUp extends Page {
 
     /**
      * Método responsável por processar o formulário de cadastro
-     * @param Request $request
-     * @author @SimpleR1ick @RiffXS
+     * @param \App\Http\Request $request
+     * 
+     * @return void
+     * 
+     * @author @SimpleR1ick
      */
     public static function setSignUp(Request $request): void {
         // POST VARS

@@ -66,6 +66,7 @@ class Contact extends Page {
     /**
      * Método responsável por renderizar o contato
      * @param  integer $id
+     * 
      * @return string
      * 
      * @author @SimpleR1ick @RiffXS
@@ -102,6 +103,7 @@ class Contact extends Page {
     /**
      * Método responsável por renderizar os cards de contato dos professores
      * @param  array $contact
+     * 
      * @return string
      * 
      * @author @SimpleR1ick @RiffXS 
@@ -127,6 +129,7 @@ class Contact extends Page {
     /**
      * Método responsável por renderizar os cards de contato dos servidores
      * @param  string $contact
+     * 
      * @return string
      * 
      * @author @SimpleR1ick @RiffXS 

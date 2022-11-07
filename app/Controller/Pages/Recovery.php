@@ -32,7 +32,7 @@ class Recovery extends Page {
 
     /**
      * Método responsável por criar e enviar o link para recuperação de senha
-     * @param Request $request
+     * @param \App\Http\Request $request
      * 
      * @author @SimpleR1ick @RiffXS
      */

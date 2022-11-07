@@ -13,7 +13,8 @@ class SignIn extends Page {
 
     /**
      * Método responsável por retornar o contéudo (view) da página login
-     * @param  Request $request
+     * @param \App\Http\Request $request
+     * 
      * @return string 
      * 
      * @author @SimpleR1ick @RiffXS
@@ -29,7 +30,8 @@ class SignIn extends Page {
 
     /**
      * Método responsável por realizar login no site
-     * @param Request $request
+     * @param \App\Http\Request $request
+     * 
      * @return void
      * 
      * @author @SimpleR1ick @RiffXS
@@ -68,7 +70,8 @@ class SignIn extends Page {
 
     /**
      * Método responsável por deslogar o usuário
-     * @param Request $request
+     * @param \App\Http\Request $request
+     * 
      * @return void
      * 
      * @author @SimpleR1ick @RiffXS
