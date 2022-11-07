@@ -33,7 +33,7 @@ class Contact extends Page {
      * Método responsável por rendenizar os contatos
      * @param EntityContact $obContacat
      */
-    public static function getContacts($obContact) {
+    private static function getContacts($obContact) {
         // DECLARAÇÃO DE VARIÁVEIS
         $contentTeacher = '';
         $contentServers = '';
@@ -66,7 +66,7 @@ class Contact extends Page {
      * @param  integer $id
      * @return string
      */
-    public static function getContactType($id) {
+    private static function getContactType($id) {
         // DECLARAÇÃO DE VARIÁVEIS
         $content = '';
         

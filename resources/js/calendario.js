@@ -136,7 +136,7 @@
         var self = this;
     
         this.events.forEach(function(ev) {
-            ev.date = moment(ev.eventTime, "YYYY-MM-DD hh:mm:ss");
+            ev.date = moment(ev.dat_evento, "YYYY-MM-DD hh:mm:ss");
         });
     
         if (this.month) {
@@ -335,11 +335,11 @@
         events.forEach(function(ev) {
             var div = createElement("div", "event");
             var square = createElement("div", "event-category " + ev.color);
-            var data = new Date(ev.eventTime);
+            var data = new Date(ev.dat_evento);
 
             data = `${(data.getDate()<10?'0':'') + data.getDate()}/${(data.getMonth()<9?'0':'') + (data.getMonth() + 1)} às ${data.getHours()}:${(data.getMinutes()<10?'0':'') + data.getMinutes()}`;
 
-            var span = createElement("span", "", `${data} - ${ev.eventName}`);
+            var span = createElement("span", "", `${data} - ${ev.dsc_evento}`);
     
             div.appendChild(square);
             div.appendChild(span);
@@ -424,18 +424,22 @@
 })();
   
 !(function() {
+    // NOME DO COKIE (mdc-calendario)
+    // OBTER ESSE COKIE VIA JS E COLOCAR NESSE ARRAY
+    // OBS: Traduzir o formato do cookie que esta em JSON string
+
     var data = [
         {
-            eventName: "Festa Cultural",
-            eventTime: "2022-10-10 18:00:00"
+            dsc_evento: "Festa Cultural",
+            dat_evento: "2022-10-10 18:00:00"
         },
         {
-            eventName: "Lunch Meeting w/ Mark jfddfjfdsjhfdsfsdfsdjhdfsdfsfsdsdf",
-            eventTime: "2022-10-24 16:03:00"
+            dsc_evento: "Lunch Meeting w/ Mark jfddfjfdsjhfdsfsdfsdjhdfsdfsfsdsdf",
+            dat_evento: "2022-10-24 16:03:00"
         },
         {
-            eventName: "Lunch Meeting w/ Mark",
-            eventTime: "2022-10-26 16:10:00"
+            dsc_evento: "Lunch Meeting w/ Mark",
+            dat_evento: "2022-10-26 16:10:00"
         }
     ];
   

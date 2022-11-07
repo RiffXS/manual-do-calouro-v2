@@ -111,7 +111,7 @@ class Page {
      * @param  string $currentModule
      * @return string
      */
-    public static function getHeader($module) {
+    private static function getHeader($module) {
         // RENDENIZA A VIEW DO HEADER
         return View::render('pages/header', [
             'links'    => self::getLinks($module),
@@ -132,7 +132,7 @@ class Page {
      * Método responsável por retornar o contéudo (view) da página genérica
      * @return string 
      */
-    public static function getPage($title, $content, $module = '') {
+    protected static function getPage($title, $content, $module = '') {
         // RENDENIZA A PAGINA
         return View::render('pages/page',[
             'title'   => $title,
@@ -148,7 +148,7 @@ class Page {
      * @param \App\Utils\Pagination $obPagination
      * @return string
      */
-    public static function getPagination($request, $obPagination) {
+    protected static function getPagination($request, $obPagination) {
         // DECLARAÇÃO DE VARIAVEIS
         $links = '';
         $pages = $obPagination->getPages(); // OBTER AS PAGINAS
