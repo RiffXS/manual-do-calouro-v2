@@ -1,27 +1,27 @@
-<section class="container">
-    <ul class="nav nav-tabs rounded border-bottom-0" id="myTab" role="tablist">
+<section class="container my-5">
+    <ul class="nav nav-tabs rounded border-bottom-0" id="tabsContatos" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+            <button class="nav-link active" id="servidor-tab" data-bs-toggle="tab" data-bs-target="#servidor-tab-pane" type="button" role="tab" aria-controls="servidor-tab-pane" aria-selected="false">
                 Servidores
             </button>
         </li>
 
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">
+            <button class="nav-link" id="professor-tab" data-bs-toggle="tab" data-bs-target="#professor-tab-pane" type="button" role="tab" aria-controls="professor-tab-pane" aria-selected="false">
                 Professores
             </button>
         </li>
     </ul>
 
-    <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade border py-4 px-2" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+    <div class="tab-content" id="tabServ">
+        <div class="tab-pane fade show active border py-4 px-2" id="servidor-tab-pane" role="tabpanel" aria-labelledby="servidor-tab" tabindex="0">
             <!-- SERVIDORES -->
             {{servidores}}
         </div>
     </div>
 
-    <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade border py-4 px-2" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+    <div class="tab-content" id="tabProf">
+        <div class="tab-pane fade border py-4 px-2" id="professor-tab-pane" role="tabpanel" aria-labelledby="professor-tab" tabindex="0">
             <!-- PROFESSORES -->
             {{professores}}
         </div>
