@@ -2,7 +2,9 @@
 
 namespace App\Controller\Pages;
 
+use App\Http\Request;
 use App\Models\User as EntityUser;
+use App\Utils\Pagination;
 use App\Utils\Session;
 use App\Utils\View;
 
@@ -51,8 +53,10 @@ class Page {
      * Método responsável por rendenizar os links do header
      * @param  string $currentModule
      * @return string
+     * 
+     * @author @SimpleR1ick @RiffXS
      */
-    private static function getLinks($current_module) {  
+    private static function getLinks(string $current_module): string {  
         // LINKS DO MENU
         $links = '';
 
@@ -85,8 +89,10 @@ class Page {
     /**
      * Método responsável por renderizar a view do menu do login
      * @return string
+     * 
+     * @author @SimpleR1ick @RiffXS
      */
-    private static function getLogin() {
+    private static function getLogin(): string {
         // RETORNA O DROPDOWN CASO LOGADO
         if (Session::isLogged()) {
             // OBTEM O ID DA SESSÃO ATUAL
@@ -110,18 +116,22 @@ class Page {
      * @param  string $contenct
      * @param  string $currentModule
      * @return string
+     * 
+     * @author @SimpleR1ick @RiffXS
      */
-    private static function getHeader($module) {
+    private static function getHeader(string $module): string {
         // RENDENIZA A VIEW DO HEADER
         return View::render('pages/header', [
-            'links'    => self::getLinks($module),
-            'login'   => self::getLogin()
+            'links' => self::getLinks($module),
+            'login' => self::getLogin()
         ]);
     }
 
     /**
      * Método responsável por rendenizar o rodapé da pagina
      * @return string
+     * 
+     * @author @SimpleR1ick
      */
     private static function getFooter() {
         // RENDENIZA A VIEW DO FOOTER
@@ -131,8 +141,10 @@ class Page {
     /**
      * Método responsável por retornar o contéudo (view) da página genérica
      * @return string 
+     * 
+     * @author @SimpleR1ick @RiffXS
      */
-    protected static function getPage($title, $content, $module = '') {
+    protected static function getPage(string $title, string $content, string $module = ''): string {
         // RENDENIZA A PAGINA
         return View::render('pages/page',[
             'title'   => $title,
@@ -147,8 +159,10 @@ class Page {
      * @param \App\Http\Request     $request
      * @param \App\Utils\Pagination $obPagination
      * @return string
+     * 
+     * @author @SimpleR1ick
      */
-    protected static function getPagination($request, $obPagination) {
+    protected static function getPagination(Request $request, Pagination $obPagination): string {
         // DECLARAÇÃO DE VARIAVEIS
         $links = '';
         $pages = $obPagination->getPages(); // OBTER AS PAGINAS
@@ -202,8 +216,10 @@ class Page {
      * @param  array  $page
      * @param  string $url
      * @return string
+     * 
+     * @author @SimpleR1ick
      */
-    private static function getPaginationLink($queryParams, $page, $url, $label = null) {
+    private static function getPaginationLink(array $queryParams, array $page, string $url, string $label = null): string {
         // ALTERA PAGINA    
         $queryParams['page'] = $page['page'];
 

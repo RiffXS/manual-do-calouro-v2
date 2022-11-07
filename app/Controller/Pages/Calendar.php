@@ -10,8 +10,10 @@ class Calendar extends Page {
     /**
      * Método responsável por retornar o contéudo (view) da página calendario
      * @return string 
+     * 
+     * @author @SimpleR1ick
      */
-    public static function getCalendar() {
+    public static function getCalendar(): string {
         // VIEW DA HOME
         $content = View::render('pages/calendar');
 
@@ -25,11 +27,15 @@ class Calendar extends Page {
     
     /**
      * Método responsavel por criar o COOKIE de eventos do calendario
+     * @return void
+     * 
+     * @author @SimpleR1ick
      */
     private static function setEventsCookie(): void {
         // NOVA INSTANCIA
         $obCalendar = new EntityCalendar;
 
+        // OBTEM OS EVENTOS DO OBJETO
         $events = $obCalendar->getEvents();
 
         // TRANSFORMA O ARRAY PARA JSON

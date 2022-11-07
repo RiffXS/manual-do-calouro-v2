@@ -2,6 +2,7 @@
 
 namespace App\Controller\Pages;
 
+use App\Http\Request;
 use App\Models\Mail\Email;
 use App\Models\User as EntityUser;
 use App\Models\Hash as EntityHash;
@@ -13,9 +14,13 @@ class Recovery extends Page {
 
     /**
      * Método responsável por retornar o contéudo (view) da página recuperação da senha
+     * @param \App\Http\Request $request
+     * 
      * @return string 
+     * 
+     * @author @SimpleR1ick @RiffXS
      */
-    public static function getRecovery($request) {
+    public static function getRecovery(Request $request): string {
         // VIEW DA HOME
         $content = View::render('pages/recovery', [
             'status' => Alert::getStatus($request)
@@ -27,9 +32,11 @@ class Recovery extends Page {
 
     /**
      * Método responsável por criar e enviar o link para recuperação de senha
-     * @param \App\Http\Request
+     * @param Request $request
+     * 
+     * @author @SimpleR1ick @RiffXS
      */
-    public static function setRecovery($request): void {
+    public static function setRecovery(Request $request): void {
         // POST VARS
         $postVars = $request->getPostVars();
 

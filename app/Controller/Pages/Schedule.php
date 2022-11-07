@@ -2,6 +2,7 @@
 
 namespace App\Controller\Pages;
 
+use App\Http\Request;
 use App\Models\Schedule as EntitySchedule;
 use App\Utils\View;
 
@@ -9,10 +10,13 @@ class Schedule extends Page {
     
     /**
      * Método responsável por retornar o contéudo (view) da página horario
-     * @param \App\Http\Request
-     * @return string 
+     * @param  Request
+     * 
+     * @return string
+     * 
+     * @author @SimpleR1ick @RiffXS 
      */
-    public static function getSchedule($request): string {
+    public static function getSchedule(Request $request): string {
         // QUERY PARAMS
         $queryParams = $request->getQueryParams();
 
@@ -48,8 +52,9 @@ class Schedule extends Page {
      * Método responsável por retornar o nome do curso
      * @param  integer $curso
      * @return string
+     * @author @SimpleR1ick @RiffXS
      */
-    private static function getCurso($curso): string {
+    private static function getCurso(int $curso): string {
         // RETORNA O NOME DO CURSO
         $curso = EntitySchedule::getCursoById($curso);
         return $curso['dsc_curso'];
@@ -60,8 +65,9 @@ class Schedule extends Page {
      * @param integer $curso
      * @param integer $modulo
      * @return string
+     * @author @SimpleR1ick @RiffXS
      */
-    public static function getTable($curso, $modulo): string {
+    public static function getTable(int $curso, int $modulo): string {
         // DECLARAÇÃO DE VARIAVEIS
         $count = 0;
         $content = '';
@@ -85,11 +91,12 @@ class Schedule extends Page {
     
     /**
      * Método responsável por rendenizar a linha de items do horário
-     * @param array   $aulas
-     * @param integer $count
+     * @param  array   $aulas
+     * @param  integer $count
      * @return string
+     * @author @SimpleR1ick @RiffXS
      */
-    public static function getRow($aulas, &$count): string {        
+    public static function getRow(array $aulas, int &$count): string {        
         $content = '';
         
         // Loop para cada aula
@@ -104,10 +111,11 @@ class Schedule extends Page {
 
     /**
      * Método responsável por criar cada item de aula da tabela
-     * @param array $class
+     * @param  array $class
      * @return string
+     * @author @SimpleR1ick @RiffXS
      */ 
-    public static function getItem($aula): string {
+    public static function getItem(array $aula): string {
         // RETORNA A VIEW DA COLUNA
         return View::render('pages/schedule/item', [
             'sala' => $aula['sala'],

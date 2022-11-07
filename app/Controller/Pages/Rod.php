@@ -8,7 +8,6 @@ class Rod extends Page {
 
     /**
      * Método responsável por retornar o contéudo (view) da página rod
-     * @param \App\Http\Request $request
      * @return string 
      */
     public static function getRod(): string {

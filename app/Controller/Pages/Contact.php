@@ -11,15 +11,17 @@ class Contact extends Page {
     /**
      * Método responsável por retornar o contéudo (view) da página contatos
      * @return string 
+     * 
+     * @author @SimpleR1ick @RiffXS 
      */
-    public static function getContact() {
+    public static function getContact(): string {
         // CRIANDO NOVA INSTÂNCIA DE CONTATO
         $obContact = new EntityContact;
 
-        // 
+        // OBTEM A VIEWS DOS CARDS CONTATOS
         $views = self::getContacts($obContact);
 
-        // VIEW DOS CONTATOS
+        // REDENIZA AS COLUNAS DE CONTATOS
         $content = View::render('pages/contacts', [
             'professores' => $views['professores'],
             'servidores'  => $views['servidores']
@@ -32,8 +34,11 @@ class Contact extends Page {
     /**
      * Método responsável por rendenizar os contatos
      * @param EntityContact $obContacat
+     * @return array
+     * 
+     * @author @SimpleR1ick @RiffXS 
      */
-    private static function getContacts($obContact) {
+    private static function getContacts(EntityContact $obContact): array {
         // DECLARAÇÃO DE VARIÁVEIS
         $contentTeacher = '';
         $contentServers = '';
@@ -51,22 +56,21 @@ class Contact extends Page {
         for ($s = 0; $s < count($servers); $s++) {
             $contentServers .= self::cardServer($servers[$s]);
         }
-
-        $content = [
+        // RETORNA UM ARRAY COM AS VIEWS DOS PROFESSORES E SERVIORES
+        return [
             'professores' => $contentTeacher,
             'servidores'  => $contentServers
-        ];
-
-        // RETORNA UM ARRAY COM AS VIEWS DOS PROFESSORES E SERVIORES
-        return $content;
+        ];        
     }
 
     /**
      * Método responsável por renderizar o contato
      * @param  integer $id
      * @return string
-     */
-    private static function getContactType($id) {
+     * 
+     * @author @SimpleR1ick @RiffXS
+     */ 
+    private static function getContactType(int $id): string {
         // DECLARAÇÃO DE VARIÁVEIS
         $content = '';
         
@@ -99,8 +103,10 @@ class Contact extends Page {
      * Método responsável por renderizar os cards de contato dos professores
      * @param  array $contact
      * @return string
+     * 
+     * @author @SimpleR1ick @RiffXS 
      */
-    public static function cardTeacher($contact) {
+    private static function cardTeacher(array $contact): string {
         // ATRIBUIÇÃO DE VARIÁVEIS
         $id = $contact['id_usuario'];
         $imagem = !empty($contact['img_perfil']) ? "{$contact['img_perfil']}" : 'user.png';
@@ -122,8 +128,10 @@ class Contact extends Page {
      * Método responsável por renderizar os cards de contato dos servidores
      * @param  string $contact
      * @return string
+     * 
+     * @author @SimpleR1ick @RiffXS 
      */
-    public static function cardServer($contact) {
+    private static function cardServer(array $contact): string {
         // ATRIBUIÇÃO DE VARIÁVEIS
         $id = $contact['id_usuario'];
         $imagem = !empty($contact['img_perfil']) ? "{$contact['img_perfil']}" : 'user.png';

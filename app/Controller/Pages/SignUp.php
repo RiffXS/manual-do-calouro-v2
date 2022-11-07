@@ -2,6 +2,7 @@
 
 namespace App\Controller\Pages;
 
+use App\Http\Request;
 use App\Models\User as EntityUser;
 use App\Utils\Tools\Alert;
 use App\Utils\Sanitize;
@@ -13,6 +14,7 @@ class SignUp extends Page {
      * Método responsável por retornar o contéudo (view) da página cadastro
      * @param \App\Http\Request $request
      * @return string
+     * @author @SimpleR1ick @RiffXS 
      */
     public static function getSignUp($request): string {
         // CONTEUDO DA PAGINA DE LOGIN
@@ -25,9 +27,10 @@ class SignUp extends Page {
 
     /**
      * Método responsável por processar o formulário de cadastro
-     * @param \App\Http\Request $request
+     * @param Request $request
+     * @author @SimpleR1ick @RiffXS
      */
-    public static function setSignUp($request): void {
+    public static function setSignUp(Request $request): void {
         // POST VARS
         $postVars = $request->getPostVars();
 

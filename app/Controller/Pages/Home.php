@@ -9,6 +9,8 @@ class Home extends Page {
     /**
      * Método responsável por retornar o contéudo (view) da página home
      * @return string 
+     * 
+     * @author @SimpleR1ick
      */
     public static function getHome() {
         // VIEW DA HOME

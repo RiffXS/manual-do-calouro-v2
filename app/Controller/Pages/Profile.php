@@ -2,6 +2,7 @@
 
 namespace App\Controller\Pages;
 
+use App\Http\Request;
 use App\Models\Grade as EntityGrade;
 use App\Models\Student as EntityStudent;
 use App\Models\Teacher as EntityTeacher;
@@ -18,8 +19,10 @@ class Profile extends Page {
      * Método responsável por retornar o contéudo (view) da página perfil
      * @param  \App\Http\Request $request
      * @return string 
+     * 
+     * @author @SimpleR1ick
      */
-    public static function getEditProfile($request) {
+    public static function getEditProfile(Request $request) {
         // OBTEM A IMAGEM DO USUARIO
         $id = Session::getSessionId();
         $obUser = EntityUser::getUserById($id);
@@ -41,9 +44,9 @@ class Profile extends Page {
 
     /**
      * Método responsável por definir o texto de acordo com o tipo de usuário
-     * @param EntityUser $obUser
+     * @param \App\Models\User $obUser
      */
-    public static function getTextType($obUser) {
+    public static function getTextType(EntityUser $obUser) {
         $text = '';
         $colum = '';
 
@@ -78,7 +81,7 @@ class Profile extends Page {
      * Método responsável por atualizar o perfil do usuário
      * @param \App\Http\Request $request
      */
-    public static function setEditProfile($request) {
+    public static function setEditProfile(Request $request) {
         // OBTEM O USUARIO E O NIVEL DE ACESSO DA SESSÃO
         $obUser = Session::getSessionUser();
         $acesso = Session::getSessionLv();
@@ -160,11 +163,15 @@ class Profile extends Page {
 
     /**
      * Método responsável por atualizar os usuário comum para o tipo aluno
-     * @param \App\Http\Request 
-     * @param EntityUser $obUser
+     * @param \App\Http\Request $request
+     * @param \App\Models\User  $obUser
      * @param array $PostVars
+     * 
+     * @return void
+     * 
+     * @author @SimpleR1ick
      */
-    private static function registerStudent($request, $obUser, $postVars) {
+    private static function registerStudent(Request $request, EntityUser $obUser, array $postVars): void {
         $matricula = $postVars['matricula'] ?? '';
 
         // VERIFICA SE A MATRICULA ESTA VAZIA
@@ -185,10 +192,14 @@ class Profile extends Page {
 
     /**
      * Método responsável por atualizar a turma do usuário
-     * @param EntityUser $obUser
+     * @param \App\Models\User $obUser
      * @param array $postVars
+     * 
+     * @return void
+     * 
+     * @author @SimpleR1ick
      */
-    private static function updateStudent($obUser, $postVars) {
+    private static function updateStudent(EntityUser $obUser, $postVars): void {
         $curso  = $postVars['curso'] ?? '';
         $modulo = $postVars['modulo'] ?? '';
 
@@ -207,10 +218,14 @@ class Profile extends Page {
 
     /**
      * Método responsável por atualizar as regras do professor
-     * @param EntityUser $obUser
+     * @param \App\Models\User $obUser
      * @param array $postVars
+     * 
+     * @return void
+     * 
+     * @author @SimpleR1ick
      */
-    private static function updateTeacher($obUser, $postVars) {
+    private static function updateTeacher(EntityUser $obUser, array $postVars): void {
         $regras = $postVars['regras'] ?? '';
 
         // VERIFICA SE O CAMPO ESTA VAZIO

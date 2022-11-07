@@ -9,8 +9,10 @@ class Faq extends Page {
     /**
      * Método responsável por retornar o contéudo (view) da página fale dúvidas frequentes
      * @return string 
+     * 
+     * @author @SimpleR1ick 
      */
-    public static function getFaq() {
+    public static function getFaq(): string {
         // VIEW DA HOME
         $content = View::render('pages/faq');
 

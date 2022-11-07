@@ -9,8 +9,10 @@ class About extends Page {
     /**
      * Método responsável por retornar o contéudo (view) da página sobre
      * @return string 
+     * 
+     * @author @SimpleR1ick @RiffXS
      */
-    public static function getAbout() {
+    public static function getAbout(): string {
         // VIEW DO SOBRE
         $content = View::render('pages/about');
 

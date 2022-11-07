@@ -2,6 +2,7 @@
 
 namespace App\Controller\Pages;
 
+use App\Http\Request;
 use App\Models\Hash as EntityHash;
 use App\Models\User as EntityUser;
 use App\Utils\Tools\Alert;
@@ -15,7 +16,7 @@ class Redefine extends Page {
      * @param \App\Http\Request
      * @return string 
      */
-    public static function getRedefine($request): string {
+    public static function getRedefine(Request $request): string {
         // QUERY PARAMS
         $queryParams = $request->getQueryParams();
 
@@ -41,9 +42,9 @@ class Redefine extends Page {
 
     /**
      * Método responsável por atualizar
-     * @param \App\Http\Request
+     * @param Request
      */
-    public static function setRedefine($request): void {
+    public static function setRedefine(Request $request): void {
         // POST VARS
         $postVars = $request->getPostVars();    
         
@@ -57,17 +58,17 @@ class Redefine extends Page {
         // NOVA INSTANCIA DE USUARIO
         $obUser = EntityUser::getUserById($id_user);
 
-        // VALIDA A SENHA
+        // VERIFICA SE AS SENHAS CONICIDEM
         if (Sanitize::validatePassword($password, $confirma)) {
             $request->getRouter()->redirect("/redefine?chave={$obHash->getHash()}&status=invalid_pass");
         }
-        // ATUALIZA O USUARIO
-        $obUser->setSenha($password);
-        $obUser->updateUser();
-        
         // EXCLUI A CHAVE
         $obHash->deleteHash();
 
+        // ATUALIZA A SENHA DO USUARIO
+        $obUser->setSenha($password);
+        $obUser->updateUser();
+        
         // REDIRECIONA PARA O LOGIN
         $request->getRouter()->redirect('/signin?status=pass_updated');        
     }

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Pages;
 
+use App\Http\Request;
 use App\Models\User as EntityUser;
 use App\Utils\Sanitize;
 use App\Utils\Session;
@@ -12,10 +13,12 @@ class SignIn extends Page {
 
     /**
      * Método responsável por retornar o contéudo (view) da página login
-     * @param \App\Http\Request $request
+     * @param  Request $request
      * @return string 
+     * 
+     * @author @SimpleR1ick @RiffXS
      */
-    public static function getSignIn($request): string {
+    public static function getSignIn(Request $request): string {
         // CONTEUDO DA PAGINA DE LOGIN
         $content = View::render('pages/signin', [
             'status' => Alert::getStatus($request)
@@ -26,9 +29,12 @@ class SignIn extends Page {
 
     /**
      * Método responsável por realizar login no site
-     * @param \App\Http\Request
+     * @param Request $request
+     * @return void
+     * 
+     * @author @SimpleR1ick @RiffXS
      */
-    public static function setSignIn($request): void {
+    public static function setSignIn(Request $request): void {
         // POST VARS
         $postVars = $request->getPostVars();
 
@@ -62,9 +68,12 @@ class SignIn extends Page {
 
     /**
      * Método responsável por deslogar o usuário
-     * @param \App\Http\Request
+     * @param Request $request
+     * @return void
+     * 
+     * @author @SimpleR1ick @RiffXS
      */
-    public static function setLogout($request): void {
+    public static function setLogout(Request $request): void {
         // DESTROI A SESSÃO DE LOGIN
         Session::logout();
 
