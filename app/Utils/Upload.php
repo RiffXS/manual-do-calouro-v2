@@ -49,6 +49,8 @@ class Upload {
     /**
      * Coonstrutor da classe
      * @param array file $_FILE['campo']
+     * 
+     * @author @SimpleR1ick
      */
     public function __construct($file) {
         $info = pathinfo($file['name']);
@@ -62,31 +64,22 @@ class Upload {
     }
 
     /**
-     * Metodo responsavel por obter o valor atributo do objeto
-     */
-    public function __get($name) {
-        return $this->{$name};
-    }
-
-    /**
-     * Metodo responsavel por setar um atributo do objeto
-     */
-    public function __set($name, $value) {
-        $this->{$name} = $value;
-    }
-
-    /**
      * Metodo responsavel por gerar um novo nome aleatorio
+     * @return void
+     * 
+     * @author Henrique Dalmagro
      */
-    public function generateNewName() {
+    public function generateNewName(): void {
         $this->name = time().'-'.uniqid();
     }
 
     /**
      * Metodo responsavel por retornar o nome do arquivo com sua extensão
      * @return string
+     * 
+     * @author @SimpleR1ick
      */
-    public function getBasename() {
+    public function getBasename(): string  {
         // VALIDA EXTENSÃO
         $extension = strlen($this->extension) ? '.'.$this->extension : '';
 
@@ -103,7 +96,7 @@ class Upload {
      * @param  boolean $overwrite
      * @return string 
      */
-    private function getPossibleBasename($dir, $overwrite) {
+    private function getPossibleBasename(string $dir, bool $overwrite): string {
         // SOBRESCREVER ARQUIVO
         if ($overwrite) return $this->getBasename();
 
@@ -125,9 +118,12 @@ class Upload {
      * Metodo responsavel por mover o arquivo de upload
      * @param  string  $dir
      * @param  boolean $overwrite 
+     * 
      * @return boolean
+     * 
+     * @author @SimpleR1ick
      */
-    public function upload($dir, $overwrite = true) {
+    public function upload(string $dir, bool $overwrite = true): bool {
         // VERIFICAR ERRO
         if ($this->error != 0) return false;
 
@@ -141,9 +137,12 @@ class Upload {
     /**
      * Metodo responsavel por criar instancias de ulpload para multiplos arquivos
      * @param  array $files $_FILES['campo']
+     * 
      * @return array
+     * 
+     * @author @SimpleR1ick
      */
-    public static function createMultUpload($files) {
+    public static function createMultUpload(array $files): array {
         // DECLARAÇÃO DE VARIAVEIS
         $uploads = [];
 
@@ -162,5 +161,17 @@ class Upload {
         }
         // RETORNA OS ARQUIVOS
         return $uploads;
+    }
+
+    /*
+     * Metodos GETTERS E SETTERS
+     */
+
+    public function __get(mixed $name) {
+        return $this->{$name};
+    }
+
+    public function __set(mixed $name, $value) {
+        $this->{$name} = $value;
     }
 }

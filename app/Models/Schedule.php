@@ -7,31 +7,36 @@ use App\Utils\Database;
 class Schedule {
 
     /**
-     * Undocumented variable
-     *
+     * ID do curso
      * @var integer
      */
     private $curso;
 
     /**
-     * Undocumented variable
-     *
+     * ID do modulo
      * @var integer
      */
     private $modulo;
 
     /**
-     * Undocumented variable
+     * Intervalo de horarios das aulas
      * @var array
      */
     private $horas;
 
     /**
-     * Undocumented variable
+     * Dados das aulas
      * @var array
      */
     private $aulas;
 
+    /**
+     * Método construtor da classes
+     * @param integer $curso
+     * @param integer $Modulo
+     * 
+     * @author @SimpleR1ick
+     */
     public function __construct($curso, $modulo) {
         $this->curso  = $curso;
         $this->modulo = $modulo;
@@ -41,11 +46,11 @@ class Schedule {
 
     /**
      * Metodo responsavel por retornar todos os horarios de uma turma
-     * @param integer $curso
-     * @param integer $modulo
      * @return array
+     * 
+     * @author @SimpleR1ick @RiffXS
      */
-    public function getScheduleClass() {
+    public function getScheduleClass(): array {
         // Seleciona todas as aulas, mesmo aquelas que não existem, e as coloca em um array
         $sql = "SELECT * FROM (
             (SELECT fk_dia_semana_id_dia_semana AS id_dia_semana,
@@ -98,35 +103,37 @@ class Schedule {
     }
 
     /**
-     * Méthodo responsavel os horarios
+     * Méthodo responsavel por consultar os horarios de tempo
      * @return array
+     * 
+     * @author @RiffXS
      */
-    public function getScheduleTimes() {
+    public function getScheduleTimes(): array {
         return (new Database('horario_aula'))->select()->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**
-     * Metodo responsavel por obter o curso de um usuario 
+     * Metodo responsavel por obter o curso de um usuario
+     * @param integer $id
+     *  
      * @return array
+     * 
+     * @author @RiffXS
      */
-    public static function getCursoById($id) {
+    public static function getCursoById(int $id): array {
         // RETORNA O NOME DO CURSO
         return (new Database('curso'))->select("id_curso = $id", null, null, 'dsc_curso')->fetch(\PDO::FETCH_ASSOC);
             
     }
 
-    /**
-     * Undocumented function
-     * @return array
+    /*
+     * Metodos GETTERS E SETTERS
      */
+
     public function getTimes() {
         return $this->horas;
     }
 
-    /**
-     * Undocumented function
-     * @return array
-     */
     public function getClass() {
         return $this->aulas;
     }

@@ -13,17 +13,24 @@ class View {
     /**
      * Methodo responsavel por definir os dados inicias da classe
      * @param array $vars
+     * 
+     * @return void
+     * 
+     * @author @SimpleR1ick
      */
-    public static function init($vars = []) {
+    public static function init(array $vars = []): void {
         self::$vars = $vars;
     }
 
     /**
      * Methodo responsavel por retornar o conteudo de uma view
-     * @param string $view
+     * @param  string $view
+     * 
      * @return string
+     * 
+     * @author @SimpleR1ick
      */
-    private static function getContentView($view) {
+    private static function getContentView($view): string {
         $file = __DIR__.'/../../resources/view/'.$view.'.html';
 
         // RETORNA O CONTEUDO DO ARQUIVO SE ELE EXISTIR
@@ -32,11 +39,14 @@ class View {
 
     /**
      * Método responsavel por retornar o conteudo rendenizado de uma view
-     * @param string $view
-     * @param array $vars (strings/numeric)
+     * @param  string $view
+     * @param  array  $vars (strings/numeric)
+     * 
      * @return string 
+     * 
+     * @author @SimpleR1ick
      */
-    public static function render($view, $vars = []) {
+    public static function render(string $view, array $vars = []): string {
         // CONTEUDO DA VIEW 
         $contentView = self::getContentView($view);
 

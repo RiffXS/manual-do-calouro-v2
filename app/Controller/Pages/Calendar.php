@@ -35,11 +35,8 @@ class Calendar extends Page {
         // NOVA INSTANCIA
         $obCalendar = new EntityCalendar;
 
-        // OBTEM OS EVENTOS DO OBJETO
-        $events = $obCalendar->getEvents();
-
         // TRANSFORMA O ARRAY PARA JSON
-        $cookieContent = json_encode($events, JSON_UNESCAPED_UNICODE);
+        $cookieContent = json_encode($obCalendar->getEvents(), JSON_UNESCAPED_UNICODE);
 
         // DEFINE O COOKIE DE EVENTOS
         setcookie('mdc-calendario', $cookieContent); 

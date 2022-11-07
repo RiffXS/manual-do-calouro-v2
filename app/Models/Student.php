@@ -75,10 +75,10 @@ class Student {
         return true;
     }
     
-    /**
-     * Set iD da turma do aluno
-     * @param  integer  $fk_turma_id_turma  ID da turma do aluno
-     */ 
+    /*
+     * Metodos GETTERS E SETTERS
+     */
+
     public function setFk_turma($fk_id) {
         $this->fk_turma_id_turma = $fk_id;
     }

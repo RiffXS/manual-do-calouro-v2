@@ -18,17 +18,29 @@ class Teacher {
      */
     private $regras;
 
+    /**
+     * Método construtor da classe
+     * @param integer $id
+     * @param string  $regras
+     * 
+     * @author @SimpleR1ick
+     */
     public function __construct($id, $regras) {
         $this->fk_servidor_fk_usuario_id_usuario = $id;
         $this->regras = $regras;
     }
 
-    public function updateRules() {
+    /**
+     * Método responsavel por atualizar as regras de um usuario professor
+     * @return boolean
+     * 
+     * @author @SimpleR1ick
+     */
+    public function updateRules(): bool {
         $where = "fk_servidor_fk_usuario_id_usuario = {$this->fk_servidor_fk_usuario_id_usuario}";
         
         return (new Database('professor'))->update($where, [
             'regras' => $this->regras
         ]);
     }
-
 }

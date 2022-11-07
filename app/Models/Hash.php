@@ -19,10 +19,11 @@ class Hash {
     private $chave_confirma;
 
     /**
-     * Metodo responsavel por verificar se uma chave existe
-     * @return mixed
+     * Metodo responsavel buscar uma chave pelo id ou hash
+     * @return self
      */
-    public static function findHash($id = null, $chave = null) {
+    public static function findHash($id = null, $chave = null): object {
+        // VERIFICA SE O ID ESTA VAZIO
         if (!is_null($id)) {
             return (new Database('chave'))->select("fk_usuario_id_usuario = $id")->fetchObject(self::class);
         } 
@@ -31,15 +32,21 @@ class Hash {
     
     /**
      * Metodo responsavel por inserir uma chave na tabela
+     * @return boolean
+     * 
+     * @author @SimpleR1ick
      */
-    public function insertHash() {
+    public function insertHash(): bool {
         return (new Database())->execute("INSERT INTO chave (fk_usuario_id_usuario, chave_confirma) VALUES ({$this->fk_usuario_id_usuario}, '{$this->chave_confirma}')");
     }
 
     /**
      * Metodo responsavel por atualizar uma chave na tabela
+     * @return boolean
+     * 
+     * @author @SimpleR1ick
      */
-    public function updateHash() {
+    public function updateHash(): bool {
         return (new Database('chave'))->update("fk_usuario_id_usuario = {$this->fk_usuario_id_usuario}", [
             'chave_confirma' => $this->chave_confirma
         ]);
@@ -47,39 +54,31 @@ class Hash {
 
     /**
      * Metodo responsavel por deleltar a chave
+     * @return boolean
+     * 
+     * @author @SimpleR1ick
      */
-    public function deleteHash() {
+    public function deleteHash(): bool {
         return (new Database('chave'))->delete("fk_usuario_id_usuario = {$this->fk_usuario_id_usuario}");
     }
 
-    /**
-     * Set iD do usuario da chave
-     * @param  integer  $fk_usuario_id_usuario
-     */ 
-    public function setFkId($id) {
-        $this->fk_usuario_id_usuario = $id;
-    }
+    /*
+     * Metodos GETTERS E SETTERS
+     */
 
-    /**
-     * Get iD do usuario da chave
-     * @return  integer
-     */ 
-    public function getFkId() {
+    public function getFkId(): int {
         return $this->fk_usuario_id_usuario;
     }
 
-    /**
-     * Metodo responsavel por gerar uma chave unica
-     */
-    public function setHash() {
-        $this->chave_confirma = sha1(uniqid(mt_rand()));
+    public function setFkId($id): void {
+        $this->fk_usuario_id_usuario = $id;
     }
 
-    /**
-     * Método responsavel por retornar o atributo chave
-     * @return string
-     */
-    public function getHash() {
+    public function getHash(): string {
         return $this->chave_confirma;
+    }
+
+    public function setHash(): void {
+        $this->chave_confirma = sha1(uniqid(mt_rand()));
     }
 }

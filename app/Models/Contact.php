@@ -29,8 +29,10 @@ class Contact {
     /**
      * Método responsável por retornar os contatos dos professores
      * @return array
+     * 
+     * @author @SimpleR1ick @RiffXS
      */
-    public static function getContactTeacher() {
+    public static function getContactTeacher(): array {
         $sql = "SELECT id_usuario,
                     nom_usuario,
                     regras,
@@ -53,8 +55,10 @@ class Contact {
     /**
      * Método responsável por retornar os contatos dos servidores
      * @return array
+     * 
+     * @author @SimpleR1ick @RiffXS
      */
-    public static function getContactServer() {
+    public static function getContactServer(): array {
         $sql = "SELECT id_usuario,
                     nom_usuario,
                     dsc_setor,
@@ -74,19 +78,15 @@ class Contact {
         return (new Database())->execute($sql)->fetchAll(\PDO::FETCH_ASSOC); 
     }
 
-    /**
-     * Get array com os dados dos professores
-     * @return  array
-     */ 
-    public function getProfessor() {
+    /*
+     * Metodos GETTERS E SETTERS
+     */
+
+    public function getProfessor(){
         return $this->professor;
     }
 
-    /**
-     * Get array com os dados dos servidores
-     * @return  array
-     */ 
-    public function getServidor() {
+    public function getServidor(){
         return $this->servidor;
     }
 }
