@@ -61,6 +61,7 @@ class User {
      * @author @SimpleR1ick @RiffXS
      */
     public function insertUser(): bool {
+        // ATRIBUI AO OBJETO A HORA ATUAL
         $this->setAdd_data();
 
         // INSERE A ISTANCIA NO BANCO

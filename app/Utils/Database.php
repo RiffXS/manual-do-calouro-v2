@@ -4,6 +4,7 @@ namespace App\Utils;
 
 use \PDO;
 use \PDOException;
+use PDOStatement;
 
 class Database {
 
@@ -53,7 +54,7 @@ class Database {
 	 * Define a tabela e instancia e conexão
 	 * @param string $table
 	 */
-	public function __construct($table = null) {
+	public function __construct($table=null) {
 		$this->table = $table;
 		$this->setConnection();
 	}
@@ -65,8 +66,10 @@ class Database {
 	 * @param  string  $user
 	 * @param  string  $pass
 	 * @param  integer $port
+	 * 
+	 * @return void
 	 */
-	public static function config($host, $name, $user, $pass, $port = 5432)	{
+	public static function config($host, $name, $user, $pass, $port = 5432): void	{
 		self::$host = $host;
 		self::$name = $name;
 		self::$user = $user;
@@ -76,8 +79,9 @@ class Database {
 
 	/**
 	 * Método responsável por criar uma conexão com o banco de dados
+	 * @return void
 	 */
-	private function setConnection() {
+	private function setConnection(): void {
 		// TENTA CRIAR UMA NOVA CONEXÃO PDO
 		try {
 			$this->connection = new PDO('pgsql:host='.self::$host.';dbname='.self::$name.';port='.self::$port, self::$user, self::$pass);
@@ -94,7 +98,7 @@ class Database {
 	 * @param  array  $params
 	 * @return \PDOStatement|bool
 	 */
-	public function execute($query, $params = []) {
+	public function execute(string $query, array $params = []): mixed {
 		// TENTA EXECUTAR A QUERY
 		try {
 			$statement = $this->connection->prepare($query);
@@ -110,77 +114,81 @@ class Database {
 	/**
 	 * Método responsável por inserir dados no banco
 	 * @param  array $values [ field => value ]
+	 * 
 	 * @return integer ID inserido
 	 */
-	public function insert($values)	{
-		//DADOS DA QUERY
+	public function insert(array $values): int {
+		// DADOS DA QUERY
 		$fields = array_keys($values);
 		$binds  = array_pad([], count($fields), '?');
 
-		//MONTA A QUERY
+		// MONTA A QUERY
 		$query = 'INSERT INTO '.$this->table.'('.implode(',', $fields).') VALUES ('.implode(',', $binds).')';
 
-		//EXECUTA O INSERT
+		// EXECUTA O INSERT
 		$this->execute($query, array_values($values));
 
-		//RETORNA O ID INSERIDO
+		// RETORNA O ID INSERIDO
 		return $this->connection->lastInsertId();
 	}
 
 	/**
 	 * Método responsável por executar uma consulta no banco
-	 * @param  string $where
-	 * @param  string $order
-	 * @param  string $limit
-	 * @param  string $fields
+	 * @param  string $where  condição
+	 * @param  string $order  ordem
+	 * @param  string $limit  limite
+	 * @param  string $fields campos
+	 * 
 	 * @return \PDOStatement
 	 */
-	public function select($where = null, $order = null, $limit = null, $fields = '*') {
-		//DADOS DA QUERY
+	public function select($where = null, $order = null, $limit = null, $fields = '*'): PDOStatement {
+		// DADOS DA QUERY
 		$where = !is_null($where) ? 'WHERE '.$where : '';
 		$order = !is_null($order) ? 'ORDER BY '.$order : '';
 		$limit = !is_null($limit) ? 'LIMIT '.$limit : '';
 
-		//MONTA A QUERY
-		$query = 'SELECT '.$fields.' FROM '.$this->table.' '.$where. ' '.$order.' '.$limit;
+		// MONTA A QUERY
+		$query = 'SELECT '.$fields.' FROM '.$this->table.' '.$where.' '.$order.' '.$limit;
 
-		//EXECUTA A QUERY
+		// EXECUTA A QUERY
 		return $this->execute($query);
 	}
 
 	/**
 	 * Método responsável por executar atualizações no banco de dados
 	 * @param  string $where
-	 * @param  array $values [ field => value ]
+	 * @param  array  $values [ field => value ]
+	 * 
 	 * @return boolean
 	 */
-	public function update($where, $values)	{
-		//DADOS DA QUERY
+	public function update(string $where, array $values): bool {
+		// DADOS DA QUERY
 		$fields = array_keys($values);
 
-		//MONTA A QUERY
+		// MONTA A QUERY
 		$query = 'UPDATE '.$this->table.' SET '.implode('=?,', $fields).'=? WHERE '.$where;
 
-		//EXECUTAR A QUERY
+		// EXECUTAR A QUERY
 		$this->execute($query, array_values($values));
 
-		//RETORNA SUCESSO
+		// RETORNA SUCESSO
 		return true;
 	}
 
 	/**
 	 * Método responsável por excluir dados do banco
 	 * @param  string $where
+	 * 
 	 * @return boolean
 	 */
-	public function delete($where) {
-		//MONTA A QUERY
+	public function delete(string $where): bool {
+		// MONTA A QUERY
 		$query = 'DELETE FROM '.$this->table.' WHERE '.$where;
 
-		//EXECUTA A QUERY
+		// EXECUTA A QUERY
 		$this->execute($query);
 
-		//RETORNA SUCESSO
+		// RETORNA SUCESSO
 		return true;
 	}
 }
