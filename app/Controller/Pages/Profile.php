@@ -91,17 +91,17 @@ class Profile extends Page {
      * @author @SimpleR1ick
      */
     public static function setEditProfile(Request $request): void {
+        // POST VARS    
+        $postVars = Sanitize::sanitizeForm($request->getPostVars());
+        $files = $request->getUploadFiles();
+
         // OBTEM O USUARIO E O NIVEL DE ACESSO DA SESSÃO
         $obUser = Session::getSessionUser();
         $acesso = Session::getSessionLv();
 
-        // POST VARS    
-        $postVars = $request->getPostVars(); 
-        $files    = $request->getUploadFiles();
-
+        $photo = $obUser->getImg_perfil();
         $nome = $postVars['nome'];
         $email = $postVars['email'];
-        $photo = $obUser->getImg_perfil();
 
         // NOVA INSTANCIA 
         $obUpload = new Upload($files['foto']);

@@ -38,7 +38,7 @@ class SignIn extends Page {
      */
     public static function setSignIn(Request $request): void {
         // POST VARS
-        $postVars = $request->getPostVars();
+        $postVars = Sanitize::sanitizeForm($request->getPostVars());
 
         $email = $postVars['email'];
         $senha = $postVars['senha'];

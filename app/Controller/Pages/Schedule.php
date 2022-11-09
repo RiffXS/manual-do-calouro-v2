@@ -4,6 +4,7 @@ namespace App\Controller\Pages;
 
 use App\Http\Request;
 use App\Models\Schedule as EntitySchedule;
+use App\Utils\Sanitize;
 use App\Utils\View;
 
 class Schedule extends Page {
@@ -18,7 +19,7 @@ class Schedule extends Page {
      */
     public static function getSchedule(Request $request): string {
         // QUERY PARAMS
-        $queryParams = $request->getQueryParams();
+        $queryParams = Sanitize::sanitizeForm($request->getQueryParams());
 
         $curso = $queryParams['curso'] ?? '';
         $modulo = $queryParams['modulo'] ?? '';

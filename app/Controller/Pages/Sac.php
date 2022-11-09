@@ -4,6 +4,7 @@ namespace App\Controller\Pages;
 
 use App\Http\Request;
 use App\Models\Mail\Email;
+use App\Utils\Sanitize;
 use App\Utils\Session;
 use App\Utils\Tools\Alert;
 use App\Utils\View;
@@ -38,7 +39,7 @@ class Sac extends Page {
      */
     public static function setSac(Request $request): void {
         // POST VARS
-        $postVars = $request->getPostVars();
+        $postVars = Sanitize::sanitizeForm($request->getPostVars());
 
         $emailTarget = 'manualdocalouro.ifes@gmail.com';
         $phoneNumber = $postVars['telefone'];

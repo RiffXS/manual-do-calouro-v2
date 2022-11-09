@@ -38,7 +38,7 @@ class Recovery extends Page {
      */
     public static function setRecovery(Request $request): void {
         // POST VARS
-        $postVars = $request->getPostVars();
+        $postVars = Sanitize::sanitizeForm($request->getPostVars());
 
         $email = $postVars['email'];
 

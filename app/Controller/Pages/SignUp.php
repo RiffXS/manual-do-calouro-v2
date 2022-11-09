@@ -37,7 +37,7 @@ class SignUp extends Page {
      */
     public static function setSignUp(Request $request): void {
         // POST VARS
-        $postVars = $request->getPostVars();
+        $postVars = Sanitize::sanitizeForm($request->getPostVars());
 
         $nome     = $postVars['nome'] ?? '';
         $email    = $postVars['email'] ?? '';
