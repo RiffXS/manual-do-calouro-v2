@@ -39,7 +39,14 @@ class Sac extends Page {
      */
     public static function setSac(Request $request): void {
         // POST VARS
-        $postVars = Sanitize::sanitizeForm($request->getPostVars());
+        $postVars = $request->getPostVars();
+
+        // VERIFICA HTML INJECT
+        if (Sanitize::validateForm($postVars)) {
+            $request->getRouter()->redirect('/signup?status=invalid_chars');
+        }
+        // SANITIZA O ARRAY
+        $postVars = Sanitize::sanitizeForm($postVars);
 
         $emailTarget = 'manualdocalouro.ifes@gmail.com';
         $phoneNumber = $postVars['telefone'];

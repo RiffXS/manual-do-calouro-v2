@@ -38,7 +38,14 @@ class SignIn extends Page {
      */
     public static function setSignIn(Request $request): void {
         // POST VARS
-        $postVars = Sanitize::sanitizeForm($request->getPostVars());
+        $postVars = $request->getPostVars();
+
+        // VERIFICA HTML INJECT
+        if (Sanitize::validateForm($postVars)) {
+            $request->getRouter()->redirect('/signup?status=invalid_chars');
+        }
+        // SANITIZA O ARRAY
+        $postVars = Sanitize::sanitizeForm($postVars);
 
         $email = $postVars['email'];
         $senha = $postVars['senha'];

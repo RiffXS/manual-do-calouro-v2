@@ -1,4 +1,8 @@
-{
+{   
+    "invalid_chars": {
+        "type": "danger",
+        "text": "Dados invalidos!"
+    },
     "invalid_name": {
         "type": "danger",
         "text": "Nome inválido!"

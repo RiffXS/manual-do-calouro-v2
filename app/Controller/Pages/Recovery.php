@@ -38,7 +38,14 @@ class Recovery extends Page {
      */
     public static function setRecovery(Request $request): void {
         // POST VARS
-        $postVars = Sanitize::sanitizeForm($request->getPostVars());
+        $postVars = $request->getPostVars();
+
+        // VERIFICA HTML INJECT
+        if (Sanitize::validateForm($postVars)) {
+            $request->getRouter()->redirect('/signup?status=invalid_chars');
+        }
+        // SANITIZA O ARRAY
+        $postVars = Sanitize::sanitizeForm($postVars);
 
         $email = $postVars['email'];
 

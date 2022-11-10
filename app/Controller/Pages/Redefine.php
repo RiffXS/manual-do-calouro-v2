@@ -53,7 +53,14 @@ class Redefine extends Page {
      */
     public static function setRedefine(Request $request): void {
         // POST VARS
-        $postVars = $request->getPostVars();    
+        $postVars = $request->getPostVars();
+
+        // VERIFICA HTML INJECT
+        if (Sanitize::validateForm($postVars)) {
+            $request->getRouter()->redirect('/signup?status=invalid_chars');
+        }
+        // SANITIZA O ARRAY
+        $postVars = Sanitize::sanitizeForm($postVars); 
         
         $password = $postVars['senha'];
         $confirma = $postVars['confirma'];
