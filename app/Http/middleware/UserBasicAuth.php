@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Request;
 use App\Models\User as EntityUser;
+use Closure;
 use Exception;
 
 class UserBasicAuth {
@@ -11,7 +13,7 @@ class UserBasicAuth {
      * Methodo responsavel por retornar uma istancia de usuario autenticado
      * @return mixed
      */
-    private function getBasicAuthUser() {
+    private function getBasicAuthUser(): mixed {
         // VERIFICA A EXISTENCIA DOS DADOS DE ACESSO
         if (!isset($_SERVER['PHP_AUTH_USER']) or !isset($_SERVER['PHP_AUTH_PW'])) {
             return false;
@@ -30,8 +32,10 @@ class UserBasicAuth {
     /**
      * Methodo responsavel por validar o acesso via basic auth
      * @param \App\Http\Request $request
+     * 
+     * @return boolean
      */
-    private function basicAuth($request) {
+    private function basicAuth(Request $request): bool {
         // VERIFICA O USUARIO RECEBIDO
         if ($obUser = $this->getBasicAuthUser()) {
             $request->user = $obUser;
@@ -44,10 +48,11 @@ class UserBasicAuth {
     /**
      * Methodo responsavel por executar o middleware
      * @param \App\Http\Request
-     * @param \Closure
+     * @param Closure
+     * 
      * @return \App\Http\Response
      */
-    public function handle($request, $next) { 
+    public function handle(Request $request, Closure $next): Request { 
         // REALIZA A VALIDAÇÃO DO ACESSO VIA BASIC AUTH
         $this->basicAuth($request);
 
