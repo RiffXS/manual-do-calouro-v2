@@ -66,26 +66,26 @@ class Request {
     }
 
     /**
-     * Methodo responsavel por retornar a instancia de router
+     * Metodo responsavel por retornar a instancia de router
      * @return Router
      */
-    public function getRouter() {
+    public function getRouter(): Router {
         return $this->router;
     }
 
     /**
-     * Méthodo responsavel por retornar ó methodo HTTP
+     * Método responsavel por retornar ó methodo HTTP
      * @return string
      */
-    public function getHttpMethod() {
+    public function getHttpMethod(): string {
         return $this->httpMethod;
     }
 
     /**
-     * Méthodo responsavel por retornar os parametros da url da requisição
+     * Método responsavel por retornar os parametros da url da requisição
      * @return array
      */
-    public function getQueryParams() {
+    public function getQueryParams(): array {
         return $this->queryParams;
     }
 
@@ -93,25 +93,26 @@ class Request {
      * Metodo responsavel por retornar os arquivos recebidos no post
      * @return array
      */
-    public function getUploadFiles() {
+    public function getUploadFiles(): array {
         return $this->uploadFiles;
     }
 
     /**
-     * Méthodo responsavel por retornar os headers da requisição
+     * Método responsavel por retornar os headers da requisição
      * @return array
      */
-    public function getHeaders() {
+    public function getHeaders(): array {
         return $this->headers;
     }
 
     /**
-     * Methodo responsavel por definir as variaveis do post
+     * Metodo responsavel por definir as variaveis do post
+     * @return boolean
      */
-    private function setPostVars() {
+    private function setPostVars(): bool {
         // VERIFICA O METHODO DA REQUISIÇÃO
         if ($this->httpMethod == 'GET') return false;
-
+    
         // POST PADRÃO
         $this->postVars = $_POST ?? [];
 
@@ -121,20 +122,24 @@ class Request {
         // VERIFICA SE E JSON
         $this->postVars = strlen($inputRaw) && empty($_POST) ? 
             json_decode($inputRaw, true) : $this->postVars;
+
+        // RETORNA SUCESSO
+        return true;
     }
 
     /**
-     * Méthodo responsavel por retornar as variaveis POST da requisição
+     * Método responsavel por retornar as variaveis POST da requisição
      * @return array
      */
-    public function getPostVars() {
+    public function getPostVars(): array {
         return $this->postVars;
     }
 
     /**
-     * Methodo responsavel por definir a URI
+     * Metodo responsavel por definir a URI
+     * @return void
      */
-    private function setUri() {
+    private function setUri(): void {
         // URI COMPLETA COM GETS    
         $this->uri = $_SERVER['REQUEST_URI'] ?? '';
 
@@ -144,10 +149,10 @@ class Request {
     }
 
     /**
-     * Méthodo responsavel por retornar a URI da requisição
+     * Método responsavel por retornar a URI da requisição
      * @return string
      */
-    public function getUri() {
+    public function getUri(): string {
         return $this->uri;
     }
 }       

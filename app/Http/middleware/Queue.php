@@ -2,6 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Request;
+use App\Http\Response;
+use Closure;
+
 class Queue {
 
     /**
@@ -36,11 +40,11 @@ class Queue {
 
     /**
      * Methodo responsavel por construir a classe de fila de middlewares
-     * @param array    $middlewares
-     * @param \Closure $controller
-     * @param array    $controllerArgs
+     * @param array   $middlewares
+     * @param Closure $controller
+     * @param array   $controllerArgs
      */
-    public function __construct($middlewares, $controller, $controllerArgs) {
+    public function __construct(array $middlewares, Closure $controller, array $controllerArgs) {
         $this->middlewares    = array_merge(self::$default, $middlewares);
         $this->controller     = $controller;
         $this->controllerArgs = $controllerArgs;
@@ -49,25 +53,30 @@ class Queue {
     /**
      * Methodo responsavel por definir o mapeamento de middlewares
      * @param array $map
+     * 
+     * @return void
      */
-    public static function setMap($map) {
+    public static function setMap($map): void {
         self::$map = $map;
     }
 
     /**
      * Methodo responsavel por definir o mapeamento de middlewares padrões
      * @param array $default
+     * 
+     * @return void
      */
-    public static function setDefault($default) {
+    public static function setDefault($default): void {
         self::$default = $default;
     }
 
     /**
      * Methodo responsavel por executar o proximo nivel da fila de middlewares
      * @param \App\Http\Request
+     * 
      * @return \App\Http\Response
      */
-    public function next($request) {
+    public function next(Request $request): Response {
         // VERIFICA SE A FILA ESTA VAZIA
         if (empty($this->middlewares)) {
             return call_user_func_array($this->controller, $this->controllerArgs);

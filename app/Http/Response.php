@@ -29,38 +29,39 @@ class Response {
     private $content;
 
     /**
+     * Método construtor da classe
      * @param integer $httpCode
      * @param mixed   $content
      * @param string  $contentType 
-     * 
      */
-    public function __construct($httpCode, $content, $contentType = 'text/html') {
+    public function __construct(int $httpCode, mixed $content, string $contentType = 'text/html') {
         $this->httpCode = $httpCode;
         $this->content  = $content;
         $this->setContentType($contentType);
     }
 
     /**
-     * Methodo responsavel por alterar o content type do Response
-     * 
+     * Metodo responsavel por alterar o content type do Response
+     * @return void
      */
-    public function setContentType($contentType) {
+    private function setContentType(string $contentType): void {
         $this->contentType = $contentType;
         $this->addHeader('Content-Type', $contentType);
     }
 
     /**
-     * Methodo responsavel por adicionar um registro no cabeçalho do Response
-     * 
+     * Metodo responsavel por adicionar um registro no cabeçalho do Response
+     * @return void
      */
-    public function addHeader($key, $value) {
+    private function addHeader(string $key, mixed $value): void {
         $this->headers[$key] = $value;
     }
 
     /**
      * Methodo responsavel por enviar os headers para o navegador
+     * @return void
      */
-    private function sendHeaders() {
+    private function sendHeaders(): void {
         // STATUS 
         http_response_code($this->httpCode);
 
@@ -71,9 +72,10 @@ class Response {
     }
 
     /**
-     * Methodo responsavel por enviar a resposta ao usuario
+     * Método responsavel por enviar a resposta ao usuario
+     * @return void
      */
-    public function sendResponse() {
+    public function sendResponse(): void {
         // ENVIANDO OS HEADERS  
         $this->sendHeaders();
 
