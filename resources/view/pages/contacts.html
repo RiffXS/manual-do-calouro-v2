@@ -1,4 +1,72 @@
-<section class="container my-5">
+<section>
+    <div class="p-5 caixa1">
+        <div class="container">
+            <h1>Contatos de Servidores</h1>
+            <p>
+                Aqui estão os contatos cadastrados no sistema.
+            </p>
+            <p>
+                Caso não encontr você pode acessá-lo <a href="https://serra.ifes.edu.br/telefones-do-campus">aqui</a>.
+            </p>
+            
+        </div>
+    </div>
+</section>
+
+<section class="container mb-5 mt-3">
+    <div>
+        <p>
+            <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#crud-contatos" aria-expanded="false" aria-controls="crud-contatos">
+                Meus contatos
+            </button>
+        </p>
+        <div class="collapse mt-3 mb-4" id="crud-contatos">
+            <div class="card card-body">
+                <span class="mb-3">
+                    <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#add-contato">
+                        Adicionar contato
+                        <i class="fa-solid fa-square-plus"></i>
+                    </button>
+                </span>
+                
+                <div class="d-flex justify-content-center">
+                    Aqui vai vir a tabela lá do crudo q eu falei só com o tipo e o contato cadastrado pelo servidor
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="add-contato" tabindex="-1" aria-labelledby="add-contato-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="add-contato-label">Adicionar contato</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="tipo-contato" class="col-form-label">Tipo de contato:</label>
+                            <select id="tipo-contato" class="form-select" aria-label="Tipo de contato">
+                                <option selected>Selecione uma opção</option>
+                                <option value="1">Telefone/Celular</option>
+                                <option value="2">E-mail</option>
+                                <option value="3">WhatsApp</option>
+                              </select>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="input-contato" placeholder="."></input>
+                            <label for="input-contato" class="col-form-label">Contato:</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <ul class="nav nav-tabs rounded border-bottom-0" id="tabsContatos" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="servidor-tab" data-bs-toggle="tab" data-bs-target="#servidor-tab-pane" type="button" role="tab" aria-controls="servidor-tab-pane" aria-selected="false">
