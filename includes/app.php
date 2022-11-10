@@ -2,10 +2,11 @@
 // LOAD COMPOSER
 require __DIR__.'/../vendor/autoload.php';
 
+use App\Http\Middleware\Queue as MiddlewareQueue;
 use App\Utils\View;
 use App\Utils\Database;
 use App\Utils\Environment;
-use App\Http\Middleware\Queue as MiddlewareQueue;
+
 
 // CARREGA VARIAVEIS DE AMBIENTE
 Environment::load(__DIR__.'/../');

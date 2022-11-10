@@ -155,11 +155,11 @@ class User {
      * Methodo responsavel por retornar uma istancia com base no ID
      * @param  integer $id
      * 
-     * @return User
+     * @return User|bool
      * 
      * @author @SimpleR1ick
      */
-    public static function getUserById($id): object {
+    public static function getUserById($id): mixed {
         return self::getUsers("id_usuario = $id")->fetchObject(self::class);
     }
 
@@ -167,11 +167,11 @@ class User {
      * Methodo responsavel por retornar um usuario com base em seu email
      * @param  string $email
      * 
-     * @return User
+     * @return User|bool
      * 
      * @author @SimpleR1ick
      */
-    public static function getUserByEmail(string $email): object {
+    public static function getUserByEmail(string $email): mixed {
         return self::getUsers("email = '$email'")->fetchObject(self::class);
     }
 

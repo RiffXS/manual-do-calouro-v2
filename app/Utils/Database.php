@@ -54,7 +54,7 @@ class Database {
 	 * Define a tabela e instancia e conexão
 	 * @param string $table
 	 */
-	public function __construct($table=null) {
+	public function __construct(string $table = null) {
 		$this->table = $table;
 		$this->setConnection();
 	}
@@ -69,7 +69,7 @@ class Database {
 	 * 
 	 * @return void
 	 */
-	public static function config($host, $name, $user, $pass, $port = 5432): void	{
+	public static function config($host, $name, $user, $pass, int $port = 5432): void {
 		self::$host = $host;
 		self::$name = $name;
 		self::$user = $user;

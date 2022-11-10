@@ -67,7 +67,7 @@ class Upload {
      * Metodo responsavel por gerar um novo nome aleatorio
      * @return void
      * 
-     * @author Henrique Dalmagro
+     * @author @SimpleR1ick
      */
     public function generateNewName(): void {
         $this->name = time().'-'.uniqid();

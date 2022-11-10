@@ -61,6 +61,7 @@ class Page {
         // LINKS DO MENU
         $links = '';
 
+        /*
         // VERIFICA SE O USUÁRIO ESTÁ LOGADO
         if (Session::isLogged()) {
             // OBTEM O ID DA SESSÃO ATUAL
@@ -75,6 +76,7 @@ class Page {
                 self::$paginas['schedule']['link'] = URL."/schedule?curso=$curso&modulo=$modulo";  
             }
         }
+        */
         // ITERA OS MODULOS
         foreach (self::$paginas as $hash => $module) {
             $links .= View::render('pages/header/link', [
