@@ -40,28 +40,30 @@ class Router {
     private $contentType = 'text/html';
 
     /**
-     * Methodo responsavel por iniciar a classe
+     * Metodo responsavel por iniciar a classe
      * @param string $uri
      */
-    public function __construct($url) {
+    public function __construct(string $url) {
         $this->request = new Request($this);
         $this->url     = $url;
         $this->setPrefix();
     }
 
     /**
-     * Methodo responsavel por alterar o valor do content type
+     * Metodo responsavel por alterar o valor do content type
      * @param string $contentType
      * 
+     * @return void
      */
-    public function setContentType($contentType) {
+    public function setContentType(string $contentType): void {
         $this->contentType = $contentType;
     }
 
     /**
-     * Methodo responsavel por definir o prefixo das rotas
+     * Metodo responsavel por definir o prefixo das rotas
+     * @return void
      */
-    private function setPrefix() {
+    private function setPrefix(): void {
         // INFORMAÇÕES DA URL
         $parseUrl = parse_url($this->url);
 
@@ -70,12 +72,14 @@ class Router {
     }
 
     /**
-     * Methodo responsavel por adicionar uma rota na classe
+     * Metodo responsavel por adicionar uma rota na classe
      * @param string $method
      * @param string $route
-     * @param array @params
+     * @param array  $params
+     * 
+     * @return array
      */
-    public function addRoute($method, $route, $params = []) {
+    public function addRoute(string $method, string $route, array $params = []): array {
         // VALIDAÇÃO DOS PARAMETROS
         foreach ($params as $key=>$value) {
             if ($value instanceof Closure) {
@@ -108,46 +112,54 @@ class Router {
     }
 
     /**
-     * Methodo responsavel por definir uma rota de GET
+     * Metodo responsavel por definir uma rota de GET
      * @param string $router
      * @param array  $params
+     * 
+     * @return array
      */
-    public function get($route, $params = []) {
+    public function get(string $route, array $params = []): array {
         return $this->addRoute('GET', $route, $params);
     }
 
     /**
-     * Methodo responsavel por definir uma rota de POST
+     * Metodo responsavel por definir uma rota de POST
      * @param string $router
      * @param array  $params
+     * 
+     * @return array
      */
-    public function post($route, $params = []) {
+    public function post(string $route, array $params = []): array {
         return $this->addRoute('POST', $route, $params);
     }
 
     /**
-     * Methodo responsavel por definir uma rota de PUT
+     * Metodo responsavel por definir uma rota de PUT
      * @param string $router
      * @param array  $params
+     * 
+     * @return array
      */
-    public function put($route, $params = []) {
+    public function put(string $route, array $params = []): array {
         return $this->addRoute('PUT', $route, $params);
     }
 
     /**
-     * Methodo responsavel por definir uma rota de DELETE
+     * Metodo responsavel por definir uma rota de DELETE
      * @param string $router
      * @param array  $params
+     * 
+     * @return array
      */
-    public function delete($route, $params = []) {
+    public function delete(string $route, array $params = []): array {
         return $this->addRoute('DELETE', $route, $params);
     }
 
     /**
-     * Methodo responsavel por retornar a  URI desconsiderando o prefixo
+     * Metodo responsavel por retornar a  URI desconsiderando o prefixo
      * @return string
      */
-    public function getUri() {
+    public function getUri(): string {
         // URI DA REQUEST
         $uri = $this->request->getUri();
 
@@ -159,10 +171,10 @@ class Router {
     }
 
     /**
-     * Methodo responsavel por retornar os dados da rota atual
+     * Metodo responsavel por retornar os dados da rota atual
      * @return array 
      */
-    private function getRoute() {
+    private function getRoute(): array {
         // URI
         $uri = $this->getUri();
         
@@ -195,10 +207,10 @@ class Router {
     }
 
     /**
-     * Methodo responsavel por executar a rota atual
+     * Metodo responsavel por executar a rota atual
      * @return Response
      */
-    public function run() {
+    public function run(): Response {
         try {
             // OBTEM A ROTA ATUAL
             $route = $this->getRoute();
@@ -229,11 +241,11 @@ class Router {
     }
 
     /**
-     * Methodo responsavel por retornar a mensagem de erro de acordo com o content type
+     * Metodo responsavel por retornar a mensagem de erro de acordo com o content type
      * @param string $message 
      * @return mixed
      */
-    private function getErrorMesasage($message) {
+    private function getErrorMesasage(string $message): mixed {
        switch ($this->contentType) {
         case 'application/json':
             return [
@@ -245,18 +257,20 @@ class Router {
     }
 
     /**
-     * Methodo responsavel por retornar a URL atual
+     * Metodo responsavel por retornar a URL atual
      * @return string
      */
-    public function getCurrentUrl() {
+    public function getCurrentUrl(): string {
         return $this->url.$this->getUri();
     }
 
     /**
-     * Methodo responsavel por redirecionar a URL
+     * Metodo responsavel por redirecionar a URL
      * @param string $route
+     * 
+     * @return void
      */
-    public function redirect($route) {
+    public function redirect(string $route): void {
         $url = $this->url.$route;
 
         // EXECUTA O REDIRECT

@@ -6,6 +6,9 @@ include_once __DIR__.'/pages/about.php';
 // ROTAS DA PAGINA CALENDARIO
 include_once __DIR__.'/pages/calendar.php';
 
+// ROTAS DA PAGINA CONFIGURAÇÕES
+include_once __DIR__.'/pages/config.php';
+
 // ROTAS DA PAGINA CONTATOS
 include_once __DIR__.'/pages/contact.php';
 

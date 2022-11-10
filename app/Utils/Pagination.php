@@ -34,7 +34,7 @@ class Pagination {
 	 * @param integer  $currentPage
 	 * @param integer  $limit
 	 */
-	public function __construct($results, $currentPage = 1, $limit = 10) {
+	public function __construct(int $results, int $currentPage = 1, int $limit = 10) {
 		$this->results     = $results;
 		$this->limit       = $limit;
 		$this->currentPage = (is_numeric($currentPage) and $currentPage > 0) ? $currentPage : 1;
@@ -43,8 +43,9 @@ class Pagination {
 
 	/**
 	 * Método responsável por calcular a páginação
+	 * @return void
 	 */
-	private function calculate() {
+	private function calculate(): void {
 		//CALCULA O TOTAL DE PÁGINAS
 		$this->pages = $this->results > 0 ? ceil($this->results / $this->limit) : 1;
 
@@ -56,8 +57,9 @@ class Pagination {
 	 * Método responsável por retornar a cláusula limit da SQL
 	 * @return string
 	 */
-	public function getLimit() {
+	public function getLimit(): string {
 		$offset = ($this->limit * ($this->currentPage - 1));
+
 		return $this->limit . ' OFFSET ' . $offset;
 	}
 
@@ -65,11 +67,11 @@ class Pagination {
 	 * Método responsável por retornar as opções de páginas disponíveis
 	 * @return array
 	 */
-	public function getPages() {
-		//NÃO RETORNA PÁGINAS
+	public function getPages(): array {
+		// VERIFICA SE EXISTE SÓ 1 PAGINA
 		if ($this->pages == 1) return [];
 
-		//PÁGINAS
+		// PÁGINAS
 		$pages = [];
 		for ($i = 1; $i <= $this->pages; $i++) {
 			$pages[] = [
@@ -77,6 +79,7 @@ class Pagination {
 				'current' => $i == $this->currentPage
 			];
 		}
+		// RETORNA AS PAGINAS
 		return $pages;
 	}
 }

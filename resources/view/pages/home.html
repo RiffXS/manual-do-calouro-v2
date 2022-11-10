@@ -28,3 +28,75 @@
         </div>
     </div>
 </section>
+
+<section>
+    <div class="p-5 mt-4 caixa1">
+        <div class="container">
+            <h1>Comentários</h1>
+            <p>
+                Comente aqui sua história com o IFES e sua experiência com o Manual do Calouro!
+            </p>
+
+            <form class="mb-4">
+                <div class="mb-3">
+                    <label for="comentario" class="form-label fw-bold">Escreva aqui seu comentário:</label>
+                    <textarea required class="form-control" id="comentario" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+
+            <h3>Outros comentários</h3>
+            <div id="comentarios">
+                <div class="card card-body mb-1">
+                    <div class="d-flex">
+                        <div class="d-inline p-1 me-3">
+                            <img class="img-comentario"
+                            src="{{URL}}/public/uploads/1667565196-6365068c799b9.jpg"
+                            alt="user_pic"
+                            />
+                        </div>
+
+                        <div class="d-flex flex-column">
+                            <!-- CABEÇALHO/NOME DO USUÁRIO -->
+                            <div>
+                                <p class="mb-0 fw-semibold">{Nome do usuário} comentou:</p>
+                            </div>
+
+                            <!-- COMENTÁRIO -->
+                            <div>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio nam excepturi repellat necessitatibus vero dolor dolorem velit obcaecati sapiente aliquam possimus harum magnam nobis, exercitationem alias optio deserunt at et!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-body mb-1">
+                    <div class="d-flex">
+                        <div class="d-inline p-1 me-3">
+                            <img class="img-comentario"
+                            src="{{URL}}/public/uploads/1667223275-635fceeb84a0d.jpg"
+                            alt="user_pic"
+                            />
+                        </div>
+
+                        <div class="d-flex flex-column">
+                            <!-- CABEÇALHO/NOME DO USUÁRIO -->
+                            <div>
+                                <p class="mb-0 fw-semibold">{Nome do usuário} comentou:</p>
+                            </div>
+
+                            <!-- COMENTÁRIO -->
+                            <div>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio nam excepturi repellat necessitatibus vero dolor dolorem velit obcaecati sapiente aliquam possimus harum magnam nobis, exercitationem alias optio deserunt at et!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="button" class="mt-2 btn btn-secondary">Ver mais</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

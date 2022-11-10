@@ -31,10 +31,14 @@ class View {
      * @author @SimpleR1ick
      */
     private static function getContentView($view): string {
+        // OBTEM O CAMINHO DO ARQUIVO
         $file = __DIR__.'/../../resources/view/'.$view.'.html';
 
         // RETORNA O CONTEUDO DO ARQUIVO SE ELE EXISTIR
-        return file_exists($file) ? file_get_contents($file) : '';
+        if (!file_exists($file)) {
+            die("O arquivo: $file não existe!");
+        }
+        return file_get_contents($file);
     }
 
     /**

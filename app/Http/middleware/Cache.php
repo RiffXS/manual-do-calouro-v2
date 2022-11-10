@@ -2,16 +2,20 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Request;
+use App\Http\Response;
 use App\Utils\Cache\File as CacheFile;
+use Closure;
 
 class Cache {
 
     /**
      * Methodo responsavel por verificar se a request atual pode ser cacheada
      * @param \App\Http\Request $request
+     * 
      * @return boolean
      */
-    private function isCacheable($request) {
+    private function isCacheable(Request $request): bool {
         // DECLARAÇÃO DE VARIAVEL
         $cache = true;
 
@@ -36,9 +40,10 @@ class Cache {
     /**
      * Methodo responsavel por retornar a hash do cache
      * @param \App\Http\Request
+     * 
      * @return string
      */
-    private function getHash($request) {
+    private function getHash(Request $request): string {
         // URI DA ROTA
         $uri = $request->getRouter()->getUri();
 
@@ -54,9 +59,10 @@ class Cache {
      * Methodo responsavel por executar o middleware
      * @param \App\Http\Request $request
      * @param \Closure $next
+     * 
      * @return \App\Http\Response
      */
-    public function handle($request, $next) { 
+    public function handle(Request $request, Closure $next): Response { 
         // VARIFICA SE A REQUEST ATUAL E CACHEAVEL
         if (!$this->isCacheable($request)) {
             // EXECUTA O PROXIMO NIVEL DO MIDDLEWARE

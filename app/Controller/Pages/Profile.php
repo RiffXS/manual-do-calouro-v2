@@ -52,9 +52,11 @@ class Profile extends Page {
      * @author @SimpleR1ick
      */
     public static function getTextType(EntityUser $obUser): array {
+        // DECLARAÇÃO DE VARIAVEIS
         $text = '';
         $colum = '';
 
+        // RELATIVO NIVEL DE ACESSO DO USUARIO
         switch ($obUser->getFk_acesso()) {
             case 2:
                 $text = 'Matricula';
@@ -76,6 +78,7 @@ class Profile extends Page {
                 $colum = 'sector';
                 break;
         }
+        // RETORNA O TEXTO E A VIEW DA COLUNA
         return [
             'text' => $text,
             'colum' => View::render("pages/profile/$colum")

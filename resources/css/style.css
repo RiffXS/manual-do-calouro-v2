@@ -90,6 +90,17 @@ span ul.nav.flex-column {
     min-height: 40px;
 }
 
+.img-comentario {
+    border-radius: 50%;
+    object-fit: cover;
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 65px;
+    max-height: 65px;
+    width: 70px;
+    height: 70px;
+}
+
 td {
     min-width: 80px;
 }

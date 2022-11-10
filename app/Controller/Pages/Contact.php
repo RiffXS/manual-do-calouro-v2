@@ -4,6 +4,7 @@ namespace App\Controller\Pages;
 
 use App\Models\Contact as EntityContact;
 use App\Models\User as EntityUser;
+use App\Utils\Session;
 use App\Utils\View;
 
 class Contact extends Page {
@@ -15,20 +16,49 @@ class Contact extends Page {
      * @author @SimpleR1ick @RiffXS 
      */
     public static function getContact(): string {
+        // DECLARAÇÃO DE VARIAVEIS
+        $crud = '';
+
         // CRIANDO NOVA INSTÂNCIA DE CONTATO
         $obContact = new EntityContact;
 
         // OBTEM A VIEWS DOS CARDS CONTATOS
         $views = self::getContacts($obContact);
 
+        // VERIFICA SE EXISTE UMA SESSÃO
+        if (Session::isLogged()) {
+            $crud = self::getCrud(Session::getSessionLv());
+        }
         // REDENIZA AS COLUNAS DE CONTATOS
         $content = View::render('pages/contacts', [
+            'my_contacts' => $crud,
             'professores' => $views['professores'],
             'servidores'  => $views['servidores']
         ]);
 
         // RETORNA A VIEW DA PAGINA
         return parent::getPage('Contatos', $content, 'contact');
+    }
+
+    /**
+     * Método responsavel por rendenizar o CRUD de contatos
+     * @param integer $acess
+     * 
+     * @return string
+     * 
+     * @author @SimpleR1ick
+     */
+    private static function getCrud($acess): string {
+        // DECLARAÇÃO DE VARIAVEIS
+        $auth = [4, 5]; // tipos de usuarios aceitos
+        $view = '';
+
+        // VERIFICA SE O ACESSO E AUTORIZADO
+        if (in_array($acess, $auth)) {
+            $view = View::render('pages/contacts/crud_contacts');
+        }
+        // RETORNA VAZIO
+        return $view;
     }
     
     /**
