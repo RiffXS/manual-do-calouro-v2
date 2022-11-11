@@ -77,12 +77,10 @@ class Schedule extends Page {
         $count = 0;
         $content = '';
 
-        // NOVA INSTANCIA
-        $obSchedule = new EntitySchedule($curso, $modulo);
+        $horas = EntitySchedule::getScheduleClass($curso, $modulo);
+        $aulas = EntitySchedule::getScheduleTimes();
 
-        $horas = $obSchedule->getTimes();
-        $aulas = $obSchedule->getClass();
-
+        // REDENIZA A TABELA
         for ($i = 0; $i < count($horas); $i++) {
             $content .= View::render('pages/schedule/row', [
                 'hora_inicio' => $horas[$i]['hora_aula_inicio'],
