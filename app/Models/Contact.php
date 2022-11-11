@@ -7,23 +7,69 @@ use App\Utils\Database;
 class Contact {
 
     /**
-     * Array com os dados dos professores
-     * @var array
+     * ID do contato
+     * @var integer
      */
-    private $professor;
+    private $id_contato;
 
     /**
-     * Array com os dados dos servidores
-     * @var array
+     * ID do servidor
+     * @var integer
      */
-    private $servidor;
-    
+    private $fk_servidor_fk_usuario_id_usuario;
+
     /**
-     * Método responsavel por construir o objeto
+     * ID do tipo do contato
+     * @var integer
      */
-    public function __construct() {
-        $this->professor = self::getContactTeacher();
-        $this->servidor  = self::getContactServer();
+    private $fk_tipo_contato_id_tipo;
+
+    /**
+     * Descrição do contato (email, telefone, whatsapp)
+     * @var string
+     */
+    private $dsc_contato;
+
+    /**
+     * Método responsavel por inserir o contato no banco de dados
+     * @return boolean
+     * 
+     * @author @SimpleR1ick
+     */
+    public function insertContact(): bool {
+        // INSERE A ISTANCIA NO BANCO
+        $this->setId_contato((new Database('contato'))->insert([
+            'fk_servidor_fk_usuario_id_usuario' => $this->fk_servidor_fk_usuario_id_usuario,
+            'fk_tipo_contato_id_tipo'           => $this->fk_tipo_contato_id_tipo,
+            'dsc_contato'                       => $this->dsc_contato  
+        ]));
+        // SUCESSO
+        return true;
+    }
+
+    /**
+     * Método responsavel por atualizar o contato no banco de dados
+     * @return boolean
+     * 
+     * @author @SimpleR1ick
+     */
+    public function updateContact(): bool {
+        // INSERE A ISTANCIA NO BANCO
+        return (new Database('contato'))->update("id_contato = {$this->id_contato}", [
+            'fk_servidor_fk_usuario_id_usuario' => $this->fk_servidor_fk_usuario_id_usuario,
+            'fk_tipo_contato_id_tipo'           => $this->fk_tipo_contato_id_tipo,
+            'dsc_contato'                       => $this->dsc_contato  
+        ]);
+    }
+
+    /**
+     * Metodo responsavel por excluir um contato do banco de dados
+     * @return boolean
+     * 
+     * @author @SimpleR1ick
+     */
+    public function deleteUser(): bool {
+        return (new Database('usuario'))->delete("id_contato = {$this->id_contato}");
     }
 
     /**
@@ -82,11 +128,67 @@ class Contact {
      * Metodos GETTERS E SETTERS
      */
 
-    public function getProfessor(){
-        return $this->professor;
-    }
+    /**
+     * Get id_usuario
+     * @return integer
+     */
+     public function getId_contato(): int {
+        return $this->id_contato;
+     }
+     
+     /**
+      * Set id_usuario
+      * @param integer $id
+      */
+     private function setId_contato(int $id): void {
+        $this->id_contato = $id;
+     }
 
-    public function getServidor(){
-        return $this->servidor;
-    }
+    /**
+     * Get fk_servidor_fk_id_usuario
+     * @return integer
+     */
+     public function getFk_usuario(): int {
+        return $this->fk_servidor_fk_usuario_id_usuario;
+     }
+
+     /**
+      * Set fk_servidor_fk_id_usuario
+      * @param integer $id
+      */
+     public function setFk_usuario(int $id): void {
+        $this->fk_servidor_fk_usuario_id_usuario = $id;
+     }
+
+    /**
+     * Get fk_tipo_contato_id_tipo
+     * @return integer
+     */
+    public function getFk_tipo(): int {
+        return $this->fk_tipo_contato_id_tipo;
+     }
+
+     /**
+      * Set fk_tipo_contato_id_tipo
+      * @param integer $id
+      */
+     public function setFk_tipo(int $id): void {
+        $this->fk_tipo_contato_id_tipo = $id;
+     }
+
+     /**
+     * Get fk_tipo_contato_id_tipo
+     * @return string
+     */
+    public function getDsc_contato(): string {
+        return $this->dsc_contato;
+     }
+
+     /**
+      * Set fk_tipo_contato_id_tipo
+      * @param string $value
+      */
+     public function setDsc_contato(string $value): void {
+        $this->dsc_contato = $value;
+     }
 }

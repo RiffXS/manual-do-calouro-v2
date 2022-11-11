@@ -20,23 +20,26 @@ class Hash {
 
     /**
      * Metodo responsavel buscar uma chave pelo id ou hash
-     * @return self
+     * @return mixed
+     * 
+     * @author @SimpleR1ick
      */
-    public static function findHash($id = null, $chave = null): object {
+    public static function findHash(int $id = null, string $chave = null): mixed {
         // VERIFICA SE O ID ESTA VAZIO
         if (!is_null($id)) {
             return (new Database('chave'))->select("fk_usuario_id_usuario = $id")->fetchObject(self::class);
-        } 
-        return (new Database('chave'))->select("chave_confirma = '$chave'")->fetchObject(self::class);
+        } else {
+            return (new Database('chave'))->select("chave_confirma = '$chave'")->fetchObject(self::class);
+        }
     }
     
     /**
      * Metodo responsavel por inserir uma chave na tabela
-     * @return boolean
+     * @return mixed
      * 
      * @author @SimpleR1ick
      */
-    public function insertHash(): bool {
+    public function insertHash(): mixed {
         return (new Database())->execute("INSERT INTO chave (fk_usuario_id_usuario, chave_confirma) VALUES ({$this->fk_usuario_id_usuario}, '{$this->chave_confirma}')");
     }
 

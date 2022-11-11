@@ -46,7 +46,7 @@ class User {
      * Identificador de status do usuario
      * @var string
      */
-    private $ativo = 1;
+    private $fk_nivel_id_nivel = 1;
 
     /**
      * Nivel de acesso do usuario
@@ -71,7 +71,7 @@ class User {
             'senha'               => $this->senha,
             'add_data'            => $this->add_data,
             'img_perfil'          => $this->img_perfil,
-            'ativo'               => $this->ativo,
+            'fk_nivel_id_nivel'   => $this->fk_nivel_id_nivel,
             'fk_acesso_id_acesso' => $this->fk_acesso_id_acesso
         ]));
         // SUCESSO
@@ -91,7 +91,7 @@ class User {
             'senha'               => $this->senha,
             'add_data'            => $this->add_data,
             'img_perfil'          => $this->img_perfil,
-            'ativo'               => $this->ativo,
+            'fk_nivel_id_nivel'   => $this->fk_nivel_id_nivel,
             'fk_acesso_id_acesso' => $this->fk_acesso_id_acesso
         ]);
     }
@@ -178,70 +178,134 @@ class User {
     /*
      * Metodos GETTERS E SETTERS
      */
-
-    public function getId_usuario() {
+    
+     /**
+      * Get id_usuario
+      * @return integer
+      */
+    public function getId_usuario(): int {
         return $this->id_usuario;
     }
 
-    private function setId_usuario(int $id){
+    /**
+     * Set id_usuario
+     * @param integer $id
+     */
+    private function setId_usuario(int $id): void {
         $this->id_usuario = $id;
     }
-
-    public function getNom_usuario() { 
+    
+    /**
+     * Get nom_usuario
+     * @return string
+     */
+    public function getNom_usuario(): string { 
         return $this->nom_usuario;
     }
 
-    public function setNom_usuario(string $name) { 
+    /**
+     * Set nom_usuario
+     * @param string $name
+     */
+    public function setNom_usuario(string $name): void { 
         $this->nom_usuario = $name;
-    }
+    }   
 
-    public function getEmail() { 
+    /**
+     * Get email
+     * @return string
+     */
+    public function getEmail(): string { 
         return $this->email;
     }
 
-    public function setEmail(string $email) { 
+    /**
+     * Set email
+     * @param string $email
+     */
+    public function setEmail(string $email): void { 
         $this->email = $email;
     }
 
-    public function getSenha() { 
+    /**
+     * Get senha
+     * @return string
+     */
+    public function getSenha(): string { 
         return $this->senha;
     }
 
-    public function setSenha(string $senha) { 
+    /**
+     * Set senha
+     * @param string $senha
+     */
+    public function setSenha(string $senha): void { 
         !empty($senha) ? $this->senha = password_hash($senha, PASSWORD_DEFAULT) : $this->senha; 
     }
 
-    public function getImg_perfil() {
+    /**
+     * get img_perfil
+     * @return string
+     */
+    public function getImg_perfil(): string {
         return !empty($this->img_perfil) ? $this->img_perfil : 'user.png';
     }
 
-    public function setImg_perfil(string $img) { 
+    /**
+     * Set img_perfil
+     * @param string $img
+     */
+    public function setImg_perfil(string $img): void { 
         $this->img_perfil = $img;
     }
 
-    public function getAtivo() { 
-        return $this->ativo;
+    /**
+     * Get ativo
+     * @return integer
+     */
+    public function getAtivo(): int { 
+        return $this->fk_nivel_id_nivel;
     }
 
-    public function setAtivo(int $ativo) {
+    /**
+     * Set ativo
+     * @param integer $ativo
+     */
+    public function setAtivo(int $ativo): void {
         $ativo = $ativo == 't' ? 1 : 0;
-        $this->ativo = $ativo;
+        $this->fk_nivel_id_nivel = $ativo;
     }
 
-    public function getAdd_data() { 
+    /**
+     * Get add_data
+     * @return string
+     */
+    public function getAdd_data(): string { 
         return date('d/m/Y H:i:s', strtotime($this->add_data));
     }
 
-    private function setAdd_data() { 
+    /**
+     * Set add_data
+     * @return void
+     */
+    private function setAdd_data(): void { 
         //$this->add_data = $data;
         $this->add_data = date('Y-m-d H:i:s');
     }
- 
-    public function getFk_acesso() { 
+    
+    /**
+     * Get fk_acesso_id_acesso
+     * @return integer
+     */
+    public function getFk_acesso(): int { 
         return $this->fk_acesso_id_acesso;
     }
 
-    public function setFk_acesso(int $acesso = 2) { 
+    /**
+     * Set fk_acesso_id_acesso
+     * @param integer $acesso
+     */
+    public function setFk_acesso(int $acesso = 2): void { 
         $this->fk_acesso_id_acesso = $acesso;
     }  
 }

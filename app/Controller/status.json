@@ -82,5 +82,9 @@
     "upload_error": {
         "type": "danger",
         "text": "Erro no upload da foto!"
+    },
+    "contact_registered": {
+        "type": "success",
+        "text": "Contato cadastrado com sucesso"
     }
 }

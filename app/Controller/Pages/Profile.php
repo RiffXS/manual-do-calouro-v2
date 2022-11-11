@@ -67,16 +67,16 @@ class Profile extends Page {
                 $text = 'Turma';
                 $colum = 'class';
                 break;
-                
-            case 4:
-                $text = 'Regras';
-                $colum = 'rules';
-                break;
 
-            case 5:
+            case 4:
                 $text = 'Setor';
                 $colum = 'sector';
                 break;
+                
+            case 5:
+                $text = 'Regras';
+                $colum = 'rules';
+                break;            
         }
         // RETORNA O TEXTO E A VIEW DA COLUNA
         return [
@@ -119,7 +119,7 @@ class Profile extends Page {
         // VERIFICA SE HOUVE UPLOAD DE FOTO
         if (is_uploaded_file($obUpload->tmpName) && $obUpload->error != 4) { 
             // VERIFICA SE O PROCESSO DE UPLOAD FOI REALIZADO
-            if (self::uploadProfilePicture($request, $obUpload, $photo)) {
+            if (!self::uploadProfilePicture($obUpload, $photo)) {
                 $request->getRouter()->redirect('/profile?status=upload_error');
             }
         }
@@ -165,18 +165,17 @@ class Profile extends Page {
 
     /**
      * Método responsavel por realizar o upload da imagem enviada pelo usuario
-     * @param \App\Http\Request $request
      * @param \App\Utils\Upload $obUpload
      * @param string $photo
      * 
-     * @return boolean
+     * @return bool e alteração de referencia da $photo
      * 
      * @author @SimpleR1ick
      */
-    private static function uploadProfilePicture(Request $request, Upload $obUpload, string $photo): bool {
+    private static function uploadProfilePicture(Upload $obUpload, string &$photo): bool {
         // VERIFICA SE O ARQUIVO E MENOR DO QUE O ACEITO
         if ($_POST['MAX_FILE_SIZE'] > $obUpload->size) {
-        // VARIFICA SE O USUARIO POSSUI UMA FOTO
+            // VARIFICA SE O USUARIO POSSUI UMA FOTO
             if ($photo == 'user.png') {
                 $obUpload->generateNewName();      // GERA UM NOME NOVO
                 $photo = $obUpload->getBasename(); // OBTEM O NOME NOVO
@@ -186,14 +185,12 @@ class Profile extends Page {
                 $obUpload->name = pathinfo($photo, PATHINFO_FILENAME);
             }
             // FAZ O UPLOAD DA FOTO PARA PASTA DE UPLOADS
-            if (!$obUpload->upload(__DIR__.'/../../../public/uploads/')) {
-                return false;
+            if ($obUpload->upload(__DIR__.'/../../../public/uploads/')) {
+                return true;
             }
-        } else {
-            $request->getRouter()->redirect('/profile?status=exceeded_size');
-            exit;
+            return false;
         }
-        return true;  
+        return false;
     }  
 
     /**

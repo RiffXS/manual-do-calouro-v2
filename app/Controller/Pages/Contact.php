@@ -2,28 +2,34 @@
 
 namespace App\Controller\Pages;
 
+use App\Http\Request;
 use App\Models\Contact as EntityContact;
 use App\Models\User as EntityUser;
+use App\Utils\Sanitize;
 use App\Utils\Session;
+use App\Utils\Tools\Alert;
 use App\Utils\View;
 
 class Contact extends Page {
 
     /**
      * Método responsável por retornar o contéudo (view) da página contatos
+     * @param \App\Http\Request $request
+     * 
      * @return string 
      * 
      * @author @SimpleR1ick @RiffXS 
      */
-    public static function getContact(): string {
+    public static function getContact(Request $request): string {
         // DECLARAÇÃO DE VARIAVEIS
         $crud = '';
 
-        // CRIANDO NOVA INSTÂNCIA DE CONTATO
-        $obContact = new EntityContact;
-
+        $contacts = [
+            'professor' => EntityContact::getContactTeacher(),
+            'servidor'  => EntityContact::getContactServer()
+        ];
         // OBTEM A VIEWS DOS CARDS CONTATOS
-        $views = self::getContacts($obContact);
+        $views = self::getContacts($contacts);
 
         // VERIFICA SE EXISTE UMA SESSÃO
         if (Session::isLogged()) {
@@ -31,6 +37,7 @@ class Contact extends Page {
         }
         // REDENIZA AS COLUNAS DE CONTATOS
         $content = View::render('pages/contacts', [
+            'status'      => Alert::getStatus($request),
             'my_contacts' => $crud,
             'professores' => $views['professores'],
             'servidores'  => $views['servidores']
@@ -55,33 +62,71 @@ class Contact extends Page {
 
         // VERIFICA SE O ACESSO E AUTORIZADO
         if (in_array($acess, $auth)) {
-            $view = View::render('pages/contacts/crud_contacts');
+            $view = View::render('pages/contacts/contact_crud', [
+
+            ]);
         }
         // RETORNA VAZIO
         return $view;
     }
+
+    /**
+     * Método responsavel por cadastrar um contato
+     * @param Request $request
+     * 
+     * @return void
+     * 
+     * @author @SimpleR1ick
+     */
+    public static function setNewContact(Request $request): void {
+        // POST VARS
+        $postVars = $request->getPostVars();
+
+        // VERIFICA HTML INJECT
+        if (Sanitize::validateForm($postVars)) {
+            $request->getRouter()->redirect('/signup?status=invalid_chars');
+        }
+        // SANITIZA O ARRAY
+        $postVars = Sanitize::sanitizeForm($postVars);
+
+        $type = $postVars['tipo-contato'];
+        $data = $postVars['input-contato'];
+
+        // NOVA INSTANCIA
+        $obContact = new EntityContact;
+
+        // INSERE DADOS NA INSTANCIA
+        $obContact->setFk_usuario(Session::getSessionId());
+        $obContact->setFk_tipo($type);
+        $obContact->setDsc_contato($data);
+
+        // INSERE OBJETO NO BANCO
+        $obContact->insertContact();
+
+        // REDIRECIONA PARA CONTATOS
+        $request->getRouter()->redirect('/contact?status=contact_registered');
+    }
     
     /**
      * Método responsável por rendenizar os contatos
-     * @param EntityContact $obContacat
+     * @param  array $obContacat
      * @return array
      * 
      * @author @SimpleR1ick @RiffXS 
      */
-    private static function getContacts(EntityContact $obContact): array {
+    private static function getContacts(array $contacts): array {
         // DECLARAÇÃO DE VARIÁVEIS
         $contentTeacher = '';
         $contentServers = '';
         
         // OBTENDO OS ARRAYS DOS CONTATOS
-        $teacher = $obContact->getProfessor();
-        $servers = $obContact->getServidor();
+        $teacher = $contacts['professor'];
+        $servers = $contacts['servidor'];
 
         // LOOP PARA OBTER AS VIEWS DOS CARDS DOS PROFESSORES
         for ($p = 0; $p < count($teacher); $p++) {
             $contentTeacher .= self::cardTeacher($teacher[$p]);
         }
-
         // LOOP PARA OBTER AS VIEWS DOS CARDS DOS SERVIDORES
         for ($s = 0; $s < count($servers); $s++) {
             $contentServers .= self::cardServer($servers[$s]);
@@ -121,7 +166,7 @@ class Contact extends Page {
             }
             
             // RENDENIZA A VIEW
-            $content .= View::render('pages/contacts/type_contact', [
+            $content .= View::render('pages/contacts/contact_type', [
                 'icone' => $icone,
                 'contato' => $typeContacts[$i]['dsc_contato']
             ]);
