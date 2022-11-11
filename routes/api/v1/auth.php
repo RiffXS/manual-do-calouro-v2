@@ -4,11 +4,13 @@ use App\Http\Response;
 use App\Controller\Api;
 
 // ROTA RAIZ DA API
-$obRouter->get('/api/v1', [
+$obRouter->post('/api/v1/auth', [
     'middlewares' => [
         'api'
     ],
     function($request) {
-        return new Response(200, Api\Api::getDetails($request), 'application/json');
+        return new Response(201, Api\Auth::generateToken($request), 'application/json');
     }
 ]);
+
+?>

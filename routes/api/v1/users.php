@@ -10,7 +10,7 @@ $obRouter->get('/api/v1/testimonies', [
         'cache'
     ],
     function($request) {
-        return new Response(200, Api\Testimony::getTestimonies($request), 'application/json');
+        return new Response(200, Api\User::getUsers($request), 'application/json');
     }
 ]);
 
@@ -21,7 +21,7 @@ $obRouter->get('/api/v1/testimonies/{id}', [
         'cache'
     ],
     function($request, $id) {
-        return new Response(200, Api\Testimony::getTestimony($request, $id), 'application/json');
+        return new Response(200, Api\User::getUser($request, $id), 'application/json');
     }
 ]);
 
@@ -32,7 +32,7 @@ $obRouter->post('/api/v1/testimonies', [
         'user-basic-auth'
     ],
     function($request) {
-        return new Response(201, Api\Testimony::setNewTestimony($request), 'application/json');
+        return new Response(201, Api\User::setNewUser($request), 'application/json');
     }
 ]);
 
@@ -43,7 +43,7 @@ $obRouter->put('/api/v1/testimonies/{id}', [
         'user-basic-auth'
     ],
     function($request, $id) {
-        return new Response(200, Api\Testimony::setEditTestimony($request, $id), 'application/json');
+        return new Response(200, Api\User::setEditUser($request, $id), 'application/json');
     }
 ]);
 
@@ -54,6 +54,17 @@ $obRouter->delete('/api/v1/testimonies/{id}', [
         'user-basic-auth'
     ],
     function($request, $id) {
-        return new Response(200, Api\Testimony::setDeleteTestimony($request, $id), 'application/json');
+        return new Response(200, Api\User::setDeleteUser($request, $id), 'application/json');
+    }
+]);
+
+// ROTA USUARIO CONCTADO
+$obRouter->get('/api/v1/users/me', [
+    'middlewares' => [
+        'api',
+        'jwt-auth'
+    ],
+    function($request) {
+        return new Response(200, Api\User::getCurrentUser($request), 'application/json');
     }
 ]);
