@@ -124,6 +124,31 @@ class Contact {
         return (new Database())->execute($sql)->fetchAll(\PDO::FETCH_ASSOC); 
     }
 
+    /**
+     * Méthodo responsavel por retornar usuario
+     * @param  string $where
+     * @param  string $order
+     * @param  string $limit
+     * @param  string $fields
+     * 
+     * @return mixed
+     * 
+     * @author @SimpleR1ick @RiffXS
+     */
+    public static function getContacts($where = null, $order = null, $limit = null, $fields = '*'): mixed {
+        return (new Database('contato'))->select($where, $order, $limit, $fields);
+    }
+
+    /**
+     * Método responsavel por retornar os contatos de um usuario
+     * @param integer $fk
+     * 
+     * @return Contact|bool
+     */
+    public static function getContactByFk(int $fk): mixed {
+        return self::getContacts("fk_servidor_fk_usuario_id_usuario = $fk")->fetch(\PDO::FETCH_ASSOC);
+    }
+
     /*
      * Metodos GETTERS E SETTERS
      */

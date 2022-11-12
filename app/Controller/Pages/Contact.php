@@ -48,6 +48,32 @@ class Contact extends Page {
     }
 
     /**
+     * Methodo responsavel por obter a rendenização dos items de usuarios para página
+     * @param \App\Http\Request $request
+     * 
+     * @return string
+     */
+    private static function getContactItems($id) {
+        // USUARIOS
+        $itens = '';
+
+        // RESULTADOS DA PAGINA
+        $results = EntityContact::getContacts("fk_servidor_fk_usuario_id_usuario = $id");
+
+        // RENDENIZA O ITEM
+        while ($obContact = $results->fetchObject(EntityContact::class)) {
+            // VIEW De DEPOIMENTOSS
+            $itens .= View::render('pages/contacts/item',[
+                'tipo'  => $obContact->getFk_tipo(),
+                'dado'  => $obContact->getDsc_contato(),
+                'click' => "onclick=editContact($id)"
+            ]);
+        }
+        // RETORNA OS DEPOIMENTOS
+        return $itens;
+    }
+
+    /**
      * Método responsavel por rendenizar o CRUD de contatos
      * @param integer $acess
      * 
@@ -62,8 +88,22 @@ class Contact extends Page {
 
         // VERIFICA SE O ACESSO E AUTORIZADO
         if (in_array($acess, $auth)) {
-            $view = View::render('pages/contacts/contact_crud', [
 
+            $modalNew = View::render('pages/contacts/modal', [
+                'id'   => 'add-contato',
+                'nome' => 'Adicionar',
+                'rota' => URL.'contact/new'
+            ]);
+            $modalEdit = View::render('pages/contacts/modal', [
+                'id'   => 'edit-contato',
+                'nome' => 'Editar',
+                'rota' => URL.'contact/edit'
+            ]);
+
+            $view .= View::render('pages/contacts/contact_crud', [
+                'items' => self::getContactItems(Session::getSessionId()),
+                'modal_cadastro' => $modalNew,
+                'modal_atualiza' => $modalEdit
             ]);
         }
         // RETORNA VAZIO
@@ -71,45 +111,9 @@ class Contact extends Page {
     }
 
     /**
-     * Método responsavel por cadastrar um contato
-     * @param Request $request
-     * 
-     * @return void
-     * 
-     * @author @SimpleR1ick
-     */
-    public static function setNewContact(Request $request): void {
-        // POST VARS
-        $postVars = $request->getPostVars();
-
-        // VERIFICA HTML INJECT
-        if (Sanitize::validateForm($postVars)) {
-            $request->getRouter()->redirect('/signup?status=invalid_chars');
-        }
-        // SANITIZA O ARRAY
-        $postVars = Sanitize::sanitizeForm($postVars);
-
-        $type = $postVars['tipo-contato'];
-        $data = $postVars['input-contato'];
-
-        // NOVA INSTANCIA
-        $obContact = new EntityContact;
-
-        // INSERE DADOS NA INSTANCIA
-        $obContact->setFk_usuario(Session::getSessionId());
-        $obContact->setFk_tipo($type);
-        $obContact->setDsc_contato($data);
-
-        // INSERE OBJETO NO BANCO
-        $obContact->insertContact();
-
-        // REDIRECIONA PARA CONTATOS
-        $request->getRouter()->redirect('/contact?status=contact_registered');
-    }
-    
-    /**
      * Método responsável por rendenizar os contatos
      * @param  array $obContacat
+     * 
      * @return array
      * 
      * @author @SimpleR1ick @RiffXS 
@@ -224,5 +228,58 @@ class Contact extends Page {
             'hora_fim'    => $contact['hora_fim'],
             'sala'        => $contact['num_sala']
         ]);
+    }
+
+    /**
+     * Método responsavel por cadastrar um contato
+     * @param Request $request
+     * 
+     * @return void
+     * 
+     * @author @SimpleR1ick
+     */
+    public static function setNewContact(Request $request): void {
+        // POST VARS
+        $postVars = $request->getPostVars();
+
+        // VERIFICA HTML INJECT
+        if (Sanitize::validateForm($postVars)) {
+            $request->getRouter()->redirect('/signup?status=invalid_chars');
+        }
+        // SANITIZA O ARRAY
+        $postVars = Sanitize::sanitizeForm($postVars);
+
+        $type = $postVars['tipo-contato'];
+        $data = $postVars['input-contato'];
+
+        // NOVA INSTANCIA
+        $obContact = new EntityContact;
+
+        // INSERE DADOS NA INSTANCIA
+        $obContact->setFk_usuario(Session::getSessionId());
+        $obContact->setFk_tipo($type);
+        $obContact->setDsc_contato($data);
+
+        // INSERE OBJETO NO BANCO
+        $obContact->insertContact();
+
+        // REDIRECIONA PARA CONTATOS
+        $request->getRouter()->redirect('/contact?status=contact_registered');
+    }
+    
+    /**
+     * Método responsavel por consultar os dados de um contato
+     * @param \App\Http\Request $request
+     * @param string $id
+     * 
+     * @return void
+     */
+    public static function getContactData(Request $request, string $id): void {
+        // ARRAY COM AS INFORMAÇÕES DO CONTATO
+        $return = [
+           'dados' => EntityContact::getContactByFk($id)
+        ];
+        // IMPRIMI O JSON NA PAGINA
+        echo json_encode($return, JSON_PRETTY_PRINT);
     }
 }

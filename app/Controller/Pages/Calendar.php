@@ -19,26 +19,14 @@ class Calendar extends Page {
 
         // VERIFICA SE O COOKIE COM EVENTOS EXISTE
         if (!isset($_COOKIE['mdc-calendario'])) {
-            self::setEventsCookie();
+            // TRANSFORMA O ARRAY PARA JSON
+            $events = EntityCalendar::getCalendar();
+            $cookie = json_encode($events, JSON_UNESCAPED_UNICODE);
+
+            // DEFINE O COOKIE DE EVENTOS
+            setcookie('mdc-calendario', $cookie); 
         }
         // RETORNA A VIEW DA PAGINA
         return parent::getPage('Calendario', $content, 'calendar');
-    }
-    
-    /**
-     * Método responsavel por criar o COOKIE de eventos do calendario
-     * @return void
-     * 
-     * @author @SimpleR1ick
-     */
-    private static function setEventsCookie(): void {
-        // NOVA INSTANCIA
-        $obCalendar = new EntityCalendar;
-
-        // TRANSFORMA O ARRAY PARA JSON
-        $cookieContent = json_encode($obCalendar->getEvents(), JSON_UNESCAPED_UNICODE);
-
-        // DEFINE O COOKIE DE EVENTOS
-        setcookie('mdc-calendario', $cookieContent); 
     }
 }

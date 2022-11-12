@@ -14,40 +14,12 @@
             </span>
             
             <div class="d-flex justify-content-center">
-                Aqui vai vir a tabela lá do crudo q eu falei só com o tipo e o contato cadastrado pelo servidor
+                {{items}}
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="add-contato" tabindex="-1" aria-labelledby="add-contato-label" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="add-contato-label">Adicionar contato</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="POST" action="{{URL}}/contact/new">
-                    <div class="mb-3">
-                        <label for="tipo-contato" class="col-form-label">Tipo de contato:</label>
-                        <select name="tipo-contato" id="tipo-contato" class="form-select" aria-label="Tipo de contato">
-                            <option selected>Selecione uma opção</option>
-                            <option value="1">Telefone/Celular</option>
-                            <option value="2">E-mail</option>
-                            <option value="3">WhatsApp</option>
-                        </select>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="input-contato" id="input-contato" placeholder="."></input>
-                        <label for="input-contato" class="col-form-label">Contato:</label>
-                    </div>
+{{modal_cadastro}}
 
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Salvar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+{{modal_atualiza}}
