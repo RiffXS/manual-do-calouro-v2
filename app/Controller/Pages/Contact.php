@@ -64,6 +64,7 @@ class Contact extends Page {
         while ($obContact = $results->fetchObject(EntityContact::class)) {
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('pages/contacts/item',[
+                'id'    => $obContact->getId_contato(),
                 'tipo'  => $obContact->getFk_tipo(),
                 'dado'  => $obContact->getDsc_contato(),
                 'click' => "onclick=editContact($id)"
@@ -88,22 +89,8 @@ class Contact extends Page {
 
         // VERIFICA SE O ACESSO E AUTORIZADO
         if (in_array($acess, $auth)) {
-
-            $modalNew = View::render('pages/contacts/modal', [
-                'id'   => 'add-contato',
-                'nome' => 'Adicionar',
-                'rota' => URL.'contact/new'
-            ]);
-            $modalEdit = View::render('pages/contacts/modal', [
-                'id'   => 'edit-contato',
-                'nome' => 'Editar',
-                'rota' => URL.'contact/edit'
-            ]);
-
-            $view .= View::render('pages/contacts/contact_crud', [
+            $view .= View::render('pages/contacts/crud', [
                 'items' => self::getContactItems(Session::getSessionId()),
-                'modal_cadastro' => $modalNew,
-                'modal_atualiza' => $modalEdit
             ]);
         }
         // RETORNA VAZIO
@@ -168,9 +155,8 @@ class Contact extends Page {
             } else if ($typeContacts[$i]['dsc_tipo'] == 'WhatsApp') {
                 $icone = 'fa-brands fa-whatsapp';
             }
-            
             // RENDENIZA A VIEW
-            $content .= View::render('pages/contacts/contact_type', [
+            $content .= View::render('pages/contacts/type', [
                 'icone' => $icone,
                 'contato' => $typeContacts[$i]['dsc_contato']
             ]);
@@ -280,6 +266,6 @@ class Contact extends Page {
            'dados' => EntityContact::getContactByFk($id)
         ];
         // IMPRIMI O JSON NA PAGINA
-        echo json_encode($return, JSON_PRETTY_PRINT);
+        echo json_encode($return, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
     }
 }
