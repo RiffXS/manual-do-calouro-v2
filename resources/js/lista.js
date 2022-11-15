@@ -13,6 +13,8 @@
     console.log(resposta["dados"]);
 
     // Obtendo os id dos inputs e adicionando os dados recebidos a eles
+    document.getElementById('edit-id-contato').value    = resposta['dados'].id_contato;
+    document.getElementById('edit-fk-usuario').value    = resposta['dados'].fk_servidor_fk_usuario_id_usuario;
     document.getElementById('edit-tipo-contato').value  = resposta['dados'].fk_tipo_contato_id_tipo;
     document.getElementById('edit-input-contato').value = resposta['dados'].dsc_contato;
 

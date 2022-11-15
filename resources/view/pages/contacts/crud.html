@@ -74,9 +74,12 @@
             </div>
             <div class="modal-body">
                 <form action="{{URL}}/contact/edit" method="POST" >
+                    <input type="hidden" name="id_contato" id="edit-id-contato"></input>
+                    <input type="hidden" name="fk_usuario" id="edit-fk-usuario"></input>
+
                     <div class="mb-3">
                         <label for="edit-tipo-contato" class="col-form-label">Tipo de contato:</label>
-                        <select name="tipo-contato" id="edit-tipo-contato" class="form-select" aria-label="Tipo de contato">
+                        <select name="tp_contato" id="edit-tipo-contato" class="form-select" aria-label="Tipo de contato">
                             <option selected>Selecione uma opção</option>
                             <option value="1">Telefone/Celular</option>
                             <option value="2">E-mail</option>
@@ -84,7 +87,7 @@
                         </select>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="input-contato" id="edit-input-contato" placeholder="."></input>
+                        <input type="text" class="form-control" name="dsc_contato" id="edit-input-contato" placeholder="."></input>
                         <label for="edit-input-contato" class="col-form-label">Contato:</label>
                     </div>
 

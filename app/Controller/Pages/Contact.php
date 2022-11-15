@@ -64,10 +64,10 @@ class Contact extends Page {
         while ($obContact = $results->fetchObject(EntityContact::class)) {
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('pages/contacts/item',[
-                'id'    => $obContact->getId_contato(),
-                'tipo'  => $obContact->getFk_tipo(),
-                'dado'  => $obContact->getDsc_contato(),
-                'click' => "onclick=editContact($id)"
+                'id'      => $obContact->getId_contato(),
+                'tipo'    => $obContact->getFk_tipo(),
+                'dado'    => $obContact->getDsc_contato(),
+                'onclick' => "onclick=editContact($id)"
             ]);
         }
         // RETORNA OS DEPOIMENTOS
@@ -260,12 +260,48 @@ class Contact extends Page {
      * 
      * @return void
      */
-    public static function getContactData(Request $request, string $id): void {
+    public static function getEditContact(Request $request, string $id): void {
         // ARRAY COM AS INFORMAÇÕES DO CONTATO
         $return = [
            'dados' => EntityContact::getContactByFk($id)
         ];
         // IMPRIMI O JSON NA PAGINA
         echo json_encode($return, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * Método responsavel por editar os dados de um contato
+     *
+     * @param Request $request
+     * @return void
+     */
+    public static function setEditContact(Request $request): void {
+        // POST VARS
+        $postVars = $request->getPostVars();
+
+        // VERIFICA HTML INJECT
+        if (Sanitize::validateForm($postVars)) {
+            $request->getRouter()->redirect('/signup?status=invalid_chars');
+        }
+        // SANITIZA O ARRAY
+        $postVars = Sanitize::sanitizeForm($postVars);
+
+        $id   = $postVars['id_contato'];
+        $fk   = $postVars['fk_usuario'];
+        $tipo = $postVars['tp_contato'];
+        $dsc  = $postVars['dsc_contato'];
+
+        // SANITIZAÇÕES
+        $obContact = new EntityContact;
+
+        $obContact->setId_contato($id);
+        $obContact->setFk_usuario($fk);
+        $obContact->setFk_tipo($tipo);
+        $obContact->setDsc_contato($dsc);
+
+        $obContact->updateContact();
+
+        $request->getRouter()->redirect('/contact?status=contact_updated');
+
     }
 }

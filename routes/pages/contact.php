@@ -20,6 +20,13 @@ $obRouter->post('/contact/new', [
 // ROTA EDIÇÃO DE CONTATO
 $obRouter->get('/contact/edit/{id}', [
     function($request, $id) {
-        return new Response(220, Pages\Contact::getContactData($request, $id));
+        return new Response(220, Pages\Contact::getEditContact($request, $id));
+    }
+]);
+
+// ROTA EDIÇÃO DE CONTATO
+$obRouter->post('/contact/edit', [
+    function($request) {
+        return new Response(200, Pages\Contact::setEditContact($request));
     }
 ]);

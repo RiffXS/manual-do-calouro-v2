@@ -165,7 +165,7 @@ class Contact {
       * Set id_usuario
       * @param integer $id
       */
-     private function setId_contato(int $id): void {
+     public function setId_contato(int $id): void {
         $this->id_contato = $id;
      }
 
