@@ -14,8 +14,6 @@ class Schedule extends Page {
      * @param \App\Http\Request
      * 
      * @return string
-     * 
-     * @author @SimpleR1ick @RiffXS 
      */
     public static function getSchedule(Request $request): string {
         // QUERY PARAMS
@@ -54,8 +52,6 @@ class Schedule extends Page {
      * @param  integer $curso
      * 
      * @return string
-     * 
-     * @author @SimpleR1ick @RiffXS
      */
     private static function getCurso(int $curso): string {
         // RETORNA O NOME DO CURSO
@@ -69,8 +65,6 @@ class Schedule extends Page {
      * @param integer $modulo
      * 
      * @return string
-     * 
-     * @author @SimpleR1ick @RiffXS
      */
     public static function getTable(int $curso, int $modulo): string {
         // DECLARAÇÃO DE VARIAVEIS
@@ -98,8 +92,6 @@ class Schedule extends Page {
      * @param  integer $count
      * 
      * @return string
-     * 
-     * @author @SimpleR1ick @RiffXS
      */
     public static function getRow(array $aulas, int &$count): string {        
         $content = '';
@@ -119,8 +111,6 @@ class Schedule extends Page {
      * @param  array $class
      * 
      * @return string
-     * 
-     * @author @SimpleR1ick @RiffXS
      */ 
     public static function getItem(array $aula): string {
         // RETORNA A VIEW DA COLUNA

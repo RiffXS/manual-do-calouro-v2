@@ -15,9 +15,7 @@ class Redefine extends Page {
      * Método responsável por retornar o contéudo (view) da página redefinir senha
      * @param \App\Http\Request
      * 
-     * @return string 
-     * 
-     * @author @SimpleR1ick
+     * @return string
      */
     public static function getRedefine(Request $request): string {
         // QUERY PARAMS
@@ -48,8 +46,6 @@ class Redefine extends Page {
      * @param \App\Http\Request
      * 
      * @return void
-     * 
-     * @author @SimpleR1ick
      */
     public static function setRedefine(Request $request): void {
         // POST VARS

@@ -9,8 +9,6 @@ class Config extends Page {
     /**
      * Método responsável por retornar o contéudo (view) da página de configurações
      * @return string 
-     * 
-     * @author @SimpleR1ick @RiffXS
      */
     public static function getConfig(): string {
         // VIEW DO SOBRE

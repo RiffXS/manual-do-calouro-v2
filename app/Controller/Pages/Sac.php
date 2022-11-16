@@ -15,9 +15,7 @@ class Sac extends Page {
      * Método responsável por retornar o contéudo (view) da página fale conosco
      * @param \App\Http\Request $request
      * 
-     * @return string 
-     * 
-     * @author @SimpleR1ick
+     * @return string
      */
     public static function getSac(Request $request): string {
         // VIEW DA HOME
@@ -34,8 +32,6 @@ class Sac extends Page {
      * @param \App\Http\Request
      * 
      * @return void
-     * 
-     * @author @SimpleR1ick
      */
     public static function setSac(Request $request): void {
         // POST VARS

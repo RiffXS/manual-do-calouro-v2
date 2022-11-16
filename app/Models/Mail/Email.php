@@ -7,16 +7,44 @@ use PHPMailer\PHPMailer\Exception;
 
 class Email {
 
-    // CREDENCIAIS DO ACESSO SMTP
+    /**
+     * Endereço servidor SMTP
+     */
     const HOST = 'smtp.gmail.com';
+
+    /**
+     * E-mail do projeto
+     */
     const USERNAME = 'manualdocalouro.ifes@gmail.com';
+
+    /**
+     * Token de acesso
+     */
     const PASSWORD = 'srjboszkjzmqbysg';
+
+    /**
+     * Tipo de segurança
+     */
     const SECURITY = 'tls';
+
+    /**
+     * Porta de uso
+     */
     const PORT = 587;
+
+    /**
+     * Tipo charset
+     */
     const CHARSET  = 'UTF-8';
 
-    // DADOS DO REMETENTE
+    /**
+     * E-mail remetente
+     */
     const FROM_EMAIL = 'manualdocalouro.ifes@gmail.com';
+
+    /**
+     * Nome remetente
+     */
     const FROM_NAME  = 'Manual do Calouro';
 
     /**
@@ -41,6 +69,7 @@ class Email {
      * @param string|array $atachments
      * @param string|array $css
      * @param string|array $bcss
+     * 
      * @return boolean
      */
     public function sendEmail($adresses, $subject, $body, $atachments = [], $css = [], $bcss = []) {

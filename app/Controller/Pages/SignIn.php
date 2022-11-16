@@ -15,9 +15,7 @@ class SignIn extends Page {
      * Método responsável por retornar o contéudo (view) da página login
      * @param \App\Http\Request $request
      * 
-     * @return string 
-     * 
-     * @author @SimpleR1ick @RiffXS
+     * @return string
      */
     public static function getSignIn(Request $request): string {
         // CONTEUDO DA PAGINA DE LOGIN
@@ -33,8 +31,6 @@ class SignIn extends Page {
      * @param \App\Http\Request $request
      * 
      * @return void
-     * 
-     * @author @SimpleR1ick @RiffXS
      */
     public static function setSignIn(Request $request): void {
         // POST VARS
@@ -80,8 +76,6 @@ class SignIn extends Page {
      * @param \App\Http\Request $request
      * 
      * @return void
-     * 
-     * @author @SimpleR1ick @RiffXS
      */
     public static function setLogout(Request $request): void {
         // DESTROI A SESSÃO DE LOGIN

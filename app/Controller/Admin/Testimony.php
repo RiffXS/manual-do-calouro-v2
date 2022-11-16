@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Http\Request;
 use App\Models\Testimony as EntityTestimony;
 use App\Utils\View;
 use App\Utils\Pagination;
@@ -13,9 +14,10 @@ class Testimony extends Page {
      * Methodo responsavel por obter a rendenização dos items de depoimentos para página
      * @param \App\Http\Request $request
      * @param Pagination $obPagination
+     * 
      * @return string
      */
-    private static function getTetimoniesItems($request, &$obPagination) {
+    private static function getTetimoniesItems(Request $request, Pagination &$obPagination): string {
         // DEPOIMENTOS
         $itens = '';
 
@@ -51,9 +53,10 @@ class Testimony extends Page {
     /**
      * Methodo responsavel por rendenizar a view de listagem de depoimentos
      * @param \App\Http\Request
+     * 
      * @return string
      */
-    public static function getTestimonies($request) {
+    public static function getTestimonies(Request $request): string {
         // CONTEUDO DA HOME
         $content = View::render('admin/modules/testimonies/index', [
             'itens'      => self::getTetimoniesItems($request, $obPagination),
@@ -68,9 +71,10 @@ class Testimony extends Page {
     /**
      * Methodo responsavel por retornar o formulario de cadastro de um novo depoimento
      * @param \App\Http\Request
+     * 
      * @return string
      */
-    public static function getNewTestimony($request) {
+    public static function getNewTestimony(Request $request): string {
         // CONTEUDO DO FORMULARIO
         $content = View::render('admin/modules/testimonies/form', [
             'tittle'   => 'Cadastrar depoimento',
@@ -86,8 +90,10 @@ class Testimony extends Page {
     /**
      * Methodo responsavel por cadastrar um depoimento no banco
      * @param \App\Http\Request
+     * 
+     * @return void
      */
-    public static function setNewTestimony($request) {
+    public static function setNewTestimony(Request $request): void {
         // POST VARS
         $postVars = $request->getPostVars();
         
@@ -105,9 +111,10 @@ class Testimony extends Page {
      * Methodo responsavel por retornar o formulario edição de um depoimento
      * @param \App\Http\Request
      * @param integer $id
+     * 
      * @return string
      */
-    public static function getEditTestimony($request, $id) {
+    public static function getEditTestimony(Request $request, int $id): string {
         // OBTENDO O DEPOIMENTO DO BANCO DE DADOS
         $obTestimony = EntityTestimony::getTestimonyById($id);
 
@@ -132,8 +139,10 @@ class Testimony extends Page {
      * Methodo responsavel por gravar a atualização de um depoimento
      * @param \App\Http\Request
      * @param integer $id
+     * 
+     * @return void
      */
-    public static function setEditTestimony($request, $id) {
+    public static function setEditTestimony(Request $request, int $id): void {
         // OBTENDO O DEPOIMENTO DO BANCO DE DADOS
         $obTestimony = EntityTestimony::getTestimonyById($id);
 
@@ -157,9 +166,10 @@ class Testimony extends Page {
      * Methodo responsavel por retornar o formulario exclusão de um depoimento
      * @param \App\Http\Request
      * @param integer $id
+     * 
      * @return string
      */
-    public static function getDeleteTestimony($request, $id) {
+    public static function getDeleteTestimony(Request $request, int $id): string {
         // OBTENDO O DEPOIMENTO DO BANCO DE DADOS
         $obTestimony = EntityTestimony::getTestimonyById($id);
 
@@ -182,8 +192,10 @@ class Testimony extends Page {
      * Methodo responsavel por excluir um depoimento
      * @param \App\Http\Request
      * @param integer $id
+     * 
+     * @return void
      */
-    public static function setDeleteTestimony($request, $id) {
+    public static function setDeleteTestimony(Request $request, int $id): void {
         // OBTENDO O DEPOIMENTO DO BANCO DE DADOS
         $obTestimony = EntityTestimony::getTestimonyById($id);
 

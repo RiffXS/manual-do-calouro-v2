@@ -19,9 +19,7 @@ class Profile extends Page {
      * Método responsável por retornar o contéudo (view) da página perfil
      * @param \App\Http\Request $request
      * 
-     * @return string 
-     * 
-     * @author @SimpleR1ick
+     * @return string
      */
     public static function getEditProfile(Request $request) {
         // OBTEM A IMAGEM DO USUARIO
@@ -48,8 +46,6 @@ class Profile extends Page {
      * @param \App\Models\User $obUser
      * 
      * @return array
-     * 
-     * @author @SimpleR1ick
      */
     public static function getTextType(EntityUser $obUser): array {
         // DECLARAÇÃO DE VARIAVEIS
@@ -90,8 +86,6 @@ class Profile extends Page {
      * @param \App\Http\Request $request
      * 
      * @return void
-     * 
-     * @author @SimpleR1ick
      */
     public static function setEditProfile(Request $request): void {
         // POST VARS    
@@ -169,8 +163,6 @@ class Profile extends Page {
      * @param string $photo
      * 
      * @return bool e alteração de referencia da $photo
-     * 
-     * @author @SimpleR1ick
      */
     private static function uploadProfilePicture(Upload $obUpload, string &$photo): bool {
         // VERIFICA SE O ARQUIVO E MENOR DO QUE O ACEITO
@@ -200,8 +192,6 @@ class Profile extends Page {
      * @param array $postVars
      * 
      * @return void
-     * 
-     * @author @SimpleR1ick
      */
     private static function registerStudent(Request $request, EntityUser $obUser, array $postVars): void {
         $matricula = $postVars['matricula'] ?? '';
@@ -228,8 +218,6 @@ class Profile extends Page {
      * @param array $postVars
      * 
      * @return void
-     * 
-     * @author @SimpleR1ick
      */
     private static function updateStudent(EntityUser $obUser, array $postVars): void {
         $curso  = $postVars['curso'] ?? '';
@@ -254,8 +242,6 @@ class Profile extends Page {
      * @param array $postVars
      * 
      * @return void
-     * 
-     * @author @SimpleR1ick
      */
     private static function updateTeacher(EntityUser $obUser, array $postVars): void {
         $regras = $postVars['regras'] ?? '';

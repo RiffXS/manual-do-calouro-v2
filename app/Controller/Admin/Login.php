@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Http\Request;
 use App\Models\User;
 use App\Utils\View;
 use App\Utils\Tools\Alert;
@@ -13,9 +14,10 @@ class Login extends Page {
      * Methodo retornar a rendenização da pagina de login
      * @param \App\Http\Request $request
      * @param  string $errorMessage
+     * 
      * @return string
      */
-    public static function getLogin($request) {
+    public static function getLogin(Request $request): string {
         // CONTEUDO DA PAGINA DE LOGIN
         $content = View::render('admin/login', [
             'status' => Alert::getStatus($request)
@@ -27,8 +29,10 @@ class Login extends Page {
     /**
      * Methodo responsavel por definir o login do usuario
      * @param \App\Http\Request
+     * 
+     * @return void
      */
-    public static function setLogin($request) {
+    public static function setLogin(Request $request): void {
         // POST VARS
         $postVars = $request->getPostVars();
 
@@ -57,8 +61,10 @@ class Login extends Page {
     /**
      * Mehtodo responsavel por deslogar o usuario
      * @param \App\Http\Request
+     * 
+     * @return void
      */
-    public static function setLogout($request) {
+    public static function setLogout(Request $request): void {
         // DESTROI A SESSÃO DE LOGIN
         Session::logout();
 

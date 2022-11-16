@@ -8,9 +8,7 @@ class Faq extends Page {
 
     /**
      * Método responsável por retornar o contéudo (view) da página fale dúvidas frequentes
-     * @return string 
-     * 
-     * @author @SimpleR1ick 
+     * @return string
      */
     public static function getFaq(): string {
         // VIEW DA HOME

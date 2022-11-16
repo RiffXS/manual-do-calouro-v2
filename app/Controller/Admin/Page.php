@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin;
 
+use App\Http\Request;
+use App\Utils\Pagination;
 use App\Utils\View;
 
 class Page {
@@ -24,9 +26,10 @@ class Page {
      * Methodo responsavel por retornar o conteudo (view) estrutura generica do painel
      * @param  string $tittle
      * @param  string $content
+     * 
      * @return string 
      */
-    public static function getPage($tittle, $content) {
+    public static function getPage(string $tittle, string $content): string {
         return View::render('admin/page', [
             'title'   => $tittle,
             'content' => $content
@@ -36,9 +39,10 @@ class Page {
     /**
      * Methodo responsavel por rendenizar a view do painel
      * @param  string $currentModule
+     * 
      * @return string
      */
-    private static function getMenu($currentModule) {
+    private static function getMenu(string $currentModule): string {
         // LINKS DO MENU
         $links = '';
 
@@ -50,7 +54,6 @@ class Page {
                 'current' => $hash == $currentModule ? 'text-success' : ''
             ]);
         }
-
         // RETORNA A RENDENIZAÇÃO DO MENU
         return View::render('admin/menu/box', [
             'links' => $links
@@ -62,9 +65,10 @@ class Page {
      * @param  string $title
      * @param  string $contenct
      * @param  string $currentModule
+     * 
      * @return string
      */
-    public static function getPanel($tittle, $content, $currentModule) {
+    public static function getPanel(string $tittle, string $content, string $currentModule): string {
         // RENDENIZA A VIEW DO PAINEL
         $contentPanel = View::render('admin/panel', [
             'menu' => self::getMenu($currentModule),
@@ -77,12 +81,14 @@ class Page {
 
     /**
      * Methodo responsavel por retornar um link da paginação
-     * @param array $queryParams
-     * @param array $page
+     * @param array  $queryParams
+     * @param array  $page
      * @param string $url
-     * @return
+     * @param string $label
+     * 
+     * @return string
      */
-    private static function getPaginationLink($queryParams, $page, $url, $label = null) {
+    private static function getPaginationLink(array $queryParams, array $page, string $url, string $label = null): string {
         // ALTERA PAGINA    
         $queryParams['page'] = $page['page'];
 
@@ -91,8 +97,8 @@ class Page {
 
         // VIEW
         return View::render('pages/pagination/link',[
-            'page' => $label ?? $page['page'],
-            'link' => $link,
+            'page'   => $label ?? $page['page'],
+            'link'   => $link,
             'active' => $page['current'] ? 'active' : ''
         ]);
     }
@@ -101,9 +107,10 @@ class Page {
      * Methodo responsavel por rendenizar o layout de paginação
      * @param \App\Http\Request $request
      * @param \App\Utils\Pagination $obPagination
+     * 
      * @return string
      */
-    public static function getPagination($request, $obPagination) {
+    protected static function getPagination(Request $request, Pagination $obPagination): string {
         // OBTER AS PAGINAS
         $pages = $obPagination->getPages();
 

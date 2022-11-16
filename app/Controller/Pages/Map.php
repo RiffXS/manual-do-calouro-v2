@@ -8,9 +8,7 @@ class Map extends Page {
 
     /**
      * Método responsável por retornar o contéudo (view) da página mapa
-     * @return string 
-     * 
-     * @author @SimpleR1ick
+     * @return string
      */
     public static function getMap(): string {
         // VIEW DA HOME

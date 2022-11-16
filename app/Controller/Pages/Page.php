@@ -54,8 +54,6 @@ class Page {
      * @param  string $currentModule
      * 
      * @return string
-     * 
-     * @author @SimpleR1ick @RiffXS
      */
     private static function getLinks(string $current_module): string {  
         // LINKS DO MENU
@@ -92,8 +90,6 @@ class Page {
     /**
      * Método responsável por renderizar a view do menu do login
      * @return string
-     * 
-     * @author @SimpleR1ick @RiffXS
      */
     private static function getLogin(): string {
         // RETORNA O DROPDOWN CASO LOGADO
@@ -118,8 +114,6 @@ class Page {
      * @param  string $module
      * 
      * @return string
-     * 
-     * @author @SimpleR1ick @RiffXS
      */
     private static function getHeader(string $module): string {
         // RENDENIZA A VIEW DO HEADER
@@ -132,8 +126,6 @@ class Page {
     /**
      * Método responsável por rendenizar o rodapé da pagina
      * @return string
-     * 
-     * @author @SimpleR1ick
      */
     private static function getFooter(): string {
         // RENDENIZA A VIEW DO FOOTER
@@ -142,9 +134,7 @@ class Page {
 
     /**
      * Método responsável por retornar o contéudo (view) da página genérica
-     * @return string 
-     * 
-     * @author @SimpleR1ick @RiffXS
+     * @return string
      */
     protected static function getPage(string $title, string $content, string $module = ''): string {
         // RENDENIZA A PAGINA
@@ -162,8 +152,6 @@ class Page {
      * @param \App\Utils\Pagination $obPagination
      * 
      * @return string
-     * 
-     * @author @SimpleR1ick
      */
     protected static function getPagination(Request $request, Pagination $obPagination): string {
         // DECLARAÇÃO DE VARIAVEIS
@@ -220,8 +208,6 @@ class Page {
      * @param  string $url
      * 
      * @return string
-     * 
-     * @author @SimpleR1ick
      */
     private static function getPaginationLink(array $queryParams, array $page, string $url, string $label = null): string {
         // ALTERA PAGINA    

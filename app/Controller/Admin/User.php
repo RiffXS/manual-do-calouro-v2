@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Http\Request;
 use App\Models\User as EntityUser;
 use App\Utils\Tools\Alert;
 use App\Utils\View;
@@ -13,9 +14,10 @@ class User extends Page {
      * Methodo responsavel por obter a rendenização dos items de usuarios para página
      * @param \App\Http\Request $request
      * @param Pagination $obPagination
+     * 
      * @return string
      */
-    private static function getUsersItems($request, &$obPagination) {
+    private static function getUsersItems(Request $request, Pagination &$obPagination): string {
         // USUARIOS
         $itens = '';
 
@@ -54,9 +56,10 @@ class User extends Page {
     /**
      * Methodo responsavel por rendenizar a view de listagem de usuarios
      * @param \App\Http\Request
+     * 
      * @return string
      */
-    public static function getUsers($request) {
+    public static function getUsers(Request $request): string {
         // CONTEUDO DA HOME
         $content = View::render('admin/modules/users/index', [
             'itens'      => self::getUsersItems($request, $obPagination),
@@ -71,9 +74,10 @@ class User extends Page {
     /**
      * Methodo responsavel por retornar o formulario de cadastro de um novo usuario
      * @param \App\Http\Request
+     * 
      * @return string
      */
-    public static function getNewUser($request) {
+    public static function getNewUser(Request $request): string {
         // CONTEUDO DO FORMULARIO
         $content = View::render('admin/modules/users/form', [
             'tittle'   => 'Cadastrar usuario',
@@ -93,8 +97,10 @@ class User extends Page {
     /**
      * Methodo responsavel por cadastrar um usuario no banco
      * @param \App\Http\Request
+     * 
+     * @return void
      */
-    public static function setNewUser($request) {
+    public static function setNewUser(Request $request): void {
         // POST VARS
         $postVars = $request->getPostVars();
 
@@ -128,9 +134,10 @@ class User extends Page {
      * Methodo responsavel por retornar o formulario edição de um usuario
      * @param \App\Http\Request
      * @param integer $id
+     * 
      * @return string
      */
-    public static function getEditUser($request, $id) {
+    public static function getEditUser(Request $request, int $id): string {
         // DECLARAÇÃO DE VARIÁVEIS
         $status = [
             'ativo'   => '',
@@ -166,8 +173,10 @@ class User extends Page {
      * Methodo responsavel por gravar a atualização de um usuario
      * @param \App\Http\Request
      * @param integer $id
+     * 
+     * @return void
      */
-    public static function setEditUser($request, $id) {
+    public static function setEditUser(Request $request, int $id): void {
         // OBTENDO O USUARIO DO BANCO DE DADOS
         $obUser = EntityUser::getUserById($id);
 
@@ -207,8 +216,10 @@ class User extends Page {
     /**
      * Methodo responsavel por excluir um usuario
      * @param \App\Http\Request
+     * 
+     * @return void
      */
-    public static function setDeleteUser($request) {
+    public static function setDeleteUser(Request $request): void {
         // POST VARS
         $postVars = $request->getPostVars();
        
@@ -219,7 +230,6 @@ class User extends Page {
         if (!$obUser instanceof EntityUser) {
             $request->getRouter()->redirect('/admin/users');
         }
-
         // EXCLUIR DEPOIMENTO
         $obUser->deleteUser();
 

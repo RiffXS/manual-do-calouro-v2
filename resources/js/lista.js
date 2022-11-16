@@ -1,9 +1,6 @@
 /**
  * Função para carregar os dados do usuario no modal
- * 
- * @param {int} id da tarefa
- * 
- * @author Henrique Dalmagro
+ * @param {int} 
  */
  async function editContact(id) {
     // REQUISIÇÃO A ROTA DE CONSULTA
@@ -20,10 +17,7 @@
 
 /**
  * Função para carregar o id do usuario a ser excluido
- * 
- * @param {int} id da tarefa
- * 
- * @author Henrique Dalmagro
+ * @param {int} id
  */
  function delContact(id) {
     // Obtendo os id dos inputs e adicionando os dados recebidos a eles

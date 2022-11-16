@@ -15,8 +15,6 @@ class SignUp extends Page {
      * @param \App\Http\Request $request
      * 
      * @return string
-     * 
-     * @author @SimpleR1ick
      */
     public static function getSignUp($request): string {
         // CONTEUDO DA PAGINA DE LOGIN
@@ -32,8 +30,6 @@ class SignUp extends Page {
      * @param \App\Http\Request $request
      * 
      * @return void
-     * 
-     * @author @SimpleR1ick
      */
     public static function setSignUp(Request $request): void {
         // POST VARS

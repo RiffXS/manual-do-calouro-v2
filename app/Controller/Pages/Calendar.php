@@ -10,8 +10,6 @@ class Calendar extends Page {
     /**
      * Método responsável por retornar o contéudo (view) da página calendario
      * @return string 
-     * 
-     * @author @SimpleR1ick
      */
     public static function getCalendar(): string {
         // VIEW DA HOME

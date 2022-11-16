@@ -16,9 +16,7 @@ class Contact extends Page {
      * Método responsável por retornar o contéudo (view) da página contatos
      * @param \App\Http\Request $request
      * 
-     * @return string 
-     * 
-     * @author @SimpleR1ick @RiffXS 
+     * @return string  
      */
     public static function getContact(Request $request): string {
         // DECLARAÇÃO DE VARIAVEIS
@@ -82,8 +80,6 @@ class Contact extends Page {
      * @param integer $acess
      * 
      * @return string
-     * 
-     * @author @SimpleR1ick
      */
     private static function getCrud($acess): string {
         // DECLARAÇÃO DE VARIAVEIS
@@ -105,8 +101,6 @@ class Contact extends Page {
      * @param  array $obContacat
      * 
      * @return array
-     * 
-     * @author @SimpleR1ick @RiffXS 
      */
     private static function getContacts(array $contacts): array {
         // DECLARAÇÃO DE VARIÁVEIS
@@ -137,8 +131,6 @@ class Contact extends Page {
      * @param  integer $id
      * 
      * @return string
-     * 
-     * @author @SimpleR1ick @RiffXS
      */ 
     private static function getContactType(int $id): string {
         // DECLARAÇÃO DE VARIÁVEIS
@@ -173,8 +165,6 @@ class Contact extends Page {
      * @param  array $contact
      * 
      * @return string
-     * 
-     * @author @SimpleR1ick @RiffXS 
      */
     private static function cardTeacher(array $contact): string {
         // ATRIBUIÇÃO DE VARIÁVEIS
@@ -199,8 +189,6 @@ class Contact extends Page {
      * @param  string $contact
      * 
      * @return string
-     * 
-     * @author @SimpleR1ick @RiffXS 
      */
     private static function cardServer(array $contact): string {
         // ATRIBUIÇÃO DE VARIÁVEIS
@@ -224,8 +212,6 @@ class Contact extends Page {
      * @param Request $request
      * 
      * @return void
-     * 
-     * @author @SimpleR1ick
      */
     public static function setNewContact(Request $request): void {
         // POST VARS
@@ -274,8 +260,8 @@ class Contact extends Page {
 
     /**
      * Método responsavel por editar os dados de um contato
-     *
      * @param Request $request
+     * 
      * @return void
      */
     public static function setEditContact(Request $request): void {

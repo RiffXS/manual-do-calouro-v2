@@ -12,6 +12,7 @@ class Testimony extends Page{
      * Método responsável por obter a renderização dos items de depoimentos para página
      * @param \App\Http\Request $request
      * @param Pagination $obPagination
+     * 
      * @return string
      */
     private static function getTetimoniesItems($request, &$obPagination) {
@@ -48,6 +49,7 @@ class Testimony extends Page{
     /**
      * Método responsável por retornar o contéudo (view) de depoimenots
      * @param \App\Http\Request $request
+     * 
      * @return string 
      */
     public static function getTestimonies($request){
@@ -65,6 +67,7 @@ class Testimony extends Page{
     /**
      * Método responsável por cadastrar um depoimento
      * @param \App\Http\Request $request
+     * 
      * @return string
      */
     public static function inserTestimony($request) {

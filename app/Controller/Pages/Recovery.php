@@ -16,9 +16,7 @@ class Recovery extends Page {
      * Método responsável por retornar o contéudo (view) da página recuperação da senha
      * @param \App\Http\Request $request
      * 
-     * @return string 
-     * 
-     * @author @SimpleR1ick @RiffXS
+     * @return string
      */
     public static function getRecovery(Request $request): string {
         // VIEW DA HOME
@@ -33,8 +31,6 @@ class Recovery extends Page {
     /**
      * Método responsável por criar e enviar o link para recuperação de senha
      * @param \App\Http\Request $request
-     * 
-     * @author @SimpleR1ick @RiffXS
      */
     public static function setRecovery(Request $request): void {
         // POST VARS
