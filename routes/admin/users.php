@@ -14,7 +14,7 @@ $obRouter->get('/admin/users', [
 ]);
 
 // ROTA DELETE DE USUARIOS
-$obRouter->post('/admin/users', [
+$obRouter->post('/admin/users/del', [
     'middlewares' => [
         'admin-login'
     ],

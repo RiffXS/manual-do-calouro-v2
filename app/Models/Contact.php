@@ -68,8 +68,8 @@ class Contact {
      * 
      * @author @SimpleR1ick
      */
-    public function deleteUser(): bool {
-        return (new Database('usuario'))->delete("id_contato = {$this->id_contato}");
+    public function deleteContact(): bool {
+        return (new Database('contato'))->delete("id_contato = {$this->id_contato}");
     }
 
     /**
@@ -141,9 +141,20 @@ class Contact {
 
     /**
      * Método responsavel por retornar os contatos de um usuario
+     * @param integer $id
+     * 
+     * @return self|bool
+     */
+    public static function getContactById(int $id): mixed {
+        return self::getContacts("id_contato = $id")->fetchObject(self::class);
+    }
+
+
+    /**
+     * Método responsavel por retornar os contatos de um usuario
      * @param integer $fk
      * 
-     * @return Contact|bool
+     * @return array|bool
      */
     public static function getContactByFk(int $fk): mixed {
         return self::getContacts("fk_servidor_fk_usuario_id_usuario = $fk")->fetch(\PDO::FETCH_ASSOC);

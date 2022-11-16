@@ -1,18 +1,30 @@
 <div>
     <p>
-        <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#crud-contatos" aria-expanded="false" aria-controls="crud-contatos">
+        <button
+            class="btn btn-outline-primary"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#crud-contatos"
+            aria-expanded="false"
+            aria-controls="crud-contatos"
+        >
             Meus contatos
         </button>
     </p>
     <div class="collapse mt-3 mb-4" id="crud-contatos">
         <div class="card card-body">
             <span class="mb-3">
-                <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#add-contato">
+                <button
+                    class="btn btn-success"
+                    type="button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#add-contato"
+                >
                     Adicionar contato
                     <i class="fa-solid fa-square-plus"></i>
                 </button>
             </span>
-            
+
             <div class="d-flex justify-content-center">
                 <table class="table table-light table-striped">
                     <thead class="">
@@ -33,18 +45,38 @@
     </div>
 </div>
 
-<div class="modal fade" id="add-contato" tabindex="-1" aria-labelledby="add-contato-label" aria-hidden="true">
+<div
+    class="modal fade"
+    id="add-contato"
+    tabindex="-1"
+    aria-labelledby="add-contato-label"
+    aria-hidden="true"
+>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="add-contato-label">Cadastrar contato</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h1 class="modal-title fs-5" id="add-contato-label">
+                    Cadastrar contato
+                </h1>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
             </div>
             <div class="modal-body">
                 <form method="POST" action="{{URL}}/contact/new">
                     <div class="mb-3">
-                        <label for="tipo-contato" class="col-form-label">Tipo de contato:</label>
-                        <select name="tipo-contato" id="tipo-contato" class="form-select" aria-label="Tipo de contato">
+                        <label for="tipo-contato" class="col-form-label"
+                            >Tipo de contato:</label
+                        >
+                        <select
+                            name="tipo-contato"
+                            id="tipo-contato"
+                            class="form-select"
+                            aria-label="Tipo de contato"
+                        >
                             <option selected>Selecione uma opção</option>
                             <option value="1">Telefone/Celular</option>
                             <option value="2">E-mail</option>
@@ -52,12 +84,22 @@
                         </select>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="input-contato" id="input-contato" placeholder="."></input>
-                        <label for="input-contato" class="col-form-label">Contato:</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="input-contato"
+                            id="input-contato"
+                            placeholder=" "
+                        />
+                        <label for="input-contato" class="col-form-label"
+                            >Contato:</label
+                        >
                     </div>
 
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Salvar</button>
+                        <button type="submit" class="btn btn-primary">
+                            Salvar
+                        </button>
                     </div>
                 </form>
             </div>
@@ -65,21 +107,49 @@
     </div>
 </div>
 
-<div class="modal fade" id="edit-contato" tabindex="-1" aria-labelledby="add-contato-label" aria-hidden="true">
+<div
+    class="modal fade"
+    id="edit-contato"
+    tabindex="-1"
+    aria-labelledby="add-contato-label"
+    aria-hidden="true"
+>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="edit-contato-label">Editar contato</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h1 class="modal-title fs-5" id="edit-contato-label">
+                    Editar contato
+                </h1>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
             </div>
             <div class="modal-body">
-                <form action="{{URL}}/contact/edit" method="POST" >
-                    <input type="hidden" name="id_contato" id="edit-id-contato"></input>
-                    <input type="hidden" name="fk_usuario" id="edit-fk-usuario"></input>
+                <form action="{{URL}}/contact/edit" method="POST">
+                    <input
+                        type="hidden"
+                        name="id_contato"
+                        id="edit-id-contato"
+                    />
+                    <input
+                        type="hidden"
+                        name="fk_usuario"
+                        id="edit-fk-usuario"
+                    />
 
                     <div class="mb-3">
-                        <label for="edit-tipo-contato" class="col-form-label">Tipo de contato:</label>
-                        <select name="tp_contato" id="edit-tipo-contato" class="form-select" aria-label="Tipo de contato">
+                        <label for="edit-tipo-contato" class="col-form-label"
+                            >Tipo de contato:</label
+                        >
+                        <select
+                            name="tp_contato"
+                            id="edit-tipo-contato"
+                            class="form-select"
+                            aria-label="Tipo de contato"
+                        >
                             <option selected>Selecione uma opção</option>
                             <option value="1">Telefone/Celular</option>
                             <option value="2">E-mail</option>
@@ -87,13 +157,61 @@
                         </select>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="dsc_contato" id="edit-input-contato" placeholder="."></input>
-                        <label for="edit-input-contato" class="col-form-label">Contato:</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="dsc_contato"
+                            id="edit-input-contato"
+                        />
+                        <label for="edit-input-contato" class="col-form-label"
+                            >Contato:</label
+                        >
                     </div>
 
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Salvar</button>
+                        <button type="submit" class="btn btn-primary">
+                            Salvar
+                        </button>
                     </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div
+    class="modal fade"
+    id="del-contato"
+    tabindex="-1"
+    aria-labelledby="tituloModal"
+    aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-black">
+                    Deseja mesmo excluir esse contato?
+                </h5>
+                <button
+                    class="btn-close"
+                    type="button"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-footer">
+                <form action="{{URL}}/contact/del" method="POST">
+                    <input type="hidden" name="id" id="id_delete">
+                    <button
+                        class="btn btn-secondary"
+                        type="button"
+                        data-bs-dismiss="modal"
+                    >
+                        Voltar
+                    </button>
+                    <button class="btn btn-danger" type="submit">
+                        Deletar
+                    </button>
                 </form>
             </div>
         </div>

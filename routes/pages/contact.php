@@ -30,3 +30,11 @@ $obRouter->post('/contact/edit', [
         return new Response(200, Pages\Contact::setEditContact($request));
     }
 ]);
+
+// ROTA EXCLUSÃO DE CONTATO
+$obRouter->post('/contact/del', [
+    function($request) {
+        return new Response(200, Pages\Contact::setDeleteContact($request));
+    }
+]);
+

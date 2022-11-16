@@ -90,5 +90,9 @@
     "contact_updated": {
         "type": "success",
         "text": "Contato atualizado com sucesso"
+    },
+    "contact_deleted": {
+        "type": "success",
+        "text": "Contato excluido com sucesso!"
     }
 }

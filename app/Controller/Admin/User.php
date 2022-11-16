@@ -69,29 +69,6 @@ class User extends Page {
     }
 
     /**
-     * Methodo responsavel por excluir um usuario
-     * @param \App\Http\Request
-     */
-    public static function setDeleteUser($request) {
-        // POST VARS
-        $postVars = $request->getPostVars();
-       
-        // OBTENDO O USUARIO DO BANCO DE DADOS
-        $obUser = EntityUser::getUserById($postVars['id']);
-
-        // VALIDA A INSTANCIA
-        if (!$obUser instanceof EntityUser) {
-            $request->getRouter()->redirect('/admin/users');
-        }
-
-        // EXCLUIR DEPOIMENTO
-        $obUser->deleteUser();
-
-        // REDIRECIONA O USUARIO
-        $request->getRouter()->redirect('/admin/users?status=user_deleted');
-    }
-
-    /**
      * Methodo responsavel por retornar o formulario de cadastro de um novo usuario
      * @param \App\Http\Request
      * @return string
@@ -100,13 +77,13 @@ class User extends Page {
         // CONTEUDO DO FORMULARIO
         $content = View::render('admin/modules/users/form', [
             'tittle'   => 'Cadastrar usuario',
+            'status'   => Alert::getStatus($request),
             'nome'     => '',
             'email'    => '',
-            'botao'    => 'Cadastrar',
-            'status'   => Alert::getStatus($request),
             'ativo'    => 'checked',
             'inativo'  => '',
-            'acesso'   => '2'
+            'acesso'   => '2',
+            'botao'    => 'Cadastrar'
         ]);
 
         // RETORNA A PAGINA COMPLETA
@@ -225,5 +202,28 @@ class User extends Page {
 
         // REDIRECIONA O USUARIO
         $request->getRouter()->redirect('/admin/users/'.$id.'/edit?status=user_updated');
+    }
+
+    /**
+     * Methodo responsavel por excluir um usuario
+     * @param \App\Http\Request
+     */
+    public static function setDeleteUser($request) {
+        // POST VARS
+        $postVars = $request->getPostVars();
+       
+        // OBTENDO O USUARIO DO BANCO DE DADOS
+        $obUser = EntityUser::getUserById($postVars['id']);
+
+        // VALIDA A INSTANCIA
+        if (!$obUser instanceof EntityUser) {
+            $request->getRouter()->redirect('/admin/users');
+        }
+
+        // EXCLUIR DEPOIMENTO
+        $obUser->deleteUser();
+
+        // REDIRECIONA O USUARIO
+        $request->getRouter()->redirect('/admin/users?status=user_deleted');
     }
 }

@@ -53,21 +53,24 @@ class Contact extends Page {
      * 
      * @return string
      */
-    private static function getContactItems($id) {
+    private static function getContactItems($fk) {
         // USUARIOS
         $itens = '';
 
         // RESULTADOS DA PAGINA
-        $results = EntityContact::getContacts("fk_servidor_fk_usuario_id_usuario = $id");
+        $results = EntityContact::getContacts("fk_servidor_fk_usuario_id_usuario = $fk");
 
         // RENDENIZA O ITEM
         while ($obContact = $results->fetchObject(EntityContact::class)) {
+            $id = $obContact->getId_contato();
+
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('pages/contacts/item',[
-                'id'      => $obContact->getId_contato(),
-                'tipo'    => $obContact->getFk_tipo(),
-                'dado'    => $obContact->getDsc_contato(),
-                'onclick' => "onclick=editContact($id)"
+                'id'   => $id,
+                'tipo' => $obContact->getFk_tipo(),
+                'dado' => $obContact->getDsc_contato(),
+                'edit' => "onclick=editContact($fk)",
+                'del'  => "onclick=delContact({$id})"
             ]);
         }
         // RETORNA OS DEPOIMENTOS
@@ -303,5 +306,29 @@ class Contact extends Page {
 
         $request->getRouter()->redirect('/contact?status=contact_updated');
 
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param Request $request
+     * @return void
+     */
+    public static function setDeleteContact(Request $request): void {
+        // POST VARS
+        $postVars = $request->getPostVars();
+
+        // OBTENDO O USUARIO DO BANCO DE DADOS
+        $obContact = EntityContact::getContactById($postVars['id']);
+  
+        // VALIDA A INSTANCIA
+        if (!$obContact instanceof EntityContact) {
+            $request->getRouter()->redirect('/contact');
+        }
+        // EXCLUIR DEPOIMENTO
+        $obContact->deleteContact();
+
+        // REDIRECIONA O USUARIO
+        $request->getRouter()->redirect('/contact?status=contact_deleted');
     }
 }
