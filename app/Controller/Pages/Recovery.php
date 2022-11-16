@@ -70,23 +70,37 @@ class Recovery extends Page {
         } else {
             $obHash->insertHash(); // INSERE A CHAVE
         }
-        // NOVA INSTANCIA
-        $obEmail = new Email;
+        // TENTA ENVIAR O EMAIL
+        if (!self::sendRecovery($obHash, $email)) {
+            $request->getRouter()->redirect('/recovery?status=recovery_erro'); 
+        } 
+        $request->getRouter()->redirect('/recovery?status=recovery_send');
+    }
 
-        // LINK HTML
-        $link = "<a href='http://localhost/mvc-mdc/redefine?chave={$obHash->getHash()}'>Clique aqui</a>";
+    /**
+     * Undocumented function
+     * @param \App\Models\Hash $obHash
+     * @param string $email
+     * 
+     * @return boolean
+     */
+    public static function sendRecovery(EntityHash $obHash, string $email) {
+
+        $key  = $obHash->getHash();
+        $link = "<a href='http://localhost/mvc-mdc/redefine?chave=$key'>Clique aqui</a>";
 
         // ASSUNTO E MENSAGEM
         $subject = 'Recuperar senha';
         $message = 'Para recuperar sua senha, acesse este link: '.$link;
 
+        $obEmail = new Email;
+
         // VERIFICA SE O PROCESSO DE ENVIO FOI EXECUTADO
-        if ($obEmail->sendEmail($email, $subject, $message)) {
-            $request->getRouter()->redirect('/recovery?status=recovery_send'); 
-        } 
-        else {
+        if (!$obEmail->sendEmail($email, $subject, $message)) {
             $obHash->deleteHash();
-            $request->getRouter()->redirect('/recovery?status=recovery_erro'); 
-        }      
+
+            return false;
+        } 
+        return true;  
     }
 }

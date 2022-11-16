@@ -37,21 +37,6 @@ class Schedule {
     private $fk_sala_aula_id_sala_aula;
 
     /**
-     * Método responsavel por retornar aula
-     * @param  string $where
-     * @param  string $order
-     * @param  string $limit
-     * @param  string $fields
-     * 
-     * @return mixed
-     * 
-     * @author @SimpleR1ick @RiffXS
-     */
-    public static function getSchedules($where = null, $order = null, $limit = null, $fields = '*'): mixed {
-        return (new Database('aula'))->select($where, $order, $limit, $fields);
-    }
-
-    /**
      * Metodo responsavel por retornar todos os horarios de uma turma
      * @return array
      * 
@@ -108,6 +93,22 @@ class Schedule {
         // RETORNA OS DEPOIMENTOS
         return (new Database('aula'))->execute($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    /**
+     * Método responsavel por retornar aula
+     * @param  string $where
+     * @param  string $order
+     * @param  string $limit
+     * @param  string $fields
+     * 
+     * @return mixed
+     * 
+     * @author @SimpleR1ick @RiffXS
+     */
+    public static function getSchedules($where = null, $order = null, $limit = null, $fields = '*'): mixed {
+        return (new Database('aula'))->select($where, $order, $limit, $fields);
+    }
+
 
     /**
      * Méthodo responsavel por consultar os horarios de tempo
