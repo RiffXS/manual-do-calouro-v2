@@ -69,7 +69,7 @@ class Database {
 	 * 
 	 * @return void
 	 */
-	public static function config($host, $name, $user, $pass, int $port = 5432): void {
+	public static function config($host, $name, $user, $pass, $port = 5432): void {
 		self::$host = $host;
 		self::$name = $name;
 		self::$user = $user;
@@ -96,14 +96,16 @@ class Database {
 	 * Método responsável por executar queries dentro do banco de dados
 	 * @param  string $query
 	 * @param  array  $params
+	 * 
 	 * @return \PDOStatement|bool
 	 */
-	public function execute(string $query, array $params = []): mixed {
-		// TENTA EXECUTAR A QUERY
+	public function execute(string $query, array $params = []): mixed { 
 		try {
+			// EXECUTA A QUERY
 			$statement = $this->connection->prepare($query);
 			$statement->execute($params);
 
+			// RETORNA O STATMENT
 			return $statement;
 
 		} catch (PDOException $e) {
@@ -190,5 +192,17 @@ class Database {
 
 		// RETORNA SUCESSO
 		return true;
+	}
+
+	/*
+     * Metodos GETTERS E SETTERS
+     */
+
+	/**
+	 * Get conexão atual
+	 * @return PDO
+	 */
+	public function getConnection(): PDO {
+		return $this->connection;
 	}
 }

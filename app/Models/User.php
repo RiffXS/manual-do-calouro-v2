@@ -108,11 +108,9 @@ class User {
 
     /**
      * Metodo responsavel por retornar a turma pelo id
-     * @return array
-     * 
-     * @author @SimpleR1ick @RiffXS
+     * @return array|bool
      */
-    public static function getUserClass(int $id): array {
+    public static function getUserClass(int $id): mixed {
         $table  = "turma t JOIN grupo g ON (t.id_turma = g.fk_turma_id_turma) JOIN grupo_aluno ga ON (g.id_grupo = fk_grupo_id_grupo) JOIN aluno a ON (ga.fk_aluno_fk_usuario_id_usuario = a.fk_usuario_id_usuario)";
         $where  = "a.fk_usuario_id_usuario = $id";
         $fields = "t.fk_curso_id_curso AS curso, t.num_modulo AS modulo";
@@ -124,8 +122,6 @@ class User {
     /**
      * Metodo responsavel por retornar um contato de um usuario pelo id
      * @return array
-     * 
-     * @author @SimpleR1ick @RiffXS
      */
     public static function getUserContact(int $id): array {
         $table = "usuario u JOIN servidor s ON (u.id_usuario = s.fk_usuario_id_usuario) JOIN contato c ON (s.fk_usuario_id_usuario = c.fk_servidor_fk_usuario_id_usuario) JOIN tipo_contato tc ON (c.fk_tipo_contato_id_tipo = tc.id_tipo)";
@@ -137,39 +133,33 @@ class User {
     }
 
     /**
-     * Méthodo responsavel por retornar usuario
+     * Método responsavel por retornar usuario
      * @param  string $where
      * @param  string $order
      * @param  string $limit
      * @param  string $fields
      * 
      * @return mixed
-     * 
-     * @author @SimpleR1ick @RiffXS
      */
     public static function getUsers($where = null, $order = null, $limit = null, $fields = '*'): mixed {
         return (new Database('usuario'))->select($where, $order, $limit, $fields);
     }
 
     /**
-     * Methodo responsavel por retornar uma istancia com base no ID
+     * Método responsavel por retornar uma istancia com base no ID
      * @param  integer $id
      * 
-     * @return User|bool
-     * 
-     * @author @SimpleR1ick
+     * @return self|bool
      */
     public static function getUserById($id): mixed {
         return self::getUsers("id_usuario = $id")->fetchObject(self::class);
     }
 
     /**
-     * Methodo responsavel por retornar um usuario com base em seu email
+     * Método responsavel por retornar um usuario com base em seu email
      * @param  string $email
      * 
-     * @return User|bool
-     * 
-     * @author @SimpleR1ick
+     * @return self|bool
      */
     public static function getUserByEmail(string $email): mixed {
         return self::getUsers("email = '$email'")->fetchObject(self::class);

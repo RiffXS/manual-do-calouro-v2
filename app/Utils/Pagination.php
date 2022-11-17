@@ -60,7 +60,7 @@ class Pagination {
 	public function getLimit(): string {
 		$offset = ($this->limit * ($this->currentPage - 1));
 
-		return $this->limit . ' OFFSET ' . $offset;
+		return $this->limit.' OFFSET '.$offset;
 	}
 
 	/**

@@ -8,21 +8,21 @@ use App\Utils\View;
 use App\Utils\Pagination;
 use App\Utils\Tools\Alert;
 
-class Testimony extends Page {
+class Comment extends Page {
 
     /**
      * Methodo responsavel por obter a rendenização dos items de depoimentos para página
      * @param \App\Http\Request $request
-     * @param Pagination $obPagination
+     * @param \App\Utils\Pagination $obPagination
      * 
      * @return string
      */
-    private static function getTetimoniesItems(Request $request, Pagination &$obPagination): string {
+    private static function getCommentsItems(Request $request, Pagination &$obPagination): string {
         // DEPOIMENTOS
         $itens = '';
 
         // QUANTIDADE TOTAL DE REGISTROS
-        $quantidadeTotal = EntityTestimony::getTestimonies(null, null, null, 'COUNT(*) AS qtd')->fetchObject()->qtd;
+        $quantidadeTotal = EntityComment::getComments(null, null, null, 'COUNT(*) AS qtd')->fetchObject()->qtd;
 
         // PAGINA ATUAL
         $queryParams = $request->getQueryParams();
@@ -32,16 +32,16 @@ class Testimony extends Page {
         $obPagination = new Pagination($quantidadeTotal, $paginaAtual, 5);
 
         // RESULTADOS DA PAGINA
-        $results = EntityTestimony::getTestimonies(null, 'id DESC', $obPagination->getLimit());
+        $results = EntityComment::getComments(null, 'id DESC', $obPagination->getLimit());
 
         // RENDENIZA O ITEM
-        while ($obTestimony = $results->fetchObject(EntityTestimony::class)) {
+        while ($obComment = $results->fetchObject(EntityComment::class)) {
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('admin/modules/testimonies/item',[
-                'id'   => $obTestimony->id,
-                'nome' => $obTestimony->nome,
-                'mensagem' => $obTestimony->mensagem,
-                'data' => date('d/m/Y H:i:s',strtotime($obTestimony->data))
+                'id'   => $obComment->id,
+                'nome' => $obComment->nome,
+                'mensagem' => $obComment->mensagem,
+                'data' => date('d/m/Y H:i:s',strtotime($obComment->data))
             ]);
         }
 
@@ -56,10 +56,10 @@ class Testimony extends Page {
      * 
      * @return string
      */
-    public static function getTestimonies(Request $request): string {
+    public static function getComments(Request $request): string {
         // CONTEUDO DA HOME
         $content = View::render('admin/modules/testimonies/index', [
-            'itens'      => self::getTetimoniesItems($request, $obPagination),
+            'itens'      => self::getCommentsItems($request, $obPagination),
             'pagination' => parent::getPagination($request, $obPagination),
             'status'     => Alert::getStatus($request)
         ]);
@@ -74,7 +74,7 @@ class Testimony extends Page {
      * 
      * @return string
      */
-    public static function getNewTestimony(Request $request): string {
+    public static function getNewComment(Request $request): string {
         // CONTEUDO DO FORMULARIO
         $content = View::render('admin/modules/testimonies/form', [
             'tittle'   => 'Cadastrar depoimento',
@@ -93,18 +93,18 @@ class Testimony extends Page {
      * 
      * @return void
      */
-    public static function setNewTestimony(Request $request): void {
+    public static function setNewComment(Request $request): void {
         // POST VARS
         $postVars = $request->getPostVars();
         
         // NOVA INSTANCIA DE DEPOIMENTO
-        $obTestimony = new EntityTestimony;
-        $obTestimony->nome = $postVars['nome'] ?? '';
-        $obTestimony->mensagem = $postVars['mensagem'] ?? '';
-        $obTestimony->cadastrarTestimony();
+        $obComment = new EntityComment;
+        $obComment->nome = $postVars['nome'] ?? '';
+        $obComment->mensagem = $postVars['mensagem'] ?? '';
+        $obComment->insertComment();
 
         // REDIRECIONA O USUARIO
-        $request->getRouter()->redirect('/admin/testimonies/'.$obTestimony->id.'/edit?status=created');
+        $request->getRouter()->redirect('/admin/testimonies/'.$obComment->id.'/edit?status=created');
     }
 
     /**
@@ -114,20 +114,20 @@ class Testimony extends Page {
      * 
      * @return string
      */
-    public static function getEditTestimony(Request $request, int $id): string {
+    public static function getEditComment(Request $request, int $id): string {
         // OBTENDO O DEPOIMENTO DO BANCO DE DADOS
-        $obTestimony = EntityTestimony::getTestimonyById($id);
+        $obComment = EntityComment::getCommentById($id);
 
         // VALIDA A INSTANCIA
-        if (!$obTestimony instanceof EntityTestimony) {
+        if (!$obComment instanceof EntityComment) {
             $request->getRouter()->redirect('/admin/testimonies');
         }
 
         // CONTEUDO DO FORMULARIO
         $content = View::render('admin/modules/testimonies/form', [
             'tittle'   => 'Editar depoimento', 
-            'nome'     => $obTestimony->nome,
-            'mensagem' => $obTestimony->mensagem,
+            'nome'     => $obComment->nome,
+            'mensagem' => $obComment->mensagem,
             'status'   => Alert::getStatus($request)
         ]);
 
@@ -142,24 +142,24 @@ class Testimony extends Page {
      * 
      * @return void
      */
-    public static function setEditTestimony(Request $request, int $id): void {
+    public static function setEditComment(Request $request, int $id): void {
         // OBTENDO O DEPOIMENTO DO BANCO DE DADOS
-        $obTestimony = EntityTestimony::getTestimonyById($id);
+        $obComment = EntityComment::getCommentById($id);
 
         // VALIDA A INSTANCIA
-        if (!$obTestimony instanceof EntityTestimony) {
+        if (!$obComment instanceof EntityComment) {
             $request->getRouter()->redirect('/admin/testimonies');
         }
         // POST VARS
         $postVars = $request->getPostVars();
 
         // ATUALIZA A INSTANCIA
-        $obTestimony->nome = $postVars['nome'] ?? $obTestimony->nome;
-        $obTestimony->mensagem = $postVars['mensagem'] ?? $obTestimony->mensagem;
-        $obTestimony->atualizarTestimony();
+        $obComment->nome = $postVars['nome'] ?? $obComment->nome;
+        $obComment->mensagem = $postVars['mensagem'] ?? $obComment->mensagem;
+        $obComment->updateComment();
 
         // REDIRECIONA O USUARIO
-        $request->getRouter()->redirect('/admin/testimonies/'.$obTestimony->id.'/edit?status=updated');
+        $request->getRouter()->redirect('/admin/testimonies/'.$obComment->id.'/edit?status=updated');
     }
 
     /**
@@ -169,19 +169,19 @@ class Testimony extends Page {
      * 
      * @return string
      */
-    public static function getDeleteTestimony(Request $request, int $id): string {
+    public static function getDeleteComment(Request $request, int $id): string {
         // OBTENDO O DEPOIMENTO DO BANCO DE DADOS
-        $obTestimony = EntityTestimony::getTestimonyById($id);
+        $obComment = EntityComment::getCommentById($id);
 
         // VALIDA A INSTANCIA
-        if (!$obTestimony instanceof EntityTestimony) {
+        if (!$obComment instanceof EntityComment) {
             $request->getRouter()->redirect('/admin/testimonies');
         }
 
         // CONTEUDO DO FORMULARIO
         $content = View::render('admin/modules/testimonies/delete', [
-            'nome'     => $obTestimony->nome,
-            'mensagem' => $obTestimony->mensagem,
+            'nome'     => $obComment->nome,
+            'mensagem' => $obComment->mensagem,
         ]);
 
         // RETORNA A PAGINA COMPLETA
@@ -195,16 +195,16 @@ class Testimony extends Page {
      * 
      * @return void
      */
-    public static function setDeleteTestimony(Request $request, int $id): void {
+    public static function setDeleteComment(Request $request, int $id): void {
         // OBTENDO O DEPOIMENTO DO BANCO DE DADOS
-        $obTestimony = EntityTestimony::getTestimonyById($id);
+        $obComment = EntityComment::getCommentById($id);
 
         // VALIDA A INSTANCIA
-        if (!$obTestimony instanceof EntityTestimony) {
+        if (!$obComment instanceof EntityComment) {
             $request->getRouter()->redirect('/admin/testimonies');
         }
         // EXCLUIR DEPOIMENTO
-        $obTestimony->excluirTestimony();
+        $obComment->deleteComment();
 
         // REDIRECIONA O USUARIO
         $request->getRouter()->redirect('/admin/testimonies?status=deleted');

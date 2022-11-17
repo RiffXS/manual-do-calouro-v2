@@ -34,7 +34,7 @@ class Comment {
      * Methodo responsavel por cadastrar a instancia atual no banco de dados
      * @return boolean
      */
-    public function cadastrarTestimony() {
+    public function insertComment() {
         // DEFINE A DATA    
         $this->data = date('Y-m-d H:i:s');
 
@@ -51,41 +51,42 @@ class Comment {
     /**
      * Methodo responsavel por atualizar do banco com a instancia atual
      */
-    public function atualizarTestimony() {
-
+    public function updateComment() {
         // ATUALIZA O DEPOIMENTO NO BANCO DE DADOS
-        return (new Database('depoimentos'))->update('id = '.$this->id, [
+        return (new Database('depoimentos'))->update("id = {$this->id}", [
             'nome'     => $this->nome,
             'mensagem' => $this->mensagem
         ]);
     }
 
     /**
-     * Methodo responsavel por retornar um depoimento com base no seu id
-     * @param integer $id
-     * @return Testimony
+     * Methodo responsavel por excluir um depoimento do banco de dados
      */
-    public static function getTestimonyById($id) {
-        return self::getTestimonies('id = '.$id)->fetchObject(self::class);
+    public function deleteComment() {
+        // EXCLUI O DEPOIMENTO DO BANCO DE DADOS
+        return (new Database('depoimentos'))->delete("id = {$this->id}");
     }
 
     /**
      * Méthodo responsavel por retornar depoimentos
-     * @param string $where
-     * @param string $order
-     * @param string $limit
-     * @param string $fields
-     * @return mixed
+     * @param  string $where
+     * @param  string $order
+     * @param  string $limit
+     * @param  string $fields
+     * 
+     * @return \PDOStatement
      */
-    public static function getTestimonies($where = null, $order = null, $limit = null, $fields = '*') {
+    public static function getComments($where = null, $order = null, $limit = null, $fields = '*') {
         return (new Database('depoimentos'))->select($where, $order, $limit, $fields);
     }  
-    
+
     /**
-     * Methodo responsavel por excluir um depoimento do banco de dados
+     * Methodo responsavel por retornar um depoimento com base no seu id
+     * @param  integer $id
+     * 
+     * @return self
      */
-    public function excluirTestimony() {
-        // EXCLUI O DEPOIMENTO DO BANCO DE DADOS
-        return (new Database('depoimentos'))->delete('id ='.$this->id);
+    public static function getCommentById($id) {
+        return self::getComments("id = $id")->fetchObject(self::class);
     }
 }

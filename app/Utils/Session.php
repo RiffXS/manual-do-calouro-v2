@@ -9,8 +9,6 @@ class Session {
     /**
      * Método responsável por iniciar a sessão
      * @return void
-     * 
-     * @author @SimpleR1ick
      */
     private static function init(): void {
         // VERIFICA SE A SESSÃO NÃO ESTÁ ATIVA
@@ -23,21 +21,17 @@ class Session {
     /**
      * Método responsavel por retornar um objeto usuario
      * @return \App\Models\User
-     * 
-     * @author @SimpleR1ick
      */
     public static function getSessionUser(): object {
         // RETORNA OS DADOS DE UM USUÁRIO NA SESSÃO
-        return EntityUser::getUserById(self::getSessionId());
+        return EntityUser::getUserById(self::getId());
     }
-
 
     /**
      * Método responsével por criar o login do usuário
      * @param \App\Models\User @obUser
-     * @return boolean
      * 
-     * @author @SimpleR1ick
+     * @return boolean
      */
     public static function login(EntityUser $obUser): bool {
         // INICIA A SESSÃO
@@ -55,10 +49,8 @@ class Session {
     /**
      * Método responsável por devolver o ID do usuário logado
      * @return integer
-     * 
-     * @author @SimpleR1ick
      */
-    public static function getSessionId(): int {
+    public static function getId(): int {
         // INICIA A SESSÃO
         self::init();
 
@@ -69,10 +61,8 @@ class Session {
     /**
      * Método responsavel por devolve o LV de acesso do usuario
      * @return integer
-     * 
-     * @author @SimpleR1ick
      */
-    public static function getSessionLv(): int {
+    public static function getLv(): int {
         // INICIA A SESSÃO
         self::init();
 
@@ -83,8 +73,6 @@ class Session {
     /**
      * Método responsável por verificar se o usuário está logado
      * @return boolean
-     * 
-     * @author @SimpleR1ick
      */
     public static function isLogged(): bool {
         // INICIA A SESSÃO
@@ -97,8 +85,6 @@ class Session {
     /**
      * Método responsável por executar o logout do usuário
      * @return boolean
-     * 
-     * @author @SimpleR1ick
      */
     public static function logout(): bool {
         // INICIA A SESSÃO

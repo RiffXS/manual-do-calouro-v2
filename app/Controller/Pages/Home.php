@@ -2,7 +2,7 @@
 
 namespace App\Controller\Pages;
 
-use App\Models\Testimony as EntityTestimony;
+use App\Models\Comment as EntityComment;
 use App\Utils\View;
 use App\Utils\Pagination;
 
@@ -23,16 +23,16 @@ class Home extends Page {
     /**
      * Método responsável por obter a renderização dos items de depoimentos para página
      * @param \App\Http\Request $request
-     * @param Pagination $obPagination
+     * @param \App\Utils\Pagination $obPagination
      * 
      * @return string
      */
-    private static function getTetimoniesItems($request, &$obPagination) {
+    private static function getCommentsItems($request, &$obPagination) {
         // DEPOIMENTOS
         $itens = '';
 
         // QUANTIDADE TOTAL DE REGISTROS
-        $quantidadeTotal = EntityTestimony::getTestimonies(null, null, null, 'COUNT(*) AS qtd')->fetchObject()->qtd;
+        $quantidadeTotal = EntityComment::getComments(null, null, null, 'COUNT(*) AS qtd')->fetchObject()->qtd;
 
         // PAGINA ATUAL
         $queryParams = $request->getQueryParams();
@@ -42,15 +42,15 @@ class Home extends Page {
         $obPagination = new Pagination($quantidadeTotal, $paginaAtual, 3);
 
         // RESULTADOS DA PAGINA
-        $results = EntityTestimony::getTestimonies(null, 'id DESC', $obPagination->getLimit());
+        $results = EntityComment::getComments(null, 'id DESC', $obPagination->getLimit());
 
         // RENDENIZA O ITEM
-        while ($obTestimony = $results->fetchObject(EntityTestimony::class)) {
+        while ($obComment = $results->fetchObject(EntityComment::class)) {
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('pages/testimony/item',[
-                'nome' => $obTestimony->nome,
-                'mensagem' => $obTestimony->mensagem,
-                'data' => date('d/m/Y H:i:s',strtotime($obTestimony->data))
+                'nome' => $obComment->nome,
+                'mensagem' => $obComment->mensagem,
+                'data' => date('d/m/Y H:i:s',strtotime($obComment->data))
             ]);
         }
 
@@ -64,11 +64,10 @@ class Home extends Page {
      * 
      * @return string 
      */
-    public static function getTestimonies($request){
-
+    public static function getComments($request){
         // VIEW De DEPOIMENTOSS
         $content =  View::render('pages/testimonies',[
-           'itens' => self::getTetimoniesItems($request, $obPagination),
+           'itens' => self::getCommentsItems($request, $obPagination),
            'pagination' => parent::getPagination($request, $obPagination)
         ]);
 
@@ -87,13 +86,13 @@ class Home extends Page {
         $postVars = $request->getPostVars();
 
         // NOVA INSTANCIA
-        $obTestimony = new EntityTestimony;
-        $obTestimony->nome = $postVars['nome'];
-        $obTestimony->mensagem = $postVars['mensagem'];
+        $obComment = new EntityComment;
+        $obComment->nome = $postVars['nome'];
+        $obComment->mensagem = $postVars['mensagem'];
 
-        $obTestimony->cadastrarTestimony();
+        $obComment->insertComment();
 
         // RETORNA A PAGINA DE LISTAGEM DE DEPOIMENTOS
-        return self::getTestimonies($request);
+        return self::getComments($request);
     }
 }

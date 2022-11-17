@@ -9,8 +9,6 @@ class Sanitize {
      * @param array $array a ser percorrido
      * 
      * @return boolean false se encontrar, true se passar
-     * 
-     * @author @SimpleR1ick
      */
     public static function validateForm(array $array): bool {
         // VARIAVEL DE CONTROLE
@@ -36,8 +34,6 @@ class Sanitize {
      * @param  array $array
      * 
      * @return array
-     * 
-     * @author @SimpleR1ick
      */
     public static function sanitizeForm(array $array): array {
         // PERCORRER OS PARES DE CHAVE VALOR
@@ -58,8 +54,6 @@ class Sanitize {
      * @param  string $nome
      * 
      * @return boolean
-     * 
-     * @author @SimpleR1ick
      */
     public static function validateName(string $name): bool {
         // PARAMETROS REGEX
@@ -77,8 +71,6 @@ class Sanitize {
      * @param  string $email
      * 
      * @return boolean
-     * 
-     * @author @SimpleR1ick
      */
     public static function validateEmail(string $email): bool {
         // SANITIZA O EMAIL
@@ -97,8 +89,6 @@ class Sanitize {
      * @param  string $confirm
      * 
      * @return boolean
-     * 
-     * @author @SimpleR1ick
      */
     public static function validatePassword(string $password, string $confirm): bool {
         // VERIFICA SE AS SENHAS SÃO IGUAIS
@@ -114,8 +104,6 @@ class Sanitize {
      * @param  string $password
      * 
      * @return boolean
-     * 
-     * @author @SimpleR1ick
      */
     public static function verifyPassword(string $password): bool {
         // PARAMETROS REGEX
