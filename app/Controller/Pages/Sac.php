@@ -21,7 +21,7 @@ class Sac extends Page {
         // VIEW DA HOME
         $content = View::render('pages/sac', [
             'status' => Alert::getStatus($request),
-            'email'  => Session::getSessionUser()->getEmail()
+            'email'  => Session::getUser()->getEmail()
         ]);
         // RETORNA A VIEW DA PAGINA
         return parent::getPage('Fale Conosco', $content);

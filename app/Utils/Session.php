@@ -22,7 +22,7 @@ class Session {
      * Método responsavel por retornar um objeto usuario
      * @return \App\Models\User
      */
-    public static function getSessionUser(): object {
+    public static function getUser(): object {
         // RETORNA OS DADOS DE UM USUÁRIO NA SESSÃO
         return EntityUser::getUserById(self::getId());
     }

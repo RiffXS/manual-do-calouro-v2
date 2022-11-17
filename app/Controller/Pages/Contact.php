@@ -31,7 +31,7 @@ class Contact extends Page {
 
         // VERIFICA SE EXISTE UMA SESSÃO
         if (Session::isLogged()) {
-            $crud = self::getCrud(Session::getSessionLv());
+            $crud = self::getCrud(Session::getLv());
         }
         // REDENIZA AS COLUNAS DE CONTATOS
         $content = View::render('pages/contacts', [
@@ -56,18 +56,18 @@ class Contact extends Page {
         $itens = '';
 
         // RESULTADOS DA PAGINA
-        $results = EntityContact::getContacts("fk_servidor_fk_usuario_id_usuario = $fk");
+        $results = EntityContact::getContactsInfo($fk);
 
         // RENDENIZA O ITEM
-        while ($obContact = $results->fetchObject(EntityContact::class)) {
-            $id = $obContact->getId_contato();
-
+        while ($contact = $results->fetch(\PDO::FETCH_ASSOC)) {
             // VIEW De DEPOIMENTOSS
+            $id = $contact['id_contato'];
+            
             $itens .= View::render('pages/contacts/item',[
-                'tipo' => $obContact->getFk_tipo(),
-                'dado' => $obContact->getDsc_contato(),
+                'tipo' => $contact['dsc_tipo'],
+                'dado' => $contact['dsc_contato'],
                 'edit' => "onclick=editContact($fk)",
-                'del'  => "onclick=delContact({$id})"
+                'del'  => "onclick=delContact($id)"
             ]);
         }
         // RETORNA OS DEPOIMENTOS
@@ -88,7 +88,7 @@ class Contact extends Page {
         // VERIFICA SE O ACESSO E AUTORIZADO
         if (in_array($acess, $auth)) {
             $view .= View::render('pages/contacts/crud', [
-                'items' => self::getContactItems(Session::getSessionId()),
+                'items' => self::getContactItems(Session::getId()),
             ]);
         }
         // RETORNA VAZIO
@@ -230,7 +230,7 @@ class Contact extends Page {
         $obContact = new EntityContact;
 
         // INSERE DADOS NA INSTANCIA
-        $obContact->setFk_usuario(Session::getSessionId());
+        $obContact->setFk_usuario(Session::getId());
         $obContact->setFk_tipo($type);
         $obContact->setDsc_contato($data);
 

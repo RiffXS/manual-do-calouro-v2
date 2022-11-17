@@ -62,7 +62,7 @@ class Page {
         // VERIFICA SE O USUÁRIO ESTÁ LOGADO
         if (Session::isLogged()) {
             // OBTEM O ID DA SESSÃO ATUAL
-            $turma = EntityUser::getUserClass(Session::getSessionId());
+            $turma = EntityUser::getUserClass(Session::getId());
 
             if (!empty($turma)) {
                 // ATRIBUI O LINK À PÁGINA DE HORÁRIO
@@ -89,7 +89,7 @@ class Page {
         // RETORNA O DROPDOWN CASO LOGADO
         if (Session::isLogged()) {
             // OBTEM O ID DA SESSÃO ATUAL
-            $id = Session::getSessionId();            
+            $id = Session::getId();            
 
             // OBTÊM OS DADOS DO USUARIO
             $obUser = EntityUser::getUserById($id);

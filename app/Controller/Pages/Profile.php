@@ -23,8 +23,7 @@ class Profile extends Page {
      */
     public static function getEditProfile(Request $request) {
         // OBTEM A IMAGEM DO USUARIO
-        $id = Session::getSessionId();
-        $obUser = EntityUser::getUserById($id);
+        $obUser = EntityUser::getUserById(Session::getId());
 
         $view = self::getTextType($obUser);
 
@@ -100,8 +99,8 @@ class Profile extends Page {
         $files = $request->getUploadFiles();
 
         // OBTEM O USUARIO E O NIVEL DE ACESSO DA SESSÃO
-        $obUser = Session::getSessionUser();
-        $acesso = Session::getSessionLv();
+        $obUser = Session::getUser();
+        $acesso = Session::getLv();
 
         $photo = $obUser->getImg_perfil();
         $nome = $postVars['nome'];
@@ -202,13 +201,14 @@ class Profile extends Page {
             $obStudent = new EntityStudent($obUser->getId_usuario(), $matricula);
         
             // VERIFICA SE A MATRICULA ESTA DISPONIVEL
-            if ($obStudent->verifyEnrollment()) {
-                // INSERE O USUARIO NA TABELA DE ALUNOS
-                $obStudent->insertStudent();
-                $obUser->setFk_acesso(3); // ALTERA O NIVEL DE ACESSO PARA 3 (ALUNO)
-            } else {
+            if (!$obStudent->verifyEnrollment()) {
                 $request->getRouter()->redirect('/profile?status=enrollment_duplicated');
-            }
+            } 
+            // INSERE O USUARIO NA TABELA DE ALUNOS
+            $obStudent->insertStudent();
+
+            // ALTERA O NIVEL DE ACESSO PARA 3 (ALUNO)
+            $obUser->setFk_acesso(3); 
         }
     }
 

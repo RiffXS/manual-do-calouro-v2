@@ -21,7 +21,7 @@ class AdminLogin {
         if (!Session::isLogged()) {
             $request->getRouter()->redirect('/admin/login');
         } 
-        if (Session::getSessionLv() != 1) {
+        if (Session::getLv() != 1) {
             $request->getRouter()->redirect('/');
         } 
         // CONTINUA A EXECUÇÃO
