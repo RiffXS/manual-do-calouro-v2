@@ -100,7 +100,7 @@ class Page {
         $link = $url.'?'.http_build_query($queryParams);
 
         // VIEW
-        return View::render('pages/pagination/link',[
+        return View::render('shared/pagination/link',[
             'page'   => $label ?? $page['page'],
             'link'   => $link,
             'active' => $page['current'] ? 'active' : ''
@@ -168,7 +168,7 @@ class Page {
             $links .= self::getPaginationLink($queryParams, $page, $url);   
         }
         // RETORNA BOX DE PAGINAÇÃO
-        return View::render('pages/pagination/box',[
+        return View::render('shared/pagination/box',[
             'links' => $links
         ]); 
     }

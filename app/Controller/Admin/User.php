@@ -17,7 +17,7 @@ class User extends Page {
      * 
      * @return string
      */
-    private static function getUsersItems(Request $request, Pagination &$obPagination): string {
+    private static function getUsersItems(Request $request, &$obPagination): string {
         // USUARIOS
         $itens = '';
 
