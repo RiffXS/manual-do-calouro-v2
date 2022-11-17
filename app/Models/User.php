@@ -113,7 +113,7 @@ class User {
      * @author @SimpleR1ick @RiffXS
      */
     public static function getUserClass(int $id): array {
-        $table  = "turma t JOIN aluno a ON (t.id_turma = a.fk_turma_id_turma)";
+        $table  = "turma t JOIN grupo g ON (t.id_turma = g.fk_turma_id_turma) JOIN grupo_aluno ga ON (g.id_grupo = fk_grupo_id_grupo) JOIN aluno a ON (ga.fk_aluno_fk_usuario_id_usuario = a.fk_usuario_id_usuario)";
         $where  = "a.fk_usuario_id_usuario = $id";
         $fields = "t.fk_curso_id_curso AS curso, t.num_modulo AS modulo";
 

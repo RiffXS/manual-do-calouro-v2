@@ -55,26 +55,20 @@ class Page {
      * 
      * @return string
      */
-    private static function getLinks(string $current_module): string {  
+    private static function getLinks(string $current_module): string { 
         // LINKS DO MENU
-        $links = '';
-
-        /*
+        $links = ''; 
+        
         // VERIFICA SE O USUÁRIO ESTÁ LOGADO
         if (Session::isLogged()) {
             // OBTEM O ID DA SESSÃO ATUAL
-            $id = Session::getSessionId();
-            $turma = EntityUser::getUserClass($id);
+            $turma = EntityUser::getUserClass(Session::getSessionId());
 
             if (!empty($turma)) {
-                $curso  = $turma['curso'];
-                $modulo = $turma['modulo'];
-
                 // ATRIBUI O LINK À PÁGINA DE HORÁRIO
-                self::$paginas['schedule']['link'] = URL."/schedule?curso=$curso&modulo=$modulo";  
+                self::$paginas['schedule']['link'] = URL."/schedule?curso={$turma['curso']}&modulo={$turma['modulo']}";  
             }
         }
-        */
         // ITERA OS MODULOS
         foreach (self::$paginas as $hash => $module) {
             $links .= View::render('pages/header/link', [

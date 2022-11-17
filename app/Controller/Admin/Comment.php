@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Http\Request;
-use App\Models\Testimony as EntityTestimony;
+use App\Models\Comment as EntityComment;
 use App\Utils\View;
 use App\Utils\Pagination;
 use App\Utils\Tools\Alert;

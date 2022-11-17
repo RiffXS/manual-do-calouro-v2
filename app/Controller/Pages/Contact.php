@@ -64,7 +64,6 @@ class Contact extends Page {
 
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('pages/contacts/item',[
-                'id'   => $id,
                 'tipo' => $obContact->getFk_tipo(),
                 'dado' => $obContact->getDsc_contato(),
                 'edit' => "onclick=editContact($fk)",

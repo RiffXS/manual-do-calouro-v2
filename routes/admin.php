@@ -6,6 +6,9 @@ include_once __DIR__.'/admin/home.php';
 // INCLUI AS ROTAS DE LOGIN
 include_once __DIR__.'/admin/login.php';
 
+// INCLUI AS ROTAS DE USUARIOS
+include_once __DIR__.'/admin/schedule.php';
+
 // INCLUI AS ROTAS DE DEPOIMENTOS
 include_once __DIR__.'/admin/testimonies.php';
 

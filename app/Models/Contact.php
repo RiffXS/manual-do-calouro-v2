@@ -31,6 +31,12 @@ class Contact {
     private $dsc_contato;
 
     /**
+     * Descrição do tipo de contato (email, telefone, whatsapp)
+     * @var string
+     */
+    private $dsc_tipo;
+
+    /**
      * Método responsavel por inserir o contato no banco de dados
      * @return boolean
      * 
@@ -139,6 +145,12 @@ class Contact {
         return (new Database('contato'))->select($where, $order, $limit, $fields);
     }
 
+    public static function getContactsInfo($id) {
+        $sql = "SELECT c.fk_servidor_fk_usuario_id_usuario, c.id_contato, tc.dsc_tipo, c.dsc_contato FROM contato c JOIN tipo_contato tc ON (c.fk_tipo_contato_id_tipo = tc.id_tipo) WHERE c.fk_servidor_fk_usuario_id_usuario = 17;";
+
+        return (new Database)->execute($sql);
+    }
+
     /**
      * Método responsavel por retornar os contatos de um usuario
      * @param integer $id
@@ -148,7 +160,6 @@ class Contact {
     public static function getContactById(int $id): mixed {
         return self::getContacts("id_contato = $id")->fetchObject(self::class);
     }
-
 
     /**
      * Método responsavel por retornar os contatos de um usuario

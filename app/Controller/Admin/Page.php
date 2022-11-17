@@ -19,6 +19,10 @@ class Page {
         'users' => [
             'label' => 'Usuários',
             'link'  => URL.'/admin/users'
+        ],
+        'schedule' => [
+            'label' => 'Aulas',
+            'link'  => URL.'/admin/schedule'
         ]
     ];
 

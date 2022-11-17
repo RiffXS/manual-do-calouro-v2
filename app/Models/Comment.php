@@ -4,7 +4,7 @@ namespace App\Models;
 
 use \App\Utils\Database;
 
-class Testimony {
+class Comment {
 
     /**
      * ID do depoimento
@@ -54,7 +54,7 @@ class Testimony {
     public function atualizarTestimony() {
 
         // ATUALIZA O DEPOIMENTO NO BANCO DE DADOS
-        return (new Database('depoimentos'))->update('id ='.$this->id, [
+        return (new Database('depoimentos'))->update('id = '.$this->id, [
             'nome'     => $this->nome,
             'mensagem' => $this->mensagem
         ]);

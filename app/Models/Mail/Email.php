@@ -57,7 +57,7 @@ class Email {
      * Metodo responsavel por retornar a mensagem de erro do envio
      * @return string
      */
-    public function getError() {
+    public function getError(): string {
         return $this->error;
     }
 
