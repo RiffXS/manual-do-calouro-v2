@@ -63,7 +63,7 @@ class Contact extends Page {
             // VIEW De DEPOIMENTOSS
             $id = $contact['id_contato'];
             
-            $itens .= View::render('pages/contacts/item',[
+            $itens .= View::render('pages/components/contacts/item',[
                 'tipo' => $contact['dsc_tipo'],
                 'dado' => $contact['dsc_contato'],
                 'edit' => "onclick=editContact($fk)",
@@ -87,7 +87,7 @@ class Contact extends Page {
 
         // VERIFICA SE O ACESSO E AUTORIZADO
         if (in_array($acess, $auth)) {
-            $view .= View::render('pages/contacts/crud', [
+            $view .= View::render('pages/components/contacts/crud', [
                 'items' => self::getContactItems(Session::getId()),
             ]);
         }
@@ -150,7 +150,7 @@ class Contact extends Page {
                 $icone = 'fa-brands fa-whatsapp';
             }
             // RENDENIZA A VIEW
-            $content .= View::render('pages/contacts/type', [
+            $content .= View::render('pages/components/contacts/type', [
                 'icone' => $icone,
                 'contato' => $typeContacts[$i]['dsc_contato']
             ]);
@@ -171,7 +171,7 @@ class Contact extends Page {
         $imagem = !empty($contact['img_perfil']) ? "{$contact['img_perfil']}" : 'user.png';
 
         // VIEW DOS CONTATOS DE PROFESSORES
-        return View::render('pages/contacts/teacher', [
+        return View::render('pages/components/contacts/teacher', [
             'contato_id'  => $id,
             'contato'     => self::getContactType($id),
             'nome'        => $contact['nom_usuario'],
@@ -195,7 +195,7 @@ class Contact extends Page {
         $imagem = !empty($contact['img_perfil']) ? "{$contact['img_perfil']}" : 'user.png';
 
         // VIEW DOS CONTATOS DE SERVIDORES
-        return View::render('pages/contacts/server', [
+        return View::render('pages/components/contacts/server', [
             'contato_id'  => $id,
             'contato'     => self::getContactType($id),
             'setor'       => $contact['dsc_setor'],

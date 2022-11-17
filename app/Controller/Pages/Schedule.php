@@ -76,7 +76,7 @@ class Schedule extends Page {
 
         // REDENIZA A TABELA
         for ($i = 0; $i < count($horas); $i++) {
-            $content .= View::render('pages/schedule/row', [
+            $content .= View::render('pages/components/schedule/row', [
                 'hora_inicio' => $horas[$i]['hora_aula_inicio'],
                 'hora_fim'    => $horas[$i]['hora_aula_fim'],
                 'aulas'       => self::getRow($aulas, $count)
@@ -114,7 +114,7 @@ class Schedule extends Page {
      */ 
     public static function getItem(array $aula): string {
         // RETORNA A VIEW DA COLUNA
-        return View::render('pages/schedule/item', [
+        return View::render('pages/components/schedule/item', [
             'sala' => $aula['sala'],
             'materia' => $aula['materia'],
             'professor' => $aula['professor']

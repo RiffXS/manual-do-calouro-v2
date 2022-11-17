@@ -76,7 +76,7 @@ class Profile extends Page {
         // RETORNA O TEXTO E A VIEW DA COLUNA
         return [
             'text' => $text,
-            'colum' => View::render("pages/profile/$colum")
+            'colum' => View::render("pages/components/profile/$colum")
         ];
     }
 

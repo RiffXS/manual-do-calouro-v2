@@ -47,7 +47,7 @@ class Home extends Page {
         // RENDENIZA O ITEM
         while ($obComment = $results->fetchObject(EntityComment::class)) {
             // VIEW De DEPOIMENTOSS
-            $itens .= View::render('pages/testimony/item',[
+            $itens .= View::render('pages/components/comment/item',[
                 'nome' => $obComment->nome,
                 'mensagem' => $obComment->mensagem,
                 'data' => date('d/m/Y H:i:s',strtotime($obComment->data))
@@ -81,7 +81,7 @@ class Home extends Page {
      * 
      * @return string
      */
-    public static function inserTestimony($request) {
+    public static function insertTestimony($request) {
         // DADOS DO POST
         $postVars = $request->getPostVars();
 
