@@ -28,11 +28,11 @@
                 <div class="me-5">
                     <label for="user_adm_ativo" class="form-label">Status</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" id="user_adm_ativoTrue" name="active" value="t" {{ativo}}>
+                        <input class="form-check-input" type="radio" id="user_adm_ativoTrue" name="active" value="1" {{ativo}}>
                         <label class="form-check-label" for="user_adm_ativoTrue"> Ativo </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" id="user_adm_ativoFalse" name="active" value="f" {{inativo}}>
+                        <input class="form-check-input" type="radio" id="user_adm_ativoFalse" name="active" value="2" {{inativo}}>
                         <label class="form-check-label" for="user_adm_ativoFalse"> Inativo </label>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                 </div>
             </div>
 
-            <button class="btn btn-primary me-2" name="btnAtualizar" type="submit">{{botao}}</button>
+            <button class="btn btn-primary me-2" type="submit">{{botao}}</button>
             <a href="{{URL}}/admin/users" class="btn btn-danger">Cancelar</a>
         </form>
     </div>

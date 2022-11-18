@@ -11,7 +11,7 @@ use App\Utils\Pagination;
 class User extends Page {
 
     /**
-     * Methodo responsavel por obter a rendenização dos items de usuarios para página
+     * Método responsavel por obter a rendenização dos items de usuarios para página
      * @param \App\Http\Request $request
      * @param Pagination $obPagination
      * 
@@ -54,7 +54,7 @@ class User extends Page {
     }
 
     /**
-     * Methodo responsavel por rendenizar a view de listagem de usuarios
+     * Método responsavel por rendenizar a view de listagem de usuarios
      * @param \App\Http\Request
      * 
      * @return string
@@ -72,7 +72,7 @@ class User extends Page {
     }
 
     /**
-     * Methodo responsavel por retornar o formulario de cadastro de um novo usuario
+     * Método responsavel por retornar o formulario de cadastro de um novo usuario
      * @param \App\Http\Request
      * 
      * @return string
@@ -95,7 +95,7 @@ class User extends Page {
     }
 
     /**
-     * Methodo responsavel por cadastrar um usuario no banco
+     * Método responsavel por cadastrar um usuario no banco
      * @param \App\Http\Request
      * 
      * @return void
@@ -108,7 +108,7 @@ class User extends Page {
         $email  = $postVars['email'] ?? '';
         $senha  = $postVars['senha'] ?? '';
         $status = $postVars['status'] ?? '';
-        $ativo  = $postVars['ativo'] ?? '';
+        $ativo  = $postVars['active'] ?? '';
 
         // VALIDA O EMAIL DO USUARIO
         $obUser = EntityUser::getUserByEmail($email);
@@ -127,11 +127,11 @@ class User extends Page {
         $obUser->insertUser();
 
         // REDIRECIONA O USUARIO
-        $request->getRouter()->redirect('/admin/users/'.$obUser->getId_usuario().'/edit?status=user_registered');
+        $request->getRouter()->redirect('/admin/users/edit/'.$obUser->getId_usuario().'?status=user_registered');
     }
 
     /**
-     * Methodo responsavel por retornar o formulario edição de um usuario
+     * Método responsavel por retornar o formulario edição de um usuario
      * @param \App\Http\Request
      * @param integer $id
      * 
@@ -170,7 +170,7 @@ class User extends Page {
     }
 
     /**
-     * Methodo responsavel por gravar a atualização de um usuario
+     * Metodo responsavel por gravar a atualização de um usuario
      * @param \App\Http\Request
      * @param integer $id
      * 
@@ -197,7 +197,7 @@ class User extends Page {
         $obUserEmail = EntityUser::getUserByEmail($email);
 
         if ($obUserEmail instanceof EntityUser && $obUserEmail->getId_usuario() != $id) {
-            $request->getRouter()->redirect('/admin/users/'.$id.'/edit?status=duplicated_email');
+            $request->getRouter()->redirect('/admin/users/edit/'.$id.'?status=duplicated_email');
         }
         
         // ATUALIZA A INSTANCIA
@@ -210,7 +210,7 @@ class User extends Page {
         $obUser->updateUser();
 
         // REDIRECIONA O USUARIO
-        $request->getRouter()->redirect('/admin/users/'.$id.'/edit?status=user_updated');
+        $request->getRouter()->redirect('/admin/users/edit/'.$id.'?status=user_updated');
     }
 
     /**

@@ -262,7 +262,6 @@ class User {
      * @param integer $ativo
      */
     public function setAtivo(int $ativo): void {
-        $ativo = $ativo == 't' ? 1 : 0;
         $this->fk_nivel_id_nivel = $ativo;
     }
 

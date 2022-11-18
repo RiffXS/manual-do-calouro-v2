@@ -1,9 +1,71 @@
-<!-- LABELS -->
-<div>
+<h1 class="text-center">{{tittle}}</h1>
 
-</div>
+<div class="bg-light text-dark rounded py-3">
+    <form action="">
+        <div class="d-flex justify-content-around mx-md-2 m-lg-0">
 
-<!-- SELECTS -->
-<div>
+            <!-- DIA_SEMANA -->
+            <div class="text-center mx-md-2 m-lg-0">
+                <label for="dia_semana" class="form-label fw-bold">Dia da Semana</label>
+                <select class="form-select" id="dia_semana" required>
+                    <option value="" selected>Selecione uma opção</option>
+                    <option value="1">Segunda-feira</option>
+                    <option value="2">Terça-feira</option>
+                    <option value="3">Quarta-feira</option>
+                    <option value="3">Quinta-feira</option>
+                    <option value="3">Sexta-feira</option>
+                    <option value="3">Sábado</option>
+                </select>
+            </div>
+        
+            <!-- HORARIO_AULA -->
+            <div class="text-center mx-md-2 m-lg-0">
+                <label for="horario" class="form-label fw-bold">Horário</label>
+                <select class="form-select" id="horario" required>
+                    <option value="" selected>Selecione uma opção</option>
+                    <option value="1">07:30 - 08:20</option>
+                    <option value="2">08:20 - 09:10</option>
+                    <option value="3">09:30 - 10:20</option>
+                </select>
+            </div>
+        
+            <!-- SALA_AULA -->
+            <div class="text-center mx-md-2 m-lg-0">
+                <label for="sala_aula" class="form-label fw-bold">Sala de Aula</label>
+                <select class="form-select" id="sala_aula" required>
+                    <option value="" selected>Selecione uma opção</option>
+                    <option value="1">105</option>
+                    <option value="2">208T</option>
+                    <option value="3">901S</option>
+                </select>
+            </div>
+        
+            <!-- DISCIPLINA -->
+            <div class="text-center mx-md-2 m-lg-0">
+                <label for="disciplina" class="form-label fw-bold">Disciplina</label>
+                <select class="form-select" id="disciplina" required>
+                    <option value="" selected>Selecione uma opção</option>
+                    <option value="1">Matemática I</option>
+                    <option value="2">Matemática II</option>
+                    <option value="3">Matemática III</option>
+                </select>
+            </div>
+        
+            <!-- PROFESSOR -->
+            <div class="text-center mx-md-2 m-lg-0">
+                <label for="professor" class="form-label fw-bold">Professor</label>
+                <select class="form-select" id="professor" required>
+                    <option value="" selected>Selecione uma opção</option>
+                    <option value="1">Moisés</option>
+                    <option value="2">Náuvia</option>
+                    <option value="3">Ana Klauck</option>
+                </select>
+            </div>
+    
+        </div>
 
+        <div class="text-center mt-4">
+            <button class="btn btn-success" type="submit">Salvar</button>
+        </div>
+    </form>
 </div>
