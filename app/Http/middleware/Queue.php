@@ -28,7 +28,7 @@ class Queue {
 
     /**
      * Função de execução do controlador
-     * @var \Closure
+     * @var Closure
      */
     private $controller;
 

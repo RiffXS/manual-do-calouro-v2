@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Http\Request;
+use App\Http\Response;
 use App\Models\User as EntityUser;
 use \Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -69,7 +70,7 @@ class JWTAuth {
      * 
      * @return \App\Http\Response
      */
-    public function handle(Request $request, Closure $next): Request { 
+    public function handle(Request $request, Closure $next): Response { 
         // REALIZA A VALIDAÇÃO DO ACESSO VIA JWT
         $this->auth($request);
 
