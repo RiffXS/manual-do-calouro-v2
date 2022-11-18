@@ -4,10 +4,10 @@ namespace App\Controller\Pages;
 
 use App\Http\Request;
 use App\Models\Contact as EntityContact;
-use App\Models\User as EntityUser;
+use App\Models\User    as EntityUser;
+use App\Utils\Tools\Alert;
 use App\Utils\Sanitize;
 use App\Utils\Session;
-use App\Utils\Tools\Alert;
 use App\Utils\View;
 
 class Contact extends Page {
@@ -22,6 +22,7 @@ class Contact extends Page {
         // DECLARAÇÃO DE VARIAVEIS
         $crud = '';
 
+        // DADOS DE CONTATOS
         $contacts = [
             'professor' => EntityContact::getContactTeacher(),
             'servidor'  => EntityContact::getContactServer()
@@ -40,7 +41,6 @@ class Contact extends Page {
             'professores' => $views['professores'],
             'servidores'  => $views['servidores']
         ]);
-
         // RETORNA A VIEW DA PAGINA
         return parent::getPage('Contatos', $content, 'contact');
     }
@@ -51,8 +51,8 @@ class Contact extends Page {
      * 
      * @return string
      */
-    private static function getContactItems($fk) {
-        // USUARIOS
+    private static function getContactItems($fk): string {
+        // DECLARAÇÃO DE VARIAVEIS
         $itens = '';
 
         // RESULTADOS DA PAGINA
@@ -106,17 +106,13 @@ class Contact extends Page {
         $contentTeacher = '';
         $contentServers = '';
         
-        // OBTENDO OS ARRAYS DOS CONTATOS
-        $teacher = $contacts['professor'];
-        $servers = $contacts['servidor'];
-
         // LOOP PARA OBTER AS VIEWS DOS CARDS DOS PROFESSORES
-        for ($p = 0; $p < count($teacher); $p++) {
-            $contentTeacher .= self::cardTeacher($teacher[$p]);
+        for ($p = 0; $p < count($contacts['professor']); $p++) {
+            $contentTeacher .= self::cardTeacher($contacts['professor'][$p]);
         }
         // LOOP PARA OBTER AS VIEWS DOS CARDS DOS SERVIDORES
-        for ($s = 0; $s < count($servers); $s++) {
-            $contentServers .= self::cardServer($servers[$s]);
+        for ($s = 0; $s < count($contacts['servidor']); $s++) {
+            $contentServers .= self::cardServer($contacts['servidor'][$s]);
         }
         // RETORNA UM ARRAY COM AS VIEWS DOS PROFESSORES E SERVIORES
         return [
@@ -160,23 +156,29 @@ class Contact extends Page {
     }
 
     /**
+     * Método responsavel por verificar se existe uma imagem
+     * @param string $image
+     * 
+     * @return string
+     */
+    private static function getImg(string $image): string {
+        return !empty($image) ? $image : 'user.png';
+    }
+
+    /**
      * Método responsável por renderizar os cards de contato dos professores
      * @param  array $contact
      * 
      * @return string
      */
     private static function cardTeacher(array $contact): string {
-        // ATRIBUIÇÃO DE VARIÁVEIS
-        $id = $contact['id_usuario'];
-        $imagem = !empty($contact['img_perfil']) ? "{$contact['img_perfil']}" : 'user.png';
-
         // VIEW DOS CONTATOS DE PROFESSORES
         return View::render('pages/components/contacts/teacher', [
-            'contato_id'  => $id,
-            'contato'     => self::getContactType($id),
+            'contato_id'  => $contact['id_usuario'],
+            'contato'     => self::getContactType($contact['id_usuario']),
+            'imagem'      => self::getImg((string)$contact['img_perfil']),
             'nome'        => $contact['nom_usuario'],
             'regras'      => $contact['regras'],
-            'imagem'      => $imagem,
             'hora_inicio' => $contact['hora_inicio'],
             'hora_fim'    => $contact['hora_fim'],
             'sala'        => $contact['num_sala']
@@ -190,16 +192,12 @@ class Contact extends Page {
      * @return string
      */
     private static function cardServer(array $contact): string {
-        // ATRIBUIÇÃO DE VARIÁVEIS
-        $id = $contact['id_usuario'];
-        $imagem = !empty($contact['img_perfil']) ? "{$contact['img_perfil']}" : 'user.png';
-
         // VIEW DOS CONTATOS DE SERVIDORES
         return View::render('pages/components/contacts/server', [
-            'contato_id'  => $id,
-            'contato'     => self::getContactType($id),
+            'contato_id'  => $contact['id_usuario'],
+            'contato'     => self::getContactType($contact['id_usuario']),
+            'imagem'      => self::getImg((string)$contact['img_perfil']),
             'setor'       => $contact['dsc_setor'],
-            'imagem'      => $imagem,
             'hora_inicio' => $contact['hora_inicio'],
             'hora_fim'    => $contact['hora_fim'],
             'sala'        => $contact['num_sala']
@@ -242,22 +240,6 @@ class Contact extends Page {
     }
     
     /**
-     * Método responsavel por consultar os dados de um contato
-     * @param \App\Http\Request $request
-     * @param string $id
-     * 
-     * @return void
-     */
-    public static function getEditContact(Request $request, string $id): void {
-        // ARRAY COM AS INFORMAÇÕES DO CONTATO
-        $return = [
-           'dados' => EntityContact::getContactByFk($id)
-        ];
-        // IMPRIMI O JSON NA PAGINA
-        echo json_encode($return, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
-    }
-
-    /**
      * Método responsavel por editar os dados de um contato
      * @param Request $request
      * 
@@ -274,29 +256,34 @@ class Contact extends Page {
         // SANITIZA O ARRAY
         $postVars = Sanitize::sanitizeForm($postVars);
 
+        // VARIAVEIS 
         $id   = $postVars['id_contato'];
         $fk   = $postVars['fk_usuario'];
         $tipo = $postVars['tp_contato'];
         $dsc  = $postVars['dsc_contato'];
 
         // SANITIZAÇÕES
+
+        // NOVA INSTANCIA DE CONTATO
         $obContact = new EntityContact;
 
+        // ATRIBUI AS PROPRIEDADES
         $obContact->setId_contato($id);
         $obContact->setFk_usuario($fk);
         $obContact->setFk_tipo($tipo);
         $obContact->setDsc_contato($dsc);
 
+        // ATUALIZA O CONTATO
         $obContact->updateContact();
 
+        // REDIRECIONA PARA PAGINA COM MENSAGEM DE SUCESSO
         $request->getRouter()->redirect('/contact?status=contact_updated');
-
     }
 
     /**
-     * Undocumented function
-     *
+     * Método responsavel por excluir um contato
      * @param Request $request
+     * 
      * @return void
      */
     public static function setDeleteContact(Request $request): void {
@@ -310,10 +297,26 @@ class Contact extends Page {
         if (!$obContact instanceof EntityContact) {
             $request->getRouter()->redirect('/contact');
         }
-        // EXCLUIR DEPOIMENTO
+        // EXCLUIR O CONTATO
         $obContact->deleteContact();
 
-        // REDIRECIONA O USUARIO
+        // REDIRECIONA O USUARIO COM MENSAGEM
         $request->getRouter()->redirect('/contact?status=contact_deleted');
+    }
+
+    /**
+     * Método responsavel por consultar os dados de um contato
+     * @param \App\Http\Request $request
+     * @param int $id
+     * 
+     * @return void
+     */
+    public static function getDataContact(Request $request, int $id): void {
+        // ARRAY COM AS INFORMAÇÕES DO CONTATO
+        $return = [
+           'dados' => EntityContact::getContactByFk($id)
+        ];
+        // IMPRIMI O JSON NA PAGINA
+        echo json_encode($return, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
     }
 }

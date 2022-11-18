@@ -4,7 +4,7 @@
  */
  async function editContact(id) {
     // REQUISIÇÃO A ROTA DE CONSULTA
-    const dados = await fetch("contact/edit/"+id);
+    const dados = await fetch("contact/data/"+id);
     const resposta = await dados.json();
 
     // Obtendo os id dos inputs e adicionando os dados recebidos a eles

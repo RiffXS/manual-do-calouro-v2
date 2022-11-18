@@ -17,10 +17,10 @@ $obRouter->post('/contact/new', [
     }
 ]);
 
-// ROTA EDIÇÃO DE CONTATO
-$obRouter->get('/contact/edit/{id}', [
+// ROTA DADOS DE CONTATO
+$obRouter->get('/contact/data/{id}', [
     function($request, $id) {
-        return new Response(220, Pages\Contact::getEditContact($request, $id));
+        return new Response(220, Pages\Contact::getDataContact($request, $id));
     }
 ]);
 

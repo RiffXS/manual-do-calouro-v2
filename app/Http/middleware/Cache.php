@@ -10,7 +10,7 @@ use Closure;
 class Cache {
 
     /**
-     * Methodo responsavel por verificar se a request atual pode ser cacheada
+     * Metodo responsavel por verificar se a request atual pode ser cacheada
      * @param \App\Http\Request $request
      * 
      * @return boolean

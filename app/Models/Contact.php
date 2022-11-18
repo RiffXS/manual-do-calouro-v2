@@ -33,8 +33,6 @@ class Contact {
     /**
      * Método responsavel por inserir o contato no banco de dados
      * @return boolean
-     * 
-     * @author @SimpleR1ick
      */
     public function insertContact(): bool {
         // INSERE A ISTANCIA NO BANCO
@@ -50,8 +48,6 @@ class Contact {
     /**
      * Método responsavel por atualizar o contato no banco de dados
      * @return boolean
-     * 
-     * @author @SimpleR1ick
      */
     public function updateContact(): bool {
         // INSERE A ISTANCIA NO BANCO
@@ -65,8 +61,6 @@ class Contact {
     /**
      * Metodo responsavel por excluir um contato do banco de dados
      * @return boolean
-     * 
-     * @author @SimpleR1ick
      */
     public function deleteContact(): bool {
         return (new Database('contato'))->delete("id_contato = {$this->id_contato}");
@@ -75,11 +69,9 @@ class Contact {
     /**
      * Método responsável por retornar os contatos dos professores
      * @return array
-     * 
-     * @author @SimpleR1ick @RiffXS
      */
     public static function getContactTeacher(): array {
-        $sql = "SELECT id_usuario,
+        $sql = "SELECT DISTINCT id_usuario,
                     nom_usuario,
                     regras,
                     img_perfil,
@@ -89,8 +81,8 @@ class Contact {
                     FROM usuario u
                     JOIN servidor s ON (u.id_usuario = s.fk_usuario_id_usuario)
                     JOIN sala sa ON (s.fk_sala_id_sala = sa.id_sala)
-                    JOIN servidor_horario sh ON (s.fk_usuario_id_usuario = sh.fk_servidor_fk_usuario_id_usuario) 
-                    JOIN horario h ON (sh.fk_horario_id_horario = h.id_horario)
+                    LEFT JOIN servidor_horario sh ON (s.fk_usuario_id_usuario = sh.fk_servidor_fk_usuario_id_usuario) 
+                    LEFT JOIN horario h ON (sh.fk_horario_id_horario = h.id_horario)
                     JOIN professor p ON (s.fk_usuario_id_usuario = p.fk_servidor_fk_usuario_id_usuario)
                     JOIN contato c ON (s.fk_usuario_id_usuario = c.fk_servidor_fk_usuario_id_usuario)";
 
@@ -101,8 +93,6 @@ class Contact {
     /**
      * Método responsável por retornar os contatos dos servidores
      * @return array
-     * 
-     * @author @SimpleR1ick @RiffXS
      */
     public static function getContactServer(): array {
         $sql = "SELECT id_usuario,
@@ -132,8 +122,6 @@ class Contact {
      * @param  string $fields
      * 
      * @return mixed
-     * 
-     * @author @SimpleR1ick @RiffXS
      */
     public static function getContacts($where = null, $order = null, $limit = null, $fields = '*'): mixed {
         return (new Database('contato'))->select($where, $order, $limit, $fields);
