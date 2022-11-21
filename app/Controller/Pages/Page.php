@@ -88,15 +88,22 @@ class Page {
     private static function getLogin(): string {
         // RETORNA O DROPDOWN CASO LOGADO
         if (Session::isLogged()) {
-            // OBTEM O ID DA SESSÃO ATUAL
-            $id = Session::getId();            
-
             // OBTÊM OS DADOS DO USUARIO
-            $obUser = EntityUser::getUserById($id);
+            $obUser = EntityUser::getUserById(Session::getId());
+
+            // VERIFICA SE O USUARIO E ADMINISTRADOR
+            $isAdmin = function($lv) {
+                // COMPARA O NIVEL DE ACESSO
+                if ($lv == 1) {
+                    return View::render('pages/header/admin');
+                }
+                return '';
+            };
 
             // RETORNA O DROPDOWN DO LOGIN
             return View::render('pages/header/dropdown', [
-                'imagem' => $obUser->getImg_perfil()
+                'imagem' => $obUser->getImg_perfil(),
+                'admin'  => $isAdmin($obUser->getFk_acesso())
             ]);
         }
         // RETORNA O BOTÃO DO LOGIN

@@ -25,15 +25,6 @@ class Student {
     private $fk_turma_id_turma;
     
     /**
-     * Metodo responsavel por construir o objeto aluno
-     * @param string $matricula
-     */
-    public function __construct($id, $matricula = null) {
-        $this->fk_usuario_id_usuario = $id;
-        $this->num_matricula         = $matricula;
-    }
-
-    /**
      * Método responsável por cadastrar um usuário como aluno
      * @return boolean
      */
@@ -52,9 +43,7 @@ class Student {
      *
      */
     public function updateStudent() {
-        $where = "fk_usuario_id_usuario = {$this->fk_usuario_id_usuario}";
-
-        return (new Database('aluno'))->update($where, [
+        return (new Database('aluno'))->update("fk_usuario_id_usuario = {$this->fk_usuario_id_usuario}", [
             'fk_turma_id_turma' => $this->fk_turma_id_turma
         ]);
     }
@@ -79,7 +68,51 @@ class Student {
      * Metodos GETTERS E SETTERS
      */
 
-    public function setFk_turma($fk_id) {
-        $this->fk_turma_id_turma = $fk_id;
+    /**
+     * Get fk_usuario_id_usuario
+     * @return integer
+     */
+    public function getFk_id_usuario(): int {
+        return $this->fk_usuario_id_usuario;
+    }
+
+    /**
+     * Set fk_usuario_id_usuario
+     * @param integer $fk
+     */
+    public function setFk_id_usuario(int $fk): void {
+        $this->fk_usuario_id_usuario = $fk;
+    }
+
+    /**
+     * Get num_matricula
+     * @return string
+     */
+    public function getNum_matricula(): string {
+        return $this->num_matricula;
+    }
+
+    /**
+     * Set num_matricula
+     * @param string $value
+     */
+    public function setNum_matricula(string $value): void {
+        $this->num_matricula = $value;
+    }
+
+    /**
+     * Get fk_turma_id_turma
+     * @return integer
+     */
+    public function getFk_id_turma(): int {
+        return $this->fk_turma_id_turma;
+    }
+
+    /**
+     * Set fk_turma_id_turma
+     * @param integer $fk
+     */
+    public function setFk_id_turma(int $fk): void {
+        $this->fk_turma_id_turma = $fk;
     }
 }

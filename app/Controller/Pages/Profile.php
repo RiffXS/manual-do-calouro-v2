@@ -9,9 +9,9 @@ use App\Models\Teacher as EntityTeacher;
 use App\Models\User    as EntityUser;
 use App\Utils\Tools\Alert;
 use App\Utils\Sanitize;
-use App\Utils\View;
 use App\Utils\Session;
 use App\Utils\Upload;
+use App\Utils\View;
 
 class Profile extends Page {
 
@@ -55,28 +55,40 @@ class Profile extends Page {
         switch ($obUser->getFk_acesso()) {
             case 2:
                 $text = 'Matricula';
-                $colum = 'enrollment';
+                $colum = View::render('pages/components/profile/enrollment');
                 break;
 
             case 3:
+                $class = EntityUser::getUserClass(Session::getId());
                 $text = 'Turma';
-                $colum = 'class';
+                
+                if (!empty($class)) {
+                    $colum = View::render('pages/components/profile/class', [
+                        'curso'  => $class['curso'],
+                        'modulo' => $class['modulo']
+                    ]);
+                }
                 break;
 
             case 4:
                 $text = 'Setor';
-                $colum = 'sector';
+                $colum = View::render('pages/components/profile/sector');
                 break;
                 
             case 5:
+                $obTeacher = EntityTeacher::getTeacherById($obUser->getId_usuario());
                 $text = 'Regras';
-                $colum = 'rules';
+
+                $colum = View::render('pages/components/profile/rules', [
+                    'regras' => $obTeacher->getRules()
+                ]);
+
                 break;            
         }
         // RETORNA O TEXTO E A VIEW DA COLUNA
         return [
-            'text' => $text,
-            'colum' => View::render("pages/components/profile/$colum")
+            'text'  => $text,
+            'colum' => $colum
         ];
     }
 
@@ -100,36 +112,17 @@ class Profile extends Page {
 
         // OBTEM O USUARIO E O NIVEL DE ACESSO DA SESSÃO
         $obUser = Session::getUser();
-        $acesso = Session::getLv();
 
         $photo = $obUser->getImg_perfil();
+
         $nome = $postVars['nome'];
         $email = $postVars['email'];
 
-        // NOVA INSTANCIA 
-        $obUpload = new Upload($files['foto']);
+        self::updateProfilePicture($request, $photo, $files['foto']);
 
-        // VERIFICA SE HOUVE UPLOAD DE FOTO
-        if (is_uploaded_file($obUpload->tmpName) && $obUpload->error != 4) { 
-            // VERIFICA SE O PROCESSO DE UPLOAD FOI REALIZADO
-            if (!self::uploadProfilePicture($obUpload, $photo)) {
-                $request->getRouter()->redirect('/profile?status=upload_error');
-            }
-        }
-        // REALIZA UMA AÇÃO DEPENDENDO DO TIPO DE USUARIO
-        switch ($acesso) {
-            case 2:
-                self::registerStudent($request, $obUser, $postVars);
-                break;
+        // ATUALIZA O CAMPO DO TIPO USUARIO
+        self::updateProfileUser($request, $obUser, $postVars);
 
-            case 3:
-                self::updateStudent($obUser, $postVars);
-                break;
-                
-            case 4:
-                self::updateTeacher($obUser, $postVars);           
-                break;
-        }
         // VALIDA O NOME
         if (Sanitize::validateName($nome)) {
             $request->getRouter()->redirect('/profile?status=invalid_name');
@@ -158,100 +151,104 @@ class Profile extends Page {
 
     /**
      * Método responsavel por realizar o upload da imagem enviada pelo usuario
-     * @param \App\Utils\Upload $obUpload
+     * @param \App\Http\Request $request
      * @param string $photo
+     * @param array $file
      * 
-     * @return bool e alteração de referencia da $photo
+     * @return void
      */
-    private static function uploadProfilePicture(Upload $obUpload, string &$photo): bool {
-        // VERIFICA SE O ARQUIVO E MENOR DO QUE O ACEITO
-        if ($_POST['MAX_FILE_SIZE'] > $obUpload->size) {
-            // VARIFICA SE O USUARIO POSSUI UMA FOTO
-            if ($photo == 'user.png') {
-                $obUpload->generateNewName();      // GERA UM NOME NOVO
-                $photo = $obUpload->getBasename(); // OBTEM O NOME NOVO
-            } 
-            else {
-                // ATRIBUI O NOME AO JA EXISTENTE DO USUARIO
-                $obUpload->name = pathinfo($photo, PATHINFO_FILENAME);
-            }
-            // FAZ O UPLOAD DA FOTO PARA PASTA DE UPLOADS
-            if ($obUpload->upload(__DIR__.'/../../../public/uploads/')) {
-                return true;
-            }
-            return false;
-        }
-        return false;
-    }  
+    private static function updateProfilePicture($request, &$photo, $file): void {
+        // NOVA INSTANCIA 
+        $obUpload = new Upload($file);
 
+        // VERIFICA SE HOUVE UPLOAD DE FOTO
+        if (is_uploaded_file($obUpload->tmpName) && $obUpload->error != 4) { 
+            // VERIFICA SE O ARQUIVO E MENOR DO QUE O ACEITO
+            if ($_POST['MAX_FILE_SIZE'] > $obUpload->size) {
+                // VARIFICA SE O USUARIO POSSUI UMA FOTO
+                if ($photo == 'user.png') {
+                    $obUpload->generateNewName();      // GERA UM NOME NOVO
+                    $photo = $obUpload->getBasename(); // OBTEM O NOME NOVO
+                } 
+                else {
+                    // ATRIBUI O NOME AO JA EXISTENTE DO USUARIO
+                    $obUpload->name = pathinfo($photo, PATHINFO_FILENAME);
+                }
+                // FAZ O UPLOAD DA FOTO PARA PASTA DE UPLOADS
+                if (!$obUpload->upload(__DIR__.'/../../../public/uploads/')) {
+                    $request->getRouter()->redirect('/profile?status=upload_error');
+                }
+            }
+        }
+    } 
+    
     /**
-     * Método responsável por atualizar os usuário comum para o tipo aluno
+     * Método responsavel por realizar uma operação relativo ao tipo de usuario atual
      * @param \App\Http\Request $request
      * @param \App\Models\User  $obUser
      * @param array $postVars
-     * 
-     * @return void
      */
-    private static function registerStudent(Request $request, EntityUser $obUser, array $postVars): void {
-        $matricula = $postVars['matricula'] ?? '';
+    private static function updateProfileUser(Request $request, EntityUser $obUser, array $postVars) {
+        // REALIZA UMA AÇÃO DEPENDENDO DO TIPO DE USUARIO
+        switch (Session::getLv()) {
+            // USUARIO
+            case 2:
+                $matricula = $postVars['matricula'] ?? '';
 
-        // VERIFICA SE A MATRICULA ESTA VAZIA
-        if (!empty($matricula)) {
-            // NOVA INSTANCIA
-            $obStudent = new EntityStudent($obUser->getId_usuario(), $matricula);
+                if (!empty($matricula)) {
+                    // NOVA INSTANCIA
+                    $obStudent = new EntityStudent;
         
-            // VERIFICA SE A MATRICULA ESTA DISPONIVEL
-            if (!$obStudent->verifyEnrollment()) {
-                $request->getRouter()->redirect('/profile?status=enrollment_duplicated');
-            } 
-            // INSERE O USUARIO NA TABELA DE ALUNOS
-            $obStudent->insertStudent();
+                    $obStudent->setFk_id_usuario($obUser->getId_usuario());
+                    $obStudent->setNum_matricula($matricula);
+                
+                    // VERIFICA SE A MATRICULA ESTA DISPONIVEL
+                    if (!$obStudent->verifyEnrollment()) {
+                        $request->getRouter()->redirect('/profile?status=enrollment_duplicated');
+                    } 
+                    // INSERE O USUARIO NA TABELA DE ALUNOS
+                    $obStudent->insertStudent();
+                }
+                // ALTERA O NIVEL DE ACESSO PARA 3 (ALUNO)
+                $obUser->setFk_acesso(3); 
+                
+                break;
+                
+            // ALUNO
+            case 3:
+                $curso  = $postVars['curso'] ?? '';
+                $modulo = $postVars['modulo'] ?? '';
 
-            // ALTERA O NIVEL DE ACESSO PARA 3 (ALUNO)
-            $obUser->setFk_acesso(3); 
+                // VERIFICA SE O CURSO E O MODULO FORAM RECEBIDOS
+                if (!empty($modulo) && !empty($curso)) {
+                    // BUSCA O ID DA TURMA POR CURSO E MODULO
+                    $gradeId = EntityGrade::getGradeId($curso, $modulo);
+
+                    // NOVA INSTANCIA
+                    $obStudent = new EntityStudent;
+ 
+                    $obStudent->setFk_id_usuario($obUser->getId_usuario());
+                    $obStudent->setFk_id_turma($gradeId['id_turma']);
+
+                    $obStudent->updateStudent(); // ATUALIZA A TURMA DO ALUNO
+                }
+                break;
+
+            // PROFESSOR
+            case 5:
+                $regras = $postVars['regras'];
+
+                // VERIFICA SE O CAMPO ESTA VAZIO
+                if (!empty($regras)) {
+                    // NOVA INSTANCIA
+                    $obTeacher = new EntityTeacher();
+
+                    $obTeacher->setFk_id_usuario($obUser->getId_usuario());
+                    $obTeacher->setRules($regras);
+
+                    $obTeacher->updateRules(); // ATUALIZA AS REGRAS DO PROFESSOR
+                }         
+                break;
         }
-    }
-
-    /**
-     * Método responsável por atualizar a turma do usuário
-     * @param \App\Models\User $obUser
-     * @param array $postVars
-     * 
-     * @return void
-     */
-    private static function updateStudent(EntityUser $obUser, array $postVars): void {
-        $curso  = $postVars['curso'] ?? '';
-        $modulo = $postVars['modulo'] ?? '';
-
-        // VERIFICA SE O CURSO E O MODULO FORAM RECEBIDOS
-        if (!empty($modulo) && !empty($curso)) {
-            // BUSCA O ID DA TURMA POR CURSO E MODULO
-            $gradeId = EntityGrade::getGradeId($curso, $modulo);
-
-            // NOVA INSTANCIA
-            $obStudent = new EntityStudent($obUser->getId_usuario());
-            $obStudent->setFk_turma($gradeId['id_turma']);
-
-            $obStudent->updateStudent(); // ATUALIZA A TURMA DO ALUNO
-        }
-    }
-
-    /**
-     * Método responsável por atualizar as regras do professor
-     * @param \App\Models\User $obUser
-     * @param array $postVars
-     * 
-     * @return void
-     */
-    private static function updateTeacher(EntityUser $obUser, array $postVars): void {
-        $regras = $postVars['regras'] ?? '';
-
-        // VERIFICA SE O CAMPO ESTA VAZIO
-        if (!empty($regras)) {
-            // NOVA INSTANCIA
-            $obTeacher = new EntityTeacher($obUser->getId_usuario(), $regras);
-
-            $obTeacher->updateRules(); // ATUALIZA AS REGRAS DO PROFESSOR
-        }  
     }
 }
