@@ -17,7 +17,7 @@ class Comment extends Page {
      * 
      * @return string
      */
-    private static function getCommentsItems(Request $request, Pagination &$obPagination): string {
+    private static function getCommentsItems(Request $request, &$obPagination): string {
         // DEPOIMENTOS
         $itens = '';
 
@@ -37,7 +37,7 @@ class Comment extends Page {
         // RENDENIZA O ITEM
         while ($obComment = $results->fetchObject(EntityComment::class)) {
             // VIEW De DEPOIMENTOSS
-            $itens .= View::render('admin/modules/testimonies/item',[
+            $itens .= View::render('admin/modules/comment/item',[
                 'id'   => $obComment->id,
                 'nome' => $obComment->nome,
                 'mensagem' => $obComment->mensagem,
@@ -58,7 +58,7 @@ class Comment extends Page {
      */
     public static function getComments(Request $request): string {
         // CONTEUDO DA HOME
-        $content = View::render('admin/modules/testimonies/index', [
+        $content = View::render('admin/modules/comment/index', [
             'itens'      => self::getCommentsItems($request, $obPagination),
             'pagination' => parent::getPagination($request, $obPagination),
             'status'     => Alert::getStatus($request)
@@ -76,7 +76,7 @@ class Comment extends Page {
      */
     public static function getNewComment(Request $request): string {
         // CONTEUDO DO FORMULARIO
-        $content = View::render('admin/modules/testimonies/form', [
+        $content = View::render('admin/modules/comments/form', [
             'tittle'   => 'Cadastrar depoimento',
             'nome'     => '',
             'mensagem' => '',

@@ -6,7 +6,8 @@ use App\Controller\Admin;
 // ROTA DE LISTAGEM DE USUARIOS
 $obRouter->get('/admin/users', [
     'middlewares' => [
-        'admin-login'
+        'admin-login',
+        'cache'
     ],
     function($request) {
         return new Response(200, Admin\User::getUsers($request));
