@@ -71,8 +71,8 @@ class Schedule extends Page {
         $count = 0;
         $content = '';
 
-        $horas = EntitySchedule::getScheduleClass($curso, $modulo);
-        $aulas = EntitySchedule::getScheduleTimes();
+        $aulas = EntitySchedule::getScheduleClass($curso, $modulo);
+        $horas = EntitySchedule::getScheduleTimes();
 
         // REDENIZA A TABELA
         for ($i = 0; $i < count($horas); $i++) {
