@@ -32,17 +32,23 @@ class Schedule extends Page {
         $obPagination = new Pagination($quantidadeTotal, $paginaAtual, 5);
 
         // RESULTADOS DA PAGINA
-        $results = EntitySchedule::getSchedules(null, 'id_usuario DESC', $obPagination->getLimit());
+        $results = EntitySchedule::getSchedules(null, 'id_aula ASC', $obPagination->getLimit());
 
         // RENDENIZA O ITEM
         while ($obShedule = $results->fetchObject(EntitySchedule::class)) {
             $modal = View::render('admin/modules/schedules/delete',[
-                'id' => $obShedule->getId_usuario()
+                'id' => $obShedule->getId_aula(),
             ]);
 
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('admin/modules/schedules/item',[
-                'modal' => $modal
+                'modal'      => $modal,
+                'id'         => $obShedule->getId_aula(),
+                'semana'     => $obShedule->getFk_dia_semana(),
+                'horario'    => $obShedule->getFk_horario_aula(),
+                'sala'       => $obShedule->getFk_sala_aula(),
+                'disciplina' => $obShedule->getFk_disciplina(),
+                'professor'  => $obShedule->getFk_professor()
             ]);
         }
 

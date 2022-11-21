@@ -56,6 +56,7 @@ class Profile extends Page {
             case 2:
                 $text = 'Matricula';
                 $colum = View::render('pages/components/profile/enrollment');
+
                 break;
 
             case 3:
@@ -73,6 +74,7 @@ class Profile extends Page {
             case 4:
                 $text = 'Setor';
                 $colum = View::render('pages/components/profile/sector');
+                
                 break;
                 
             case 5:
@@ -193,14 +195,12 @@ class Profile extends Page {
         switch (Session::getLv()) {
             // USUARIO
             case 2:
-                $matricula = $postVars['matricula'] ?? '';
-
-                if (!empty($matricula)) {
+                if (!empty($postVars['matricula'])) {
                     // NOVA INSTANCIA
                     $obStudent = new EntityStudent;
         
                     $obStudent->setFk_id_usuario($obUser->getId_usuario());
-                    $obStudent->setNum_matricula($matricula);
+                    $obStudent->setNum_matricula($postVars['matricula']);
                 
                     // VERIFICA SE A MATRICULA ESTA DISPONIVEL
                     if (!$obStudent->verifyEnrollment()) {
@@ -216,13 +216,10 @@ class Profile extends Page {
                 
             // ALUNO
             case 3:
-                $curso  = $postVars['curso'] ?? '';
-                $modulo = $postVars['modulo'] ?? '';
-
                 // VERIFICA SE O CURSO E O MODULO FORAM RECEBIDOS
-                if (!empty($modulo) && !empty($curso)) {
+                if (!empty($postVars['curso']) && !empty($postVars['modulo'])) {
                     // BUSCA O ID DA TURMA POR CURSO E MODULO
-                    $gradeId = EntityGrade::getGradeId($curso, $modulo);
+                    $gradeId = EntityGrade::getGradeId($postVars['curso'], $postVars['modulo']);
 
                     // NOVA INSTANCIA
                     $obStudent = new EntityStudent;
@@ -234,17 +231,19 @@ class Profile extends Page {
                 }
                 break;
 
+            // SERVIDOR
+            case 4:
+                break;
+
             // PROFESSOR
             case 5:
-                $regras = $postVars['regras'];
-
                 // VERIFICA SE O CAMPO ESTA VAZIO
-                if (!empty($regras)) {
+                if (!empty($postVars['regras'])) {
                     // NOVA INSTANCIA
                     $obTeacher = new EntityTeacher();
 
                     $obTeacher->setFk_id_usuario($obUser->getId_usuario());
-                    $obTeacher->setRules($regras);
+                    $obTeacher->setRules($postVars['regras']);
 
                     $obTeacher->updateRules(); // ATUALIZA AS REGRAS DO PROFESSOR
                 }         

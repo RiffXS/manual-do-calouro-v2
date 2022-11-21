@@ -1,16 +1,17 @@
 <tr>
     <td scope="row">{{id}}</td>
-    <td>{{}}</td>
-    <td>{{}}</td>
-    <td>{{}}</td>
-    <td>{{}}</td>
+    <td>{{semana}}</td>
+    <td>{{horario}}</td>
+    <td>{{sala}}</td>
+    <td>{{disciplina}}</td>
+    <td>{{professor}}</td>
     <td>
-      <a class="btn btn-warning btn-sm text-center" href="{{URL}}/admin/users/{{id}}/edit">
+      <a class="btn btn-warning btn-sm text-center" href="{{URL}}/admin/schedules/{{id}}/edit">
            <i class="fa-solid fa-pen"></i>
       </a>
     </td>
     <td>
-      <a class="btn btn-danger btn-sm text-center" href="{{URL}}/admin/users/{{id}}/delete"
+      <a class="btn btn-danger btn-sm text-center" href="{{URL}}/admin/schedules/{{id}}/delete"
           data-bs-toggle="modal" data-bs-target="#modal{{id}}">
             <i class="fa-solid fa-trash"></i>
       </a>

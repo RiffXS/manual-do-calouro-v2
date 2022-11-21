@@ -1,4 +1,9 @@
 {
+    "invalid_acess": {
+        "type": "danger",
+        "text": "Acesso negado!"
+    },
+    
     "invalid_chars": {
         "type": "danger",
         "text": "Dados invalidos!"

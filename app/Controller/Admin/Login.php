@@ -43,13 +43,18 @@ class Login extends Page {
 
         // BUSCA USUARIO PELO EMAIL
         $obUser = User::getUserByEmail($email);
-
+        
+        // VALIDA A INSTANCIA
         if (!$obUser instanceof User) {
             $request->getRouter()->redirect('/admin/login?status=invalid_data');
         }
         // VERIFICA A SENHA DO USUARIO
         if (!password_verify($senha, $obUser->getSenha())) {
             $request->getRouter()->redirect('/admin/login?status=invalid_data');
+        }
+        // VERIFICA SE O USUARIO POSSUI O ACESSO NECESSARIO
+        if ($obUser->getFk_acesso() != 1) {
+            $request->getRouter()->redirect('/admin/login?status=invalid_acess');
         }
         // CRIA A SESSÃO DE LOGIN
         Session::Login($obUser);

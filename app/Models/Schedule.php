@@ -13,12 +13,6 @@ class Schedule {
     private $id_aula;
 
     /**
-     * Fk do grupo
-     * @var integer
-     */
-    private $fk_grupo_id_grupo;
-
-    /**
      * Fk do dia da semana
      * @var integer
      */
@@ -35,6 +29,18 @@ class Schedule {
      * @var integer
      */
     private $fk_sala_aula_id_sala_aula;
+
+    /**
+     * Fk disciplina
+     * @var integer
+     */
+    private $fk_disciplina_id_disciplina;
+
+    /**
+     * Fk do professor
+     * @var integer
+     */
+    private $fk_professor_fk_servidor_fk_usuario_id_usuario;
 
     /**
      * Metodo responsavel por retornar todos os horarios de uma turma
@@ -191,22 +197,6 @@ class Schedule {
     }
 
     /**
-     * Get fk_grupo_id_grupo
-     * @return integer
-     */
-    public function getFk_grupo(): int {
-        return $this->fk_grupo_id_grupo;
-    }
-
-    /**
-     * Set fk_grupo_id_grupo
-     * @param integer $fk
-     */
-    public function setFk_grupo(int $fk): void {
-        $this->fk_grupo_id_grupo = $fk;
-    }
-
-    /**
      * Get fk_dia_semana_id_dia_semana
      * @return integer
      */
@@ -252,5 +242,37 @@ class Schedule {
      */
     public function setFk_sala_aula(int $fk): void {
         $this->fk_sala_aula_id_sala_aula = $fk;
+    }
+    
+    /**
+     * Get fk_disciplina_id_disciplina
+     * @return integer
+     */
+    public function getFk_disciplina(): int {
+        return $this->fk_disciplina_id_disciplina;
+    }
+
+    /**
+     * Set fk_disciplina_id_disciplina
+     * @param integer $fk
+     */
+    public function setFk_disciplina(int $fk): void {
+        $this->fk_disciplina_id_disciplina = $fk;
+    }
+
+    /**
+     * Get fk_professor_fk_servidor_fk_usuario_id_usuario
+     * @return integer
+     */
+    public function getFk_professor(): int {
+        return $this->fk_professor_fk_servidor_fk_usuario_id_usuario;
+    }
+
+    /**
+     * Set fk_professor_fk_servidor_fk_usuario_id_usuario
+     * @param integer $fk
+     */
+    public function setFk_professor(int $fk): void {
+        $this->fk_professor_fk_servidor_fk_usuario_id_usuario = $fk;
     }
 } 
