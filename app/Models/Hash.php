@@ -69,18 +69,34 @@ class Hash {
      * Metodos GETTERS E SETTERS
      */
 
+    /**
+     * Get fk_usuario_id_usuario
+     * @return integer
+     */
     public function getFkId(): int {
         return $this->fk_usuario_id_usuario;
     }
 
+    /**
+     * Set fk_usuario_id_usuario
+     * @param integer $id
+     */
     public function setFkId($id): void {
         $this->fk_usuario_id_usuario = $id;
     }
 
+    /**
+     * Get chave_confirma
+     * @return string
+     */
     public function getHash(): string {
         return $this->chave_confirma;
     }
 
+    /**
+     * Set chave_confirma
+     * @return void
+     */
     public function setHash(): void {
         $this->chave_confirma = sha1(uniqid(mt_rand()));
     }

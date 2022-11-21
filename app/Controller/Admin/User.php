@@ -13,7 +13,7 @@ class User extends Page {
     /**
      * Método responsavel por obter a rendenização dos items de usuarios para página
      * @param \App\Http\Request $request
-     * @param Pagination $obPagination
+     * @param \App\Utils\Pagination $obPagination
      * 
      * @return string
      */

@@ -20,9 +20,21 @@ class Page {
             'label' => 'Usuários',
             'link'  => URL.'/admin/users'
         ],
+        'comments' => [
+            'label' => 'Comentários',
+            'link'  => URL.'/admin/comments'
+        ],
+        'calendar' => [
+            'label' => 'Eventos',
+            'link'  => URL.'/admin/calendar'
+        ],
         'schedule' => [
-            'label' => 'Aulas',
+            'label' => 'Horarios',
             'link'  => URL.'/admin/schedule'
+        ],
+        'contacts' => [
+            'label' => 'Contatos',
+            'link'  => URL.'/admin/contacts' 
         ]
     ];
 

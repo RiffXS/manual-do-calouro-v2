@@ -8,8 +8,8 @@ $obRouter->get('/admin/schedule', [
     'middlewares' => [
         'admin-login'
     ],
-    function() {
-        return new Response(200, Admin\Schedule::getSchedule());
+    function($request) {
+        return new Response(200, Admin\Schedule::getSchedules($request));
     }
 ]);
 
