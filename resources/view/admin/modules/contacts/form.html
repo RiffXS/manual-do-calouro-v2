@@ -1,0 +1,59 @@
+<h1 class="text-center">{{tittle}}</h1>
+
+<div class="row d-flex justify-content-center">
+    <div class="col-8">
+        {{status}}
+        
+        <form method="POST">
+            <!-- NOME -->
+            <div class="mb-3">
+                <label class="form-label" for="nome"> Nome </label>
+                <input class="form-control" type="text" name="nome" value="{{nome}}" required>
+            </div>
+
+            <!-- EMAIL -->
+            <div class="mb-3">
+                <label class="form-label" for="email"> E-mail </label>
+                <input class="form-control" type="email" aria-describedby="ajudaEmail" name="email" value="{{email}}" required>
+            </div>
+
+            <!-- SENHA -->
+            <div class="mb-3">
+                <label class="form-label" for="senha"> Senha </label>
+                <input class="form-control" type="password" aria-describedby="ajudaEmail" name="senha">
+            </div>
+
+            <div class="input-group mb-3" id="user_adm_ativo">
+                <!-- ATIVO -->
+                <div class="me-5">
+                    <label for="user_adm_ativo" class="form-label">Status</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="user_adm_ativoTrue" name="active" value="1" {{ativo}}>
+                        <label class="form-check-label" for="user_adm_ativoTrue"> Ativo </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="user_adm_ativoFalse" name="active" value="2" {{inativo}}>
+                        <label class="form-check-label" for="user_adm_ativoFalse"> Inativo </label>
+                    </div>
+                </div>
+                
+                <!-- ACESSO -->
+                <div class="me-3">
+                    <label class="form-label" for="user_adm_acesso">Acesso</label>
+                    <input class="form-control" type="number" id="user_adm_acesso" name="status" min="1" max="5" value="{{acesso}}">
+                </div>
+
+                <div class="form-text">
+                    <small>5 - servidor</small><br>
+                    <small>4 - professor</small><br>
+                    <small>3 - aluno</small><br>
+                    <small>2 - usuario</small><br>
+                    <small>1 - admin</small>
+                </div>
+            </div>
+
+            <button class="btn btn-primary me-2" type="submit">{{botao}}</button>
+            <a href="{{URL}}/admin/users" class="btn btn-danger">Cancelar</a>
+        </form>
+    </div>
+</div>

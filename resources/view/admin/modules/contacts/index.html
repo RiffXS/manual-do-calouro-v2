@@ -1,0 +1,29 @@
+<h1>Contatos</h1>
+
+<hr />
+
+<a href="{{URL}}/admin/users/new">
+    <button class="btn btn-success" type="button">Cadastrar usuario</button>
+</a>
+
+<hr />
+
+{{status}}
+
+<table class="table table-light table-striped">
+    <thead class="">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Usuario</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Contato</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{itens}}
+    </tbody>
+</table>
+
+{{pagination}}
