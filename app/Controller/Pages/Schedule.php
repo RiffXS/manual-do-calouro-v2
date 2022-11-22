@@ -3,7 +3,7 @@
 namespace App\Controller\Pages;
 
 use App\Http\Request;
-use App\Models\Schedule as EntitySchedule;
+use App\Models\Aula as EntitySchedule;
 use App\Utils\Sanitize;
 use App\Utils\View;
 

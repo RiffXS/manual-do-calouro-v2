@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Http\Request;
-use App\Models\Schedule as EntitySchedule;
+use App\Models\Aula as EntitySchedule;
 use App\Utils\Tools\Alert;
 use App\Utils\Pagination;
 use App\Utils\View;

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use \App\Utils\Database;
 
-class Grade {
+class Turma {
 
     /**
      * Método responsável por id da turma 

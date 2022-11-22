@@ -48,7 +48,7 @@ class Request {
 
     /**
      * Instancia de User
-     * @var \App\Models\User
+     * @var \App\Models\Usuario
      */
     public $user;
 

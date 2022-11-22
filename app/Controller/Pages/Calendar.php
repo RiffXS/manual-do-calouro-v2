@@ -2,7 +2,7 @@
 
 namespace App\Controller\Pages;
 
-use App\Models\Calendar as EntityCalendar;
+use App\Models\Evento as EntityCalendar;
 use App\Utils\View;
 
 class Calendar extends Page {

@@ -2,7 +2,7 @@
 
 namespace App\Controller\Pages;
 
-use App\Models\Comment as EntityComment;
+use App\Models\Comentario as EntityComment;
 use App\Utils\View;
 use App\Utils\Pagination;
 

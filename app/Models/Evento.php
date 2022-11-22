@@ -3,7 +3,7 @@
 namespace App\Models;
 use App\Utils\Database;
 
-class Calendar {
+class Evento {
 
     /**
      * ID serial do evento

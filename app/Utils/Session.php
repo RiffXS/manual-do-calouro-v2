@@ -2,7 +2,7 @@
 
 namespace App\Utils;
 
-use App\Models\User as EntityUser; 
+use App\Models\Usuario as EntityUser; 
 
 class Session {
 
@@ -20,7 +20,7 @@ class Session {
 
     /**
      * Método responsavel por retornar um objeto usuario
-     * @return \App\Models\User
+     * @return \App\Models\Usuario
      */
     public static function getUser(): object {
         // RETORNA OS DADOS DE UM USUÁRIO NA SESSÃO
@@ -29,7 +29,7 @@ class Session {
 
     /**
      * Método responsével por criar o login do usuário
-     * @param \App\Models\User @obUser
+     * @param \App\Models\Usuario @obUser
      * 
      * @return boolean
      */

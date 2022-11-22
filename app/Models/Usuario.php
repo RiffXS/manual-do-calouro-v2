@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Utils\Database;
 
-class User {
+class Usuario {
 
     /**
      * ID do usuario

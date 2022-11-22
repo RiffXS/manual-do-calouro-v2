@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Utils\Database;
 
-class Schedule {
+class Aula {
 
     /**
      * ID da aula

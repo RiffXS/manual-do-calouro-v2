@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Http\Request;
-use App\Models\User as EntityUser;
+use App\Models\Usuario as EntityUser;
 use Closure;
 use Exception;
 

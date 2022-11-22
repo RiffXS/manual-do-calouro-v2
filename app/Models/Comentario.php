@@ -4,7 +4,7 @@ namespace App\Models;
 
 use \App\Utils\Database;
 
-class Comment {
+class Comentario {
 
     /**
      * ID do depoimento

@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Http\Request;
-use App\Models\Contact as EntityContact;
+use App\Models\Contato as EntityContact;
 use App\Utils\Tools\Alert;
 use App\Utils\Pagination;
 use App\Utils\View;

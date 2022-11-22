@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Http\Request;
-use App\Models\Calendar as EntityCalendar;
+use App\Models\Evento as EntityCalendar;
 use App\Utils\Tools\Alert;
 use App\Utils\Pagination;
 use App\Utils\View;

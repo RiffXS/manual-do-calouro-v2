@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Utils\Database;
 
-class Hash {
+class Chave {
 
     /**
      * ID do usuario da chave

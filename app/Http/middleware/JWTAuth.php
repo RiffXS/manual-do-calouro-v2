@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Http\Request;
 use App\Http\Response;
-use App\Models\User as EntityUser;
+use App\Models\Usuario as EntityUser;
 use \Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Closure;

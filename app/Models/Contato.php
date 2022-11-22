@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Utils\Database;
 
-class Contact {
+class Contato {
 
     /**
      * ID do contato
