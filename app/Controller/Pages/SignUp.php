@@ -11,13 +11,13 @@ use App\Utils\View;
 class SignUp extends Page {
 
     /**
-     * Método responsável por retornar o contéudo (view) da página cadastro
+     * Método responsável por retornar o contéudo (view) da página de cadastro
      * @param \App\Http\Request $request
      * 
      * @return string
      */
     public static function getSignUp($request): string {
-        // CONTEUDO DA PAGINA DE LOGIN
+        // RENDENIZA O CONTEUDO DA PAGINA DE CADASTRO
         $content = View::render('pages/signup', [
             'status' => Alert::getStatus($request)
         ]);
@@ -42,6 +42,7 @@ class SignUp extends Page {
         // SANITIZA O ARRAY
         $postVars = Sanitize::sanitizeForm($postVars);
 
+        // ATRIBUINDO AS VARIAVEIS
         $nome     = $postVars['nome'] ?? '';
         $email    = $postVars['email'] ?? '';
         $password = $postVars['senha'] ?? '';
@@ -59,25 +60,25 @@ class SignUp extends Page {
         if (Sanitize::validatePassword($password, $confirm)) {
             $request->getRouter()->redirect('/signup?status=invalid_pass');
         }
-
-        // VERIFICA O EMAIL DO USUÁRIO
+        // CONSULTA O USUARIO UTILIZANDO O EMAIL
         $obUser = EntityUser::getUserByEmail($email);
 
-        // VERIFICA SE O EMAIL ESTA DISPONÍVEL
+        // VALIDA A INSTANCIA, VERIFICANDO SE O EMAIL JÁ ESTA SENDO UTILIZADO
         if ($obUser instanceof EntityUser) {
             $request->getRouter()->redirect('/signup?status=duplicated_email');
         }
         // NOVA INSTÂNCIA DE USUARIO
         $obUser = new EntityUser;
 
+        // ATRIBUTOS DO OBJETO
         $obUser->setNom_usuario($nome);
         $obUser->setEmail($email);
         $obUser->setSenha($password);
       
-        // CADASTRA O USUÁRIO
+        // REALIZA O INSERT NO BANCO DE DADOS
         $obUser->insertUser();
 
-        // REDIRECIONA AO LOGIN
+        // REDIRECIONA PARA PAGINA DE LOGIN
         $request->getRouter()->redirect('/signin?status=user_registered');
     }
 }

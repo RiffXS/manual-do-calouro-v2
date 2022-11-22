@@ -18,7 +18,7 @@ class Sac extends Page {
      * @return string
      */
     public static function getSac(Request $request): string {
-        // VIEW DA HOME
+        // RENDENIZA O CONTEUDO DA PAGINA DE SAC
         $content = View::render('pages/sac', [
             'status' => Alert::getStatus($request),
             'email'  => Session::getUser()->getEmail()
@@ -44,12 +44,13 @@ class Sac extends Page {
         // SANITIZA O ARRAY
         $postVars = Sanitize::sanitizeForm($postVars);
 
+        // ATRIBUINDO AS VARIAVEIS
         $emailTarget = 'manualdocalouro.ifes@gmail.com';
         $phoneNumber = $postVars['telefone'];
         $subjectText = $postVars['assunto'];
         $messageText = $postVars['texto'];
 
-        // NOVA INSTANCIA
+        // NOVA INSTANCIA DE EMAIL
         $obEmail = new Email;
         
         // VERIFICA SE O PROCESSO DE ENVIO FOI EXECUTADO

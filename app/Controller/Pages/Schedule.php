@@ -10,7 +10,7 @@ use App\Utils\View;
 class Schedule extends Page {
     
     /**
-     * Método responsável por retornar o contéudo (view) da página horario
+     * Método responsável por retornar o contéudo (view) da página de horario
      * @param \App\Http\Request
      * 
      * @return string
@@ -19,23 +19,21 @@ class Schedule extends Page {
         // QUERY PARAMS
         $queryParams = Sanitize::sanitizeForm($request->getQueryParams());
 
+        // ATRIBUINDO AS VARIAVEIS
         $curso = $queryParams['curso'] ?? '';
         $modulo = $queryParams['modulo'] ?? '';
 
-        // VERIFICA SE HOUVE EXISTE PARAMETROS PRA CONSULTA DE HORARIOS
+        // VERIFICA SE EXISTEM PARAMETROS NA URL
         if (!empty($curso) and !empty($modulo)) {
-            // OBTEM OS DADOS PARA TABELA
-            $nome  = self::getCurso($curso);
-            $table = self::getTable($curso, $modulo);
-
+            // RENDENIZA A PAGINA COM TABELA
             $content = View::render('pages/schedule', [
-                'curso'    => $nome,
+                'horarios' => self::getTable($curso, $modulo),
+                'curso'    => self::getCurso($curso),
                 'modulo'   => $modulo,
-                'horarios' => $table,
                 'hidden'   => ''
             ]);
-        // RENDENIZA A O HORARIO SEM TABELA    
         } else {
+            // RENDENIZA O PAGINA SEM TABELA 
             $content = View::render('pages/schedule', [
                 'horarios' => '',
                 'curso'    => '',
@@ -61,7 +59,7 @@ class Schedule extends Page {
 
     /**
      * Método responsável por retornar a view da tabela do horário
-     * @param integer $curso
+     * @param integer $curso 
      * @param integer $modulo
      * 
      * @return string
@@ -71,11 +69,14 @@ class Schedule extends Page {
         $count = 0;
         $content = '';
 
+        // ARRAY COM AULAS DA TURMA CONSULTADA POR CURSO/MODULO
         $aulas = EntitySchedule::getScheduleClass($curso, $modulo);
+
+        // ARRAY COM TODOS OS HORARIOS ESTATICOS DO BANCO
         $horas = EntitySchedule::getScheduleTimes();
 
-        // REDENIZA A TABELA
         for ($i = 0; $i < count($horas); $i++) {
+            // RENDENIZA AS LINHAS DA TABELA
             $content .= View::render('pages/components/schedule/row', [
                 'hora_inicio' => $horas[$i]['hora_aula_inicio'],
                 'hora_fim'    => $horas[$i]['hora_aula_fim'],
@@ -87,7 +88,7 @@ class Schedule extends Page {
     }
     
     /**
-     * Método responsável por rendenizar a linha de items do horário
+     * Método responsável por retornar a view de uma linha
      * @param  array   $aulas
      * @param  integer $count
      * 
@@ -96,9 +97,9 @@ class Schedule extends Page {
     public static function getRow(array $aulas, int &$count): string {        
         $content = '';
         
-        // Loop para cada aula
+        // RENDENIZA OS ITEMS DE SEGUNDA A SABADO
         for ($i = 0; $i < 6; $i++) {
-            // VIEW DO HORÁRIO
+            // VIEW DO ITEM
             $content .= self::getItem($aulas[$count]);
             $count++;
         }
@@ -107,13 +108,13 @@ class Schedule extends Page {
     }
 
     /**
-     * Método responsável por criar cada item de aula da tabela
+     * Método responsável retornar a view de um item
      * @param  array $class
      * 
      * @return string
      */ 
     public static function getItem(array $aula): string {
-        // RETORNA A VIEW DA COLUNA
+        // RETORNA A VIEW DO ITEM
         return View::render('pages/components/schedule/item', [
             'sala' => $aula['sala'],
             'materia' => $aula['materia'],

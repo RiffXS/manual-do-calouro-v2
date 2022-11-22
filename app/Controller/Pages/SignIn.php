@@ -12,13 +12,13 @@ use App\Utils\View;
 class SignIn extends Page {
 
     /**
-     * Método responsável por retornar o contéudo (view) da página login
+     * Método responsável por retornar o contéudo (view) da página de login
      * @param \App\Http\Request $request
      * 
      * @return string
      */
     public static function getSignIn(Request $request): string {
-        // CONTEUDO DA PAGINA DE LOGIN
+        // RENDENIZA O CONTEUDO DA PAGINA DE LOGIN
         $content = View::render('pages/signin', [
             'status' => Alert::getStatus($request)
         ]);
@@ -27,7 +27,7 @@ class SignIn extends Page {
     }
 
     /**
-     * Método responsável por realizar login no site
+     * Método responsável por processar o formulario de login
      * @param \App\Http\Request $request
      * 
      * @return void
@@ -43,6 +43,7 @@ class SignIn extends Page {
         // SANITIZA O ARRAY
         $postVars = Sanitize::sanitizeForm($postVars);
 
+        // ATRIBUINDO VARIAVEIS
         $email = $postVars['email'];
         $senha = $postVars['senha'];
 
@@ -50,24 +51,25 @@ class SignIn extends Page {
         if (Sanitize::validateEmail($email)) {
             $request->getRouter()->redirect('/signin?status=invalid_email');
         }
+        // CONSULTA O USUARIO UTILIZANDO O EMAIL
         $obUser = EntityUser::getUserByEmail($email);
 
         // VALIDA A INSTANCIA, VERIFICANDO SE HOUVE RESULTADO
         if (!$obUser instanceof EntityUser) {
             $request->getRouter()->redirect('/signin?status=invalid_data');
         }
-        // VERIFICA A SENHA DO USUARIO CONINCIDE COM A DO BANCO
+        // VERIFICA SE A SENHA DO USUARIO CONINCIDE COM A HASH NO BANCO DE DADOS
         if (!password_verify($senha, $obUser->getSenha())) {
             $request->getRouter()->redirect('/signin?status=invalid_data');
         }
-        // VERIFICA SE O USUÁRIO ESTÁ ATIVO
+        // VERIFICA SE O USUÁRIO ESTÁ ATIVO NO SISTEMA
         if (!$obUser->getAtivo() != 0) {
             $request->getRouter()->redirect('/signin?status=inactive_user');
         }
-        // CRIA A SESSÃO DE LOGIN
+        // REALIZA O LOGIN, CRIANDO UMA SESSÃO
         Session::Login($obUser);
 
-        // REDIRECIONA O USUARIO PARA O HOME
+        // REDIRECIONA O USUARIO PARA A HOME
         $request->getRouter()->redirect('/');
     }
 
