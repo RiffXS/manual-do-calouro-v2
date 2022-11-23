@@ -1,28 +1,20 @@
-const url = 'http://localhost/mvc-mdc';
+async function getApiData(route) {
 
-/**
- * Função para realizar request a uma rota e obter os dados
- * @param {string} route 
- * 
- * @returns 
- */
-async function getData(route) {
     const response = await fetch(route);
 
-    const result = await response.json();
-
-    return await result['dados'];
+    if (response.ok) {
+        return await response.json();
+    }
+    alert("HTTP-Error: " + response.status);
 }
 
 /**
  * Função para rendenizar os dados do modal contato
  * @param {int} id 
  */
-async function editContact(id) {
+ async function editContact(id) {
     // REQUISIÇÃO A ROTA DE CONSULTA
-    const data = await getData(url+'/api/v1/contact/data/'+id);
-
-    console.log(data);
+    const data = await getApiData("contact/data/"+id);
 
     // ADICIONANDO VALORES AO MODAL DE EDIÇÃO
     document.getElementById('edit-id-contato').value    = data.id_contato;

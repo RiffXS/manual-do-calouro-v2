@@ -17,13 +17,6 @@ $obRouter->post('/contact/new', [
     }
 ]);
 
-// ROTA DADOS DE CONTATO
-$obRouter->get('/contact/data/{id}', [
-    function($request, $id) {
-        return new Response(220, Pages\Contact::getDataContact($request, $id));
-    }
-]);
-
 // ROTA EDIÇÃO DE CONTATO
 $obRouter->post('/contact/edit', [
     function($request) {
