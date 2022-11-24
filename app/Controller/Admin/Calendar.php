@@ -8,7 +8,7 @@ use App\Utils\Tools\Alert;
 use App\Utils\Pagination;
 use App\Utils\View;
 
-class Contact extends Page {
+class Calendar extends Page {
 
     /**
      * Método responsavel por obter a rendenização dos items de usuarios para página
@@ -32,21 +32,21 @@ class Contact extends Page {
         $obPagination = new Pagination($quantidadeTotal, $paginaAtual, 5);
 
         // RESULTADOS DA PAGINA
-        $results = EntityCalendar::getEvents(null, 'id_contato DESC', $obPagination->getLimit());
+        $results = EntityCalendar::getEvents(null, 'id_evento DESC', $obPagination->getLimit());
 
         // RENDENIZA O ITEM
-        while ($obContact = $results->fetchObject(EntityCalendar::class)) {
-            $modal = View::render('admin/modules/contacts/delete',[
-                'id' => $obContact->getId_contato()
+        while ($obCalendar = $results->fetchObject(EntityCalendar::class)) {  
+            $modal = View::render('admin/modules/calendar/delete',[
+                'id' => $obCalendar->getId_evento()
             ]);
 
             // VIEW De DEPOIMENTOSS
-            $itens .= View::render('admin/modules/contacts/item',[
-                'id'    => $obContact->getId_contato(),
-                'user'  => $obContact->getFk_usuario(),
-                'tipo'  => $obContact->getFk_tipo(),
-                'dsc'   => $obContact->getDsc_contato(),
-                'modal' => $modal
+            $itens .= View::render('admin/modules/calendar/item',[
+                'id'     => $obCalendar->getId_evento(),
+                'campus' => $obCalendar->getFk_campus(),
+                'data'   => $obCalendar->getDat_evento(),
+                'dsc'    => $obCalendar->getDsc_evento(),
+                'modal'  => $modal
             ]);
         }
 
@@ -62,13 +62,13 @@ class Contact extends Page {
      */
     public static function getEvents(Request $request): string {
         // CONTEUDO DA HOME
-        $content = View::render('admin/modules/contacts/index', [
+        $content = View::render('admin/modules/calendar/index', [
             'itens'      => self::getEventsItems($request, $obPagination),
             'pagination' => parent::getPagination($request, $obPagination),
             'status'     => Alert::getStatus($request)
         ]);
 
         // RETORNA A PAGINA COMPLETA
-        return parent::getPanel('Contatos > MDC', $content, 'contacts');
+        return parent::getPanel('Contatos > MDC', $content, 'calendar');
     }
 }

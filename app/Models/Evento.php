@@ -1,6 +1,7 @@
 <?php 
 
 namespace App\Models;
+
 use App\Utils\Database;
 
 class Evento {
@@ -32,8 +33,6 @@ class Evento {
     /**
      * Método responsavel por obter os eventos do banco de dados
      * @return mixed
-     * 
-     * @author @SimpleR1ick
      */
     public static function getEvents($where = null, $order = null, $limit = null, $fields = '*'): mixed {
         return (new Database('evento'))->select($where, $order, $limit, $fields);

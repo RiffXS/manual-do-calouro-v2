@@ -155,14 +155,14 @@ class User extends Page {
 
         // CONTEUDO DO FORMULARIO
         $content = View::render('admin/modules/users/form', [
+            'status'  => Alert::getStatus($request),
             'tittle'  => 'Editar usuario',
+            'botao'   => 'Atualizar',
             'nome'    => $obUser->getNom_usuario(),
             'email'   => $obUser->getEmail(),
-            'botao'   => 'Atualizar',
-            'status'  => Alert::getStatus($request),
+            'acesso'  => $obUser->getFk_acesso(),
             'ativo'   => $status['ativo'],
             'inativo' => $status['inativo'],
-            'acesso'  => $obUser->getFk_acesso()
         ]);
 
         // RETORNA A PAGINA COMPLETA

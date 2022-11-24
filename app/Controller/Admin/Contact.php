@@ -71,4 +71,11 @@ class Contact extends Page {
         // RETORNA A PAGINA COMPLETA
         return parent::getPanel('Contatos > MDC', $content, 'contacts');
     }
+
+    public static function getEditContact(Request $request, int $id) {
+
+        $obContact = EntityContact::getContactById($id);
+
+        echo '<pre>'; print_r($obContact); echo '</pre>'; exit;
+    }
 }

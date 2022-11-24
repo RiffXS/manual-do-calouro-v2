@@ -1,0 +1,18 @@
+<div class="modal fade" id="modal{{id}}" tabindex="-1" aria-labelledby="tituloModal" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title text-black">Deseja mesmo excluir esse item?</h5>
+				<button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-footer">
+				<form action="{{URL}}/admin/users/del" method="POST">
+					<input type="hidden" name="id" value="{{id}}">
+
+					<button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Voltar</button>
+					<button class="btn btn-danger" type="submit">Deletar</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
