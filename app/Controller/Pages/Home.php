@@ -12,9 +12,12 @@ class Home extends Page {
      * Método responsável por retornar o contéudo (view) da página home
      * @return string
      */
-    public static function getHome() {
+    public static function getHome($request) {
         // VIEW DA HOME
-        $content = View::render('pages/home');
+        $content = View::render('pages/home', [
+            'comentarios' => self::getCommentsItems($request, $obPagination),
+            'pagination'  => parent::getPagination($request, $obPagination)
+        ]);
 
         // RETORNA A VIEW DA PAGINA
         return parent::getPage('Home', $content, 'home');
@@ -42,7 +45,7 @@ class Home extends Page {
         $obPagination = new Pagination($quantidadeTotal, $paginaAtual, 3);
 
         // RESULTADOS DA PAGINA
-        $results = EntityComment::getComments(null, 'id DESC', $obPagination->getLimit());
+        $results = EntityComment::getComments(null, 'id_comentario DESC', $obPagination->getLimit());
 
         // RENDENIZA O ITEM
         while ($obComment = $results->fetchObject(EntityComment::class)) {
@@ -53,46 +56,7 @@ class Home extends Page {
                 'data' => date('d/m/Y H:i:s',strtotime($obComment->data))
             ]);
         }
-
         // RETORNA OS DEPOIMENTOS
         return $itens;
-    }
-
-    /**
-     * Método responsável por retornar o contéudo (view) de depoimenots
-     * @param \App\Http\Request $request
-     * 
-     * @return string 
-     */
-    public static function getComments($request){
-        // VIEW De DEPOIMENTOSS
-        $content =  View::render('pages/testimonies',[
-           'itens' => self::getCommentsItems($request, $obPagination),
-           'pagination' => parent::getPagination($request, $obPagination)
-        ]);
-
-        // RETORNA A VIEW DA PAGINA
-        return parent::getPage('DEPOIMENTOS > WDEV', $content);
-    }
-
-    /**
-     * Método responsável por cadastrar um depoimento
-     * @param \App\Http\Request $request
-     * 
-     * @return string
-     */
-    public static function insertTestimony($request) {
-        // DADOS DO POST
-        $postVars = $request->getPostVars();
-
-        // NOVA INSTANCIA
-        $obComment = new EntityComment;
-        $obComment->nome = $postVars['nome'];
-        $obComment->mensagem = $postVars['mensagem'];
-
-        $obComment->insertComment();
-
-        // RETORNA A PAGINA DE LISTAGEM DE DEPOIMENTOS
-        return self::getComments($request);
     }
 }

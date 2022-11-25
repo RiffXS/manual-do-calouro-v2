@@ -36,13 +36,8 @@ class Schedule extends Page {
 
         // RENDENIZA O ITEM
         while ($obShedule = $results->fetch(\PDO::FETCH_ASSOC)) {
-            $modal = View::render('admin/modules/schedules/delete',[
-                'id' => $obShedule['id_aula'],
-            ]);
-
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('admin/modules/schedules/item',[
-                'modal'      => $modal,
                 'id'         => $obShedule['id_aula'],
                 'semana'     => $obShedule['dsc_dia_semana'],
                 'horario'    => $obShedule['hora_aula_inicio'],

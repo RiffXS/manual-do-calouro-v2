@@ -38,8 +38,20 @@ class Evento {
         return (new Database('evento'))->select($where, $order, $limit, $fields);
     }
 
-    public static function getDscEvents() {
-        $sql = "SELECT id_evento, dsc_campus, dat_evento, dsc_evento FROM evento e JOIN campus c ON (e.fk_campus_id_campus = c.id_campus)";
+    /**
+     * 
+     * 
+     */
+    public static function getDscEvents($order, $limit) {
+        $sql = "SELECT id_evento,
+                    dsc_campus,
+                    dat_evento,
+                    dsc_evento
+                FROM evento e
+                    JOIN campus c ON (e.fk_campus_id_campus = c.id_campus)
+                ORDER BY $order LIMIT $limit";
+
+        return (new Database)->execute($sql);
     }
 
     /*

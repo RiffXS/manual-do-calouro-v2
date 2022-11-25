@@ -4,12 +4,11 @@ namespace App\Controller\Admin;
 
 use App\Http\Request;
 use App\Models\Evento as EntityCalendar;
-use App\Utils\Database;
 use App\Utils\Tools\Alert;
 use App\Utils\Pagination;
 use App\Utils\View;
 
-class Calendar extends Page {
+class Event extends Page {
 
     /**
      * Método responsavel por obter a rendenização dos items de usuarios para página
@@ -33,23 +32,16 @@ class Calendar extends Page {
         $obPagination = new Pagination($quantidadeTotal, $paginaAtual, 5);
 
         // RESULTADOS DA PAGINA
-        $results = EntityCalendar::getEvents(null, 'id_evento DESC', $obPagination->getLimit());
+        $results = EntityCalendar::getDscEvents('id_evento DESC', $obPagination->getLimit());
 
         // RENDENIZA O ITEM
-        while ($obCalendar = $results->fetchObject(EntityCalendar::class)) {  
-            
-
-            $modal = View::render('admin/modules/calendar/delete',[
-                'id' => $obCalendar->getId_evento()
-            ]);
-
+        while ($obCalendar = $results->fetch(\PDO::FETCH_ASSOC)) {  
             // VIEW De DEPOIMENTOSS
-            $itens .= View::render('admin/modules/calendar/item',[
-                'id'     => $obCalendar->getId_evento(),
-                'campus' => $obCalendar->dsc_campus,
-                'data'   => $obCalendar->getDat_evento(),
-                'dsc'    => $obCalendar->getDsc_evento(),
-                'modal'  => $modal
+            $itens .= View::render('admin/modules/events/item',[
+                'id'     => $obCalendar['id_evento'],
+                'campus' => $obCalendar['dsc_campus'],
+                'data'   => $obCalendar['dat_evento'],
+                'dsc'    => $obCalendar['dsc_evento'],
             ]);
         }
 
@@ -65,13 +57,13 @@ class Calendar extends Page {
      */
     public static function getEvents(Request $request): string {
         // CONTEUDO DA HOME
-        $content = View::render('admin/modules/calendar/index', [
+        $content = View::render('admin/modules/events/index', [
             'itens'      => self::getEventsItems($request, $obPagination),
             'pagination' => parent::getPagination($request, $obPagination),
             'status'     => Alert::getStatus($request)
         ]);
 
         // RETORNA A PAGINA COMPLETA
-        return parent::getPanel('Contatos > MDC', $content, 'calendar');
+        return parent::getPanel('Eventos > MDC', $content, 'events');
     }
 }

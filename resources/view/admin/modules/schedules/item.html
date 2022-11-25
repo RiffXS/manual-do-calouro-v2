@@ -6,16 +6,14 @@
     <td>{{disciplina}}</td>
     <td>{{professor}}</td>
     <td>
-      <a class="btn btn-warning btn-sm text-center" href="{{URL}}/admin/schedules/{{id}}/edit">
+      <a class="btn btn-warning btn-sm text-center" href="{{URL}}/admin/schedules/edit/{{id}}">
            <i class="fa-solid fa-pen"></i>
       </a>
     </td>
     <td>
-      <a class="btn btn-danger btn-sm text-center" href="{{URL}}/admin/schedules/{{id}}/delete"
+      <a class="btn btn-danger btn-sm text-center" href="{{URL}}/admin/schedules/del/{{id}}"
           data-bs-toggle="modal" data-bs-target="#modal{{id}}">
             <i class="fa-solid fa-trash"></i>
       </a>
     </td>
 </tr>
-
-{{modal}}

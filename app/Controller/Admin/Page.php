@@ -16,13 +16,13 @@ class Page {
             'label' => 'Home',
             'link'  => URL.'/admin'
         ],
-        'users' => [
-            'label' => 'Usuários',
-            'link'  => URL.'/admin/users'
-        ],
         'comments' => [
             'label' => 'Comentários',
             'link'  => URL.'/admin/comments'
+        ],
+        'users' => [
+            'label' => 'Usuários',
+            'link'  => URL.'/admin/users'
         ],
         'events' => [
             'label' => 'Eventos',

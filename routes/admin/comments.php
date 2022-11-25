@@ -14,13 +14,11 @@ $obRouter->get('/admin/comments', [
 ]);
 
 // ROTA DE EXCLUSÃO DE UM DEPOIMENTO
-$obRouter->post('/admin/comments/{id}/delete', [
+$obRouter->post('/admin/comments/delete', [
     'middlewares' => [
         'admin-login'
     ],
-    function($request, $id) {
-        return new Response(200, Admin\Comment::setDeleteComment($request, $id));
+    function($request) {
+        return new Response(200, Admin\Comment::setDeleteComment($request));
     }
 ]);
-
-?>
