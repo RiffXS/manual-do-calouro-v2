@@ -29,7 +29,7 @@ class Schedule extends Page {
         $paginaAtual = $queryParams['page'] ?? 1;
 
         // INSTANCIA DE PAGINAÇÃO
-        $obPagination = new Pagination($quantidadeTotal, $paginaAtual, 5);
+        $obPagination = new Pagination($quantidadeTotal, $paginaAtual, 10);
 
         // RESULTADOS DA PAGINA
         $results = EntitySchedule::getDscSchedules('id_aula ASC', $obPagination->getLimit());
@@ -81,7 +81,10 @@ class Schedule extends Page {
      * @return string
      */
     public static function getNewSchedule(Request $request): string {
-        $content = View::render('admin/modules/schedules/form');
+        $content = View::render('admin/modules/schedules/form', [
+           'tittle'  => 'Cadastrar aula',
+           'status' => Alert::getStatus($request)
+        ]);
 
         return parent::getPanel('Cadastrar aula > MDC', $content, 'horario');
     }

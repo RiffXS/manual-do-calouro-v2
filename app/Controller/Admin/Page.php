@@ -24,13 +24,13 @@ class Page {
             'label' => 'Comentários',
             'link'  => URL.'/admin/comments'
         ],
-        'calendar' => [
+        'events' => [
             'label' => 'Eventos',
-            'link'  => URL.'/admin/calendar'
+            'link'  => URL.'/admin/events'
         ],
         'schedules' => [
             'label' => 'Horarios',
-            'link'  => URL.'/admin/schedule'
+            'link'  => URL.'/admin/schedules'
         ],
         'contacts' => [
             'label' => 'Contatos',
@@ -93,6 +93,10 @@ class Page {
 
         // RETORNA A PAGINA RENDENIZADA
         return self::getPage($tittle, $contentPanel);
+    }
+
+    public static function getModal() {
+        
     }
 
     /**

@@ -4,7 +4,7 @@ use App\Http\Response;
 use App\Controller\Admin;
 
 // ROTA ADMIN
-$obRouter->get('/admin/schedule', [
+$obRouter->get('/admin/schedules', [
     'middlewares' => [
         'admin-login'
     ],
@@ -14,7 +14,7 @@ $obRouter->get('/admin/schedule', [
 ]);
 
 // ROTA ADMIN
-$obRouter->get('/admin/schedule/new', [
+$obRouter->get('/admin/schedules/new', [
     'middlewares' => [
         'admin-login'
     ],

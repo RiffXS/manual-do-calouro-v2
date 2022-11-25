@@ -3,6 +3,7 @@
 <div class="bg-light text-dark rounded py-3">
     <form action="">
         <div class="d-flex justify-content-around mx-md-2 m-lg-0">
+            {{status}}
 
             <!-- DIA_SEMANA -->
             <div class="text-center mx-md-2 m-lg-0">
@@ -66,6 +67,7 @@
 
         <div class="text-center mt-4">
             <button class="btn btn-success" type="submit">Salvar</button>
+            <a href="{{URL}}/admin/schedules" class="btn btn-danger">Cancelar</a>
         </div>
     </form>
 </div>
