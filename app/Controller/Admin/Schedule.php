@@ -32,23 +32,23 @@ class Schedule extends Page {
         $obPagination = new Pagination($quantidadeTotal, $paginaAtual, 5);
 
         // RESULTADOS DA PAGINA
-        $results = EntitySchedule::getSchedules(null, 'id_aula ASC', $obPagination->getLimit());
+        $results = EntitySchedule::getDscSchedules('id_aula ASC', $obPagination->getLimit());
 
         // RENDENIZA O ITEM
-        while ($obShedule = $results->fetchObject(EntitySchedule::class)) {
+        while ($obShedule = $results->fetch(\PDO::FETCH_ASSOC)) {
             $modal = View::render('admin/modules/schedules/delete',[
-                'id' => $obShedule->getId_aula(),
+                'id' => $obShedule['id_aula'],
             ]);
 
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('admin/modules/schedules/item',[
                 'modal'      => $modal,
-                'id'         => $obShedule->getId_aula(),
-                'semana'     => $obShedule->getFk_dia_semana(),
-                'horario'    => $obShedule->getFk_horario_aula(),
-                'sala'       => $obShedule->getFk_sala_aula(),
-                'disciplina' => $obShedule->getFk_disciplina(),
-                'professor'  => $obShedule->getFk_professor()
+                'id'         => $obShedule['id_aula'],
+                'semana'     => $obShedule['dsc_dia_semana'],
+                'horario'    => $obShedule['hora_aula_inicio'],
+                'sala'       => $obShedule['dsc_sala_aula'],
+                'disciplina' => $obShedule['dsc_disciplina'],
+                'professor'  => $obShedule['nom_usuario']
             ]);
         }
 

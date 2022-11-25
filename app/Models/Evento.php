@@ -38,6 +38,10 @@ class Evento {
         return (new Database('evento'))->select($where, $order, $limit, $fields);
     }
 
+    public static function getDscEvents() {
+        $sql = "SELECT id_evento, dsc_campus, dat_evento, dsc_evento FROM evento e JOIN campus c ON (e.fk_campus_id_campus = c.id_campus)";
+    }
+
     /*
      * Metodos GETTERS E SETTERS
      */

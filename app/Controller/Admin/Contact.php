@@ -31,8 +31,10 @@ class Contact extends Page {
         // INSTANCIA DE PAGINAÇÃO
         $obPagination = new Pagination($quantidadeTotal, $paginaAtual, 5);
 
+        $sql = 'SELECT id_contato, nom_usuario, dsc_tipo, dsc_contato FROM tipo_contato tc JOIN contato c ON (tc.id_tipo = c.fk_tipo_contato_id_tipo) JOIN servidor s ON (c.fk_servidor_fk_usuario_id_usuario = s.fk_usuario_id_usuario) JOIN usuario u ON (s.fk_usuario_id_usuario = u.id_usuario)';
+
         // RESULTADOS DA PAGINA
-        $results = EntityContact::getContacts(null, 'id_contato DESC', $obPagination->getLimit());
+        $results = EntityContact::getContacts(null, 'id_contato ASC', $obPagination->getLimit());
 
         // RENDENIZA O ITEM
         while ($obContact = $results->fetchObject(EntityContact::class)) {

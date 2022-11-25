@@ -28,7 +28,7 @@ class Page {
             'label' => 'Eventos',
             'link'  => URL.'/admin/calendar'
         ],
-        'schedule' => [
+        'schedules' => [
             'label' => 'Horarios',
             'link'  => URL.'/admin/schedule'
         ],

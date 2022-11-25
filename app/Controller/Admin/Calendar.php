@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Http\Request;
 use App\Models\Evento as EntityCalendar;
+use App\Utils\Database;
 use App\Utils\Tools\Alert;
 use App\Utils\Pagination;
 use App\Utils\View;
@@ -36,6 +37,8 @@ class Calendar extends Page {
 
         // RENDENIZA O ITEM
         while ($obCalendar = $results->fetchObject(EntityCalendar::class)) {  
+            
+
             $modal = View::render('admin/modules/calendar/delete',[
                 'id' => $obCalendar->getId_evento()
             ]);
@@ -43,7 +46,7 @@ class Calendar extends Page {
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('admin/modules/calendar/item',[
                 'id'     => $obCalendar->getId_evento(),
-                'campus' => $obCalendar->getFk_campus(),
+                'campus' => $obCalendar->dsc_campus,
                 'data'   => $obCalendar->getDat_evento(),
                 'dsc'    => $obCalendar->getDsc_evento(),
                 'modal'  => $modal
