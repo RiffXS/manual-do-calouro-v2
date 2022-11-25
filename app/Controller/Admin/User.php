@@ -36,16 +36,12 @@ class User extends Page {
 
         // RENDENIZA O ITEM
         while ($obUser = $results->fetchObject(EntityUser::class)) {
-            $modal = View::render('admin/modules/users/delete',[
-                'id' => $obUser->getId_usuario()
-            ]);
-
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('admin/modules/users/item',[
+                'click' => "onclick=deleteItem({$obUser->getId_usuario()})",
                 'id'    => $obUser->getId_usuario(),
                 'nome'  => $obUser->getNom_usuario(),
                 'email' => $obUser->getEmail(),
-                'modal' => $modal
             ]);
         }
 
