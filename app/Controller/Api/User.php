@@ -3,7 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Http\Request;
-use App\Models\User as EntityUser;
+use App\Models\Usuario as EntityUser;
 use App\Utils\Pagination;
 use Exception;
 
@@ -11,7 +11,7 @@ class User extends Api {
 
     /**
      * Método responsavel por retornar os detalhes do usuario
-     * @param \App\Models\User $obUser
+     * @param \App\Models\Usuario $obUser
      * 
      * @return array
      */

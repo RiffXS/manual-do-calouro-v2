@@ -3,11 +3,11 @@
 namespace App\Http\Middleware;
 
 use App\Http\Request;
-use App\Models\User as EntityUser;
+use App\Models\Usuario as EntityUser;
 use Closure;
 use Exception;
 
-class UserBasicAuth {
+class BasicAuth {
 
     /**
      * Método responsavel por retornar uma istancia de usuario autenticado
@@ -26,7 +26,7 @@ class UserBasicAuth {
             return false;
         }
         // VALIDA A SENHA E RETORNA O USUARIO
-        return password_verify($_SERVER['PHP_AUTH_PW'], $obUser->senha) ? $obUser : false;
+        return password_verify($_SERVER['PHP_AUTH_PW'], $obUser->getSenha()) ? $obUser : false;
     }
 
     /**

@@ -38,7 +38,7 @@ class Alert {
      * @param  string $message
      * @return string
      */
-    public static function getAlert($type, $text) {
+    private static function getAlert($type, $text) {
         return View::render('shared/alert/status', [
             'tipo'     => $type,
             'mensagem' => $text

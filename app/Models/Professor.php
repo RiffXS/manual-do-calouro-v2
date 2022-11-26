@@ -4,7 +4,7 @@ namespace App\Models;
 
 use \App\Utils\Database;
 
-class Teacher {
+class Professor {
 
     /**
      * ID do professor

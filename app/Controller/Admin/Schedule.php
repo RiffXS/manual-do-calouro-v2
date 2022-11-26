@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Http\Request;
-use App\Models\Schedule as EntitySchedule;
+use App\Models\Aula as EntitySchedule;
 use App\Utils\Tools\Alert;
 use App\Utils\Pagination;
 use App\Utils\View;
@@ -29,26 +29,21 @@ class Schedule extends Page {
         $paginaAtual = $queryParams['page'] ?? 1;
 
         // INSTANCIA DE PAGINAÇÃO
-        $obPagination = new Pagination($quantidadeTotal, $paginaAtual, 5);
+        $obPagination = new Pagination($quantidadeTotal, $paginaAtual, 10);
 
         // RESULTADOS DA PAGINA
-        $results = EntitySchedule::getSchedules(null, 'id_aula ASC', $obPagination->getLimit());
+        $results = EntitySchedule::getDscSchedules('id_aula ASC', $obPagination->getLimit());
 
         // RENDENIZA O ITEM
-        while ($obShedule = $results->fetchObject(EntitySchedule::class)) {
-            $modal = View::render('admin/modules/schedules/delete',[
-                'id' => $obShedule->getId_aula(),
-            ]);
-
+        while ($obShedule = $results->fetch(\PDO::FETCH_ASSOC)) {
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('admin/modules/schedules/item',[
-                'modal'      => $modal,
-                'id'         => $obShedule->getId_aula(),
-                'semana'     => $obShedule->getFk_dia_semana(),
-                'horario'    => $obShedule->getFk_horario_aula(),
-                'sala'       => $obShedule->getFk_sala_aula(),
-                'disciplina' => $obShedule->getFk_disciplina(),
-                'professor'  => $obShedule->getFk_professor()
+                'id'         => $obShedule['id_aula'],
+                'semana'     => $obShedule['dsc_dia_semana'],
+                'horario'    => $obShedule['hora_aula_inicio'],
+                'sala'       => $obShedule['dsc_sala_aula'],
+                'disciplina' => $obShedule['dsc_disciplina'],
+                'professor'  => $obShedule['nom_usuario']
             ]);
         }
 
@@ -81,7 +76,10 @@ class Schedule extends Page {
      * @return string
      */
     public static function getNewSchedule(Request $request): string {
-        $content = View::render('admin/modules/schedules/form');
+        $content = View::render('admin/modules/schedules/form', [
+           'tittle'  => 'Cadastrar aula',
+           'status' => Alert::getStatus($request)
+        ]);
 
         return parent::getPanel('Cadastrar aula > MDC', $content, 'horario');
     }

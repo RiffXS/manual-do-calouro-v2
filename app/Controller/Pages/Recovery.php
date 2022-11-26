@@ -4,8 +4,8 @@ namespace App\Controller\Pages;
 
 use App\Http\Request;
 use App\Models\Mail\Email;
-use App\Models\User as EntityUser;
-use App\Models\Hash as EntityHash;
+use App\Models\Usuario as EntityUser;
+use App\Models\Chave as EntityHash;
 use App\Utils\Tools\Alert;
 use App\Utils\Sanitize;
 use App\Utils\View;
@@ -79,7 +79,7 @@ class Recovery extends Page {
 
     /**
      * Undocumented function
-     * @param \App\Models\Hash $obHash
+     * @param \App\Models\Chave $obHash
      * @param string $email
      * 
      * @return boolean

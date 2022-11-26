@@ -3,10 +3,10 @@
 namespace App\Controller\Pages;
 
 use App\Http\Request;
-use App\Models\Grade   as EntityGrade;
-use App\Models\Student as EntityStudent;
-use App\Models\Teacher as EntityTeacher;
-use App\Models\User    as EntityUser;
+use App\Models\Turma as EntityGrade;
+use App\Models\Aluno as EntityStudent;
+use App\Models\Professor as EntityTeacher;
+use App\Models\Usuario as EntityUser;
 use App\Utils\Tools\Alert;
 use App\Utils\Sanitize;
 use App\Utils\Session;
@@ -42,7 +42,7 @@ class Profile extends Page {
 
     /**
      * Método responsável por definir o texto de acordo com o tipo de usuário
-     * @param \App\Models\User $obUser
+     * @param \App\Models\Usuario $obUser
      * 
      * @return array
      */
@@ -187,7 +187,7 @@ class Profile extends Page {
     /**
      * Método responsavel por realizar uma operação relativo ao tipo de usuario atual
      * @param \App\Http\Request $request
-     * @param \App\Models\User  $obUser
+     * @param \App\Models\Usuario  $obUser
      * @param array $postVars
      */
     private static function updateProfileUser(Request $request, EntityUser $obUser, array $postVars) {

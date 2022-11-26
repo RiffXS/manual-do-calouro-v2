@@ -3,8 +3,8 @@
 namespace App\Controller\Pages;
 
 use App\Http\Request;
-use App\Models\Contact as EntityContact;
-use App\Models\User    as EntityUser;
+use App\Models\Contato as EntityContact;
+use App\Models\Usuario as EntityUser;
 use App\Utils\Tools\Alert;
 use App\Utils\Sanitize;
 use App\Utils\Session;
@@ -302,21 +302,5 @@ class Contact extends Page {
 
         // REDIRECIONA O USUARIO COM MENSAGEM
         $request->getRouter()->redirect('/contact?status=contact_deleted');
-    }
-
-    /**
-     * Método responsavel por consultar os dados de um contato
-     * @param \App\Http\Request $request
-     * @param int $id
-     * 
-     * @return void
-     */
-    public static function getDataContact(Request $request, int $id): void {
-        // ARRAY COM AS INFORMAÇÕES DO CONTATO
-        $return = [
-           'dados' => EntityContact::getContactByFk($id)
-        ];
-        // IMPRIMI O JSON NA PAGINA
-        echo json_encode($return, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
     }
 }

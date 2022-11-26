@@ -4,7 +4,7 @@ namespace App\Models;
 
 use \App\Utils\Database;
 
-class Student {
+class Aluno {
 
     /**
      * ID do aluno

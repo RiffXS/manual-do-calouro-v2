@@ -3,7 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Http\Request;
-use App\Models\User as EntityUser;
+use App\Models\Usuario as EntityUser;
 use App\Utils\Sanitize;
 use \Firebase\JWT\JWT;
 use Exception;

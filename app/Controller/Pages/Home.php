@@ -2,7 +2,10 @@
 
 namespace App\Controller\Pages;
 
-use App\Models\Comment as EntityComment;
+use App\Http\Request;
+use App\Models\Comentario as EntityComment;
+use App\Utils\Sanitize;
+use App\Utils\Session;
 use App\Utils\View;
 use App\Utils\Pagination;
 
@@ -12,10 +15,20 @@ class Home extends Page {
      * Método responsável por retornar o contéudo (view) da página home
      * @return string
      */
-    public static function getHome() {
-        // VIEW DA HOME
-        $content = View::render('pages/home');
+    public static function getHome($request) {
+        
+        $form = '<p>Faço login para comentar</p>';
 
+        if (Session::isLogged()) {
+            $form = View::render('pages/components/home/form');
+        }
+
+        // VIEW DA HOME
+        $content = View::render('pages/home', [
+            'formulario'  => $form,
+            'comentarios' => self::getCommentsItems($request, $obPagination),
+            'pagination'  => parent::getPagination($request, $obPagination)
+        ]);
         // RETORNA A VIEW DA PAGINA
         return parent::getPage('Home', $content, 'home');
     }
@@ -42,7 +55,7 @@ class Home extends Page {
         $obPagination = new Pagination($quantidadeTotal, $paginaAtual, 3);
 
         // RESULTADOS DA PAGINA
-        $results = EntityComment::getComments(null, 'id DESC', $obPagination->getLimit());
+        $results = EntityComment::getComments(null, 'id_comentario DESC', $obPagination->getLimit());
 
         // RENDENIZA O ITEM
         while ($obComment = $results->fetchObject(EntityComment::class)) {
@@ -53,46 +66,31 @@ class Home extends Page {
                 'data' => date('d/m/Y H:i:s',strtotime($obComment->data))
             ]);
         }
-
         // RETORNA OS DEPOIMENTOS
         return $itens;
     }
 
     /**
-     * Método responsável por retornar o contéudo (view) de depoimenots
-     * @param \App\Http\Request $request
      * 
-     * @return string 
-     */
-    public static function getComments($request){
-        // VIEW De DEPOIMENTOSS
-        $content =  View::render('pages/testimonies',[
-           'itens' => self::getCommentsItems($request, $obPagination),
-           'pagination' => parent::getPagination($request, $obPagination)
-        ]);
-
-        // RETORNA A VIEW DA PAGINA
-        return parent::getPage('DEPOIMENTOS > WDEV', $content);
-    }
-
-    /**
-     * Método responsável por cadastrar um depoimento
-     * @param \App\Http\Request $request
      * 
-     * @return string
      */
-    public static function insertTestimony($request) {
-        // DADOS DO POST
+    public static function setNewComment(Request $request): void {
+        // POST VARS
         $postVars = $request->getPostVars();
 
-        // NOVA INSTANCIA
+        // VERIFICA HTML INJECT
+        if (Sanitize::validateForm($postVars)) {
+            $request->getRouter()->redirect('/signup?status=invalid_chars');
+        }
+        // SANITIZA O ARRAY
+        $postVars = Sanitize::sanitizeForm($postVars); 
+
         $obComment = new EntityComment;
-        $obComment->nome = $postVars['nome'];
-        $obComment->mensagem = $postVars['mensagem'];
 
-        $obComment->insertComment();
+        $obComment->setFK_id_usuario(Session::getId());
+        $obComment->setDsc_comentario($postVars['mensagem']);
+        $obComment->setAdd_data();
 
-        // RETORNA A PAGINA DE LISTAGEM DE DEPOIMENTOS
-        return self::getComments($request);
+        echo '<pre>'; print_r($postVars); echo '</pre>'; exit;
     }
 }

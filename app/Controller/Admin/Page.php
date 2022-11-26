@@ -16,21 +16,21 @@ class Page {
             'label' => 'Home',
             'link'  => URL.'/admin'
         ],
-        'users' => [
-            'label' => 'Usuários',
-            'link'  => URL.'/admin/users'
-        ],
         'comments' => [
             'label' => 'Comentários',
             'link'  => URL.'/admin/comments'
         ],
-        'calendar' => [
-            'label' => 'Eventos',
-            'link'  => URL.'/admin/calendar'
+        'users' => [
+            'label' => 'Usuários',
+            'link'  => URL.'/admin/users'
         ],
-        'schedule' => [
+        'events' => [
+            'label' => 'Eventos',
+            'link'  => URL.'/admin/events'
+        ],
+        'schedules' => [
             'label' => 'Horarios',
-            'link'  => URL.'/admin/schedule'
+            'link'  => URL.'/admin/schedules'
         ],
         'contacts' => [
             'label' => 'Contatos',
@@ -93,6 +93,10 @@ class Page {
 
         // RETORNA A PAGINA RENDENIZADA
         return self::getPage($tittle, $contentPanel);
+    }
+
+    public static function getModal() {
+        
     }
 
     /**

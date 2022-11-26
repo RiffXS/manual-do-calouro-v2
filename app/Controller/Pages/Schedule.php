@@ -3,7 +3,7 @@
 namespace App\Controller\Pages;
 
 use App\Http\Request;
-use App\Models\Schedule as EntitySchedule;
+use App\Models\Aula as EntitySchedule;
 use App\Utils\Sanitize;
 use App\Utils\View;
 
@@ -96,11 +96,50 @@ class Schedule extends Page {
      */
     public static function getRow(array $aulas, int &$count): string {        
         $content = '';
-        
-        // RENDENIZA OS ITEMS DE SEGUNDA A SABADO
+
+        $double = [
+            'a' => [
+                'sala' => '-',
+                'materia' => '-',
+                'professor' => '-'
+            ],
+            'b' => [
+                'sala' => '-',
+                'materia' => '-',
+                'professor' => '-'
+            ]
+        ];
+
+        // Loop para cada aula
         for ($i = 0; $i < 6; $i++) {
-            // VIEW DO ITEM
-            $content .= self::getItem($aulas[$count]);
+            // VERIFICA SE É UMA AULA DE TURMA COMPLETA
+            if ($aulas[$count]['grupo'] == 'C') {
+                // VIEW DO HORÁRIO
+                $content .= self::getItem($aulas[$count]);
+            } else {
+                if ($aulas[$count]['grupo'] == 'A') {
+                    $double['a'] = [
+                        'sala' => $aulas[$count]['sala'],
+                        'materia' => $aulas[$count]['materia'],
+                        'professor' => $aulas[$count]['professor'],
+                    ];
+                    if ($aulas[$count+1]['grupo'] == 'B') {
+                        $double['b'] = [
+                            'sala' => $aulas[$count+1]['sala'],
+                            'materia' => $aulas[$count+1]['materia'],
+                            'professor' => $aulas[$count+1]['professor'],
+                        ];
+                        $count++;
+                    }
+                } else {
+                    $double['b'] = [
+                        'sala' => $aulas[$count]['sala'],
+                        'materia' => $aulas[$count]['materia'],
+                        'professor' => $aulas[$count]['professor'],
+                    ];
+                }
+                $content .= self::getDoubleItem($double);
+            }
             $count++;
         }
         // RETORNA A VIEW DA LINHA
@@ -113,12 +152,23 @@ class Schedule extends Page {
      * 
      * @return string
      */ 
-    public static function getItem(array $aula): string {
-        // RETORNA A VIEW DO ITEM
+    private static function getItem(array $aula): string {
+        // RETORNA A VIEW DA COLUNA
         return View::render('pages/components/schedule/item', [
             'sala' => $aula['sala'],
             'materia' => $aula['materia'],
             'professor' => $aula['professor']
+        ]);
+    }
+
+    private static function getDoubleItem($double) {
+        return View::render('pages/components/schedule/double', [
+            'sala-a' => $double['a']['sala'],
+            'materia-a' => $double['a']['materia'],
+            'professor-a' => $double['a']['professor'],
+            'sala-b' => $double['b']['sala'],
+            'materia-b' => $double['b']['materia'],
+            'professor-b' => $double['b']['professor']
         ]);
     }
 }

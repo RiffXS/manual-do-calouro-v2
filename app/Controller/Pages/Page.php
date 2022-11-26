@@ -3,7 +3,7 @@
 namespace App\Controller\Pages;
 
 use App\Http\Request;
-use App\Models\User as EntityUser;
+use App\Models\Usuario as EntityUser;
 use App\Utils\Pagination;
 use App\Utils\Session;
 use App\Utils\View;

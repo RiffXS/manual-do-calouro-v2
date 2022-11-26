@@ -1,0 +1,30 @@
+<h1>Eventos</h1>
+<p>Eventos registrados no campus</p>
+
+<hr />
+
+<a href="{{URL}}/admin/users/new">
+    <button class="btn btn-success" type="button">Cadastrar evento</button>
+</a>
+
+<hr />
+
+{{status}}
+
+<table class="table table-light table-striped">
+    <thead class="">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Campus</th>
+            <th scope="col">Data</th>
+            <th scope="col">Descrição</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{itens}}
+    </tbody>
+</table>
+
+{{pagination}}

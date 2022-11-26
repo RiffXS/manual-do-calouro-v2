@@ -2,7 +2,7 @@
 
 namespace App\Controller\Pages;
 
-use App\Models\Calendar as EntityCalendar;
+use App\Models\Evento as EntityCalendar;
 use App\Utils\View;
 
 class Calendar extends Page {
@@ -18,7 +18,8 @@ class Calendar extends Page {
         // VERIFICA SE O COOKIE COM EVENTOS EXISTE
         if (!isset($_COOKIE['mdc-calendario'])) {
             // TRANSFORMA O ARRAY PARA JSON
-            $events = EntityCalendar::getCalendar();
+            $events = EntityCalendar::getEvents(null, null, null, 'dsc_evento, dat_evento')->fetchAll(\PDO::FETCH_ASSOC);
+
             $cookie = json_encode($events, JSON_UNESCAPED_UNICODE);
 
             // DEFINE O COOKIE DE EVENTOS

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Utils\Database;
 
-class Contact {
+class Contato {
 
     /**
      * ID do contato
@@ -138,8 +138,12 @@ class Contact {
     }
 
     public static function getContactsInfo($id) {
-        $sql = "SELECT c.id_contato, tc.dsc_tipo, c.dsc_contato 
-                FROM contato c JOIN tipo_contato tc ON (c.fk_tipo_contato_id_tipo = tc.id_tipo) WHERE c.fk_servidor_fk_usuario_id_usuario = $id;";
+        $sql = "SELECT c.id_contato,
+                    tc.dsc_tipo,
+                    c.dsc_contato
+                FROM contato c
+                    JOIN tipo_contato tc ON (c.fk_tipo_contato_id_tipo = tc.id_tipo)
+                WHERE c.fk_servidor_fk_usuario_id_usuario = $id";
 
         return (new Database)->execute($sql);
     }

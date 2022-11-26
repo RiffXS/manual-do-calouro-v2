@@ -3,7 +3,7 @@
 namespace App\Controller\Pages;
 
 use App\Http\Request;
-use App\Models\User as EntityUser;
+use App\Models\Usuario as EntityUser;
 use App\Utils\Tools\Alert;
 use App\Utils\Sanitize;
 use App\Utils\View;

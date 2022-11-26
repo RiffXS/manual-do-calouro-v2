@@ -30,15 +30,15 @@ View::init([
 
 // DEFINE O MAPEAMENTO DE MIDDLEWARES DISPONIVEIS
 MiddlewareQueue::setMap([
-    'maintenence'     => \App\Http\Middleware\Maintenence::class,
-    'admin-logout'    => \App\Http\Middleware\AdminLogout::class,
-    'admin-login'     => \App\Http\Middleware\AdminLogin::class,
-    'api'             => \App\Http\Middleware\Api::class,
-    'user-login'      => \App\Http\Middleware\UserLogin::class,
-    'user-logout'     => \App\Http\Middleware\UserLogout::class,
-    'user-basic-auth' => \App\Http\Middleware\UserBasicAuth::class,
-    'jwt-auth'        => \App\Http\Middleware\JWTAuth::class,
-    'cache'           => \App\Http\Middleware\Cache::class,
+    'maintenence'  => \App\Http\Middleware\Maintenence::class,
+    'admin-logout' => \App\Http\Middleware\AdminLogout::class,
+    'admin-login'  => \App\Http\Middleware\AdminLogin::class,
+    'user-login'   => \App\Http\Middleware\UserLogin::class,
+    'user-logout'  => \App\Http\Middleware\UserLogout::class,
+    'basic-auth'   => \App\Http\Middleware\BasicAuth::class,
+    'jwt-auth'     => \App\Http\Middleware\JWTAuth::class,
+    'cache'        => \App\Http\Middleware\Cache::class,
+    'api'          => \App\Http\Middleware\Api::class,
 ]);
 
 // DEFINE O MAPEAMENTO DE MIDDLEWARES EM TODAS AS ROTAS

@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Http\Request;
-use App\Models\User;
+use App\Models\Usuario as EntityUser;
 use App\Utils\View;
 use App\Utils\Tools\Alert;
 use App\Utils\Session;
@@ -42,10 +42,10 @@ class Login extends Page {
         $msg = 'E-mail ou senha inválidos!';
 
         // BUSCA USUARIO PELO EMAIL
-        $obUser = User::getUserByEmail($email);
+        $obUser = EntityUser::getUserByEmail($email);
         
         // VALIDA A INSTANCIA
-        if (!$obUser instanceof User) {
+        if (!$obUser instanceof EntityUser) {
             $request->getRouter()->redirect('/admin/login?status=invalid_data');
         }
         // VERIFICA A SENHA DO USUARIO

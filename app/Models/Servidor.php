@@ -4,7 +4,7 @@ namespace App\Models;
 
 use \App\Utils\Database;
 
-class Server {
+class Servidor {
 
     /**
      * ID do servidor
