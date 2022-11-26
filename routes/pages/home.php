@@ -9,3 +9,10 @@ $obRouter->get('/', [
         return new Response(200, Pages\Home::getHome($request));
     }
 ]);
+
+// ROTA CADASTRO DE COMENTARIO
+$obRouter->post('/comment/new', [
+    function($request) {
+        return new Response(200, Pages\Home::setNewComment($request));
+    }
+]);
