@@ -8,6 +8,23 @@ use App\Utils\Sanitize;
 use App\Utils\View;
 
 class Schedule extends Page {
+
+    /**
+     * Array para aulas divididas
+     * @var array
+     */
+    private static $double = [
+        'a' => [
+            'sala' => '-',
+            'materia' => '-',
+            'professor' => '-'
+        ],
+        'b' => [
+            'sala' => '-',
+            'materia' => '-',
+            'professor' => '-'
+        ]
+    ];
     
     /**
      * Método responsável por retornar o contéudo (view) da página de horario
@@ -86,6 +103,37 @@ class Schedule extends Page {
         // RETORNA O CONTEÚDO DA PÁGINA
         return $content;
     }
+
+    /**
+     * Método responsavel por definir o array de aula com turma dividida
+     * @param array $aulas 
+     * @param integer $count
+     * 
+     * @return void
+     */
+    private static function setDoubleItem($aulas, &$count): void {
+        if ($aulas[$count]['grupo'] == 'A') {
+            self::$double['a'] = [
+                'sala' => $aulas[$count]['sala'],
+                'materia' => $aulas[$count]['materia'],
+                'professor' => $aulas[$count]['professor'],
+            ];
+            if ($aulas[$count+1]['grupo'] == 'B') {
+                self::$double['b'] = [
+                    'sala' => $aulas[$count+1]['sala'],
+                    'materia' => $aulas[$count+1]['materia'],
+                    'professor' => $aulas[$count+1]['professor'],
+                ];
+                $count++;
+            }
+        } else {
+            self::$double['b'] = [
+                'sala' => $aulas[$count]['sala'],
+                'materia' => $aulas[$count]['materia'],
+                'professor' => $aulas[$count]['professor'],
+            ];
+        }
+    }
     
     /**
      * Método responsável por retornar a view de uma linha
@@ -95,55 +143,43 @@ class Schedule extends Page {
      * @return string
      */
     public static function getRow(array $aulas, int &$count): string {        
+        // DECLARAÇÃO DE VARIAVEL
         $content = '';
 
-        $double = [
-            'a' => [
-                'sala' => '-',
-                'materia' => '-',
-                'professor' => '-'
-            ],
-            'b' => [
-                'sala' => '-',
-                'materia' => '-',
-                'professor' => '-'
-            ]
-        ];
-
-        // Loop para cada aula
+        // RENDENIZA OS SEIS ITEMS DE UMA LINHA
         for ($i = 0; $i < 6; $i++) {
-            // VERIFICA SE É UMA AULA DE TURMA COMPLETA
-            if ($aulas[$count]['grupo'] == 'C') {
-                // VIEW DO HORÁRIO
-                $content .= self::getItem($aulas[$count]);
-            } else {
-                if ($aulas[$count]['grupo'] == 'A') {
-                    $double['a'] = [
-                        'sala' => $aulas[$count]['sala'],
-                        'materia' => $aulas[$count]['materia'],
-                        'professor' => $aulas[$count]['professor'],
-                    ];
-                    if ($aulas[$count+1]['grupo'] == 'B') {
-                        $double['b'] = [
-                            'sala' => $aulas[$count+1]['sala'],
-                            'materia' => $aulas[$count+1]['materia'],
-                            'professor' => $aulas[$count+1]['professor'],
-                        ];
-                        $count++;
-                    }
-                } else {
-                    $double['b'] = [
-                        'sala' => $aulas[$count]['sala'],
-                        'materia' => $aulas[$count]['materia'],
-                        'professor' => $aulas[$count]['professor'],
-                    ];
-                }
-                $content .= self::getDoubleItem($double);
+            if ($aulas[$count]['grupo'] != 'C') {
+
+                self::setDoubleItem($aulas, $count);
+    
+                // VIEW DE TURMA DIVIDIDA A-B
+                $content .= self::getDoubleClass(self::$double);
+            } 
+            else {
+                // VIEW DE TURMA COMPLETA
+                $content .= self::getClass($aulas[$count]);
             }
+            // AUMENTA O CONTADOR
             $count++;
         }
         // RETORNA A VIEW DA LINHA
         return $content;
+    }
+
+    /**
+     * Método responsavel por retorna a view de um item duplo
+     * @param array @double
+     * 
+     */
+    private static function getDoubleClass($double) {
+        return View::render('pages/components/schedule/double', [
+            'sala-a'      => $double['a']['sala'],
+            'materia-a'   => $double['a']['materia'],
+            'professor-a' => $double['a']['professor'],
+            'sala-b'      => $double['b']['sala'],
+            'materia-b'   => $double['b']['materia'],
+            'professor-b' => $double['b']['professor']
+        ]);
     }
 
     /**
@@ -152,23 +188,12 @@ class Schedule extends Page {
      * 
      * @return string
      */ 
-    private static function getItem(array $aula): string {
+    private static function getClass(array $aula): string {
         // RETORNA A VIEW DA COLUNA
         return View::render('pages/components/schedule/item', [
             'sala' => $aula['sala'],
             'materia' => $aula['materia'],
             'professor' => $aula['professor']
-        ]);
-    }
-
-    private static function getDoubleItem($double) {
-        return View::render('pages/components/schedule/double', [
-            'sala-a' => $double['a']['sala'],
-            'materia-a' => $double['a']['materia'],
-            'professor-a' => $double['a']['professor'],
-            'sala-b' => $double['b']['sala'],
-            'materia-b' => $double['b']['materia'],
-            'professor-b' => $double['b']['professor']
         ]);
     }
 }

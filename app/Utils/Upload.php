@@ -48,9 +48,7 @@ class Upload {
 
     /**
      * Coonstrutor da classe
-     * @param array file $_FILE['campo']
-     * 
-     * @author @SimpleR1ick
+     * @param array $file $_FILE['arquivo']
      */
     public function __construct($file) {
         $info = pathinfo($file['name']);
@@ -66,8 +64,6 @@ class Upload {
     /**
      * Metodo responsavel por gerar um novo nome aleatorio
      * @return void
-     * 
-     * @author @SimpleR1ick
      */
     public function generateNewName(): void {
         $this->name = time().'-'.uniqid();
@@ -76,8 +72,6 @@ class Upload {
     /**
      * Metodo responsavel por retornar o nome do arquivo com sua extensão
      * @return string
-     * 
-     * @author @SimpleR1ick
      */
     public function getBasename(): string  {
         // VALIDA EXTENSÃO
@@ -94,6 +88,7 @@ class Upload {
      * Metodo responsavel por obter um nome possivel para o arquivo
      * @param  string  $dir
      * @param  boolean $overwrite
+     * 
      * @return string 
      */
     private function getPossibleBasename(string $dir, bool $overwrite): string {
@@ -120,8 +115,6 @@ class Upload {
      * @param  boolean $overwrite 
      * 
      * @return boolean
-     * 
-     * @author @SimpleR1ick
      */
     public function upload(string $dir, bool $overwrite = true): bool {
         // VERIFICAR ERRO
@@ -136,11 +129,9 @@ class Upload {
 
     /**
      * Metodo responsavel por criar instancias de ulpload para multiplos arquivos
-     * @param  array $files $_FILES['campo']
+     * @param  array $files $_FILES['arquivo']
      * 
      * @return array
-     * 
-     * @author @SimpleR1ick
      */
     public static function createMultUpload(array $files): array {
         // DECLARAÇÃO DE VARIAVEIS
@@ -166,12 +157,68 @@ class Upload {
     /*
      * Metodos GETTERS E SETTERS
      */
-
-    public function __get(mixed $name) {
-        return $this->{$name};
+    
+    /**
+     * Get name
+     * @return string
+     */
+    public function getName(): string {
+        return $this->name;
     }
 
-    public function __set(mixed $name, $value) {
-        $this->{$name} = $value;
+    /**
+     * Set name
+     * @param string $name
+     */
+    public function setName(string $name): void {
+        $this->name = $name;
+    }
+
+    /**
+     * Get extension
+     * @return string
+     */
+    public function getExtension(): string {
+        return $this->extension;
+    }
+
+    /**
+     * Set extension
+     * @param mixed $name
+     */
+    public function setExtension(mixed $ext): void {
+        $this->extension = $ext;
+    }
+
+    /**
+     * Get tpmName
+     * @return string
+     */
+    public function getTpmName(): string {
+        return $this->tmpName;
+    }
+
+    /**
+     * Get type
+     * @return string
+     */
+    public function getType(): string {
+        return $this->type;
+    }
+
+    /**
+     * Get size
+     * @return integer
+     */
+    public function getsize(): int {
+        return $this->size;
+    }
+
+    /**
+     * Get error
+     * @return integer
+     */
+    public function getUploadError(): int {
+        return $this->error;
     }
 }

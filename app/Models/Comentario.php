@@ -39,7 +39,7 @@ class Comentario {
         $this->setAdd_data();
 
         // INSERE O DEPOIMENTO NO BANCO DE DADOS
-        $this->setId_comentario((new Database('depoimentos'))->insert([
+        $this->setId_comentario((new Database('comentario'))->insert([
             'dsc_comentario'        => $this->dsc_comentario,
             'add_data'              => $this->add_data,
             'fk_usuario_id_usuario' => $this->fk_usuario_id_usuario
@@ -93,6 +93,20 @@ class Comentario {
         return self::getComments("id_comentario = $id")->fetchObject(self::class);
     }
 
+    public static function getDscComments($order, $limit) {
+        $sql =  "SELECT id_comentario,
+                    dsc_comentario,
+                    c.add_data,
+                    nom_usuario,
+                    img_perfil
+                FROM comentario c
+                    JOIN usuario u ON (
+                        c.fk_usuario_id_usuario = u.id_usuario
+                    ) ORDER BY $order LIMIT $limit";
+                    
+        return (new Database())->execute($sql);
+    }
+
     /*
      * Metodos GETTERS E SETTERS
      */
@@ -114,11 +128,11 @@ class Comentario {
     }
 
     public function getAdd_data(): string {
-        return date('d/m/Y H:i:s',strtotime($this->add_data));
+        return date('d/m/Y H:i:s', strtotime($this->add_data));
     }
 
     public function setAdd_data(): void {
-        $this->add_data;
+        $this->add_data = date('Y-m-d H:i:s');
     }
 
     public function getFK_id_usuario(): string {

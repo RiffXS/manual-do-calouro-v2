@@ -91,15 +91,13 @@ class Page {
             // OBTÊM OS DADOS DO USUARIO
             $obUser = EntityUser::getUserById(Session::getId());
 
-            // VERIFICA SE O USUARIO E ADMINISTRADOR
+            // LAMBDA - RENDENIZA LINK SE USUARIO FOR ADMINISTRADOR
             $isAdmin = function($lv) {
-                // COMPARA O NIVEL DE ACESSO
                 if ($lv == 1) {
                     return View::render('pages/header/admin');
                 }
                 return '';
             };
-
             // RETORNA O DROPDOWN DO LOGIN
             return View::render('pages/header/dropdown', [
                 'imagem' => $obUser->getImg_perfil(),

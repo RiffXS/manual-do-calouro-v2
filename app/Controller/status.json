@@ -99,5 +99,21 @@
     "contact_deleted": {
         "type": "success",
         "text": "Contato excluido com sucesso!"
+    },
+    "comment_registered": {
+        "type": "success",
+        "text": "Comentario cadastro com sucesso!"
+    },
+    "image_type": {
+        "type": "danger",
+        "text": "Somente PNG e JPEG são permitidos."
+    },
+    "image_syze": {
+        "type": "danger",
+        "text": "O tamanho da imagem excede 2 MB"
+    },
+    "image_erro": {
+        "type": "danger",
+        "text": "Problema no upload de imagem."
     }
 }

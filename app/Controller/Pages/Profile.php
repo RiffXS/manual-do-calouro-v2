@@ -114,16 +114,30 @@ class Profile extends Page {
 
         // OBTEM O USUARIO E O NIVEL DE ACESSO DA SESSÃO
         $obUser = Session::getUser();
-
         $photo = $obUser->getImg_perfil();
+
+        // NOVA INSTANCIA 
+        $obUpload = new Upload($files['foto']);
+
+        // LAMBDA - VERIFICA SE EXISTE UM STATUS DE ERRO
+        $isError = function($key) use ($request): void {
+            if (!empty($key)) {
+                $request->getRouter()->redirect("/profile?status=$key");
+            }
+        };
+        // Valida a entrada do arquivo para verificar se não está vazio
+        if (!file_exists($obUpload->getTpmName())) {
+            $isError(self::updateProfilePicture($obUpload, $photo));
+        }    
+
+        // ATUALIZA O CAMPO DO TIPO USUARIO
+        self::updateProfileUser($request, $obUser, $postVars);
+
 
         $nome = $postVars['nome'];
         $email = $postVars['email'];
 
-        self::updateProfilePicture($request, $photo, $files['foto']);
-
-        // ATUALIZA O CAMPO DO TIPO USUARIO
-        self::updateProfileUser($request, $obUser, $postVars);
+        
 
         // VALIDA O NOME
         if (Sanitize::validateName($nome)) {
@@ -154,36 +168,32 @@ class Profile extends Page {
     /**
      * Método responsavel por realizar o upload da imagem enviada pelo usuario
      * @param \App\Http\Request $request
-     * @param string $photo
+     * @param \App\Utils\Upload $photo
      * @param array $file
      * 
-     * @return void
+     * @return string
      */
-    private static function updateProfilePicture($request, &$photo, $file): void {
-        // NOVA INSTANCIA 
-        $obUpload = new Upload($file);
+    private static function updateProfilePicture(Upload $obUpload, string &$photo): string {
+        $extensions = array("png", "jpg", "jpeg");
 
-        // VERIFICA SE HOUVE UPLOAD DE FOTO
-        if (is_uploaded_file($obUpload->tmpName) && $obUpload->error != 4) { 
-            // VERIFICA SE O ARQUIVO E MENOR DO QUE O ACEITO
-            if ($_POST['MAX_FILE_SIZE'] > $obUpload->size) {
-                // VARIFICA SE O USUARIO POSSUI UMA FOTO
-                if ($photo == 'user.png') {
-                    $obUpload->generateNewName();      // GERA UM NOME NOVO
-                    $photo = $obUpload->getBasename(); // OBTEM O NOME NOVO
-                } 
-                else {
-                    // ATRIBUI O NOME AO JA EXISTENTE DO USUARIO
-                    $obUpload->name = pathinfo($photo, PATHINFO_FILENAME);
-                }
-                // FAZ O UPLOAD DA FOTO PARA PASTA DE UPLOADS
-                if (!$obUpload->upload(__DIR__.'/../../../public/uploads/')) {
-                    $request->getRouter()->redirect('/profile?status=upload_error');
-                }
-            }
+        $status = '';
+
+        // VALIDA SE A EXTENSÃO DO ARQUIVO É PERMITIDA
+        if (!in_array($obUpload->getExtension(), $extensions)) {
+            $status = 'image_type';
         }
+        // VALIDA SE O TAMANHO DA IMAGEM EXCEDEU O LIMITE
+        else if ($obUpload->getsize() > $_POST['MAX_FILE_SIZE']) {
+            $status = 'image_syze';
+        } 
+        // VALIDA SE O UPLOAD OCORREU CORRETAMENTE
+        else if ((!$obUpload->upload(__DIR__.'/../../../public/uploads/'))){    
+            $status = 'image_erro';
+        } 
+        // RETORNA O STATUS
+        return $status;
     } 
-    
+
     /**
      * Método responsavel por realizar uma operação relativo ao tipo de usuario atual
      * @param \App\Http\Request $request
@@ -204,7 +214,7 @@ class Profile extends Page {
                 
                     // VERIFICA SE A MATRICULA ESTA DISPONIVEL
                     if (!$obStudent->verifyEnrollment()) {
-                        $request->getRouter()->redirect('/profile?status=enrollment_duplicated');
+                        $status = 'enrollment_duplicated';
                     } 
                     // INSERE O USUARIO NA TABELA DE ALUNOS
                     $obStudent->insertStudent();

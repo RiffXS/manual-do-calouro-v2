@@ -55,15 +55,21 @@ class Home extends Page {
         $obPagination = new Pagination($quantidadeTotal, $paginaAtual, 3);
 
         // RESULTADOS DA PAGINA
-        $results = EntityComment::getComments(null, 'id_comentario DESC', $obPagination->getLimit());
+        $results = EntityComment::getDscComments('id_comentario DESC', $obPagination->getLimit());
+
+        // VERIFICA SE A IMAGEM ESTA VAZIA
+        $image = function($img) {
+            return !empty($img) ? $img : 'user.png';
+        };
 
         // RENDENIZA O ITEM
-        while ($obComment = $results->fetchObject(EntityComment::class)) {
+        while ($obComment = $results->fetch(\PDO::FETCH_ASSOC)) {
             // VIEW De DEPOIMENTOSS
-            $itens .= View::render('pages/components/comment/item',[
-                'nome' => $obComment->nome,
-                'mensagem' => $obComment->mensagem,
-                'data' => date('d/m/Y H:i:s',strtotime($obComment->data))
+            $itens .= View::render('pages/components/home/comment',[
+                'imagem' => $image($obComment['img_perfil']),
+                'data'   => $obComment['add_data'],
+                'nome'   => $obComment['nom_usuario'],
+                'texto'  => $obComment['dsc_comentario']
             ]);
         }
         // RETORNA OS DEPOIMENTOS
@@ -91,6 +97,8 @@ class Home extends Page {
         $obComment->setDsc_comentario($postVars['mensagem']);
         $obComment->setAdd_data();
 
-        echo '<pre>'; print_r($postVars); echo '</pre>'; exit;
+        $obComment->insertComment();
+
+        $request->getRouter()->redirect('/?status=comment_registered');
     }
 }
