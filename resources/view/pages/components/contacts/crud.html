@@ -1,17 +1,16 @@
 <div>
-    <p>
-        <button
-            class="btn btn-outline-primary"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#crud-contatos"
-            aria-expanded="false"
-            aria-controls="crud-contatos"
-        >
-            Meus contatos
-        </button>
-    </p>
-    <div class="collapse mt-3 mb-4" id="crud-contatos">
+    <button
+        class="btn btn-outline-primary mb-3"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#crud-contatos"
+        aria-expanded="false"
+        aria-controls="crud-contatos"
+    >
+        Meus contatos
+    </button>
+
+    <div class="collapse mb-3" id="crud-contatos">
         <div class="card card-body">
             <span class="mb-3">
                 <button
@@ -66,10 +65,7 @@
             </div>
             <div class="modal-body">
                 <form method="POST" action="{{URL}}/contact/new">
-                    <div class="mb-3">
-                        <label for="tipo-contato" class="col-form-label"
-                            >Tipo de contato:</label
-                        >
+                    <div class="form-floating mb-3">
                         <select
                             name="tipo-contato"
                             id="tipo-contato"
@@ -81,6 +77,10 @@
                             <option value="2">E-mail</option>
                             <option value="3">WhatsApp</option>
                         </select>
+
+                        <label for="tipo-contato"
+                            >Tipo de contato:</label
+                        >
                     </div>
                     <div class="form-floating mb-3">
                         <input
