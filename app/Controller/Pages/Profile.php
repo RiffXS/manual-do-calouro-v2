@@ -114,21 +114,36 @@ class Profile extends Page {
 
         // OBTEM O USUARIO E O NIVEL DE ACESSO DA SESSÃO
         $obUser = Session::getUser();
-        $photo = $obUser->getImg_perfil();
-
-        // NOVA INSTANCIA 
-        $obUpload = new Upload($files['foto']);
-
+    
         // LAMBDA - VERIFICA SE EXISTE UM STATUS DE ERRO
         $isError = function($key) use ($request): void {
             if (!empty($key)) {
                 $request->getRouter()->redirect("/profile?status=$key");
             }
         };
+
+        // NOVA INSTANCIA 
+        $obUpload = new Upload($files['foto']);
+
+        $photo = $obUser->getImg_perfil();
+
         // Valida a entrada do arquivo para verificar se não está vazio
-        if (!file_exists($obUpload->getTpmName())) {
-            $isError(self::updateProfilePicture($obUpload, $photo));
+        if (file_exists($obUpload->getTpmName())) {
+            $info = pathinfo($photo);
+
+            if ($photo == 'user.png') {
+                $obUpload->generateNewName();
+            } 
+            else {
+                if ($obUpload->getExtension() != $info['extension']) {
+                    unlink(__DIR__."/../../../public/uploads/".$photo);
+                }
+                // ATRIBUI O NOME AO JA EXISTENTE DO USUARIO
+                $obUpload->setName($photo);
+            }
+            $isError(self::updateProfilePicture($obUpload));
         }    
+        $photo = $obUpload->getBasename();
 
         // ATUALIZA O CAMPO DO TIPO USUARIO
         self::updateProfileUser($request, $obUser, $postVars);
@@ -136,8 +151,6 @@ class Profile extends Page {
 
         $nome = $postVars['nome'];
         $email = $postVars['email'];
-
-        
 
         // VALIDA O NOME
         if (Sanitize::validateName($nome)) {
@@ -173,7 +186,7 @@ class Profile extends Page {
      * 
      * @return string
      */
-    private static function updateProfilePicture(Upload $obUpload, string &$photo): string {
+    private static function updateProfilePicture(Upload $obUpload): string {
         $extensions = array("png", "jpg", "jpeg");
 
         $status = '';
@@ -185,7 +198,7 @@ class Profile extends Page {
         // VALIDA SE O TAMANHO DA IMAGEM EXCEDEU O LIMITE
         else if ($obUpload->getsize() > $_POST['MAX_FILE_SIZE']) {
             $status = 'image_syze';
-        } 
+        }
         // VALIDA SE O UPLOAD OCORREU CORRETAMENTE
         else if ((!$obUpload->upload(__DIR__.'/../../../public/uploads/'))){    
             $status = 'image_erro';
