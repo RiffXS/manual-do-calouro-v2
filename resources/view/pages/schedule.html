@@ -14,6 +14,38 @@
 
 <section class="my-4">
     <div class="container">
+        <button
+            class="btn btn-outline-dark mb-3"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#crud-sala"
+            aria-expanded="false"
+            aria-controls="crud-sala"
+        >
+            Verificar disponibilidade de uma sala
+        </button>
+    
+        <div class="collapse mb-3" id="crud-sala">
+            <div class="card card-body">
+                <div class="mb-3">
+                    <form class="row" action="">
+                        <div class="col-11">
+                            <label class="form-label" for="input-sala">Sala</label>
+                            <input type="text" class="form-control" id="input-sala" placeholder="ex: 901T">
+                        </div>
+    
+                        <div class="col-1 d-flex justify-content-center">
+                            <button class="btn btn-warning align-self-end" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="my-4">
+    <div class="container">
         <form class="d-flex flex-column align-items-center" method="GET">
             <h5>Curso:</h5>
             <!-- GRUPO DE BOTÕES CURSO -->

@@ -19,7 +19,21 @@ class Professor {
     private $regras;
 
     /**
-     * Método responsavel por atualizar as regras de um usuario professor
+     * Método responsável por cadastrar um usuário como aluno
+     * @return boolean
+     */
+    public function insertTeacher() {
+        (new Database('professor'))->insert([
+            'fk_servidor_fk_usuario_id_usuario' => $this->fk_servidor_fk_usuario_id_usuario,
+            'regras'                            => $this->regras
+        ], false);
+
+        // RETORNA VERDADEIRO
+        return true;
+    }
+
+    /**
+     * Método responsável por atualizar as regras de um usuário professor
      * @return boolean
      */
     public function updateRules(): bool {
@@ -31,7 +45,7 @@ class Professor {
     }
 
     /**
-     * Método responsavel por retornar usuario
+     * Método responsável por retornar usuário
      * @param  string $where
      * @param  string $order
      * @param  string $limit
@@ -44,7 +58,7 @@ class Professor {
     }
 
     /**
-     * Método responsavel por retornar uma istancia com base no ID
+     * Método responsável por retornar uma istância com base no ID
      * @param  integer $id
      * 
      * @return self|bool
@@ -54,7 +68,7 @@ class Professor {
     }
 
     /*
-     * Metodos GETTERS E SETTERS
+     * Métodos GETTERS e SETTERS
      */
 
     /**
@@ -88,4 +102,5 @@ class Professor {
     public function setRules(string $rules): void {
         $this->regras = $rules;
     }
+
 }

@@ -92,6 +92,10 @@ class Database {
 		}
 	}
 
+	public function beginTransaction() {
+		$this->connection->beginTransaction();
+	}
+
 	/**
 	 * Método responsável por executar queries dentro do banco de dados
 	 * @param  string $query
@@ -116,10 +120,11 @@ class Database {
 	/**
 	 * Método responsável por inserir dados no banco
 	 * @param  array $values [ field => value ]
+	 * @param  boolean $returnId
 	 * 
-	 * @return integer ID inserido
+	 * @return integer|void ID inserido
 	 */
-	public function insert(array $values): int {
+	public function insert(array $values, bool $returnId = true): mixed {
 		// DADOS DA QUERY
 		$fields = array_keys($values);
 		$binds  = array_pad([], count($fields), '?');
@@ -130,6 +135,10 @@ class Database {
 		// EXECUTA O INSERT
 		$this->execute($query, array_values($values));
 
+		// NÃO RETORNA O ID
+		if ($returnId === false) {
+			return null;
+		}
 		// RETORNA O ID INSERIDO
 		return $this->connection->lastInsertId();
 	}

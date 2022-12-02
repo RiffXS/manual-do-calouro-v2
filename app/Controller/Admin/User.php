@@ -3,15 +3,18 @@
 namespace App\Controller\Admin;
 
 use App\Http\Request;
-use App\Models\Usuario as EntityUser;
-use App\Utils\Tools\Alert;
 use App\Utils\View;
 use App\Utils\Pagination;
+use App\Models\Admin as EntityAdmin;
+use App\Models\Usuario as EntityUser;
+use App\Models\Servidor as EntityServer;
+use App\Models\Professor as EntityTeacher;
+use App\Utils\Tools\Alert;
 
 class User extends Page {
 
     /**
-     * Método responsavel por obter a rendenização dos items de usuarios para página
+     * Método responsável por obter a renderização dos items de usuários para página
      * @param \App\Http\Request $request
      * @param \App\Utils\Pagination $obPagination
      * 
@@ -50,7 +53,7 @@ class User extends Page {
     }
 
     /**
-     * Método responsavel por rendenizar a view de listagem de usuarios
+     * Método responsável por renderizar a view de listagem de usuários
      * @param \App\Http\Request
      * 
      * @return string
@@ -68,7 +71,7 @@ class User extends Page {
     }
 
     /**
-     * Método responsavel por retornar o formulario de cadastro de um novo usuario
+     * Método responsável por retornar o formulário de cadastro de um novo usuário
      * @param \App\Http\Request
      * 
      * @return string
@@ -91,7 +94,7 @@ class User extends Page {
     }
 
     /**
-     * Método responsavel por cadastrar um usuario no banco
+     * Método responsável por cadastrar um usuário no banco
      * @param \App\Http\Request
      * 
      * @return void
@@ -122,12 +125,14 @@ class User extends Page {
 
         $obUser->insertUser();
 
+        self::registerByUserType($obUser);
+
         // REDIRECIONA O USUARIO
         $request->getRouter()->redirect('/admin/users/edit/'.$obUser->getId_usuario().'?status=user_registered');
     }
 
     /**
-     * Método responsavel por retornar o formulario edição de um usuario
+     * Método responsável por retornar o formulário de edição de um usuário
      * @param \App\Http\Request
      * @param integer $id
      * 
@@ -166,7 +171,7 @@ class User extends Page {
     }
 
     /**
-     * Metodo responsavel por gravar a atualização de um usuario
+     * Método responsável por gravar a atualização de um usuário
      * @param \App\Http\Request
      * @param integer $id
      * 
@@ -205,12 +210,14 @@ class User extends Page {
 
         $obUser->updateUser();
 
+        self::registerByUserType($obUser);
+
         // REDIRECIONA O USUARIO
         $request->getRouter()->redirect('/admin/users/edit/'.$id.'?status=user_updated');
     }
 
     /**
-     * Methodo responsavel por excluir um usuario
+     * Método responsável por excluir um usuário
      * @param \App\Http\Request
      * 
      * @return void
@@ -231,5 +238,39 @@ class User extends Page {
 
         // REDIRECIONA O USUARIO
         $request->getRouter()->redirect('/admin/users?status=user_deleted');
+    }
+
+    /**
+     * Método responsável por inserir um usuario professor e administrador nas tabelas de herança
+     * @param \App\Models\Usuario $obUser
+     * 
+     * @return void
+     */
+    private static function registerByUserType(EntityUser $obUser): void {
+        // OBTEM O ID DO USUARIO
+        $id = $obUser->getId_usuario();
+
+        // NOVA INSTANCIA DE SERVIDOR
+        $obServer = new EntityServer;
+        $obServer->setFk_id_usuario($id);
+        $obServer->setFk_id_sala(1);
+        $obServer->insertServer();
+
+        switch($obUser->getFk_acesso()) {
+            case 4: // ADMINISTRATIVO
+                $obAdmin = new EntityAdmin;
+                $obAdmin->setFk_id_usuario($id);
+                $obAdmin->setFk_id_setor(1);
+                $obAdmin->insertAdmin();
+
+                break;
+
+            case 5: // PROFESSOR
+                $obTeacher = new EntityTeacher;
+                $obTeacher->setFk_id_usuario($id);
+                $obTeacher->insertTeacher();
+
+                break;
+        }
     }
 }
