@@ -22,7 +22,7 @@ class Comentario {
      * Data de publicação
      * @var string
      */
-    private $add_data;
+    private $dt_comentario;
 
     /**
      * FK do usuario que fez o comentario
@@ -36,12 +36,12 @@ class Comentario {
      */
     public function insertComment() {
         // DEFINE A DATA    
-        $this->setAdd_data();
+        $this->setdt_comentario();
 
         // INSERE O DEPOIMENTO NO BANCO DE DADOS
         $this->setId_comentario((new Database('comentario'))->insert([
             'dsc_comentario'        => $this->dsc_comentario,
-            'add_data'              => $this->add_data,
+            'dt_comentario'         => $this->dt_comentario,
             'fk_usuario_id_usuario' => $this->fk_usuario_id_usuario
         ]));
         // SUCESSO
@@ -53,12 +53,12 @@ class Comentario {
      */
     public function updateComment() {
         // DEFINE A DATA    
-        $this->setAdd_data();
+        $this->setDt_comentario();
 
         // ATUALIZA O DEPOIMENTO NO BANCO DE DADOS
         return (new Database('comentario'))->update("id_comentario = {$this->id_comentario}", [
             'dsc_comentario' => $this->dsc_comentario,
-            'add_data'       => $this->add_data
+            'dt_comentario'  => $this->dt_comentario
         ]);
     }
 
@@ -93,10 +93,17 @@ class Comentario {
         return self::getComments("id_comentario = $id")->fetchObject(self::class);
     }
 
-    public static function getDscComments($order, $limit) {
+    /**
+     * Método responsavel por retornar os comentario
+     * @param string $order
+     * @param string $limit
+     * 
+     * @return \PDOStatement
+     */
+    public static function getDscComments(string $order, string $limit): \PDOStatement {
         $sql =  "SELECT id_comentario,
                     dsc_comentario,
-                    c.add_data,
+                    dt_comentario,
                     nom_usuario,
                     img_perfil
                 FROM comentario c
@@ -111,34 +118,66 @@ class Comentario {
      * Metodos GETTERS E SETTERS
      */
 
+    /**
+     * Get id_comentario
+     * @return int
+     */
     public function getId_comentario(): int {
         return $this->id_comentario;
-    }
+    }   
 
+    /**
+     * Set id_comentario
+     * @param mixed $id
+     */
     public function setId_comentario($id): void {
         $this->id_comentario = $id;
     }
 
+    /**
+     * Get dsc_comentario
+     * @return string
+     */
     public function getDsc_comentario(): string {
         return $this->dsc_comentario;
     }
 
+    /**
+     * Set dsc_comentario
+     * @param mixed $dsc
+     */
     public function setDsc_comentario($dsc): void {
         $this->dsc_comentario = $dsc;
     }
 
-    public function getAdd_data(): string {
-        return date('d/m/Y H:i:s', strtotime($this->add_data));
+    /**
+     * Get dt_comentario
+     * @return string
+     */
+    public function getDt_comentario(): string {
+        return date('d/m/Y H:i:s', strtotime($this->dt_comentario));
     }
 
-    public function setAdd_data(): void {
-        $this->add_data = date('Y-m-d H:i:s');
+    /**
+     * Set dt_comentario
+     * @return void
+     */
+    public function setDt_comentario(): void {
+        $this->dt_comentario = date('Y-m-d H:i:s');
     }
 
+    /**
+     * Get fk_usuario_id_usuario
+     * @return string
+     */
     public function getFK_id_usuario(): string {
         return $this->fk_usuario_id_usuario;
     }
 
+    /**
+     * Set fk_usuario_id_usuario
+     * @param mixed $fk
+     */
     public function setFK_id_usuario($fk): void {
         $this->fk_usuario_id_usuario = $fk;
     }

@@ -67,7 +67,7 @@ class Home extends Page {
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('pages/components/home/comment',[
                 'imagem' => $image($obComment['img_perfil']),
-                'data'   => $obComment['add_data'],
+                'data'   => $obComment['dt_comentario'],
                 'nome'   => $obComment['nom_usuario'],
                 'texto'  => $obComment['dsc_comentario']
             ]);
@@ -95,7 +95,7 @@ class Home extends Page {
 
         $obComment->setFK_id_usuario(Session::getId());
         $obComment->setDsc_comentario($postVars['mensagem']);
-        $obComment->setAdd_data();
+        $obComment->setDt_comentario();
 
         $obComment->insertComment();
 
