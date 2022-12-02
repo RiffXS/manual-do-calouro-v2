@@ -112,6 +112,7 @@ class Schedule extends Page {
      * @return void
      */
     private static function setDoubleItem($aulas, &$count): void {
+        
         if ($aulas[$count]['grupo'] == 'A') {
             self::$double['a'] = [
                 'sala' => $aulas[$count]['sala'],
@@ -170,8 +171,9 @@ class Schedule extends Page {
      * Método responsavel por retorna a view de um item duplo
      * @param array @double
      * 
+     * @return string
      */
-    private static function getDoubleClass($double) {
+    private static function getDoubleClass(array $double): string {
         return View::render('pages/components/schedule/double', [
             'sala-a'      => $double['a']['sala'],
             'materia-a'   => $double['a']['materia'],
@@ -195,5 +197,9 @@ class Schedule extends Page {
             'materia' => $aula['materia'],
             'professor' => $aula['professor']
         ]);
+    }
+
+    public static function getAvailability(Request $request) {
+
     }
 }

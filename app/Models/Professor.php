@@ -89,9 +89,9 @@ class Professor {
     
     /**
      * Get regras
-     * @return string
+     * @return string|null
      */
-    public function getRules(): string {
+    public function getRules(): mixed {
         return $this->regras;
     }
 
