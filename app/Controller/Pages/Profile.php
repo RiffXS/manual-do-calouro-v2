@@ -206,7 +206,7 @@ class Profile extends Page {
     } 
 
     /**
-     * Método responsavel por realizar uma operação relativo ao tipo de usuario atual
+     * Método responsável por realizar uma operação relativo ao tipo de usuário atual
      * @param \App\Http\Request $request
      * @param \App\Models\Usuario  $obUser
      * @param array $postVars
@@ -252,6 +252,7 @@ class Profile extends Page {
 
                     $obStudent->updateStudent(); // ATUALIZA A TURMA DO ALUNO
                 }
+
                 break;
 
             // SERVIDOR
@@ -269,14 +270,16 @@ class Profile extends Page {
                     $obTeacher->setRules($postVars['regras']);
 
                     $obTeacher->updateRules(); // ATUALIZA AS REGRAS DO PROFESSOR
-                }         
+                }
+
                 break;
         }
     }
 
     /**
-     * Método responsável por retornar a view dos cursos
-     *
+     * Método responsável por retornar a view dos cursos do usuário
+     * @param EntityUser $obUser
+     * 
      * @return string
      */
     public static function getCourse(EntityUser $obUser) {
@@ -292,6 +295,7 @@ class Profile extends Page {
                     'curso'    => $cursos[$i]['dsc_curso'],
                     'selected' => 'selected'
                 ]);
+
             } else {
                 $curso .= View::render('pages/components/profile/course', [
                     'id'       => $cursos[$i]['id_curso'],
@@ -304,6 +308,12 @@ class Profile extends Page {
         return $curso;
     }
 
+    /**
+     * Método responsável por retornar a view dos módulos do usuário
+     *
+     * @param EntityUser $obUser
+     * @return void
+     */
     public static function getModule(EntityUser $obUser) {
         $modulo = '';
 
@@ -316,6 +326,7 @@ class Profile extends Page {
                     'modulo'   => "$i",
                     'selected' => 'selected'
                 ]);
+
             } else {
                 $modulo .= View::render('pages/components/profile/module', [
                     'id'       => "$i",
@@ -326,6 +337,28 @@ class Profile extends Page {
         }
 
         return $modulo;
+    }
+
+    /**
+     * Método responsável por retornar a view dos grupos do usuário
+     *
+     * @param EntityUser $obUser
+     * @return void
+     */
+    public static function getGroup(EntityUser $obUser) {
+        $grupo = '';
+
+        $class = $obUser->getUserClass($obUser->getId_usuario());
+
+        $group = EntityGrade::getGroupByClass($class['curso'], $class['modulo']);
+
+        for ($i = 0; $i < count($group); $i++) {
+            $grupo .= View::render('pages/components/profile/group', [
+                'id'       => $group[$i]['id_grupo'],
+                'grupo'    => $group[$i]['dsc_grupo'],
+                'selected' => 'selected'
+            ]);
+        }
     }
 
 }
