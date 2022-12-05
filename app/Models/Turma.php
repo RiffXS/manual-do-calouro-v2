@@ -17,4 +17,15 @@ class Turma {
 
         return (new Database('turma'))->select($where, null, null, 'id_turma')->fetch(\PDO::FETCH_ASSOC);
     }
+
+    /**
+     * Método responsável por retornar as descrições dos cursos
+     * @return array
+     * 
+     * @author @RiffXS
+     */
+    public static function getCursos() {
+        return (new Database('curso'))->select()->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
 }

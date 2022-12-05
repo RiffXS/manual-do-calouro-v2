@@ -34,7 +34,7 @@ class Profile extends Page {
             'nome'   => $obUser->getNom_usuario(),
             'email'  => $obUser->getEmail(),
             'texto'  => $view['text'],
-            'campo'  => $view['colum']
+            'campo'  => $view['column']
         ]);
         // RETORNA A VIEW DA PAGINA
         return parent::getPage('Perfil', $content);
@@ -49,13 +49,13 @@ class Profile extends Page {
     public static function getTextType(EntityUser $obUser): array {
         // DECLARAÇÃO DE VARIAVEIS
         $text = '';
-        $colum = '';
+        $column = '';
 
         // RELATIVO NIVEL DE ACESSO DO USUARIO
         switch ($obUser->getFk_acesso()) {
             case 2:
                 $text = 'Matricula';
-                $colum = View::render('pages/components/profile/enrollment');
+                $column = View::render('pages/components/profile/enrollment');
 
                 break;
 
@@ -63,17 +63,16 @@ class Profile extends Page {
                 $class = EntityUser::getUserClass(Session::getId());
                 $text = 'Turma';
                 
-                if (!empty($class)) {
-                    $colum = View::render('pages/components/profile/class', [
-                        'curso'  => $class['curso'],
-                        'modulo' => $class['modulo']
-                    ]);
-                }
+                $column = View::render('pages/components/profile/class', [
+                    'curso'  => self::getCourse($obUser),
+                    'modulo' => self::getModule($obUser)
+                ]);
+
                 break;
 
             case 4:
                 $text = 'Setor';
-                $colum = View::render('pages/components/profile/sector');
+                $column = View::render('pages/components/profile/sector');
                 
                 break;
                 
@@ -81,7 +80,7 @@ class Profile extends Page {
                 $obTeacher = EntityTeacher::getTeacherById($obUser->getId_usuario());
                 $text = 'Regras';
 
-                $colum = View::render('pages/components/profile/rules', [
+                $column = View::render('pages/components/profile/rules', [
                     'regras' => $obTeacher->getRules()
                 ]);
 
@@ -90,7 +89,7 @@ class Profile extends Page {
         // RETORNA O TEXTO E A VIEW DA COLUNA
         return [
             'text'  => $text,
-            'colum' => $colum
+            'column' => $column
         ];
     }
 
@@ -147,7 +146,6 @@ class Profile extends Page {
 
         // ATUALIZA O CAMPO DO TIPO USUARIO
         self::updateProfileUser($request, $obUser, $postVars);
-
 
         $nome = $postVars['nome'];
         $email = $postVars['email'];
@@ -227,10 +225,12 @@ class Profile extends Page {
                 
                     // VERIFICA SE A MATRICULA ESTA DISPONIVEL
                     if (!$obStudent->verifyEnrollment()) {
-                        $status = 'enrollment_duplicated';
+                        $request->getRouter()->redirect('/profile?status=enrollment_duplicated');
                     } 
                     // INSERE O USUARIO NA TABELA DE ALUNOS
                     $obStudent->insertStudent();
+
+                    echo '<pre>'; print_r($obStudent); echo '</pre>'; exit;
                 }
                 // ALTERA O NIVEL DE ACESSO PARA 3 (ALUNO)
                 $obUser->setFk_acesso(3); 
@@ -273,4 +273,59 @@ class Profile extends Page {
                 break;
         }
     }
+
+    /**
+     * Método responsável por retornar a view dos cursos
+     *
+     * @return string
+     */
+    public static function getCourse(EntityUser $obUser) {
+        $curso = '';
+        $cursos = EntityGrade::getCursos();
+
+        $class = $obUser->getUserClass($obUser->getId_usuario());
+
+        for ($i = 0; $i < count($cursos); $i++) {
+            if (($i+1) == $class['curso']) {
+                $curso .= View::render('pages/components/profile/course', [
+                    'id'       => $cursos[$i]['id_curso'],
+                    'curso'    => $cursos[$i]['dsc_curso'],
+                    'selected' => 'selected'
+                ]);
+            } else {
+                $curso .= View::render('pages/components/profile/course', [
+                    'id'       => $cursos[$i]['id_curso'],
+                    'curso'    => $cursos[$i]['dsc_curso'],
+                    'selected' => ''
+                ]);
+            }
+        }
+
+        return $curso;
+    }
+
+    public static function getModule(EntityUser $obUser) {
+        $modulo = '';
+
+        $class = $obUser->getUserClass($obUser->getId_usuario());
+
+        for ($i = 1; $i < 7; $i++) {
+            if ($i == $class['modulo']) {
+                $modulo .= View::render('pages/components/profile/module', [
+                    'id'       => "$i",
+                    'modulo'   => "$i",
+                    'selected' => 'selected'
+                ]);
+            } else {
+                $modulo .= View::render('pages/components/profile/module', [
+                    'id'       => "$i",
+                    'modulo'   => "$i",
+                    'selected' => ''
+                ]);
+            }
+        }
+
+        return $modulo;
+    }
+
 }

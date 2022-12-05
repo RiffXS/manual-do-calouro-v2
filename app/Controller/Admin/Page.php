@@ -29,7 +29,7 @@ class Page {
             'link'  => URL.'/admin/events'
         ],
         'schedules' => [
-            'label' => 'Horarios',
+            'label' => 'Horários',
             'link'  => URL.'/admin/schedules'
         ],
         'contacts' => [

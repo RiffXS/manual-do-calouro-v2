@@ -71,7 +71,7 @@ class Schedule extends Page {
     private static function getCurso(int $curso): string {
         // RETORNA O NOME DO CURSO
         $curso = EntitySchedule::getCursoById($curso);
-        return $curso['dsc_curso'];
+        return $curso['sigla_curso'];
     }
 
     /**
