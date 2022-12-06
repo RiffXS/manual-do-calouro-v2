@@ -137,13 +137,40 @@ class Contato {
         return (new Database('contato'))->select($where, $order, $limit, $fields);
     }
 
-    public static function getContactsInfo($id) {
+    /**
+     * Método responsavel por consultar as informações de um contato, pelo ID do usuario
+     * @param integer $id
+     * 
+     * @return \PDOStatement|bool
+     */
+    public static function getContactsInfo(int $id): mixed {
         $sql = "SELECT c.id_contato,
                     tc.dsc_tipo,
                     c.dsc_contato
                 FROM contato c
                     JOIN tipo_contato tc ON (c.fk_tipo_contato_id_tipo = tc.id_tipo)
                 WHERE c.fk_servidor_fk_usuario_id_usuario = $id";
+
+        return (new Database)->execute($sql);
+    }
+
+    /**
+     * Método responsavel por retornar todos os contatos com seus campos de descrição
+     * @param string $order
+     * @param string $limit
+     * 
+     * @return \PDOStatement|bool
+     */
+    public static function getDscContacts(string $order, string $limit) {
+        $sql = "SELECT c.id_contato,
+                    u.nom_usuario,
+                    tc.dsc_tipo,
+                    c.dsc_contato
+                FROM contato c
+                    JOIN tipo_contato tc ON (c.fk_tipo_contato_id_tipo = tc.id_tipo)
+                    JOIN servidor s ON (c.fk_servidor_fk_usuario_id_usuario = s.fk_usuario_id_usuario)
+                    JOIN usuario u ON (s.fk_usuario_id_usuario = u.id_usuario)
+                ORDER BY $order LIMIT $limit";
 
         return (new Database)->execute($sql);
     }

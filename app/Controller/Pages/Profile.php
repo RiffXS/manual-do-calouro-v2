@@ -312,7 +312,8 @@ class Profile extends Page {
      * Método responsável por retornar a view dos módulos do usuário
      *
      * @param EntityUser $obUser
-     * @return void
+     * 
+     * @return string
      */
     public static function getModule(EntityUser $obUser) {
         $modulo = '';

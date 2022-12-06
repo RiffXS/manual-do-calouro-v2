@@ -34,20 +34,20 @@ class Contact extends Page {
         $sql = 'SELECT id_contato, nom_usuario, dsc_tipo, dsc_contato FROM tipo_contato tc JOIN contato c ON (tc.id_tipo = c.fk_tipo_contato_id_tipo) JOIN servidor s ON (c.fk_servidor_fk_usuario_id_usuario = s.fk_usuario_id_usuario) JOIN usuario u ON (s.fk_usuario_id_usuario = u.id_usuario)';
 
         // RESULTADOS DA PAGINA
-        $results = EntityContact::getContacts(null, 'id_contato ASC', $obPagination->getLimit());
+        $results = EntityContact::getDscContacts('id_contato ASC', $obPagination->getLimit());
 
         // RENDENIZA O ITEM
-        while ($obContact = $results->fetchObject(EntityContact::class)) {
+        while ($obContact = $results->fetch(\PDO::FETCH_ASSOC)) {
             $modal = View::render('admin/modules/contacts/delete',[
-                'id' => $obContact->getId_contato()
+                'id' => $obContact['id_contato']
             ]);
 
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('admin/modules/contacts/item',[
-                'id'    => $obContact->getId_contato(),
-                'user'  => $obContact->getFk_usuario(),
-                'tipo'  => $obContact->getFk_tipo(),
-                'dsc'   => $obContact->getDsc_contato(),
+                'id'    => $obContact['id_contato'],
+                'user'  => $obContact['nom_usuario'],
+                'tipo'  => $obContact['dsc_tipo'],
+                'dsc'   => $obContact['dsc_contato'],
                 'modal' => $modal
             ]);
         }

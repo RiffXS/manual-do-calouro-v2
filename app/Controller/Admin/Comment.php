@@ -65,7 +65,7 @@ class Comment extends Page {
         ]);
 
         // RETORNA A PAGINA COMPLETA
-        return parent::getPanel('Depoimentos  > WDEV', $content, 'testimonies');
+        return parent::getPanel('Depoimentos > MDC', $content, 'testimonies');
     }
 
     /**

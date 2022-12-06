@@ -291,7 +291,7 @@ class Contact extends Page {
         $postVars = $request->getPostVars();
 
         // OBTENDO O USUARIO DO BANCO DE DADOS
-        $obContact = EntityContact::getContactById($postVars['id']);
+        $obContact = EntityContact::getContactById((int)$postVars['id']);
   
         // VALIDA A INSTANCIA
         if (!$obContact instanceof EntityContact) {
