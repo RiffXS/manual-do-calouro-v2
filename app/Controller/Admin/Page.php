@@ -29,13 +29,9 @@ class Page {
             'link'  => URL.'/admin/events'
         ],
         'schedules' => [
-            'label' => 'Horários',
+            'label' => 'Aulas',
             'link'  => URL.'/admin/schedules'
         ],
-        'contacts' => [
-            'label' => 'Contatos',
-            'link'  => URL.'/admin/contacts' 
-        ]
     ];
 
     /**

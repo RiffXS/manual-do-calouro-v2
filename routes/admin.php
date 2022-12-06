@@ -3,9 +3,6 @@
 // INCLUI AS ROTAS DE DEPOIMENTOS
 include_once __DIR__.'/admin/comments.php';
 
-// INCLUI AS ROTAS DE CONTATOS
-include_once __DIR__.'/admin/contacts.php';
-
 // INCLUI AS ROTAS DE EVENTOS
 include_once __DIR__.'/admin/events.php';
 
