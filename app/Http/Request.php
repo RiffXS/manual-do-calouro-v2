@@ -66,6 +66,10 @@ class Request {
     }
 
     /**
+     * Método GETTERS e SETTERS
+     */
+
+    /**
      * Metodo responsavel por retornar a instancia de router
      * @return Router
      */

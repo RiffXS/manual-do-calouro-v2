@@ -11,7 +11,7 @@ class Api {
      */
     public static function getDetails($request) {
         return [
-            'nome'   => 'API - WDEV',
+            'nome'   => 'API - MDC',
             'versao' => 'v1.0.0',
             'autor'  => 'Henrique Dalmagro',
         ];

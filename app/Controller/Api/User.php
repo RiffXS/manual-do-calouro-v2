@@ -16,11 +16,11 @@ class User extends Api {
      * @return array
      */
     private static function detailsUser(EntityUser $obUser): array {
-        return [
+        return array(
             'id'    => $obUser->getId_usuario(),
             'nome'  => $obUser->getNom_usuario(),
             'email' => $obUser->getEmail(),
-        ];
+        );
     }
 
     /**
