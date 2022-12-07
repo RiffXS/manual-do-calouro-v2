@@ -5,51 +5,25 @@
         {{status}}
         
         <form method="POST">
-            <!-- NOME -->
+            <!-- DESCRICAO -->
             <div class="mb-3">
-                <label class="form-label" for="nome"> Nome </label>
-                <input class="form-control" type="text" name="nome" value="{{nome}}" required>
+                <label class="form-label" for="descricao"> Descrição </label>
+                <input class="form-control" type="text" name="descricao" value="{{descricao}}" required>
             </div>
 
-            <!-- EMAIL -->
+            <!-- DATA -->
             <div class="mb-3">
-                <label class="form-label" for="email"> E-mail </label>
-                <input class="form-control" type="email" aria-describedby="ajudaEmail" name="email" value="{{email}}" required>
+                <label class="form-label" for="data"> Data </label>
+                <input class="form-control" type="date" name="data" value="{{data}}" required>
             </div>
 
-            <!-- SENHA -->
+            <!-- CAMPUS -->
             <div class="mb-3">
-                <label class="form-label" for="senha"> Senha </label>
-                <input class="form-control" type="password" aria-describedby="ajudaEmail" name="senha">
-            </div>
-
-            <div class="input-group mb-3" id="user_adm_ativo">
-                <!-- ATIVO -->
-                <div class="me-5">
-                    <label for="user_adm_ativo" class="form-label">Status</label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" id="user_adm_ativoTrue" name="active" value="1" {{ativo}}>
-                        <label class="form-check-label" for="user_adm_ativoTrue"> Ativo </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" id="user_adm_ativoFalse" name="active" value="2" {{inativo}}>
-                        <label class="form-check-label" for="user_adm_ativoFalse"> Inativo </label>
-                    </div>
-                </div>
-                
-                <!-- ACESSO -->
-                <div class="me-3">
-                    <label class="form-label" for="user_adm_acesso">Acesso</label>
-                    <input class="form-control" type="number" id="user_adm_acesso" name="status" min="1" max="5" value="{{acesso}}">
-                </div>
-
-                <div class="form-text">
-                    <small>5 - servidor</small><br>
-                    <small>4 - professor</small><br>
-                    <small>3 - aluno</small><br>
-                    <small>2 - usuario</small><br>
-                    <small>1 - admin</small>
-                </div>
+                <label class="form-label" for="campus"> Campus </label>
+                <select class="form-select" name="campus">
+                    <option value="" selected>** Selecione uma opçãi **</option>
+                    <option value="1">Serra</option>
+                  </select>
             </div>
 
             <button class="btn btn-primary me-2" type="submit">{{botao}}</button>
