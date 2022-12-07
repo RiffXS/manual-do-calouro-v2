@@ -20,6 +20,8 @@ class Servidor {
 
     /**
      * Método responsável por cadastrar um usuário como servidor
+     * 
+     * @return boolean
      */
     public function insertServer() {
         (new Database('servidor'))->insert([
@@ -33,6 +35,7 @@ class Servidor {
 
     /**
      * Método responsável por atualizar a sala de um servidor
+     * 
      * @return boolean
      */
     public function updateRoom(): bool {

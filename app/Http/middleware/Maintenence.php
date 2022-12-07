@@ -9,7 +9,7 @@ use Closure;
 class Maintenence {
 
     /**
-     * Método responsavel por executar o middleware
+     * Método responsável por executar o middleware
      * @param \App\Http\Request
      * @param Closure
      * 

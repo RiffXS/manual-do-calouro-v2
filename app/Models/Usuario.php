@@ -7,64 +7,62 @@ use App\Utils\Database;
 class Usuario {
 
     /**
-     * ID do usuario
+     * ID do usuário
      * @var integer
      */
     private $id_usuario;
 
     /**
-     * Nome do usuario
+     * Nome do usuário
      * @var string
      */
     private $nom_usuario;
 
     /**
-     * Email do usuario
+     * Email do usuário
      * @var string
      */
     private $email;
 
     /**
-     * Senha do usuario
+     * Senha do usuário
      * @var string
      */
     private $senha;
 
     /**
-     * Codigo da foto do usuario
+     * Código da foto do usuário
      * @var string
      */
     private $img_perfil;
 
     /**
-     * Data de criação do usuario
+     * Data de criação do usuário
      * @var string
      */
     private $add_data;
 
     /**
-     * Identificador de status do usuario
+     * Identificador de status do usuário
      * @var string
      */
     private $fk_nivel_id_nivel = 1;
 
     /**
-     * Nivel de acesso do usuario
+     * Nivel de acesso do usuário
      * @var integer
      */
     private $fk_acesso_id_acesso = 2;
 
     /**
-     * Metodo responsavel por cadastrar a istancia atual no banco de dados
+     * Método responsável por cadastrar a instância atual no banco de dados
      * @return boolean
-     * 
-     * @author @SimpleR1ick @RiffXS
      */
     public function insertUser(): bool {
         // ATRIBUI AO OBJETO A HORA ATUAL
         $this->setAdd_data();
 
-        // INSERE A ISTANCIA NO BANCO
+        // INSERE A INSTÂNCIA NO BANCO
         $this->setId_usuario((new Database('usuario'))->insert([
             'nom_usuario'         => $this->nom_usuario,
             'email'               => $this->email,
@@ -79,10 +77,8 @@ class Usuario {
     }
 
     /**
-     * Metodo responsavel por atualizar os dados no banco
+     * Método responsável por atualizar os dados no banco
      * @return boolean
-     * 
-     * @author @SimpleR1ick @RiffXS
      */
     public function updateUser(): bool {
         return (new Database('usuario'))->update("id_usuario = {$this->id_usuario}", [
@@ -97,17 +93,15 @@ class Usuario {
     }
 
     /**
-     * Metodo responsavel por excluir um usuario do banco
+     * Método responsável por excluir um usuário do banco
      * @return boolean
-     * 
-     * @author @RiffXS
      */
     public function deleteUser(): bool {
         return (new Database('usuario'))->delete("id_usuario = {$this->id_usuario}");
     }
 
     /**
-     * Metodo responsavel por retornar a turma pelo id
+     * Método responsável por retornar a turma pelo id do usuário
      * @return array|bool
      */
     public static function getUserClass(int $id): mixed {
@@ -120,10 +114,39 @@ class Usuario {
     }
 
     /**
-     * Metodo responsavel por retornar um contato de um usuario pelo id
-     * @return array
+     * Método responsável por retornar o grupo pelo id do usuário
+     * @param integer $id
+     * 
+     * @return mixed
      */
-    public static function getUserContact(int $id): array {
+    public static function getUserGroup(int $id): mixed {
+        $table  = "grupo g JOIN turma t ON (g.fk_turma_id_turma = t.id_turma) JOIN grupo_aluno ga ON (g.id_grupo = fk_grupo_id_grupo)";
+        $where  = "ga.fk_aluno_fk_usuario_id_usuario = $id";
+        $fields = "dsc_grupo AS grupo";
+
+        // RETORNA UM ARRAY ASSOCIATIVO
+        return (new Database($table))->select($where, null, null, $fields)->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Método responsável por retornar o id do grupo pelo id
+     * @param integer $id
+     * 
+     * @return mixed
+     */
+    public static function getUserGroupId(int $id): mixed {
+        $table  = "turma t JOIN grupo g ON (t.id_turma = g.fk_turma_id_turma) JOIN grupo_aluno ga ON (g.id_grupo = fk_grupo_id_grupo) JOIN aluno a ON (ga.fk_aluno_fk_usuario_id_usuario = a.fk_usuario_id_usuario)";
+        $where  = "a.fk_usuario_id_usuario = $id";
+
+        // RETORNA UM ARRAY ASSOCIATIVO
+        return (new Database($table))->select($where, null, null, 'id_grupo')->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Método responsável por retornar um contato de um usuário pelo id
+     * @return array|bool
+     */
+    public static function getUserContact(int $id): mixed {
         $table = "usuario u JOIN servidor s ON (u.id_usuario = s.fk_usuario_id_usuario) JOIN contato c ON (s.fk_usuario_id_usuario = c.fk_servidor_fk_usuario_id_usuario) JOIN tipo_contato tc ON (c.fk_tipo_contato_id_tipo = tc.id_tipo)";
         $where = "id_usuario = $id";
         $fields = "nom_usuario, dsc_contato, dsc_tipo";
@@ -133,7 +156,7 @@ class Usuario {
     }
 
     /**
-     * Método responsavel por retornar usuario
+     * Método responsável por retornar usuário
      * @param  string $where
      * @param  string $order
      * @param  string $limit
@@ -146,7 +169,7 @@ class Usuario {
     }
 
     /**
-     * Método responsavel por retornar uma istancia com base no ID
+     * Método responsável por retornar uma istância com base no ID
      * @param  integer $id
      * 
      * @return self|bool
@@ -156,7 +179,7 @@ class Usuario {
     }
 
     /**
-     * Método responsavel por retornar um usuario com base em seu email
+     * Método responsável por retornar um usuário com base em seu email
      * @param  string $email
      * 
      * @return self|bool
@@ -166,7 +189,7 @@ class Usuario {
     }
 
     /*
-     * Metodos GETTERS E SETTERS
+     * Métodos GETTERS E SETTERS
      */
     
      /**

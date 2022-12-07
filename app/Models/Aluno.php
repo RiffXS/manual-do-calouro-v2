@@ -17,12 +17,6 @@ class Aluno {
      * @var string
      */
     private $num_matricula;
-
-    /**
-     * ID da turma do aluno
-     * @var integer
-     */
-    private $fk_turma_id_turma;
     
     /**
      * Método responsável por cadastrar um usuário como aluno
@@ -32,20 +26,10 @@ class Aluno {
         (new Database('aluno'))->insert([
             'fk_usuario_id_usuario' => $this->fk_usuario_id_usuario,
             'num_matricula'         => $this->num_matricula
-        ]);
+        ], false);
 
         // RETORNA VERDADEIRO
         return true;
-    }
-
-    /**
-     * Método responsável por atualizar a turma do aluno
-     *
-     */
-    public function updateStudent() {
-        return (new Database('aluno'))->update("fk_usuario_id_usuario = {$this->fk_usuario_id_usuario}", [
-            'fk_turma_id_turma' => $this->fk_turma_id_turma
-        ]);
     }
 
     /**
@@ -65,7 +49,7 @@ class Aluno {
     }
     
     /*
-     * Metodos GETTERS E SETTERS
+     * Métodos GETTERS E SETTERS
      */
 
     /**
@@ -98,21 +82,5 @@ class Aluno {
      */
     public function setNum_matricula(string $value): void {
         $this->num_matricula = $value;
-    }
-
-    /**
-     * Get fk_turma_id_turma
-     * @return integer
-     */
-    public function getFk_id_turma(): int {
-        return $this->fk_turma_id_turma;
-    }
-
-    /**
-     * Set fk_turma_id_turma
-     * @param integer $fk
-     */
-    public function setFk_id_turma(int $fk): void {
-        $this->fk_turma_id_turma = $fk;
     }
 }

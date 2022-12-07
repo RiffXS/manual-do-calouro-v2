@@ -5,7 +5,7 @@ namespace App\Http;
 class Response {
 
     /**
-     * Codigo status HTTP
+     * Código status HTTP
      * @var integer
      */
     private $httpCode = 200;
@@ -17,13 +17,13 @@ class Response {
     private $headers = [];
 
     /**
-     * Tipo de conteudo que esta sendo retornado
+     * Tipo de conteúdo que está sendo retornado
      * @var 
      */
     private $contentType = 'text/html';
 
     /**
-     * Conteudo do Response
+     * Conteúdo do Response
      * @var mixed
      */
     private $content;
@@ -41,7 +41,7 @@ class Response {
     }
 
     /**
-     * Metodo responsavel por alterar o content type do Response
+     * Método responsável por alterar o content type do Response
      * @return void
      */
     private function setContentType(string $contentType): void {
@@ -50,7 +50,7 @@ class Response {
     }
 
     /**
-     * Metodo responsavel por adicionar um registro no cabeçalho do Response
+     * Método responsável por adicionar um registro no cabeçalho do Response
      * @return void
      */
     private function addHeader(string $key, mixed $value): void {
@@ -58,7 +58,7 @@ class Response {
     }
 
     /**
-     * Methodo responsavel por enviar os headers para o navegador
+     * Método responsável por enviar os headers para o navegador
      * @return void
      */
     private function sendHeaders(): void {
@@ -72,7 +72,7 @@ class Response {
     }
 
     /**
-     * Método responsavel por enviar a resposta ao usuario
+     * Método responsável por enviar a resposta ao usuário
      * @return void
      */
     public function sendResponse(): void {

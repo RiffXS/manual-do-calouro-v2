@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Http\Request;
 use App\Models\Aula as EntitySchedule;
+use App\Utils\Database;
 use App\Utils\Tools\Alert;
 use App\Utils\Pagination;
 use App\Utils\View;
@@ -11,7 +12,7 @@ use App\Utils\View;
 class Schedule extends Page {
 
     /**
-     * Método responsavel por obter a rendenização dos items de usuarios para página
+     * Método responsavel por obter a renderização dos items de usuarios para página
      * @param \App\Http\Request $request
      * @param \App\Utils\Pagination $obPagination
      * 
@@ -34,7 +35,7 @@ class Schedule extends Page {
         // RESULTADOS DA PAGINA
         $results = EntitySchedule::getDscSchedules('id_aula ASC', $obPagination->getLimit());
 
-        // RENDENIZA O ITEM
+        // RENDERIZA O ITEM
         while ($obShedule = $results->fetch(\PDO::FETCH_ASSOC)) {
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('admin/modules/schedules/item',[
@@ -52,7 +53,7 @@ class Schedule extends Page {
     }
 
        /**
-     * Método responsavel por rendenizar a view de listagem de usuarios
+     * Método responsavel por renderizar a view de listagem de usuarios
      * @param \App\Http\Request
      * 
      * @return string
@@ -70,17 +71,143 @@ class Schedule extends Page {
     }
     
     /**
-     * Método responsavel por rendenizar o formulario de cadastro de aula
+     * Método responsavel por renderizar o formulario de cadastro de aula
      * @param \App\Http\Request $request
      * 
      * @return string
      */
     public static function getNewSchedule(Request $request): string {
+        $obDatabase = new Database;
+
         $content = View::render('admin/modules/schedules/form', [
-           'tittle'  => 'Cadastrar aula',
-           'status' => Alert::getStatus($request)
+           'tittle'     => 'Cadastrar aula',
+           'status'     => Alert::getStatus($request),
+           'semana'     => self::getWeekDays($obDatabase),
+           'horario'    => self::getSchedule($obDatabase),
+           'sala'       => self::getRooms($obDatabase),
+           'disciplina' => self::getSubjects($obDatabase),
+           'professor'  => self::getTeachers($obDatabase)
         ]);
 
         return parent::getPanel('Cadastrar aula > MDC', $content, 'horario');
+    }
+
+    /**
+     * Método responsável por renderizar as opções de dia da semana
+     * @param \App\Utils\Database $obDatabase
+     * 
+     * @return string
+     */
+    private static function getWeekDays(Database $obDatabase): string {
+        // DECLARAÇÃO DE VARIAVEIS
+        $content = '';
+        $diaSemana = $obDatabase->selectAll('dia_semana');
+
+        // RENDERIZA AS OPÇÕES DA SEMANA
+        for ($i = 0; $i < count($diaSemana); $i++) {
+            $content .= self::getOption($diaSemana[$i], [
+                'id_dia_semana',
+                'dsc_dia_semana'
+            ]);
+        }
+        // RETORNA O CONTEUDO
+        return $content;
+    }
+
+    /**
+     * Método 
+     * @param \App\Utils\Database $obDatabase
+     * 
+     */
+    private static function getSchedule(Database $obDatabase): string {
+        $content = '';
+        $horarioAula = $obDatabase->selectAll('horario_aula');
+
+        // RENDERIZA AS OPÇÕES DE HORARIO
+        for ($i = 0; $i < count($horarioAula); $i++) {
+            $horario = array(
+                'id_horario' => $horarioAula[$i]['id_horario_aula'],
+                'inicio_fim' => $horarioAula[$i]['hora_aula_inicio'] . ' - ' . $horarioAula[$i]['hora_aula_fim']
+            );
+
+            $content .= self::getOption($horario, [
+                'id_horario',
+                'inicio_fim'
+            ]);
+        }
+        return $content;
+    }
+
+    /**
+     * 
+     * @param \App\Utils\Database $obDatabase
+     */
+    private static function getRooms(Database $obDatabase): string {
+        $content = '';
+        $salaAula = $obDatabase->selectAll('sala_aula');
+
+        // RENDERIZA AS OPÇÕES DA SEMANA
+        for ($i = 0; $i < count($salaAula); $i++) {
+            $content .= self::getOption($salaAula[$i], [
+                'id_sala_aula',
+                'dsc_sala_aula'
+            ]);
+        }
+        return $content;
+    }
+
+    /**
+     * 
+     * @param \App\Utils\Database $obDatabase
+     */
+    private static function getSubjects(Database $obDatabase): string {
+        $content = '';
+        $disciplina = $obDatabase->selectAll('disciplina');
+
+        // RENDERIZA AS OPÇÕES DAS DISCIPLINA
+        for ($i = 0; $i < count($disciplina); $i++) {
+            $content .= self::getOption($disciplina[$i], [
+                'id_disciplina',
+                'dsc_disciplina'
+            ]);
+        }
+        return $content;
+    }
+
+    /**
+     * 
+     * @param \App\Utils\Database $obDatabase
+     */
+    private static function getTeachers(Database $obDatabase): string {
+        $content = '';
+
+        $sql = 'professor p JOIN servidor s ON (p.fk_servidor_fk_usuario_id_usuario = s.fk_usuario_id_usuario) JOIN usuario u ON (s.fk_usuario_id_usuario = u.id_usuario)';
+
+        $professor = $obDatabase->selectAll($sql, 'id_usuario, nom_usuario');
+
+        // RENDERIZA AS OPÇÕES DAS DISCIPLINA
+        for ($i = 0; $i < count($professor); $i++) {
+            $content .= self::getOption($professor[$i], [
+                'id_usuario',
+                'nom_usuario'
+            ]);
+        }
+        return $content;
+    }
+
+
+
+    /**
+     * 
+     * @param array $array
+     * @param array $keys
+     * 
+     * @return string
+     */
+    private static function getOption($array, $keys): string {
+        return View::render('/admin/modules/schedules/option', [
+            'id'    => $array[$keys[0]],
+            'valor' => $array[$keys[1]]
+        ]);
     }
 }

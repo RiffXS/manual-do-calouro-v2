@@ -54,7 +54,7 @@ class Email {
     private $error;
 
     /**
-     * Metodo responsavel por retornar a mensagem de erro do envio
+     * Método responsável por retornar a mensagem de erro do envio
      * @return string
      */
     public function getError(): string {
@@ -62,7 +62,7 @@ class Email {
     }
 
     /**
-     * Método responsavel por enviar o email
+     * Método responsável por enviar o email
      * @param string|array $adresses
      * @param string       $subject
      * @param string       $body

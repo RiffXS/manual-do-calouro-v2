@@ -18,7 +18,7 @@ class Sac extends Page {
      * @return string
      */
     public static function getSac(Request $request): string {
-        // RENDENIZA O CONTEUDO DA PAGINA DE SAC
+        // RENDERIZA O CONTEUDO DA PAGINA DE SAC
         $content = View::render('pages/sac', [
             'status' => Alert::getStatus($request),
             'email'  => Session::getUser()->getEmail()

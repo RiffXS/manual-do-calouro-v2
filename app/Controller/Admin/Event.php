@@ -11,7 +11,7 @@ use App\Utils\View;
 class Event extends Page {
 
     /**
-     * Método responsavel por obter a rendenização dos items de usuarios para página
+     * Método responsável por obter a renderização dos items de usuários para página
      * @param \App\Http\Request $request
      * @param \App\Utils\Pagination $obPagination
      * 
@@ -34,7 +34,7 @@ class Event extends Page {
         // RESULTADOS DA PAGINA
         $results = EntityCalendar::getDscEvents('id_evento DESC', $obPagination->getLimit());
 
-        // RENDENIZA O ITEM
+        // RENDERIZA O ITEM
         while ($obCalendar = $results->fetch(\PDO::FETCH_ASSOC)) {  
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('admin/modules/events/item',[
@@ -50,7 +50,7 @@ class Event extends Page {
     }
 
     /**
-     * Método responsavel por rendenizar a view de listagem de usuarios
+     * Método responsável por renderizar a view de listagem de usuários
      * @param \App\Http\Request
      * 
      * @return string

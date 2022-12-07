@@ -39,7 +39,7 @@ class Queue {
     private $controllerArgs = [];
 
     /**
-     * Metodo responsavel por construir a classe de fila de middlewares
+     * Método responsável por construir a classe de fila de middlewares
      * @param array   $middlewares
      * @param Closure $controller
      * @param array   $controllerArgs
@@ -51,7 +51,7 @@ class Queue {
     }
 
     /**
-     * Metodo responsavel por definir o mapeamento de middlewares
+     * Método responsável por definir o mapeamento de middlewares
      * @param array $map
      * 
      * @return void
@@ -61,7 +61,7 @@ class Queue {
     }
 
     /**
-     * Metodo responsavel por definir o mapeamento de middlewares padrões
+     * Método responsável por definir o mapeamento de middlewares padrões
      * @param array $default
      * 
      * @return void
@@ -71,7 +71,7 @@ class Queue {
     }
 
     /**
-     * Metodo responsavel por executar o proximo nivel da fila de middlewares
+     * Método responsável por executar o próximo nível da fila de middlewares
      * @param \App\Http\Request
      * 
      * @return \App\Http\Response

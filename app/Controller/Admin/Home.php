@@ -7,7 +7,7 @@ use App\Utils\View;
 class Home extends Page {
 
     /**
-     * Método responsavel por rendenizar a view de home no painel
+     * Método responsável por renderizar a view de home no painel
      * @return string
      */
     public static function getHome(): string {

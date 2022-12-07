@@ -11,7 +11,7 @@ use App\Utils\Tools\Alert;
 class Comment extends Page {
 
     /**
-     * Methodo responsavel por obter a rendenização dos items de depoimentos para página
+     * Método responsável por obter a renderização dos items de depoimentos para página
      * @param \App\Http\Request $request
      * @param \App\Utils\Pagination $obPagination
      * 
@@ -34,7 +34,7 @@ class Comment extends Page {
         // RESULTADOS DA PAGINA
         $results = EntityComment::getComments(null, 'id_comentario DESC', $obPagination->getLimit());
 
-        // RENDENIZA O ITEM
+        // RENDERIZA O ITEM
         while ($obComment = $results->fetchObject(EntityComment::class)) {
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('admin/modules/comments/item',[
@@ -51,7 +51,7 @@ class Comment extends Page {
 
 
     /**
-     * Methodo responsavel por rendenizar a view de listagem de depoimentos
+     * Método responsável por renderizar a view de listagem de depoimentos
      * @param \App\Http\Request
      * 
      * @return string
@@ -69,7 +69,7 @@ class Comment extends Page {
     }
 
     /**
-     * Methodo responsavel por retornar o formulario exclusão de um depoimento
+     * Método responsável por retornar o formulário de exclusão de um depoimento
      * @param \App\Http\Request
      * @param integer $id
      * 
@@ -94,7 +94,7 @@ class Comment extends Page {
     }
 
     /**
-     * Methodo responsavel por excluir um depoimento
+     * Método responsável por excluir um depoimento
      * @param \App\Http\Request
      * @param integer $id
      * 

@@ -13,7 +13,7 @@ use Exception;
 class JWTAuth {
 
     /**
-     * Metodo responsavel por retornar uma istancia de usuario autenticado
+     * Método responsável por retornar uma istância de usuário autenticado
      * @param \App\Http\Request $request
      * 
      * @return EntityUser|bool
@@ -48,7 +48,7 @@ class JWTAuth {
     }
 
     /**
-     * Methodo responsavel por validar o acesso via JWT
+     * Método responsável por validar o acesso via JWT
      * @param \App\Http\Request $request
      * 
      * @return boolean
@@ -64,7 +64,7 @@ class JWTAuth {
     }
 
     /**
-     * Methodo responsavel por executar o middleware
+     * Método responsável por executar o middleware
      * @param \App\Http\Request
      * @param Closure
      * 

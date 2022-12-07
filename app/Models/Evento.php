@@ -31,18 +31,26 @@ class Evento {
     private $fk_campus_id_campus;
 
     /**
-     * Método responsavel por obter os eventos do banco de dados
-     * @return mixed
+     * Método responsável por obter os eventos do banco de dados
+     * @param string $where
+     * @param string $order
+     * @param string $limit
+     * @param string $fields
+     * 
+     * @return \PDOStatement
      */
     public static function getEvents($where = null, $order = null, $limit = null, $fields = '*'): mixed {
         return (new Database('evento'))->select($where, $order, $limit, $fields);
     }
 
     /**
+     * Método responsável por obter a descrição dos eventos
+     * @param string $order
+     * @param string $limit
      * 
-     * 
+     * @return \PDOStatement|bool
      */
-    public static function getDscEvents($order, $limit) {
+    public static function getDscEvents($order, $limit): mixed {
         $sql = "SELECT id_evento,
                     dsc_campus,
                     dat_evento,
@@ -55,7 +63,7 @@ class Evento {
     }
 
     /*
-     * Metodos GETTERS E SETTERS
+     * Métodos GETTERS E SETTERS
      */
     
     /**

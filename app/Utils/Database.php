@@ -144,6 +144,17 @@ class Database {
 	}
 
 	/**
+     * Método responsavel por consultar toda a tabela
+     * @param string $table
+	 * @param string $fields
+	 * 
+	 * @return array
+     */
+    public function selectAll(string $table, string $fields = '*'): array {
+        return $this->execute("SELECT $fields FROM $table")->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+	/**
 	 * Método responsável por executar uma consulta no banco
 	 * @param  string $where  condição
 	 * @param  string $order  ordem

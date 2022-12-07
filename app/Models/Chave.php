@@ -7,7 +7,7 @@ use App\Utils\Database;
 class Chave {
 
     /**
-     * ID do usuario da chave
+     * ID do usuário da chave
      * @var integer
      */
     private $fk_usuario_id_usuario;
@@ -19,10 +19,9 @@ class Chave {
     private $chave_confirma;
 
     /**
-     * Metodo responsavel buscar uma chave pelo id ou hash
-     * @return mixed
+     * Método responsável por buscar uma chave pelo id ou hash
      * 
-     * @author @SimpleR1ick
+     * @return mixed
      */
     public static function findHash(int $id = null, string $chave = null): mixed {
         // VERIFICA SE O ID ESTA VAZIO
@@ -34,20 +33,18 @@ class Chave {
     }
     
     /**
-     * Metodo responsavel por inserir uma chave na tabela
-     * @return mixed
+     * Método responsável por inserir uma chave na tabela
      * 
-     * @author @SimpleR1ick
+     * @return mixed
      */
     public function insertHash(): mixed {
         return (new Database())->execute("INSERT INTO chave (fk_usuario_id_usuario, chave_confirma) VALUES ({$this->fk_usuario_id_usuario}, '{$this->chave_confirma}')");
     }
 
     /**
-     * Metodo responsavel por atualizar uma chave na tabela
-     * @return boolean
+     * Método responsável por atualizar uma chave na tabela
      * 
-     * @author @SimpleR1ick
+     * @return boolean
      */
     public function updateHash(): bool {
         return (new Database('chave'))->update("fk_usuario_id_usuario = {$this->fk_usuario_id_usuario}", [
@@ -56,17 +53,16 @@ class Chave {
     }
 
     /**
-     * Metodo responsavel por deleltar a chave
-     * @return boolean
+     * Método responsável por deleltar a chave
      * 
-     * @author @SimpleR1ick
+     * @return boolean
      */
     public function deleteHash(): bool {
         return (new Database('chave'))->delete("fk_usuario_id_usuario = {$this->fk_usuario_id_usuario}");
     }
 
     /*
-     * Metodos GETTERS E SETTERS
+     * Métodos GETTERS E SETTERS
      */
 
     /**

@@ -10,12 +10,7 @@
                 <label for="dia_semana" class="form-label fw-bold">Dia da Semana</label>
                 <select class="form-select" id="dia_semana" required>
                     <option value="" selected>Selecione uma opção</option>
-                    <option value="2">Segunda-feira</option>
-                    <option value="3">Terça-feira</option>
-                    <option value="4">Quarta-feira</option>
-                    <option value="5">Quinta-feira</option>
-                    <option value="6">Sexta-feira</option>
-                    <option value="7">Sábado</option>
+                    {{semana}}
                 </select>
             </div>
         
@@ -24,9 +19,7 @@
                 <label for="horario" class="form-label fw-bold">Horário</label>
                 <select class="form-select" id="horario" required>
                     <option value="" selected>Selecione uma opção</option>
-                    <option value="1">07:30 - 08:20</option>
-                    <option value="2">08:20 - 09:10</option>
-                    <option value="3">09:30 - 10:20</option>
+                    {{horario}}
                 </select>
             </div>
         
@@ -35,9 +28,7 @@
                 <label for="sala_aula" class="form-label fw-bold">Sala de Aula</label>
                 <select class="form-select" id="sala_aula" required>
                     <option value="" selected>Selecione uma opção</option>
-                    <option value="1">105</option>
-                    <option value="2">208T</option>
-                    <option value="3">901S</option>
+                    {{sala}}
                 </select>
             </div>
         
@@ -46,9 +37,7 @@
                 <label for="disciplina" class="form-label fw-bold">Disciplina</label>
                 <select class="form-select" id="disciplina" required>
                     <option value="" selected>Selecione uma opção</option>
-                    <option value="1">Matemática I</option>
-                    <option value="2">Matemática II</option>
-                    <option value="3">Matemática III</option>
+                    {{disciplina}}
                 </select>
             </div>
         
@@ -57,12 +46,9 @@
                 <label for="professor" class="form-label fw-bold">Professor</label>
                 <select class="form-select" id="professor" required>
                     <option value="" selected>Selecione uma opção</option>
-                    <option value="1">Moisés</option>
-                    <option value="2">Náuvia</option>
-                    <option value="3">Ana Klauck</option>
+                    {{professor}}
                 </select>
             </div>
-    
         </div>
 
         <div class="text-center mt-4">

@@ -25,13 +25,13 @@ class Comentario {
     private $dt_comentario;
 
     /**
-     * FK do usuario que fez o comentario
+     * FK do usuario que fez o comentário
      * @var integer
      */
     private $fk_usuario_id_usuario;
 
     /**
-     * Methodo responsavel por cadastrar a instancia atual no banco de dados
+     * Método responsável por cadastrar a instância atual no banco de dados
      * @return boolean
      */
     public function insertComment() {
@@ -49,7 +49,7 @@ class Comentario {
     }
 
     /**
-     * Methodo responsavel por atualizar do banco com a instancia atual
+     * Método responsável por atualizar do banco com a instância atual
      */
     public function updateComment() {
         // DEFINE A DATA    
@@ -63,7 +63,7 @@ class Comentario {
     }
 
     /**
-     * Methodo responsavel por excluir um depoimento do banco de dados
+     * Método responsável por excluir um depoimento do banco de dados
      */
     public function deleteComment() {
         // EXCLUI O DEPOIMENTO DO BANCO DE DADOS
@@ -71,7 +71,7 @@ class Comentario {
     }
 
     /**
-     * Méthodo responsavel por retornar depoimentos
+     * Método responsável por retornar depoimentos
      * @param  string $where
      * @param  string $order
      * @param  string $limit
@@ -84,7 +84,7 @@ class Comentario {
     }  
 
     /**
-     * Methodo responsavel por retornar um depoimento com base no seu id
+     * Método responsável por retornar um depoimento com base no seu id
      * @param  integer $id
      * 
      * @return self|bool
@@ -94,7 +94,7 @@ class Comentario {
     }
 
     /**
-     * Método responsavel por retornar os comentario
+     * Método responsável por retornar os comentários
      * @param string $order
      * @param string $limit
      * 
@@ -115,7 +115,7 @@ class Comentario {
     }
 
     /*
-     * Metodos GETTERS E SETTERS
+     * Métodos GETTERS E SETTERS
      */
 
     /**

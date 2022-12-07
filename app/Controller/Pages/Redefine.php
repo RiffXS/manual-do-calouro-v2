@@ -26,7 +26,7 @@ class Redefine extends Page {
         // NOVA INSTANCIA
         $obHash = EntityHash::findHash(null, $chave);
 
-        // VALIDA A INSTANCIA, VERIFICANDO SE HOUVE RESULTADO 
+        // VALIDA A INSTÂNCIA, VERIFICANDO SE HOUVE RESULTADO 
         if (!$obHash instanceof EntityHash) {
             // REDIRECIONA PARA HOME
             $request->getRouter()->redirect('/recovery?status=invalid_hash');
@@ -37,12 +37,12 @@ class Redefine extends Page {
             'status' => Alert::getStatus($request)
         ]);
 
-        // RETORNA A VIEW DA PAGINA
+        // RETORNA A VIEW DA PÁGINA
         return parent::getPage('Redefinir Senha', $content);
     }
 
     /**
-     * Método responsável por atualizar
+     * Método responsável por redefinir a senha
      * @param \App\Http\Request
      * 
      * @return void

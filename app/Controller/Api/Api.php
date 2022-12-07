@@ -5,7 +5,7 @@ namespace App\Controller\Api;
 class Api {
     
     /**
-     * Methodo responsavel retornar os detalhes da API
+     * Método responsável retornar os detalhes da API
      * @param \App\Http\Request
      * @return array
      */
@@ -18,7 +18,7 @@ class Api {
     }
 
     /**
-     * Methodo responsavel por retornar os detalhes da paginação
+     * Método responsável por retornar os detalhes da paginação
      * @param \App\Http\Request
      * @param \App\Utils\Pagination 
      * @return array
@@ -27,7 +27,7 @@ class Api {
         // QUERY PARAMS
         $queryParams = $request->getQueryParams();
 
-        // PAGINA
+        // PÁGINA
         $pages = $obPagination->getPages();
 
         // RETORNO 

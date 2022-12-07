@@ -8,7 +8,7 @@ use App\Models\Contato as EntityContact;
 class Contact {
     
     /**
-     * Método responsavel por consultar os dados de um contato
+     * Método responsável por consultar os dados de um contato
      * @param \App\Http\Request $request
      * @param int $id
      * 

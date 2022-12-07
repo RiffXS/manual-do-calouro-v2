@@ -22,13 +22,13 @@ class Router {
     private $prefix = '';
 
     /**
-     * Indice de rotas
+     * Índice de rotas
      * @var array 
      */
     private $routes = [];
 
     /**
-     * Instancia de Request
+     * Instância de Request
      * @var Request
      */
     private $request;
@@ -40,7 +40,7 @@ class Router {
     private $contentType = 'text/html';
 
     /**
-     * Metodo responsavel por iniciar a classe
+     * Método responsável por iniciar a classe
      * @param string $uri
      */
     public function __construct(string $url) {
@@ -50,7 +50,7 @@ class Router {
     }
 
     /**
-     * Metodo responsavel por alterar o valor do content type
+     * Método responsável por alterar o valor do content type
      * @param string $contentType
      * 
      * @return void
@@ -60,7 +60,7 @@ class Router {
     }
 
     /**
-     * Metodo responsavel por definir o prefixo das rotas
+     * Método responsável por definir o prefixo das rotas
      * @return void
      */
     private function setPrefix(): void {
@@ -72,7 +72,7 @@ class Router {
     }
 
     /**
-     * Metodo responsavel por adicionar uma rota na classe
+     * Método responsável por adicionar uma rota na classe
      * @param string $method
      * @param string $route
      * @param array  $params
@@ -112,7 +112,7 @@ class Router {
     }
 
     /**
-     * Metodo responsavel por definir uma rota de GET
+     * Método responsável por definir uma rota de GET
      * @param string $router
      * @param array  $params
      * 
@@ -123,7 +123,7 @@ class Router {
     }
 
     /**
-     * Metodo responsavel por definir uma rota de POST
+     * Método responsável por definir uma rota de POST
      * @param string $router
      * @param array  $params
      * 
@@ -134,7 +134,7 @@ class Router {
     }
 
     /**
-     * Metodo responsavel por definir uma rota de PUT
+     * Método responsável por definir uma rota de PUT
      * @param string $router
      * @param array  $params
      * 
@@ -145,7 +145,7 @@ class Router {
     }
 
     /**
-     * Metodo responsavel por definir uma rota de DELETE
+     * Método responsável por definir uma rota de DELETE
      * @param string $router
      * @param array  $params
      * 
@@ -156,7 +156,7 @@ class Router {
     }
 
     /**
-     * Metodo responsavel por retornar a  URI desconsiderando o prefixo
+     * Método responsável por retornar a  URI desconsiderando o prefixo
      * @return string
      */
     public function getUri(): string {
@@ -171,7 +171,7 @@ class Router {
     }
 
     /**
-     * Metodo responsavel por retornar os dados da rota atual
+     * Método responsável por retornar os dados da rota atual
      * @return array 
      */
     private function getRoute(): array {
@@ -198,7 +198,7 @@ class Router {
                     // RETORNO DO PARAMETROS DA ROTA
                     return $methods[$httpMethod];
                 }
-                // MÉTHODO NÃO PERMITIDO/DEFINIDO
+                // MÉTODO NÃO PERMITIDO/DEFINIDO
                 throw new Exception("Méthodo não permitido", 405);
             }
         }
@@ -207,7 +207,7 @@ class Router {
     }
 
     /**
-     * Metodo responsavel por executar a rota atual
+     * Método responsável por executar a rota atual
      * @return Response
      */
     public function run(): Response {
@@ -241,8 +241,8 @@ class Router {
     }
 
     /**
-     * Metodo responsavel por retornar a mensagem de erro de acordo com o content type
-     * @param string $message 
+     * Método responsável por retornar a mensagem de erro de acordo com o content type
+     * @param string $message
      * @return mixed
      */
     private function getErrorMesasage(string $message): mixed {
@@ -257,7 +257,7 @@ class Router {
     }
 
     /**
-     * Metodo responsavel por retornar a URL atual
+     * Método responsável por retornar a URL atual
      * @return string
      */
     public function getCurrentUrl(): string {
@@ -265,7 +265,7 @@ class Router {
     }
 
     /**
-     * Metodo responsavel por redirecionar a URL
+     * Método responsável por redirecionar a URL
      * @param string $route
      * 
      * @return void

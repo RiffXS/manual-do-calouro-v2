@@ -37,7 +37,7 @@ class User extends Page {
         // RESULTADOS DA PAGINA
         $results = EntityUser::getUsers(null, 'id_usuario DESC', $obPagination->getLimit());
 
-        // RENDENIZA O ITEM
+        // RENDERIZA O ITEM
         while ($obUser = $results->fetchObject(EntityUser::class)) {
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('admin/modules/users/item',[
@@ -241,7 +241,7 @@ class User extends Page {
     }
 
     /**
-     * Método responsável por inserir um usuario professor e administrador nas tabelas de herança
+     * Método responsável por inserir um usuário professor e administrador nas tabelas de herança
      * @param \App\Models\Usuario $obUser
      * 
      * @return void

@@ -10,7 +10,7 @@ use Exception;
 class BasicAuth {
 
     /**
-     * Método responsavel por retornar uma istancia de usuario autenticado
+     * Método responsável por retornar uma istância de usuário autenticado
      * @return mixed
      */
     private function getBasicAuthUser(): mixed {
@@ -30,7 +30,7 @@ class BasicAuth {
     }
 
     /**
-     * Método responsavel por validar o acesso via basic auth
+     * Método responsável por validar o acesso via basic auth
      * @param \App\Http\Request $request
      * 
      * @return boolean
@@ -46,7 +46,7 @@ class BasicAuth {
     }
 
     /**
-     * Método responsavel por executar o middleware
+     * Método responsável por executar o middleware
      * @param \App\Http\Request
      * @param Closure
      * 

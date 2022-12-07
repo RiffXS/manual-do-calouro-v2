@@ -10,7 +10,7 @@ use Closure;
 class AdminLogin {
 
     /**
-     * Método responsavel por executar o middleware
+     * Método responsável por executar o middleware
      * @param \App\Http\Request
      * @param \Closure
      * 

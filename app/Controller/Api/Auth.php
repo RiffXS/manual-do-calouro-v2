@@ -11,7 +11,7 @@ use Exception;
 class Auth extends Api {
 
     /**
-     * Método responsavel por gerar um token JWT
+     * Método responsável por gerar um token JWT
      * @param Request $request
      * 
      * @return array

@@ -62,7 +62,7 @@ class Home extends Page {
             return !empty($img) ? $img : 'user.png';
         };
 
-        // RENDENIZA O ITEM
+        // RENDERIZA O ITEM
         while ($obComment = $results->fetch(\PDO::FETCH_ASSOC)) {
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('pages/components/home/comment',[

@@ -43,10 +43,9 @@ class Aula {
     private $fk_professor_fk_servidor_fk_usuario_id_usuario;
 
     /**
-     * Metodo responsavel por retornar todos os horarios de uma turma
-     * @return array
+     * Método responsável por retornar todos os horários de uma turma
      * 
-     * @author @SimpleR1ick @RiffXS
+     * @return array
      */
     public static function getScheduleClass($curso, $modulo): array {
         // Seleciona todas as aulas, mesmo aquelas que não existem, e as coloca em um array
@@ -141,7 +140,7 @@ class Aula {
     }
 
     /**
-     * Método responsavel por retornar aula
+     * Método responsável por retornar aula
      * @param  string $where
      * @param  string $order
      * @param  string $limit
@@ -156,7 +155,7 @@ class Aula {
     }
 
     /**
-     * Método responsavel por consultar todas as aulas com a descrição dos items
+     * Método responsável por consultar todas as aulas com a descrição dos items
      * @param string  $order 
      * @param integer $limit 
      * 
@@ -190,22 +189,19 @@ class Aula {
     }
 
     /**
-     * Méthodo responsavel por consultar os horarios de tempo
-     * @return array
+     * Método responsável por consultar os horários de tempo
      * 
-     * @author @RiffXS
+     * @return array
      */
     public static function getScheduleTimes(): array {
         return (new Database('horario_aula'))->select()->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**
-     * Metodo responsavel por obter o curso de um usuario
+     * Método responsável por obter o curso de um usuário
      * @param integer $id
      *  
      * @return array
-     * 
-     * @author @RiffXS
      */
     public static function getCursoById(int $id): array {
         // RETORNA O NOME DO CURSO
@@ -214,7 +210,7 @@ class Aula {
     }
 
     /*
-     * Metodos GETTERS E SETTERS
+     * Métodos GETTERS E SETTERS
      */
 
     /**

@@ -78,7 +78,7 @@ class Recovery extends Page {
     }
 
     /**
-     * Undocumented function
+     * Método responsável por enviar um email com o link chave de recuperação
      * @param \App\Models\Chave $obHash
      * @param string $email
      * 

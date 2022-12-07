@@ -7,6 +7,7 @@ use App\Models\Turma as EntityGrade;
 use App\Models\Aluno as EntityStudent;
 use App\Models\Professor as EntityTeacher;
 use App\Models\Usuario as EntityUser;
+use App\Models\GrupoAluno as EntityGroupStudent;
 use App\Utils\Tools\Alert;
 use App\Utils\Sanitize;
 use App\Utils\Session;
@@ -21,7 +22,7 @@ class Profile extends Page {
      * 
      * @return string
      */
-    public static function getEditProfile(Request $request) {
+    public static function getEditProfile(Request $request): string {
         // OBTEM A IMAGEM DO USUARIO
         $obUser = EntityUser::getUserById(Session::getId());
 
@@ -60,12 +61,12 @@ class Profile extends Page {
                 break;
 
             case 3:
-                $class = EntityUser::getUserClass(Session::getId());
                 $text = 'Turma';
                 
                 $column = View::render('pages/components/profile/class', [
                     'curso'  => self::getCourse($obUser),
-                    'modulo' => self::getModule($obUser)
+                    'modulo' => self::getModule($obUser),
+                    'grupo'  => self::getGroup($obUser)
                 ]);
 
                 break;
@@ -210,47 +211,60 @@ class Profile extends Page {
      * @param \App\Http\Request $request
      * @param \App\Models\Usuario  $obUser
      * @param array $postVars
+     * 
+     * @return void
      */
-    private static function updateProfileUser(Request $request, EntityUser $obUser, array $postVars) {
-        // REALIZA UMA AÇÃO DEPENDENDO DO TIPO DE USUARIO
+    private static function updateProfileUser(Request $request, EntityUser $obUser, array $postVars): void {
+        // REALIZA UMA AÇÃO DEPENDENDO DO TIPO DE USUÁRIO
         switch (Session::getLv()) {
-            // USUARIO
+            // USUÁRIO
             case 2:
                 if (!empty($postVars['matricula'])) {
-                    // NOVA INSTANCIA
+                    // NOVA INSTÂNCIA
                     $obStudent = new EntityStudent;
         
                     $obStudent->setFk_id_usuario($obUser->getId_usuario());
                     $obStudent->setNum_matricula($postVars['matricula']);
                 
-                    // VERIFICA SE A MATRICULA ESTA DISPONIVEL
+                    // VERIFICA SE A MATRÍCULA ESTA DISPONIVEL
                     if (!$obStudent->verifyEnrollment()) {
                         $request->getRouter()->redirect('/profile?status=enrollment_duplicated');
                     } 
-                    // INSERE O USUARIO NA TABELA DE ALUNOS
+                    // INSERE O USUÁRIO NA TABELA DE ALUNOS
                     $obStudent->insertStudent();
-
-                    echo '<pre>'; print_r($obStudent); echo '</pre>'; exit;
                 }
-                // ALTERA O NIVEL DE ACESSO PARA 3 (ALUNO)
+
+                // ALTERA O NÍVEL DE ACESSO PARA 3 (ALUNO)
                 $obUser->setFk_acesso(3); 
                 
                 break;
                 
             // ALUNO
             case 3:
-                // VERIFICA SE O CURSO E O MODULO FORAM RECEBIDOS
+                // VERIFICA SE O CURSO E O MÓDULO FORAM RECEBIDOS
                 if (!empty($postVars['curso']) && !empty($postVars['modulo'])) {
                     // BUSCA O ID DA TURMA POR CURSO E MODULO
                     $gradeId = EntityGrade::getGradeId($postVars['curso'], $postVars['modulo']);
 
-                    // NOVA INSTANCIA
-                    $obStudent = new EntityStudent;
- 
-                    $obStudent->setFk_id_usuario($obUser->getId_usuario());
-                    $obStudent->setFk_id_turma($gradeId['id_turma']);
+                    if (!empty($postVars['grupo'])) {
+                        // NOVA INSTÂNCIA
+                        $obGroupStudent = new EntityGroupStudent;
+    
+                        $obGroupStudent->setFk_id_usuario($obUser->getId_usuario());
+                        $obGroupStudent->setFk_id_grupo($postVars['grupo']);
 
-                    $obStudent->updateStudent(); // ATUALIZA A TURMA DO ALUNO
+                        $obGroupStudent->updateGroupStudent(); // ATUALIZA A TURMA DO ALUNO
+
+                        break;
+                    }
+
+                    // NOVA INSTÂNCIA
+                    $obGroupStudent = new EntityGroupStudent;
+ 
+                    $obGroupStudent->setFk_id_usuario($obUser->getId_usuario());
+                    $obGroupStudent->setFk_id_grupo($gradeId['id_grupo']);
+
+                    $obGroupStudent->insertGroupStudent(); // ATUALIZA A TURMA DO ALUNO
                 }
 
                 break;
@@ -278,34 +292,45 @@ class Profile extends Page {
 
     /**
      * Método responsável por retornar a view dos cursos do usuário
-     * @param EntityUser $obUser
+     * @param \App\Models\Usuario $obUser
      * 
      * @return string
      */
     public static function getCourse(EntityUser $obUser) {
-        $curso = '';
+        // DECLARAÇÃO DE VARIÁVEIS
+        $content = '';
+
+        // ARRAY COM TODOS OS CURSOS CADASTRADOS
         $cursos = EntityGrade::getCursos();
 
+        // ARRAY COM O CURSO E O MÓDULO DO USUÁRIO
         $class = $obUser->getUserClass($obUser->getId_usuario());
 
         for ($i = 0; $i < count($cursos); $i++) {
-            if (($i+1) == $class['curso']) {
-                $curso .= View::render('pages/components/profile/course', [
-                    'id'       => $cursos[$i]['id_curso'],
-                    'curso'    => $cursos[$i]['dsc_curso'],
-                    'selected' => 'selected'
-                ]);
-
+            if (!empty($class['curso'])) {
+                if (($i+1) == $class['curso']) {
+                    $content .= View::render('pages/components/profile/course', [
+                        'id'       => $cursos[$i]['id_curso'],
+                        'curso'    => $cursos[$i]['dsc_curso'],
+                        'selected' => 'selected'
+                    ]);
+                } else {
+                    $content .= View::render('pages/components/profile/course', [
+                        'id'       => $cursos[$i]['id_curso'],
+                        'curso'    => $cursos[$i]['dsc_curso'],
+                        'selected' => ''
+                    ]);
+                }
             } else {
-                $curso .= View::render('pages/components/profile/course', [
+                $content .= View::render('pages/components/profile/course', [
                     'id'       => $cursos[$i]['id_curso'],
                     'curso'    => $cursos[$i]['dsc_curso'],
                     'selected' => ''
                 ]);
             }
         }
-
-        return $curso;
+        // RETORNA O CONTEÚDO
+        return $content;
     }
 
     /**
@@ -316,50 +341,117 @@ class Profile extends Page {
      * @return string
      */
     public static function getModule(EntityUser $obUser) {
-        $modulo = '';
+        // DECLARAÇÃO DE VARIÁVEIS
+        $content = '';
 
+        // ARRAY COM O CURSO E O MÓDULO DO USUÁRIO
         $class = $obUser->getUserClass($obUser->getId_usuario());
 
-        for ($i = 1; $i < 7; $i++) {
-            if ($i == $class['modulo']) {
-                $modulo .= View::render('pages/components/profile/module', [
-                    'id'       => "$i",
-                    'modulo'   => "$i",
-                    'selected' => 'selected'
-                ]);
 
+        for ($i = 1; $i < 7; $i++) {
+            if (!empty($class['modulo'])) {
+                if ($i == $class['modulo']) {
+                    $content .= View::render('pages/components/profile/module', [
+                        'id'       => "$i",
+                        'modulo'   => "$i",
+                        'selected' => 'selected'
+                    ]);
+                } else {
+                    $content .= View::render('pages/components/profile/module', [
+                        'id'       => "$i",
+                        'modulo'   => "$i",
+                        'selected' => ''
+                    ]);
+                }
             } else {
-                $modulo .= View::render('pages/components/profile/module', [
+                $content .= View::render('pages/components/profile/module', [
                     'id'       => "$i",
                     'modulo'   => "$i",
                     'selected' => ''
                 ]);
             }
         }
-
-        return $modulo;
+        // RETORNA O CONTEÚDO
+        return $content;
     }
 
     /**
      * Método responsável por retornar a view dos grupos do usuário
-     *
-     * @param EntityUser $obUser
-     * @return void
+     * @param \App\Models\Usuario $obUser
+     * 
+     * @return string
      */
-    public static function getGroup(EntityUser $obUser) {
-        $grupo = '';
+    public static function getGroup(EntityUser $obUser): string {
+        // DECLARAÇÃO DE VARIAVEIS
+        $content = '';
 
+        // ARRAY COM O CURSO E O MÓDULO DO USUÁRIO
         $class = $obUser->getUserClass($obUser->getId_usuario());
 
+        // ARRAY COM OS GRUPOS DA TURMA DO USUÁRIO
         $group = EntityGrade::getGroupByClass($class['curso'], $class['modulo']);
 
-        for ($i = 0; $i < count($group); $i++) {
-            $grupo .= View::render('pages/components/profile/group', [
-                'id'       => $group[$i]['id_grupo'],
-                'grupo'    => $group[$i]['dsc_grupo'],
-                'selected' => 'selected'
+        if (count($group) > 1) {
+            $content .= View::render('pages/components/profile/group', [
+                'grupo' => self::getGroupItem($obUser, $group)
             ]);
-        }
+        } 
+        // RETORNA O CONTEÚDO
+        return $content;
     }
 
+    /**
+     * Método responsável por retonar a view das opções de grupo
+     * @param \App\Models\Usuario $obUser
+     * @param array $group
+     * 
+     * @return string
+     */
+    public static function getGroupItem(EntityUser $obUser, array $group) {
+        // DECLARAÇÃO DE VARIÁVEIS
+        $content = '';
+
+        // ARRAY COM O GRUPO DO USUÁRIO
+        $groupItem = $obUser->getUserGroup($obUser->getId_usuario());
+        
+        if (!empty($groupItem)) {
+            if ($groupItem['grupo'] == 'A') {
+                $content .= View::render('pages/components/profile/group-item', [
+                    'id'       => $group[0]['id_grupo'],
+                    'grupo'    => $group[0]['dsc_grupo'],
+                    'selected' => 'selected'
+                ]);
+            } else {
+                $content .= View::render('pages/components/profile/group-item', [
+                    'id'       => $group[0]['id_grupo'],
+                    'grupo'    => $group[0]['dsc_grupo'],
+                    'selected' => ''
+                ]);
+            }
+            
+            if ($groupItem['grupo'] == 'B') {
+                $content .= View::render('pages/components/profile/group-item', [
+                    'id'       => $group[1]['id_grupo'],
+                    'grupo'    => $group[1]['dsc_grupo'],
+                    'selected' => 'selected'
+                ]);
+            } else {
+                $content .= View::render('pages/components/profile/group-item', [
+                    'id'       => $group[1]['id_grupo'],
+                    'grupo'    => $group[1]['dsc_grupo'],
+                    'selected' => ''
+                ]);
+            }
+        } else {
+            for ($i = 0; $i < count($group); $i++) {
+                $content .= View::render('pages/components/profile/group-item', [
+                    'id'       => $group[$i]['id_grupo'],
+                    'grupo'    => $group[$i]['dsc_grupo'],
+                    'selected' => ''
+                ]);
+            }
+        }
+        // RETORNA O CONTEÚDO
+        return $content;
+    }
 }

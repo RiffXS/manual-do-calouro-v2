@@ -18,7 +18,7 @@ class SignIn extends Page {
      * @return string
      */
     public static function getSignIn(Request $request): string {
-        // RENDENIZA O CONTEUDO DA PAGINA DE LOGIN
+        // RENDERIZA O CONTEUDO DA PAGINA DE LOGIN
         $content = View::render('pages/signin', [
             'status' => Alert::getStatus($request)
         ]);

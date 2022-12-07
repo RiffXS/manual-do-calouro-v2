@@ -17,7 +17,7 @@ class SignUp extends Page {
      * @return string
      */
     public static function getSignUp($request): string {
-        // RENDENIZA O CONTEUDO DA PAGINA DE CADASTRO
+        // RENDERIZA O CONTEUDO DA PAGINA DE CADASTRO
         $content = View::render('pages/signup', [
             'status' => Alert::getStatus($request)
         ]);

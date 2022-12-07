@@ -10,7 +10,7 @@ use Exception;
 class User extends Api {
 
     /**
-     * Método responsavel por retornar os detalhes do usuario
+     * Método responsável por retornar os detalhes do usuário
      * @param \App\Models\Usuario $obUser
      * 
      * @return array
@@ -24,7 +24,7 @@ class User extends Api {
     }
 
     /**
-     * Método responsavel por retornar o usuario atualmente conectado
+     * Método responsável por retornar o usuário atualmente conectado
      * @param Request $request
      * 
      * @return array
@@ -35,7 +35,7 @@ class User extends Api {
     }
 
     /**
-     * Methodo responsavel por obter a rendenização dos items de usuarios para página
+     * Método responsável por obter a renderização dos items de usuários para página
      * @param \App\Http\Request $request
      * @param \App\Utils\Pagination $obPagination
      * 
@@ -58,7 +58,7 @@ class User extends Api {
         // RESULTADOS DA PAGINA
         $results = EntityUser::getUsers(null, 'id_usuario ASC', $obPagination->getLimit());
 
-        // RENDENIZA O ITEM
+        // RENDERIZA O ITEM
         while ($obUser = $results->fetchObject(EntityUser::class)) {
             $itens[] = self::detailsUser($obUser);
         }
@@ -67,7 +67,7 @@ class User extends Api {
     }
 
     /**
-     * Methodo responsavel retornar os detalhes da API
+     * Método responsável retornar os detalhes da API
      * @param \App\Http\Request
      * @return array
      */
@@ -79,7 +79,7 @@ class User extends Api {
     }
 
     /**
-     * Methodo responsavel por retornar os detalhes de um usuario
+     * Método responsável por retornar os detalhes de um usuário
      * @param \App\Http\Request
      * @param integer $id
      * 
@@ -102,7 +102,7 @@ class User extends Api {
     }
 
     /**
-     * Metodo responsavel por cadastrar um novo usuario
+     * Método responsável por cadastrar um novo usuário
      * @param \App\Http\Request $request
      * 
      * @return array
@@ -135,7 +135,7 @@ class User extends Api {
     }
 
     /**
-     * Methodo responsavel por atualizar um usuario
+     * Método responsável por atualizar um usuario
      * @param \App\Http\Request $request
      * @param integer $id
      * 
@@ -177,7 +177,7 @@ class User extends Api {
     }
 
     /**
-     * Methodo responsavel por excluir um depoimento
+     * Método responsável por excluir um depoimento
      * @param \App\Http\Request $request
      * 
      * @return array

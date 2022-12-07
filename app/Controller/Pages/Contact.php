@@ -46,7 +46,7 @@ class Contact extends Page {
     }
 
     /**
-     * Methodo responsavel por obter a rendenização dos items de usuarios para página
+     * Método responsável por obter a renderização dos items de usuários para página
      * @param \App\Http\Request $request
      * 
      * @return string
@@ -58,7 +58,7 @@ class Contact extends Page {
         // RESULTADOS DA PAGINA
         $results = EntityContact::getContactsInfo($fk);
 
-        // RENDENIZA O ITEM
+        // RENDERIZA O ITEM
         while ($contact = $results->fetch(\PDO::FETCH_ASSOC)) {
             // VIEW De DEPOIMENTOSS
             $id = $contact['id_contato'];
@@ -75,7 +75,7 @@ class Contact extends Page {
     }
 
     /**
-     * Método responsavel por rendenizar o CRUD de contatos
+     * Método responsável por renderizar o CRUD de contatos
      * @param integer $acess
      * 
      * @return string
@@ -96,7 +96,7 @@ class Contact extends Page {
     }
 
     /**
-     * Método responsável por rendenizar os contatos
+     * Método responsável por renderizar os contatos
      * @param  array $obContacat
      * 
      * @return array
@@ -145,7 +145,7 @@ class Contact extends Page {
             } else if ($typeContacts[$i]['dsc_tipo'] == 'WhatsApp') {
                 $icone = 'fa-brands fa-whatsapp';
             }
-            // RENDENIZA A VIEW
+            // RENDERIZA A VIEW
             $content .= View::render('pages/components/contacts/type', [
                 'icone' => $icone,
                 'contato' => $typeContacts[$i]['dsc_contato']
@@ -156,7 +156,7 @@ class Contact extends Page {
     }
 
     /**
-     * Método responsavel por verificar se existe uma imagem
+     * Método responsável por verificar se existe uma imagem
      * @param string $image
      * 
      * @return string
@@ -205,7 +205,7 @@ class Contact extends Page {
     }
 
     /**
-     * Método responsavel por cadastrar um contato
+     * Método responsável por cadastrar um contato
      * @param Request $request
      * 
      * @return void
@@ -240,7 +240,7 @@ class Contact extends Page {
     }
     
     /**
-     * Método responsavel por editar os dados de um contato
+     * Método responsável por editar os dados de um contato
      * @param Request $request
      * 
      * @return void
@@ -281,7 +281,7 @@ class Contact extends Page {
     }
 
     /**
-     * Método responsavel por excluir um contato
+     * Método responsável por excluir um contato
      * @param Request $request
      * 
      * @return void

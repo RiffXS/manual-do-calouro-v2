@@ -10,7 +10,7 @@ use Closure;
 class Cache {
 
     /**
-     * Metodo responsavel por verificar se a request atual pode ser cacheada
+     * Método responsável por verificar se a request atual pode ser cacheada
      * @param \App\Http\Request $request
      * 
      * @return boolean
@@ -38,7 +38,7 @@ class Cache {
     }
 
     /**
-     * Methodo responsavel por retornar a hash do cache
+     * Método responsável por retornar a hash do cache
      * @param \App\Http\Request
      * 
      * @return string
@@ -56,7 +56,7 @@ class Cache {
     }
 
     /**
-     * Methodo responsavel por executar o middleware
+     * Método responsável por executar o middleware
      * @param \App\Http\Request $request
      * @param \Closure $next
      * 

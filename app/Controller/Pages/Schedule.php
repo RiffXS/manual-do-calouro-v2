@@ -27,7 +27,7 @@ class Schedule extends Page {
     ];
     
     /**
-     * Método responsável por retornar o contéudo (view) da página de horario
+     * Método responsável por retornar o contéudo (view) da página de horário
      * @param \App\Http\Request
      * 
      * @return string
@@ -42,15 +42,15 @@ class Schedule extends Page {
 
         // VERIFICA SE EXISTEM PARAMETROS NA URL
         if (!empty($curso) and !empty($modulo)) {
-            // RENDENIZA A PAGINA COM TABELA
+            // RENDERIZA A PAGINA COM TABELA
             $content = View::render('pages/schedule', [
                 'horarios' => self::getTable($curso, $modulo),
-                'curso'    => self::getCurso($curso),
+                'curso'    => EntitySchedule::getCursoById($curso),
                 'modulo'   => $modulo,
                 'hidden'   => ''
             ]);
         } else {
-            // RENDENIZA O PAGINA SEM TABELA 
+            // RENDERIZA O PAGINA SEM TABELA 
             $content = View::render('pages/schedule', [
                 'horarios' => '',
                 'curso'    => '',
@@ -60,18 +60,6 @@ class Schedule extends Page {
         }
         // RETORNA A VIEW DA PAGINA
         return parent::getPage('Horários', $content, 'schedule');
-    }
-
-    /**
-     * Método responsável por retornar o nome do curso
-     * @param  integer $curso
-     * 
-     * @return string
-     */
-    private static function getCurso(int $curso): string {
-        // RETORNA O NOME DO CURSO
-        $curso = EntitySchedule::getCursoById($curso);
-        return $curso['sigla_curso'];
     }
 
     /**
@@ -93,7 +81,7 @@ class Schedule extends Page {
         $horas = EntitySchedule::getScheduleTimes();
 
         for ($i = 0; $i < count($horas); $i++) {
-            // RENDENIZA AS LINHAS DA TABELA
+            // RENDERIZA AS LINHAS DA TABELA
             $content .= View::render('pages/components/schedule/row', [
                 'hora_inicio' => $horas[$i]['hora_aula_inicio'],
                 'hora_fim'    => $horas[$i]['hora_aula_fim'],
@@ -105,7 +93,7 @@ class Schedule extends Page {
     }
 
     /**
-     * Método responsavel por definir o array de aula com turma dividida
+     * Método responsável por definir o array de aula com turma dividida
      * @param array $aulas 
      * @param integer $count
      * 
@@ -168,7 +156,7 @@ class Schedule extends Page {
     }
 
     /**
-     * Método responsavel por retorna a view de um item duplo
+     * Método responsável por retornar a view de um item duplo
      * @param array @double
      * 
      * @return string
@@ -200,6 +188,6 @@ class Schedule extends Page {
     }
 
     public static function getAvailability(Request $request) {
-
+        
     }
 }
