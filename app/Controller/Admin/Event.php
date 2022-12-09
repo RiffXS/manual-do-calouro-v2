@@ -65,5 +65,24 @@ class Event extends Page {
 
         // RETORNA A PAGINA COMPLETA
         return parent::getPanel('Eventos > MDC', $content, 'events');
+    }   
+
+    /**
+     * Método responsavel por renderizar o formulario de cadastro de evento
+     * @param \App\Http\Request $request
+     * 
+     * @return string
+     */
+    public static function getNewEvent(Request $request): string {
+        // CONTEUDO DO FORMULARIO
+        $content = View::render('/admin/modules/events/form', [
+            'tittle' => 'Cadastrar evento',
+            'status' => Alert::getStatus($request),
+            'descricao' => '',
+            'data' => '',
+            'botao' => 'Cadastrar'
+        ]);
+        // RETORNA A PAGINA COMPLETA
+        return parent::getPanel('Cadastrar evento > MDC', $content, 'events');
     }
 }
