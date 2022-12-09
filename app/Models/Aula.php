@@ -43,11 +43,19 @@ class Aula {
     private $fk_professor_fk_servidor_fk_usuario_id_usuario;
 
     /**
+     * FK do grupo
+     * @var mixed
+     */
+    private $fk_grupo_id_grupo;
+
+    /**
      * Método responsável por retornar todos os horários de uma turma
+     * @param integer $curso
+     * @param integer $modulo
      * 
      * @return array
      */
-    public static function getScheduleClass($curso, $modulo): array {
+    public static function getScheduleClass(int $curso, int $modulo): array {
         // Seleciona todas as aulas, mesmo aquelas que não existem, e as coloca em um array
         $sql = "SELECT
                     *
@@ -140,28 +148,13 @@ class Aula {
     }
 
     /**
-     * Método responsável por retornar aula
-     * @param  string $where
-     * @param  string $order
-     * @param  string $limit
-     * @param  string $fields
-     * 
-     * @return mixed
-     * 
-     * @author @SimpleR1ick @RiffXS
-     */
-    public static function getSchedules($where = null, $order = null, $limit = null, $fields = '*'): mixed {
-        return (new Database('aula'))->select($where, $order, $limit, $fields);
-    }
-
-    /**
      * Método responsável por consultar todas as aulas com a descrição dos items
      * @param string  $order 
      * @param integer $limit 
      * 
      * @return \PDOStatement
      */
-    public static function getDscSchedules($order, $limit): \PDOStatement {
+    public static function getDscSchedules(string $order, int $limit): \PDOStatement {
         $sql = "SELECT id_aula,
                     dsc_dia_semana,
                     hora_aula_inicio,
@@ -189,27 +182,30 @@ class Aula {
     }
 
     /**
-     * Método responsável por consultar os horários de tempo
+     * Método responsável por retornar aula
+     * @param  string $where
+     * @param  string $order
+     * @param  string $limit
+     * @param  string $fields
      * 
-     * @return array
+     * @return mixed
      */
-    public static function getScheduleTimes(): array {
-        return (new Database('horario_aula'))->select()->fetchAll(\PDO::FETCH_ASSOC);
+    public static function getSchedules($where = null, $order = null, $limit = null, $fields = '*'): mixed {
+        return (new Database('aula'))->select($where, $order, $limit, $fields);
     }
 
     /**
-     * Método responsável por obter o curso de um usuário
-     * @param integer $id
+     * Método responsavel por retornar os dados de uma aula pelo ID
+     * @param int $id
      * 
-     * @return array
+     * @return self|bool
      */
-    public static function getCursoById(int $id): array {
-        // RETORNA O NOME DO CURSO
-        return (new Database('curso'))->select("id_curso = $id", null, null, 'sigla_curso')->fetch(\PDO::FETCH_ASSOC);
+    public static function getScheduleById(int $id): mixed {
+        return self::getSchedules("id_aula = $id")->fetchObject(self::class);
     }
 
     /*
-     * Métodos GETTERS E SETTERS
+     * Métodos GETTERS e SETTERS
      */
 
     /**
@@ -306,5 +302,21 @@ class Aula {
      */
     public function setFk_professor(int $fk): void {
         $this->fk_professor_fk_servidor_fk_usuario_id_usuario = $fk;
+    }
+
+    /**
+     * Get fk_grupo_id_grupo
+     * @return int
+     */
+    public function getFk_grupo(): int {
+        return $this->fk_grupo_id_grupo;
+    }
+
+    /**
+     * Set fk_grupo_id_grupo
+     * @param integer $fk
+     */
+    public function setFk_grupo(int $fk): void {
+        $this->fk_grupo_id_grupo = $fk;
     }
 } 

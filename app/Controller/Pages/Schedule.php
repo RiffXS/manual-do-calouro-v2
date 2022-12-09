@@ -3,6 +3,8 @@
 namespace App\Controller\Pages;
 
 use App\Http\Request;
+use App\Models\Constant\Curso as EntityCourse;
+use App\Models\Constant\HorarioAula as EntityTime;
 use App\Models\Aula as EntitySchedule;
 use App\Utils\Sanitize;
 use App\Utils\View;
@@ -45,7 +47,7 @@ class Schedule extends Page {
             // RENDERIZA A PAGINA COM TABELA
             $content = View::render('pages/schedule', [
                 'horarios' => self::getTable($curso, $modulo),
-                'curso'    => EntitySchedule::getCursoById($curso)['sigla_curso'],
+                'curso'    => EntityCourse::getCursoById($curso)['sigla_curso'],
                 'modulo'   => $modulo,
                 'hidden'   => ''
             ]);
@@ -78,7 +80,7 @@ class Schedule extends Page {
         $aulas = EntitySchedule::getScheduleClass($curso, $modulo);
 
         // ARRAY COM TODOS OS HORARIOS ESTATICOS DO BANCO
-        $horas = EntitySchedule::getScheduleTimes();
+        $horas = EntityTime::getTimes();
 
         for ($i = 0; $i < count($horas); $i++) {
             // RENDERIZA AS LINHAS DA TABELA

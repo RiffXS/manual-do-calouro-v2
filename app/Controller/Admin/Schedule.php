@@ -92,6 +92,13 @@ class Schedule extends Page {
         return parent::getPanel('Cadastrar aula > MDC', $content, 'horario');
     }
 
+    public static function getEditSchedule(Request $request, int $id) {
+        
+        $obSchedule = EntitySchedule::getScheduleById($id);
+
+        
+    }
+
     /**
      * Método responsável por renderizar as opções de dia da semana
      * @param \App\Utils\Database $obDatabase
