@@ -41,14 +41,12 @@ class Comment extends Page {
                 'id'       => $obComment->getId_comentario(),
                 'user'     => $obComment->getFK_id_usuario(),
                 'mensagem' => $obComment->getDsc_comentario(),
-                'data'     => $obComment->getAdd_data()
+                'data'     => $obComment->getDt_comentario()
             ]);
         }
-
         // RETORNA OS DEPOIMENTOS
         return $itens;
     }
-
 
     /**
      * Método responsável por renderizar a view de listagem de depoimentos

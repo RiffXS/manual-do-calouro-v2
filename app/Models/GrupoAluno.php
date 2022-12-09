@@ -21,7 +21,7 @@ class GrupoAluno {
     /**
      * Método responsável por inserir o aluno no grupo padrão
      * 
-     * @return \PDO_STATEMENT|bool
+     * @return \PDOStatement|bool
      */
     public function insertGroupStudent(): mixed {
         return (new Database('grupo_aluno'))->insert([
@@ -33,7 +33,7 @@ class GrupoAluno {
     /**
      * Método responsável por atualizar a turma do aluno
      * 
-     * @return \PDO_STATEMENT|bool
+     * @return \PDOStatement|bool
      */
     public function updateGroupStudent(): mixed {
         return (new Database('grupo_aluno'))->update("fk_aluno_fk_usuario_id_usuario = {$this->fk_aluno_fk_usuario_id_usuario}", [
