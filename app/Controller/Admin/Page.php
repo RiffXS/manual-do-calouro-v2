@@ -31,7 +31,7 @@ class Page {
         'schedules' => [
             'label' => 'Aulas',
             'link'  => URL.'/admin/schedules'
-        ],
+        ]
     ];
 
     /**
