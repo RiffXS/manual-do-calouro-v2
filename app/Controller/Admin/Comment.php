@@ -38,6 +38,7 @@ class Comment extends Page {
         while ($obComment = $results->fetchObject(EntityComment::class)) {
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('admin/modules/comments/item',[
+                'click' => "onclick=deleteItem({$obComment->getId_comentario()})",
                 'id'       => $obComment->getId_comentario(),
                 'user'     => $obComment->getFK_id_usuario(),
                 'mensagem' => $obComment->getDsc_comentario(),

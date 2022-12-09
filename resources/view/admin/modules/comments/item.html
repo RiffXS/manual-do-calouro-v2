@@ -4,13 +4,35 @@
     <td>{{mensagem}}</td>
     <td>{{data}}</td>
     <td>
-        <a href="{{URL}}/admin/comments/edit/{{id}}">
-            <button class="btn btn-primary" type="button">Exibir</button>
-        </a>
+        <a class="btn btn-primary btn-sm text-center" href="{{URL}}/admin/coomments/view/{{id}}">
+            <i class="fa-regular fa-eye"></i>
+       </a>
     </td>
     <td>
-        <a href="{{URL}}/admin/comments/delete/{{id}}">
-            <button class="btn btn-danger" type="button">Excluir</button>
-        </a>
+        <a class="btn btn-danger btn-sm text-center" href="{{URL}}/admin/comments/del"
+			data-bs-toggle="modal" data-bs-target="#modal-delete" {{click}} >
+      		<i class="fa-solid fa-trash"></i>
+    	</a>
     </td>
 </tr>
+
+<div class="modal fade" id="modal-delete" tabindex="-1" aria-labelledby="tituloModal" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title text-black">Deseja mesmo excluir esse item?</h5>
+				<button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-footer">
+				<form action="{{URL}}/admin/comments/del" method="POST">
+					<input type="hidden" name="id" id="id">
+
+					<button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Voltar</button>
+					<button class="btn btn-danger" type="submit">Deletar</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="{{URL}}/resources/js/admin.js"></script>
