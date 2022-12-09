@@ -45,7 +45,7 @@ class Schedule extends Page {
             // RENDERIZA A PAGINA COM TABELA
             $content = View::render('pages/schedule', [
                 'horarios' => self::getTable($curso, $modulo),
-                'curso'    => EntitySchedule::getCursoById($curso),
+                'curso'    => EntitySchedule::getCursoById($curso)['sigla_curso'],
                 'modulo'   => $modulo,
                 'hidden'   => ''
             ]);
