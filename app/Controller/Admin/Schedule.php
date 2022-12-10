@@ -39,6 +39,7 @@ class Schedule extends Page {
         while ($obShedule = $results->fetch(\PDO::FETCH_ASSOC)) {
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('admin/modules/schedules/item',[
+                'edit' => "onclick=editSchedule({$obShedule['id_aula']})",
                 'id'         => $obShedule['id_aula'],
                 'semana'     => $obShedule['dsc_dia_semana'],
                 'horario'    => $obShedule['hora_aula_inicio'],
@@ -82,6 +83,7 @@ class Schedule extends Page {
         $content = View::render('admin/modules/schedules/form', [
            'tittle'     => 'Cadastrar Aula',
            'status'     => Alert::getStatus($request),
+           'hidden'     => '',
            'semana'     => self::getWeekDays($obDatabase),
            'horario'    => self::getSchedule($obDatabase),
            'sala'       => self::getRooms($obDatabase),
@@ -92,11 +94,23 @@ class Schedule extends Page {
         return parent::getPanel('Cadastrar Aula > MDC', $content, 'horario');
     }
 
-    public static function getEditSchedule(Request $request, int $id) {
-        
-        $obSchedule = EntitySchedule::getScheduleById($id);
+    public static function getEditSchedule(Request $request, int $id): string {
+        $schedule = EntitySchedule::getSchedules("id_aula = $id")->fetch(\PDO::FETCH_ASSOC);
 
-        
+        $obDatabase = new Database;
+
+        $content = View::render('admin/modules/schedules/form', [
+            'tittle'     => 'Editar Aula',
+            'status'     => Alert::getStatus($request),
+            'hidden'     => parent::setHiddens($schedule),
+            'semana'     => self::getWeekDays($obDatabase),
+            'horario'    => self::getSchedule($obDatabase),
+            'sala'       => self::getRooms($obDatabase),
+            'disciplina' => self::getSubjects($obDatabase),
+            'professor'  => self::getTeachers($obDatabase)
+         ]);
+ 
+         return parent::getPanel('Editar Aula > MDC', $content, 'horario');
     }
 
     /**
@@ -201,8 +215,6 @@ class Schedule extends Page {
         }
         return $content;
     }
-
-
 
     /**
      * 

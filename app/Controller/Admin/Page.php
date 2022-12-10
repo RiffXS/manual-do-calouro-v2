@@ -91,8 +91,27 @@ class Page {
         return self::getPage($tittle, $contentPanel);
     }
 
-    public static function getModal() {
+    /**
+     * Método responsavel por renderizar os input hidden
+     * @param array $array
+     * 
+     * @return string
+     */
+    protected static function setHiddens(array $array): string {
+        // INICIALIZAÇÃO DE VARIAVEL
+        $content = '';
+
         
+        for ($i = 0; $i < count($array); $i++) {
+            $keys = array_keys($array);
+
+            $content .= View::render('/shared/hidden', [
+                'id'    => $keys[$i],
+                'value' => $array[$keys[$i]]
+            ]);
+        }
+        // RETORNA O CONTEUDO
+        return $content;
     }
 
     /**
