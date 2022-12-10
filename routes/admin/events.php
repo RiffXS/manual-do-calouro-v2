@@ -33,12 +33,32 @@ $obRouter->post('/admin/events/new', [
     } 
 ]);
 
-// ROTA DE EDIÇÃO DE UM EVENTO
+// ROTA FORMULARIO DE EDIÇÃO DE EVENTO
 $obRouter->get('/admin/events/edit/{id}', [
     'middlewares' => [
         'admin-login'
     ],
     function($request, $id) {
         return new Response(200, Admin\Event::getEditEvent($request, $id));
+    }
+]);
+
+// ROTA DE ALTERAÇÃO DE EVENTO
+$obRouter->post('/admin/events/edit/{id}', [
+    'middlewares' => [
+        'admin-login'
+    ],
+    function ($request, $id) {
+        return new Response(200, Admin\Event::setEditEvent($request, $id));
+    }
+]);
+
+// ROTA DE EXCLUSÃO DE EVENTO
+$obRouter->post('/admin/events/del', [
+    'middlewares' => [
+        'admin-login'
+    ],
+    function ($request) {
+        return new Response(200, Admin\Event::setDeleteEvent($request));
     }
 ]);

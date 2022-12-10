@@ -29,6 +29,6 @@ class HorarioAula {
      * @return array
      */
     public static function getTimes(): array {
-        return (new Database())->selectAll('horario_aula');
+        return (new Database())->find('horario_aula');
     }
 }

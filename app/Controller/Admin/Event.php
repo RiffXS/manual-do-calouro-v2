@@ -38,6 +38,7 @@ class Event extends Page {
         while ($obCalendar = $results->fetch(\PDO::FETCH_ASSOC)) {  
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('admin/modules/events/item',[
+                'click'  => "onclick=deleteItem({$obCalendar['id_evento']})",
                 'id'     => $obCalendar['id_evento'],
                 'campus' => $obCalendar['dsc_campus'],
                 'data'   => $obCalendar['dat_evento'],
@@ -139,5 +140,58 @@ class Event extends Page {
         ]);
         // RETORNA A PAGINA COMPLETA
         return parent::getPanel('Editar Evento > MDC', $content, 'events');
+    }
+
+    /**
+     * Método responsavel por atualizar um evento
+     * @param \App\Http\Request $request
+     * @param integer $id
+     * 
+     * @return void
+     */
+    public static function setEditEvent(Request $request, int $id): void {
+        // OBTENDO O EVENTO PELO ID
+        $obEvent = EntityCalendar::getEventById($id);
+
+        // VALIDA A INSTANCIA DO OBJETO
+        if (!$obEvent instanceof EntityCalendar) {
+            $request->getRouter()->redirect('/admin/events');
+        }
+        // POST VARS
+        $postVars = $request->getPostVars();
+
+        $obEvent->setId_evento($id);
+        $obEvent->setDsc_evento($postVars['descricao']);
+        $obEvent->setDat_evento($postVars['data']);
+        $obEvent->setFk_campus($postVars['campus']);
+
+        $obEvent->updateEvent();
+
+        // REDIRECIONA O USUARIO
+        $request->getRouter()->redirect('/admin/events?status=event_updated');
+    }
+
+    /**
+     * Método responsável por excluir um evento
+     * @param \App\Http\Request
+     * 
+     * @return void
+     */
+    public static function setDeleteEvent(Request $request): void {
+        // POST VARS
+        $postVars = $request->getPostVars();
+
+        // OBTENDO O USUÁRIO DO BANCO DE DADOS
+        $obEvent = EntityCalendar::getEventById((int)$postVars['id']);
+
+        // VALIDA A INSTANCIA
+        if (!$obEvent instanceof EntityCalendar) {
+            $request->getRouter()->redirect('/admin/events');
+        }
+        // EXCLUIR DEPOIMENTO
+        $obEvent->deleteEvent();
+
+        // REDIRECIONA O USUÁRIO
+        $request->getRouter()->redirect('/admin/events?status=event_deleted');
     }
 }

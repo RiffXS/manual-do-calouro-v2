@@ -92,8 +92,36 @@ class Database {
 		}
 	}
 
-	public function beginTransaction() {
+	/**
+	 * Get conexão atual
+	 * @return PDO
+	 */
+	public function getConnection(): PDO {
+		return $this->connection;
+	}
+
+	/**
+	 * Desativa o auto-commit da instancia
+	 * @return void
+	 */
+	public function beginTransaction(): void {
 		$this->connection->beginTransaction();
+	}
+
+	/**
+	 * Salva as alterações na instancia
+	 * @return void
+	 */
+	public function commit(): void {
+		$this->connection->commit();
+	}
+
+	/**
+	 * Revverte as alterações na instancia
+	 * @return void
+	 */
+	public function rollBack(): void {
+		$this->connection->rollBack();
 	}
 
 	/**
@@ -150,8 +178,10 @@ class Database {
 	 * 
 	 * @return array
      */
-    public function selectAll(string $table, string $fields = '*'): array {
-        return $this->execute("SELECT $fields FROM $table")->fetchAll(PDO::FETCH_ASSOC);
+    public function find(string $table, string $fields = '*'): array {
+		$stmt = $this->execute("SELECT $fields FROM $table");
+
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 	/**
@@ -212,17 +242,5 @@ class Database {
 
 		// RETORNA SUCESSO
 		return true;
-	}
-
-	/*
-     * Metodos GETTERS E SETTERS
-     */
-
-	/**
-	 * Get conexão atual
-	 * @return PDO
-	 */
-	public function getConnection(): PDO {
-		return $this->connection;
 	}
 }

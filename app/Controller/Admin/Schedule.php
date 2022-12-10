@@ -108,7 +108,7 @@ class Schedule extends Page {
     private static function getWeekDays(Database $obDatabase): string {
         // DECLARAÇÃO DE VARIAVEIS
         $content = '';
-        $diaSemana = $obDatabase->selectAll('dia_semana');
+        $diaSemana = $obDatabase->find('dia_semana');
 
         // RENDERIZA AS OPÇÕES DA SEMANA
         for ($i = 0; $i < count($diaSemana); $i++) {
@@ -128,7 +128,7 @@ class Schedule extends Page {
      */
     private static function getSchedule(Database $obDatabase): string {
         $content = '';
-        $horarioAula = $obDatabase->selectAll('horario_aula');
+        $horarioAula = $obDatabase->find('horario_aula');
 
         // RENDERIZA AS OPÇÕES DE HORARIO
         for ($i = 0; $i < count($horarioAula); $i++) {
@@ -151,7 +151,7 @@ class Schedule extends Page {
      */
     private static function getRooms(Database $obDatabase): string {
         $content = '';
-        $salaAula = $obDatabase->selectAll('sala_aula');
+        $salaAula = $obDatabase->find('sala_aula');
 
         // RENDERIZA AS OPÇÕES DA SEMANA
         for ($i = 0; $i < count($salaAula); $i++) {
@@ -169,7 +169,7 @@ class Schedule extends Page {
      */
     private static function getSubjects(Database $obDatabase): string {
         $content = '';
-        $disciplina = $obDatabase->selectAll('disciplina');
+        $disciplina = $obDatabase->find('disciplina');
 
         // RENDERIZA AS OPÇÕES DAS DISCIPLINA
         for ($i = 0; $i < count($disciplina); $i++) {
@@ -190,7 +190,7 @@ class Schedule extends Page {
 
         $sql = 'professor p JOIN servidor s ON (p.fk_servidor_fk_usuario_id_usuario = s.fk_usuario_id_usuario) JOIN usuario u ON (s.fk_usuario_id_usuario = u.id_usuario)';
 
-        $professor = $obDatabase->selectAll($sql, 'id_usuario, nom_usuario');
+        $professor = $obDatabase->find($sql, 'id_usuario, nom_usuario');
 
         // RENDERIZA AS OPÇÕES DAS DISCIPLINA
         for ($i = 0; $i < count($professor); $i++) {
