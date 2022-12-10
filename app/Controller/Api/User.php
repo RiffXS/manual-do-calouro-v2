@@ -30,7 +30,7 @@ class User extends Api {
      * @return array
      */
     public static function getCurrentUser(Request $request) {
-        // RETORNA OS DETALHES DO USUARIO
+        // RETORNA OS DETALHES DO USUÁRIO
         return self::detailsUser($request->user);
     }
 
@@ -62,7 +62,7 @@ class User extends Api {
         while ($obUser = $results->fetchObject(EntityUser::class)) {
             $itens[] = self::detailsUser($obUser);
         }
-        // RETORNA OS USUARIOS
+        // RETORNA OS USUÁRIOS
         return $itens;
     }
 
@@ -86,18 +86,18 @@ class User extends Api {
      * @return array
      */
     public static function getUser(Request $request, int $id) {
-        // VALIDA O ID DO USUARIO
+        // VALIDA O ID DO USUáRIO
         if (!is_numeric($id)) {
-            throw new Exception("O id '".$id."'não e valido", 400);
+            throw new Exception("O id '".$id."'não é valido", 400);
         }
-        // BUSCA USUARIO
+        // BUSCA USUÁRIO
         $obUser = EntityUser::getUserById($id);
 
         // VALIDA SE O DEPOIMENTO EXISTE
         if (!$obUser instanceof EntityUser) {
-            throw new Exception("O usuario ".$id." não foi encontrado", 404);
+            throw new Exception("O usuário ".$id." não foi encontrado", 404);
         }
-        // RETORNA OS DETALHES DO USUARIO
+        // RETORNA OS DETALHES DO USUÁRIO
         return self::detailsUser($obUser);
     }
 
@@ -115,13 +115,13 @@ class User extends Api {
         if (!isset($postVars['nome']) or !isset($postVars['email']) or !isset($postVars['senha'])) {
             throw new Exception("Os campos 'nome', 'email' e 'senha' são obrigatorios", 400);
         }
-        // VALIDA O EMAIL DO USUARIO
+        // VALIDA O EMAIL DO USUÁRIO
         $obUser = EntityUser::getUserByEmail($postVars[]);
 
         if ($obUser instanceof EntityUser) {
             throw new Exception("O email já está em uso.", 400);
         }
-        // NOVA INSTANCIA DE USUARIO
+        // NOVA INSTANCIA DE USUÁRIO
         $obUser = new EntityUser;
 
         $obUser->setNom_usuario($postVars['nome']);
@@ -130,12 +130,12 @@ class User extends Api {
 
         $obUser->insertUser();
 
-        // RETORNA OS DETALHES DO USUARIO CADASTRADO
+        // RETORNA OS DETALHES DO USUÁRIO CADASTRADO
         return self::detailsUser($obUser);
     }
 
     /**
-     * Método responsável por atualizar um usuario
+     * Método responsável por atualizar um usuário
      * @param \App\Http\Request $request
      * @param integer $id
      * 
@@ -158,7 +158,7 @@ class User extends Api {
 
         // VALIDA A INSTANCIA
         if (!$obUser instanceof EntityUser) {
-            throw new Exception("O usuario ".$id." não foi encontrado", 404);
+            throw new Exception("O usuário ".$id." não foi encontrado", 404);
         }
         // VALIDA DISPONIBILIDADE DO EMAIL
         $obUserEmail = EntityUser::getUserByEmail($email);

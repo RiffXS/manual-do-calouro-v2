@@ -26,6 +26,6 @@ class Calendar extends Page {
             setcookie('mdc-calendario', $cookie); 
         }
         // RETORNA A VIEW DA PAGINA
-        return parent::getPage('Calendario', $content, 'calendar');
+        return parent::getPage('Calendário', $content, 'calendar');
     }
 }

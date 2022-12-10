@@ -88,10 +88,10 @@ class Page {
     private static function getLogin(): string {
         // RETORNA O DROPDOWN CASO LOGADO
         if (Session::isLogged()) {
-            // OBTÊM OS DADOS DO USUARIO
+            // OBTÊM OS DADOS DO USUÁRIO
             $obUser = EntityUser::getUserById(Session::getId());
 
-            // LAMBDA - RENDERIZA LINK SE USUARIO FOR ADMINISTRADOR
+            // LAMBDA - RENDERIZA LINK SE USUÁRIO FOR ADMINISTRADOR
             $isAdmin = function($lv) {
                 if ($lv == 1) {
                     return View::render('pages/header/admin');

@@ -17,7 +17,7 @@ class Home extends Page {
      */
     public static function getHome($request) {
         
-        $form = '<p>Faço login para comentar</p>';
+        $form = '<p>Faça login para comentar</p>';
 
         if (Session::isLogged()) {
             $form = View::render('pages/components/home/form');

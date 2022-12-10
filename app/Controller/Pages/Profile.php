@@ -55,7 +55,7 @@ class Profile extends Page {
         // RELATIVO NIVEL DE ACESSO DO USUARIO
         switch ($obUser->getFk_acesso()) {
             case 2:
-                $text = 'Matricula';
+                $text = 'Matrícula';
                 $column = View::render('pages/components/profile/enrollment');
 
                 break;

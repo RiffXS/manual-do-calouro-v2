@@ -64,7 +64,7 @@ class Comment extends Page {
         ]);
 
         // RETORNA A PAGINA COMPLETA
-        return parent::getPanel('Commentarios > MDC', $content, 'comments');
+        return parent::getPanel('Commentários > MDC', $content, 'comments');
     }
 
     /**
@@ -89,7 +89,7 @@ class Comment extends Page {
         ]);
 
         // RETORNA A PAGINA COMPLETA
-        return parent::getPanel('Excluir comentario > MDC', $content, 'comments');
+        return parent::getPanel('Excluir Comentário > MDC', $content, 'comments');
     }
 
     /**

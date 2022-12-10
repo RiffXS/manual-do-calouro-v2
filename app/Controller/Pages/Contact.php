@@ -82,7 +82,7 @@ class Contact extends Page {
      */
     private static function getCrud($acess): string {
         // DECLARAÇÃO DE VARIAVEIS
-        $auth = [4, 5]; // tipos de usuarios aceitos
+        $auth = [4, 5]; // tipos de usuários aceitos
         $view = '';
 
         // VERIFICA SE O ACESSO E AUTORIZADO
@@ -290,7 +290,7 @@ class Contact extends Page {
         // POST VARS
         $postVars = $request->getPostVars();
 
-        // OBTENDO O USUARIO DO BANCO DE DADOS
+        // OBTENDO O USUÁRIO DO BANCO DE DADOS
         $obContact = EntityContact::getContactById((int)$postVars['id']);
   
         // VALIDA A INSTANCIA
@@ -300,7 +300,7 @@ class Contact extends Page {
         // EXCLUIR O CONTATO
         $obContact->deleteContact();
 
-        // REDIRECIONA O USUARIO COM MENSAGEM
+        // REDIRECIONA O USUÁRIO COM MENSAGEM
         $request->getRouter()->redirect('/contact?status=contact_deleted');
     }
 }

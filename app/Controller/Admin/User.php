@@ -67,7 +67,7 @@ class User extends Page {
         ]);
 
         // RETORNA A PAGINA COMPLETA
-        return parent::getPanel('Usuarios > MDC', $content, 'users');
+        return parent::getPanel('Usuários > MDC', $content, 'users');
     }
 
     /**
@@ -79,7 +79,7 @@ class User extends Page {
     public static function getNewUser(Request $request): string {
         // CONTEUDO DO FORMULARIO
         $content = View::render('admin/modules/users/form', [
-            'tittle'   => 'Cadastrar usuario',
+            'tittle'   => 'Cadastrar Usuário',
             'status'   => Alert::getStatus($request),
             'nome'     => '',
             'email'    => '',
@@ -90,7 +90,7 @@ class User extends Page {
         ]);
 
         // RETORNA A PAGINA COMPLETA
-        return parent::getPanel('Cadastrar usuario > MDC', $content, 'users');
+        return parent::getPanel('Cadastrar Usuário > MDC', $content, 'users');
     }
 
     /**
@@ -109,13 +109,13 @@ class User extends Page {
         $status = $postVars['status'] ?? '';
         $ativo  = $postVars['active'] ?? '';
 
-        // VALIDA O EMAIL DO USUARIO
+        // VALIDA O EMAIL DO USUÁRIO
         $obUser = EntityUser::getUserByEmail($email);
 
         if ($obUser instanceof EntityUser) {
             $request->getRouter()->redirect('/admin/users/new?status=duplicated_email');
         }
-        // NOVA INSTANCIA DE USUARIO
+        // NOVA INSTANCIA DE USUÁRIO
         $obUser = new EntityUser;
         $obUser->setNom_usuario($nome);
         $obUser->setEmail($email);
@@ -127,7 +127,7 @@ class User extends Page {
 
         self::registerByUserType($obUser);
 
-        // REDIRECIONA O USUARIO
+        // REDIRECIONA O USUÁRIO
         $request->getRouter()->redirect('/admin/users/edit/'.$obUser->getId_usuario().'?status=user_registered');
     }
 
@@ -145,7 +145,7 @@ class User extends Page {
             'inativo' => ''
         ];
         
-        // OBTENDO O USUARIO DO BANCO DE DADOS
+        // OBTENDO O USUÁRIO DO BANCO DE DADOS
         $obUser = EntityUser::getUserById($id);
 
         // VALIDA A INSTANCIA
@@ -157,7 +157,7 @@ class User extends Page {
         // CONTEUDO DO FORMULARIO
         $content = View::render('admin/modules/users/form', [
             'status'  => Alert::getStatus($request),
-            'tittle'  => 'Editar usuario',
+            'tittle'  => 'Editar Usuário',
             'botao'   => 'Atualizar',
             'nome'    => $obUser->getNom_usuario(),
             'email'   => $obUser->getEmail(),
@@ -167,7 +167,7 @@ class User extends Page {
         ]);
 
         // RETORNA A PAGINA COMPLETA
-        return parent::getPanel('Editar usuario  > WDEV', $content, 'users');
+        return parent::getPanel('Editar Usuário  > WDEV', $content, 'users');
     }
 
     /**
@@ -178,7 +178,7 @@ class User extends Page {
      * @return void
      */
     public static function setEditUser(Request $request, int $id): void {
-        // OBTENDO O USUARIO DO BANCO DE DADOS
+        // OBTENDO O USUÁRIO DO BANCO DE DADOS
         $obUser = EntityUser::getUserById($id);
 
         // VALIDA A INSTANCIA
@@ -194,7 +194,7 @@ class User extends Page {
         $active = $postVars['active'] ?? '';
         $status = $postVars['status'] ?? '';
 
-        // VALIDA O EMAIL DO USUARIO
+        // VALIDA O EMAIL DO USUÁRIO
         $obUserEmail = EntityUser::getUserByEmail($email);
 
         if ($obUserEmail instanceof EntityUser && $obUserEmail->getId_usuario() != $id) {
@@ -212,7 +212,7 @@ class User extends Page {
 
         self::registerByUserType($obUser);
 
-        // REDIRECIONA O USUARIO
+        // REDIRECIONA O USUÁRIO
         $request->getRouter()->redirect('/admin/users/edit/'.$id.'?status=user_updated');
     }
 
@@ -226,7 +226,7 @@ class User extends Page {
         // POST VARS
         $postVars = $request->getPostVars();
        
-        // OBTENDO O USUARIO DO BANCO DE DADOS
+        // OBTENDO O USUÁRIO DO BANCO DE DADOS
         $obUser = EntityUser::getUserById($postVars['id']);
 
         // VALIDA A INSTANCIA
@@ -236,7 +236,7 @@ class User extends Page {
         // EXCLUIR DEPOIMENTO
         $obUser->deleteUser();
 
-        // REDIRECIONA O USUARIO
+        // REDIRECIONA O USUÁRIO
         $request->getRouter()->redirect('/admin/users?status=user_deleted');
     }
 
@@ -247,7 +247,7 @@ class User extends Page {
      * @return void
      */
     private static function registerByUserType(EntityUser $obUser): void {
-        // OBTEM O ID DO USUARIO
+        // OBTEM O ID DO USUÁRIO
         $id = $obUser->getId_usuario();
 
         // NOVA INSTANCIA DE SERVIDOR

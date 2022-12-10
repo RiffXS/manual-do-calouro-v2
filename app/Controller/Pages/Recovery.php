@@ -91,7 +91,7 @@ class Recovery extends Page {
 
         // ASSUNTO E MENSAGEM
         $subject = 'Recuperar senha';
-        $message = 'Para recuperar sua senha, acesse este link: '.$link;
+        $message = 'Para recuperar sua senha, acesse esse link: '.$link;
 
         $obEmail = new Email;
 

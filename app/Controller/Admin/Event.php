@@ -76,13 +76,13 @@ class Event extends Page {
     public static function getNewEvent(Request $request): string {
         // CONTEUDO DO FORMULARIO
         $content = View::render('/admin/modules/events/form', [
-            'tittle' => 'Cadastrar evento',
+            'tittle' => 'Cadastrar Evento',
             'status' => Alert::getStatus($request),
             'descricao' => '',
             'data' => '',
             'botao' => 'Cadastrar'
         ]);
         // RETORNA A PAGINA COMPLETA
-        return parent::getPanel('Cadastrar evento > MDC', $content, 'events');
+        return parent::getPanel('Cadastrar Evento > MDC', $content, 'events');
     }
 }

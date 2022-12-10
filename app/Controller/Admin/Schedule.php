@@ -67,7 +67,7 @@ class Schedule extends Page {
         ]);
 
         // RETORNA A PAGINA COMPLETA
-        return parent::getPanel('Horarios > MDC', $content, 'schedules');
+        return parent::getPanel('Horários > MDC', $content, 'schedules');
     }
     
     /**
@@ -80,7 +80,7 @@ class Schedule extends Page {
         $obDatabase = new Database;
 
         $content = View::render('admin/modules/schedules/form', [
-           'tittle'     => 'Cadastrar aula',
+           'tittle'     => 'Cadastrar Aula',
            'status'     => Alert::getStatus($request),
            'semana'     => self::getWeekDays($obDatabase),
            'horario'    => self::getSchedule($obDatabase),
@@ -89,7 +89,7 @@ class Schedule extends Page {
            'professor'  => self::getTeachers($obDatabase)
         ]);
 
-        return parent::getPanel('Cadastrar aula > MDC', $content, 'horario');
+        return parent::getPanel('Cadastrar Aula > MDC', $content, 'horario');
     }
 
     public static function getEditSchedule(Request $request, int $id) {

@@ -31,16 +31,16 @@ class Auth extends Api {
 
         // VALIDA OS CAMPOS OBRIGATORIOS
         if (!isset($postVars['email']) or !isset($postVars['senha'])) {
-            throw new Exception("Os campos 'email' e 'senha' são obrigatorios", 400);
+            throw new Exception("Os campos 'email' e 'senha' são obrigatórios", 400);
         }
         // BUSCAR USUARIO PELO EMAIL
         $obUser = EntityUser::getUserByEmail($postVars['email']);
         if (!$obUser instanceof EntityUser) {
-            throw new Exception("O usuario ou senha são invalidos!", 400);
+            throw new Exception("O usuário ou senha são invalidos!", 400);
         }
         // VALIDA SENHA DO USUARIO
         if (!password_verify($postVars['senha'], $obUser->getSenha())) {
-            throw new Exception("O usuario ou senha são invalidos!", 400);
+            throw new Exception("O usuário ou senha são invalidos!", 400);
         }
         // PAYLOAD
         $key = getenv('JWT_KEY');

@@ -99,31 +99,37 @@ class Schedule extends Page {
      * @param array $aulas 
      * @param integer $count
      * 
-     * @return void
+     * @return array
      */
-    private static function setDoubleItem($aulas, &$count): void {
-        
+    private static function setDoubleItem($aulas, &$count): array {
+        $double = self::$double;
+
         if ($aulas[$count]['grupo'] == 'A') {
-            self::$double['a'] = [
+            $double['a'] = [
                 'sala' => $aulas[$count]['sala'],
                 'materia' => $aulas[$count]['materia'],
                 'professor' => $aulas[$count]['professor'],
             ];
+
             if ($aulas[$count+1]['grupo'] == 'B') {
-                self::$double['b'] = [
+                $double['b'] = [
                     'sala' => $aulas[$count+1]['sala'],
                     'materia' => $aulas[$count+1]['materia'],
                     'professor' => $aulas[$count+1]['professor'],
                 ];
+
                 $count++;
             }
+
         } else {
-            self::$double['b'] = [
+            $double['b'] = [
                 'sala' => $aulas[$count]['sala'],
                 'materia' => $aulas[$count]['materia'],
                 'professor' => $aulas[$count]['professor'],
             ];
         }
+
+        return $double;
     }
     
     /**
@@ -141,10 +147,10 @@ class Schedule extends Page {
         for ($i = 0; $i < 6; $i++) {
             if ($aulas[$count]['grupo'] != 'C') {
 
-                self::setDoubleItem($aulas, $count);
+                $double = self::setDoubleItem($aulas, $count);
     
                 // VIEW DE TURMA DIVIDIDA A-B
-                $content .= self::getDoubleClass(self::$double);
+                $content .= self::getDoubleClass($double);
             } 
             else {
                 // VIEW DE TURMA COMPLETA

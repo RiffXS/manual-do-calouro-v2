@@ -39,8 +39,6 @@ class Login extends Page {
         $email = $postVars['email'] ?? '';
         $senha = $postVars['senha'] ?? '';
 
-        $msg = 'E-mail ou senha inválidos!';
-
         // BUSCA USUARIO PELO EMAIL
         $obUser = EntityUser::getUserByEmail($email);
         
