@@ -6,7 +6,9 @@ window.onload = function () {
     const disciplina = document.getElementById('fk_disciplina_id_disciplina').value;
     const professor = document.getElementById('fk_professor_fk_servidor_fk_usuario_id_usuario').value;
 
-    document.getElementById('dia-semana').value = semana;
+    console.log(semana);
+
+    document.getElementById('dia_semana').value = semana;
     document.getElementById('horario').value = horario;
     document.getElementById('sala_aula').value = sala;
     document.getElementById('disciplina').value = disciplina;

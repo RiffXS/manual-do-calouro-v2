@@ -113,6 +113,51 @@ class Schedule extends Page {
          return parent::getPanel('Editar Aula > MDC', $content, 'horario');
     }
 
+    public static function setEditSchedule(Request $request, int $id): void {
+
+        $postVars = $request->getPostVars();
+
+        $obSchedule = EntitySchedule::getScheduleById($id);
+
+        if (!$obSchedule instanceof EntitySchedule) {
+            $request->getRouter()->redirect('/admin/schedules');
+        }
+
+        $semana     = $postVars['dia_semana'] ?? '';
+        $horario    = $postVars['horario'] ?? '';
+        $sala       = $postVars['sala_aula'] ?? '';
+        $disciplina = $postVars['disciplina'] ?? '';
+        $professor  = $postVars['professor'] ?? '';
+
+        $obSchedule->setFk_dia_semana($semana);
+        $obSchedule->setFk_horario_aula($horario);
+        $obSchedule->setFk_sala_aula($sala);
+        $obSchedule->setFk_disciplina($disciplina);
+        $obSchedule->setFk_professor($professor);
+
+        $obSchedule->updateSchedule();
+
+        $request->getRouter()->redirect('/admin/schedules?status=schedule_updated');
+    }
+
+    public static function setDeleteSchedule(Request $request): void {
+        // POST VARS
+        $postVars = $request->getPostVars();
+       
+        // OBTENDO O USUÁRIO DO BANCO DE DADOS
+        $obUser = EntitySchedule::getScheduleById((int)$postVars['id']);
+
+        // VALIDA A INSTANCIA
+        if (!$obUser instanceof EntitySchedule) {
+            $request->getRouter()->redirect('/admin/schedules');
+        }
+        // EXCLUIR DEPOIMENTO
+        $obUser->deleteSchedule();
+
+        // REDIRECIONA O USUÁRIO
+        $request->getRouter()->redirect('/admin/schedules?status=schedule_deleted');
+    }
+
     /**
      * Método responsável por renderizar as opções de dia da semana
      * @param \App\Utils\Database $obDatabase

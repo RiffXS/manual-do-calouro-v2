@@ -127,5 +127,17 @@
     ,"event_deleted": {
         "type": "success",
         "text": "Evento excluido com sucesso!."
+    },
+    "schedule_registered": {
+        "type": "success",
+        "text": "Aula cadastrado com sucesso!."
+    },
+    "schedule_updated": {
+        "type": "success",
+        "text": "Aula atualizado com sucesso!."
+    }
+    ,"schedule_deleted": {
+        "type": "success",
+        "text": "Aula excluido com sucesso!."
     }
 }

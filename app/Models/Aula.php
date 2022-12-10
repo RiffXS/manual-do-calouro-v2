@@ -49,6 +49,48 @@ class Aula {
     private $fk_grupo_id_grupo;
 
     /**
+     * Método responsável por cadastrar a instância atual no banco de dados
+     * @return boolean
+     */
+    public function insertSchedule(): bool {
+        // INSERE A INSTÂNCIA NO BANCO
+        $this->setId_aula((new Database('aula'))->insert([
+            'fk_dia_semana_id_dia_semana' => $this->fk_dia_semana_id_dia_semana,
+            'fk_horario_aula_id_horario_aula' => $this->fk_horario_aula_id_horario_aula,
+            'fk_sala_aula_id_sala_aula' => $this->fk_sala_aula_id_sala_aula,
+            'fk_disciplina_id_disciplina' => $this->fk_disciplina_id_disciplina,
+            'fk_professor_fk_servidor_fk_usuario_id_usuario' => $this->fk_professor_fk_servidor_fk_usuario_id_usuario,
+            'fk_grupo_id_grupo' => $this->fk_grupo_id_grupo,
+            
+        ]));
+        // SUCESSO
+        return true;
+    }
+
+    /**
+     * Método responsável por atualizar os dados no banco
+     * @return boolean
+     */
+    public function updateSchedule(): bool {
+        return (new Database('aula'))->update("id_aula = {$this->id_aula}", [
+            'fk_dia_semana_id_dia_semana' => $this->fk_dia_semana_id_dia_semana,
+            'fk_horario_aula_id_horario_aula' => $this->fk_horario_aula_id_horario_aula,
+            'fk_sala_aula_id_sala_aula' => $this->fk_sala_aula_id_sala_aula,
+            'fk_disciplina_id_disciplina' => $this->fk_disciplina_id_disciplina,
+            'fk_professor_fk_servidor_fk_usuario_id_usuario' => $this->fk_professor_fk_servidor_fk_usuario_id_usuario,
+            'fk_grupo_id_grupo' => $this->fk_grupo_id_grupo,
+        ]);
+    }
+
+    /**
+     * Método responsável por excluir uma aula do banco
+     * @return boolean
+     */
+    public function deleteSchedule(): bool {
+        return (new Database('aula'))->delete("id_aula = {$this->id_aula}");
+    }
+
+    /**
      * Método responsável por retornar todos os horários de uma turma
      * @param integer $curso
      * @param integer $modulo

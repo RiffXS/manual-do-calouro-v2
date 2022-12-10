@@ -32,3 +32,23 @@ $obRouter->get('/admin/schedules/edit/{id}', [
         return new Response(200, Admin\Schedule::getEditSchedule($request, $id));
     }
 ]);
+
+// ROTA DE ALTERAÇÃO DE AULA
+$obRouter->post('/admin/schedules/edit/{id}', [
+    'middlewares' => [
+        'admin-login'
+    ],
+    function($request, $id) {
+        return new Response(200, Admin\Schedule::setEditSchedule($request, $id));
+    } 
+]);
+
+// ROTA DE EXCLUSÃO DE AULA
+$obRouter->post('/admin/schedules/del', [
+    'middlewares' => [
+        'admin-login'
+    ],
+    function($request) {
+        return new Response(200, Admin\Schedule::setDeleteSchedule($request));
+    } 
+]);
