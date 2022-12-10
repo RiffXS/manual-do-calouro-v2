@@ -435,24 +435,6 @@ function getCookie(name) {
 }
 
 !(function() {
-    // NOME DO COKIE (mdc-calendario)
-    // OBTER ESSE COKIE VIA JS E COLOCAR NESSE ARRAY
-    // OBS: Traduzir o formato do cookie que esta em JSON string
-
-    // var data = [
-    //     {
-    //         dsc_evento: "Festa Cultural",
-    //         dat_evento: "2022-10-10 18:00:00"
-    //     },
-    //     {
-    //         dsc_evento: "Lunch Meeting w/ Mark jfddfjfdsjhfdsfsdfsdjhdfsdfsfsdsdf",
-    //         dat_evento: "2022-10-24 16:03:00"
-    //     },
-    //     {
-    //         dsc_evento: "Lunch Meeting w/ Mark",
-    //         dat_evento: "2022-10-26 16:10:00"
-    //     }
-    // ];
     var data = JSON.parse(decodeURIComponent(getCookie("mdc-calendario")));
 
     function addDate(ev) {}

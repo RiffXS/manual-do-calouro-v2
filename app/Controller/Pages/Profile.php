@@ -28,13 +28,8 @@ class Profile extends Page {
 
         $view = self::getTextType($obUser);
 
-        $class = $obUser->getUserClass($obUser->getId_usuario());
-
         // VIEW DA HOME
         $content = View::render('pages/profile', [
-            'h-curso'  => $class['curso'],
-            'h-modulo' => $class['modulo'],
-            'h-grupo'  => $class['grupo'],
             'status'   => Alert::getStatus($request),
             'foto'     => $obUser->getImg_perfil(),
             'nome'     => $obUser->getNom_usuario(),
@@ -66,9 +61,14 @@ class Profile extends Page {
                 break;
 
             case 3:
+                // CONSULTA A TURMA DO ALUNO
+                $class = $obUser->getUserClass($obUser->getId_usuario());
+
                 $text = 'Turma';
-                
                 $column = View::render('pages/components/profile/class', [
+                    'h-curso'  => $class['curso'],
+                    'h-modulo' => $class['modulo'],
+                    'h-grupo'  => $class['grupo'],
                     'curso'  => self::getCourse($obUser),
                     'modulo' => self::getModule($obUser),
                     'grupo'  => self::getGroup($obUser)
@@ -83,6 +83,7 @@ class Profile extends Page {
                 break;
                 
             case 5:
+                // CONSULTA OS DADOS DO PROFESSOR
                 $obTeacher = EntityTeacher::getTeacherById($obUser->getId_usuario());
                 $text = 'Regras';
 
