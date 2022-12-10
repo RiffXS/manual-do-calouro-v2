@@ -104,6 +104,10 @@
         "type": "success",
         "text": "Comentario cadastro com sucesso!"
     },
+    "comment_deleted": {
+        "type": "success",
+        "text": "Comentario excluido com sucesso!"
+    },
     "image_type": {
         "type": "danger",
         "text": "Somente PNG e JPEG são permitidos."

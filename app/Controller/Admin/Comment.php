@@ -64,7 +64,7 @@ class Comment extends Page {
         ]);
 
         // RETORNA A PAGINA COMPLETA
-        return parent::getPanel('Depoimentos > MDC', $content, 'testimonies');
+        return parent::getPanel('Commentarios > MDC', $content, 'comments');
     }
 
     /**
@@ -89,7 +89,7 @@ class Comment extends Page {
         ]);
 
         // RETORNA A PAGINA COMPLETA
-        return parent::getPanel('Excluir depoimento  > WDEV', $content, 'testimonies');
+        return parent::getPanel('Excluir comentario > MDC', $content, 'comments');
     }
 
     /**
@@ -113,6 +113,6 @@ class Comment extends Page {
         $obComment->deleteComment();
 
         // REDIRECIONA O USUARIO
-        $request->getRouter()->redirect('/admin/comments?status=deleted');
+        $request->getRouter()->redirect('/admin/comments?status=comment_deleted');
     }
 }

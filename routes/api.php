@@ -3,6 +3,9 @@
 // ROTAS PADRÕES DA API
 include_once __DIR__.'/api/v1/default.php';
 
+// ROTAS DE COMENTARIOS
+include_once __DIR__ .'/api/v1/comment.php';
+
 // ROTAS DE CONTATOS
 include_once __DIR__.'/api/v1/contact.php';
 

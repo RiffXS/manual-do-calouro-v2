@@ -33,7 +33,7 @@ class Schedule extends Page {
         $obPagination = new Pagination($quantidadeTotal, $paginaAtual, 10);
 
         // RESULTADOS DA PAGINA
-        $results = EntitySchedule::getDscSchedules('id_aula ASC', $obPagination->getLimit());
+        $results = EntitySchedule::getDscSchedules('id_aula ASC', (int)$obPagination->getLimit());
 
         // RENDERIZA O ITEM
         while ($obShedule = $results->fetch(\PDO::FETCH_ASSOC)) {

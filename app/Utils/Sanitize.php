@@ -48,7 +48,7 @@ class Sanitize {
         // RETORNA O ARRAY SANITIZADO
         return $array;
     }
-
+    
     /**
      * Metodo responsavel por verificar se o nome de entrada esta nos parametros do site
      * @param  string $nome
