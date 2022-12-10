@@ -3,6 +3,8 @@
 <div class="row d-flex justify-content-center">
     <div class="col-8">
         {{status}}
+
+        <input type="hidden" id="h-campus" value="{{campus}}">
         
         <form method="POST">
             <!-- DESCRICAO -->
@@ -14,20 +16,22 @@
             <!-- DATA -->
             <div class="mb-3">
                 <label class="form-label" for="data"> Data </label>
-                <input class="form-control" type="date" name="data" value="{{data}}" required>
+                <input class="form-control" type="date" name="data" id="data" value="{{data}}" required>
             </div>
 
             <!-- CAMPUS -->
             <div class="mb-3">
                 <label class="form-label" for="campus"> Campus </label>
-                <select class="form-select" name="campus">
-                    <option value="" selected>** Selecione uma opçãi **</option>
+                <select class="form-select" name="campus" id="campus">
+                    <option selected>** Selecione uma opção **</option>
                     <option value="1">Serra</option>
                   </select>
             </div>
 
             <button class="btn btn-primary me-2" type="submit">{{botao}}</button>
-            <a href="{{URL}}/admin/users" class="btn btn-danger">Cancelar</a>
-        </form>
+            <a href="{{URL}}/admin/events" class="btn btn-danger">Cancelar</a>
+        </form> 
     </div>
 </div>
+
+<script src="{{URL}}/resources/js/events.js"></script>

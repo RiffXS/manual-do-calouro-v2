@@ -1,5 +1,5 @@
 // URL do projeto
-const url = 'http://localhost/mvc-mdc';
+const url = 'http://localhost/manual-do-calouro';
 
 /**
  * Função para realizar request a uma rota e obter os dados

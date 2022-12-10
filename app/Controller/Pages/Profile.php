@@ -28,14 +28,19 @@ class Profile extends Page {
 
         $view = self::getTextType($obUser);
 
+        $class = $obUser->getUserClass($obUser->getId_usuario());
+
         // VIEW DA HOME
         $content = View::render('pages/profile', [
-            'status' => Alert::getStatus($request),
-            'foto'   => $obUser->getImg_perfil(),
-            'nome'   => $obUser->getNom_usuario(),
-            'email'  => $obUser->getEmail(),
-            'texto'  => $view['text'],
-            'campo'  => $view['column']
+            'h-curso'  => $class['curso'],
+            'h-modulo' => $class['modulo'],
+            'h-grupo'  => $class['grupo'],
+            'status'   => Alert::getStatus($request),
+            'foto'     => $obUser->getImg_perfil(),
+            'nome'     => $obUser->getNom_usuario(),
+            'email'    => $obUser->getEmail(),
+            'texto'    => $view['text'],
+            'campo'    => $view['column']
         ]);
         // RETORNA A VIEW DA PAGINA
         return parent::getPage('Perfil', $content);
@@ -303,32 +308,13 @@ class Profile extends Page {
         // ARRAY COM TODOS OS CURSOS CADASTRADOS
         $cursos = EntityGrade::getCursos();
 
-        // ARRAY COM O CURSO E O MÓDULO DO USUÁRIO
-        $class = $obUser->getUserClass($obUser->getId_usuario());
-
         for ($i = 0; $i < count($cursos); $i++) {
-            if (!empty($class['curso'])) {
-                if (($i+1) == $class['curso']) {
-                    $content .= View::render('pages/components/profile/course', [
-                        'id'       => $cursos[$i]['id_curso'],
-                        'curso'    => $cursos[$i]['dsc_curso'],
-                        'selected' => 'selected'
-                    ]);
-                } else {
-                    $content .= View::render('pages/components/profile/course', [
-                        'id'       => $cursos[$i]['id_curso'],
-                        'curso'    => $cursos[$i]['dsc_curso'],
-                        'selected' => ''
-                    ]);
-                }
-            } else {
-                $content .= View::render('pages/components/profile/course', [
-                    'id'       => $cursos[$i]['id_curso'],
-                    'curso'    => $cursos[$i]['dsc_curso'],
-                    'selected' => ''
-                ]);
-            }
+            $content .= View::render('pages/components/profile/course', [
+                'id'       => $cursos[$i]['id_curso'],
+                'curso'    => $cursos[$i]['dsc_curso']
+            ]);
         }
+
         // RETORNA O CONTEÚDO
         return $content;
     }
@@ -344,32 +330,11 @@ class Profile extends Page {
         // DECLARAÇÃO DE VARIÁVEIS
         $content = '';
 
-        // ARRAY COM O CURSO E O MÓDULO DO USUÁRIO
-        $class = $obUser->getUserClass($obUser->getId_usuario());
-
-
         for ($i = 1; $i < 7; $i++) {
-            if (!empty($class['modulo'])) {
-                if ($i == $class['modulo']) {
-                    $content .= View::render('pages/components/profile/module', [
-                        'id'       => "$i",
-                        'modulo'   => "$i",
-                        'selected' => 'selected'
-                    ]);
-                } else {
-                    $content .= View::render('pages/components/profile/module', [
-                        'id'       => "$i",
-                        'modulo'   => "$i",
-                        'selected' => ''
-                    ]);
-                }
-            } else {
-                $content .= View::render('pages/components/profile/module', [
-                    'id'       => "$i",
-                    'modulo'   => "$i",
-                    'selected' => ''
-                ]);
-            }
+            $content .= View::render('pages/components/profile/module', [
+                'id'       => "$i",
+                'modulo'   => "$i"
+            ]);
         }
         // RETORNA O CONTEÚDO
         return $content;
@@ -389,7 +354,7 @@ class Profile extends Page {
         $class = $obUser->getUserClass($obUser->getId_usuario());
 
         // ARRAY COM OS GRUPOS DA TURMA DO USUÁRIO
-        $group = EntityGrade::getGroupByClass($class['curso'], $class['modulo']);
+        $group = EntityGrade::getGroupsByClass($class['curso'], $class['modulo']);
 
         if (count($group) > 1) {
             $content .= View::render('pages/components/profile/group', [
@@ -414,43 +379,13 @@ class Profile extends Page {
         // ARRAY COM O GRUPO DO USUÁRIO
         $groupItem = $obUser->getUserGroup($obUser->getId_usuario());
         
-        if (!empty($groupItem)) {
-            if ($groupItem['grupo'] == 'A') {
-                $content .= View::render('pages/components/profile/group-item', [
-                    'id'       => $group[0]['id_grupo'],
-                    'grupo'    => $group[0]['dsc_grupo'],
-                    'selected' => 'selected'
-                ]);
-            } else {
-                $content .= View::render('pages/components/profile/group-item', [
-                    'id'       => $group[0]['id_grupo'],
-                    'grupo'    => $group[0]['dsc_grupo'],
-                    'selected' => ''
-                ]);
-            }
-            
-            if ($groupItem['grupo'] == 'B') {
-                $content .= View::render('pages/components/profile/group-item', [
-                    'id'       => $group[1]['id_grupo'],
-                    'grupo'    => $group[1]['dsc_grupo'],
-                    'selected' => 'selected'
-                ]);
-            } else {
-                $content .= View::render('pages/components/profile/group-item', [
-                    'id'       => $group[1]['id_grupo'],
-                    'grupo'    => $group[1]['dsc_grupo'],
-                    'selected' => ''
-                ]);
-            }
-        } else {
-            for ($i = 0; $i < count($group); $i++) {
-                $content .= View::render('pages/components/profile/group-item', [
-                    'id'       => $group[$i]['id_grupo'],
-                    'grupo'    => $group[$i]['dsc_grupo'],
-                    'selected' => ''
-                ]);
-            }
+        for($i = 0; $i < count($groupItem); $i++) {
+            $content .= View::render('pages/components/profile/group-item', [
+                'id'       => $group[$i]['id_grupo'],
+                'grupo'    => $group[$i]['dsc_grupo']
+            ]);
         }
+
         // RETORNA O CONTEÚDO
         return $content;
     }

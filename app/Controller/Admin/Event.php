@@ -85,4 +85,59 @@ class Event extends Page {
         // RETORNA A PAGINA COMPLETA
         return parent::getPanel('Cadastrar Evento > MDC', $content, 'events');
     }
+
+    /**
+     * Método responsavel por cadastrar um novo evento
+     * @param \App\Http\Request $request
+     * 
+     * @return void
+     */
+    public static function setNewEvent(Request $request): void {
+        // POST VARS
+        $postVars = $request->getPostVars();
+
+        $evento = $postVars['descricao'];
+        $campus = $postVars['campus'];
+        $data   = $postVars['data'];
+
+        // NOVA INSTANCIA DE EVENTO
+        $obEvent = new EntityCalendar;
+
+        $obEvent->setDsc_evento($evento);
+        $obEvent->setDat_evento($data);
+        $obEvent->setFk_campus($campus);
+
+        $obEvent->insertEvent();
+
+        // REDIRECIONA O USUARIO
+        $request->getRouter()->redirect('/admin/events?status=event_registered');
+    }
+
+    /**
+     * Método responsavel por retornar o formulario de edição de um evento
+     * @param \App\Http\Request $request
+     * @param integer $id
+     * 
+     * @return string
+     */
+    public static function getEditEvent(Request $request, int $id): string {
+        // OBTEM O EVENTO PELO ID
+        $obEvent = EntityCalendar::getEventById($id);
+
+        // VALIDA INSTANCIA DO OBJETO
+        if (!$obEvent instanceof EntityCalendar) {
+            $request->getRouter()->redirect('admin/events');
+        }
+        // CONTEUDO DO FORMULARIO
+        $content = View::render('/admin/modules/events/form', [
+            'tittle'    => 'Editar Evento',
+            'status'    => Alert::getStatus($request),
+            'descricao' => $obEvent->getDsc_evento(),
+            'data'      => $obEvent->getDat_evento(),
+            'campus'    => $obEvent->getFk_campus(),
+            'botao'     => 'Editar'
+        ]);
+        // RETORNA A PAGINA COMPLETA
+        return parent::getPanel('Editar Evento > MDC', $content, 'events');
+    }
 }

@@ -84,10 +84,6 @@
         "type": "danger",
         "text": "Matrícula já registrada!"
     },
-    "upload_error": {
-        "type": "danger",
-        "text": "Erro no upload da foto!"
-    },
     "contact_registered": {
         "type": "success",
         "text": "Contato cadastrado com sucesso"
@@ -100,13 +96,13 @@
         "type": "success",
         "text": "Contato excluido com sucesso!"
     },
-    "comment_registered": {
-        "type": "success",
-        "text": "Comentario cadastro com sucesso!"
-    },
     "comment_deleted": {
         "type": "success",
         "text": "Comentario excluido com sucesso!"
+    },
+    "upload_error": {
+        "type": "danger",
+        "text": "Erro no upload da foto!"
     },
     "image_type": {
         "type": "danger",
@@ -119,5 +115,17 @@
     "image_erro": {
         "type": "danger",
         "text": "Problema no upload de imagem."
+    },
+    "event_registered": {
+        "type": "success",
+        "text": "Evento cadastrado com sucesso!."
+    },
+    "event_updated": {
+        "type": "success",
+        "text": "Evento atualizado com sucesso!."
+    }
+    ,"event_deleted": {
+        "type": "success",
+        "text": "Evento excluido com sucesso!."
     }
 }

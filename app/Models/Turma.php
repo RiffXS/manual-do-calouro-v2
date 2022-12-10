@@ -34,7 +34,7 @@ class Turma {
      * 
      * @return array
      */
-    public static function getGroupByClass($curso, $modulo): array {
+    public static function getGroupsByClass($curso, $modulo): array {
         $table  = "grupo g JOIN turma t ON (g.fk_turma_id_turma = t.id_turma)";
         $where  = "g.dsc_grupo IN ('A', 'B') AND t.fk_curso_id_curso = $curso AND t.num_modulo = $modulo";
         $fields = "id_grupo, dsc_grupo";

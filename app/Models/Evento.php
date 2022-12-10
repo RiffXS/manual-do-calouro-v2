@@ -30,6 +30,41 @@ class Evento {
      */
     private $fk_campus_id_campus;
 
+     /**
+     * Método responsável por cadastrar a instância atual no banco de dados
+     * @return boolean
+     */
+    public function insertEvent(): bool {
+        // INSERE A INSTÂNCIA NO BANCO
+        $this->setId_evento((new Database('evento'))->insert([
+            'dsc_evento'          => $this->dsc_evento,
+            'dat_evento'          => $this->dat_evento,
+            'fk_campus_id_campus' => $this->fk_campus_id_campus,
+        ]));
+        // SUCESSO
+        return true;
+    }
+
+    /**
+     * Método responsável por atualizar os dados de um evento no banco
+     * @return boolean
+     */
+    public function updateEvent(): bool {
+        return (new Database('evento'))->update("id_evento = {$this->id_evento}", [
+            'dsc_evento'          => $this->dsc_evento,
+            'dat_evento'          => $this->dat_evento,
+            'fk_campus_id_campus' => $this->fk_campus_id_campus,
+        ]);
+    }
+
+    /**
+     * Método responsável por excluir um evento do banco
+     * @return boolean
+     */
+    public function deleteEvent(): bool {
+        return (new Database('evento'))->delete("id_evento = {$this->id_evento}");
+    }
+
     /**
      * Método responsável por obter os eventos do banco de dados
      * @param string $where
@@ -41,6 +76,16 @@ class Evento {
      */
     public static function getEvents($where = null, $order = null, $limit = null, $fields = '*'): mixed {
         return (new Database('evento'))->select($where, $order, $limit, $fields);
+    }
+
+    /**
+     * Método responsavel por obter um evento pelo ID
+     * @param integer $id
+     * 
+     * @return self|bool
+     */
+    public static function getEventById(int $id): mixed {
+        return self::getEvents("id_evento = $id")->fetchObject(self::class);
     }
 
     /**
@@ -103,7 +148,7 @@ class Evento {
      * @return string 
      */
     public function getDat_evento(): string {
-        return $this->dat_evento;
+        return date('Y-m-d', strtotime($this->dat_evento));
     }
 
     /**

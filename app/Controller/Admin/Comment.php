@@ -32,17 +32,17 @@ class Comment extends Page {
         $obPagination = new Pagination($quantidadeTotal, $paginaAtual, 5);
 
         // RESULTADOS DA PAGINA
-        $results = EntityComment::getComments(null, 'id_comentario DESC', $obPagination->getLimit());
+        $results = EntityComment::getDscComments('id_comentario DESC', $obPagination->getLimit());
 
         // RENDERIZA O ITEM
-        while ($obComment = $results->fetchObject(EntityComment::class)) {
+        while ($obComment = $results->fetch(\PDO::FETCH_ASSOC)) {
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('admin/modules/comments/item',[
-                'click' => "onclick=deleteItem({$obComment->getId_comentario()})",
-                'id'       => $obComment->getId_comentario(),
-                'user'     => $obComment->getFK_id_usuario(),
-                'mensagem' => $obComment->getDsc_comentario(),
-                'data'     => $obComment->getDt_comentario()
+                'click' => "onclick=deleteItem({$obComment['id_comentario']})",
+                'id'       => $obComment['id_comentario'],
+                'user'     => $obComment['nom_usuario'],
+                'mensagem' => $obComment['dsc_comentario'],
+                'data'     => $obComment['dt_comentario']
             ]);
         }
         // RETORNA OS DEPOIMENTOS
