@@ -39,7 +39,7 @@ class Schedule extends Page {
         while ($obShedule = $results->fetch(\PDO::FETCH_ASSOC)) {
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('admin/modules/schedules/item',[
-                'edit' => "onclick=editSchedule({$obShedule['id_aula']})",
+                'click' => "onclick=deleteItem({$obShedule['id_aula']})",
                 'id'         => $obShedule['id_aula'],
                 'semana'     => $obShedule['dsc_dia_semana'],
                 'horario'    => $obShedule['hora_aula_inicio'],
@@ -94,6 +94,25 @@ class Schedule extends Page {
         return parent::getPanel('Cadastrar Aula > MDC', $content, 'horario');
     }
 
+    /**
+     * Método responsavel por processar o formulario de cadastro
+     * @param \App\Http\Request $request
+     * 
+     * @return void
+     */
+    public static function setNewSchedule(Request $request): void {
+        $postvars = $request->getPostVars();
+
+        echo '<pre>'; print_r($postvars); echo '</pre>'; exit;
+    }
+
+    /**
+     * Método responsavel por renderizar o formulario de edição de aula
+     * @param \App\Http\Request $request
+     * @param integer $id
+     * 
+     * @return string
+     */
     public static function getEditSchedule(Request $request, int $id): string {
         $schedule = EntitySchedule::getSchedules("id_aula = $id")->fetch(\PDO::FETCH_ASSOC);
 
@@ -113,22 +132,32 @@ class Schedule extends Page {
          return parent::getPanel('Editar Aula > MDC', $content, 'horario');
     }
 
+    /**
+     * Método responsavel por processaro formulario de edicão de aula
+     * @param \App\Http\Request $request
+     * @param integer $id
+     * 
+     * @return void
+     */
     public static function setEditSchedule(Request $request, int $id): void {
-
+        // POST VARS
         $postVars = $request->getPostVars();
 
+        // CONSULTA SEUS DADOS PELO ID
         $obSchedule = EntitySchedule::getScheduleById($id);
 
+        // VALIDA A INSTANCIA DO OBJETO
         if (!$obSchedule instanceof EntitySchedule) {
             $request->getRouter()->redirect('/admin/schedules');
         }
-
+        // DECLARAÇÃO DE VARIAVEIS
         $semana     = $postVars['dia_semana'] ?? '';
         $horario    = $postVars['horario'] ?? '';
         $sala       = $postVars['sala_aula'] ?? '';
         $disciplina = $postVars['disciplina'] ?? '';
         $professor  = $postVars['professor'] ?? '';
 
+        // SET DE ATRIBUTOS
         $obSchedule->setFk_dia_semana($semana);
         $obSchedule->setFk_horario_aula($horario);
         $obSchedule->setFk_sala_aula($sala);
@@ -137,9 +166,16 @@ class Schedule extends Page {
 
         $obSchedule->updateSchedule();
 
+        // REDIRECIONA O USUARIO
         $request->getRouter()->redirect('/admin/schedules?status=schedule_updated');
     }
 
+    /**
+     * Método responsavel por excluir uma aula a partir do modal
+     * @param \App\Http\Request $request
+     * 
+     * @return void
+     */
     public static function setDeleteSchedule(Request $request): void {
         // POST VARS
         $postVars = $request->getPostVars();
@@ -184,8 +220,10 @@ class Schedule extends Page {
      * Método 
      * @param \App\Utils\Database $obDatabase
      * 
+     * @return string
      */
     private static function getSchedule(Database $obDatabase): string {
+        // DECLARAÇÃO DE VARIAVEIS
         $content = '';
         $horarioAula = $obDatabase->find('horario_aula');
 
@@ -201,14 +239,18 @@ class Schedule extends Page {
                 'inicio_fim'
             ]);
         }
+        // RETORNA O CONTEUDO
         return $content;
     }
 
     /**
-     * 
+     * Método responsavel por renderizar as opções de sala
      * @param \App\Utils\Database $obDatabase
+     * 
+     * @return string
      */
     private static function getRooms(Database $obDatabase): string {
+        // DECLARAÇÃO DE VARIAVEIS
         $content = '';
         $salaAula = $obDatabase->find('sala_aula');
 
@@ -219,14 +261,18 @@ class Schedule extends Page {
                 'dsc_sala_aula'
             ]);
         }
+        // RETORNA O CONTEUDO
         return $content;
     }
 
     /**
-     * 
+     * Método responsavel por renderizar as opções de disciplina
      * @param \App\Utils\Database $obDatabase
+     * 
+     * @return string
      */
     private static function getSubjects(Database $obDatabase): string {
+        // DECLARAÇÃO DE VARIAVEIS
         $content = '';
         $disciplina = $obDatabase->find('disciplina');
 
@@ -237,12 +283,15 @@ class Schedule extends Page {
                 'dsc_disciplina'
             ]);
         }
+        // RETORNA O CONTEUDO
         return $content;
     }
 
     /**
-     * 
+     * Método responsavel por renderizar as opções de professores
      * @param \App\Utils\Database $obDatabase
+     * 
+     * @return string
      */
     private static function getTeachers(Database $obDatabase): string {
         $content = '';
@@ -262,16 +311,16 @@ class Schedule extends Page {
     }
 
     /**
-     * 
-     * @param array $array
+     * Método responsavel por criar uma view de option
+     * @param array $values
      * @param array $keys
      * 
      * @return string
      */
-    private static function getOption($array, $keys): string {
+    private static function getOption(array $values, array $keys): string {
         return View::render('/admin/modules/schedules/option', [
-            'id'    => $array[$keys[0]],
-            'valor' => $array[$keys[1]]
+            'id'    => $values[$keys[0]],
+            'valor' => $values[$keys[1]]
         ]);
     }
 }

@@ -23,6 +23,16 @@ $obRouter->get('/admin/schedules/new', [
     }
 ]);
 
+// ROTA DE FORMULARIO DE CADASTRO
+$obRouter->post('/admin/schedules/new', [
+    'middlewares' => [
+        'admin-login'
+    ],
+    function ($request) {
+        return new Response(200, Admin\Schedule::setNewSchedule($request));
+    }
+]);
+
 // ROTA DE EDIÇÃO DE AULA
 $obRouter->get('/admin/schedules/edit/{id}', [
     'middlewares' => [
