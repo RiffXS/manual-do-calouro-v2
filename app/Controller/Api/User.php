@@ -110,7 +110,7 @@ class User extends Api {
     public static function setNewUser(Request $request): array {
         // POST VARS
         $postVars = $request->getPostVars();
-    
+        
         // VALIDA OS CAMPOS OBRIGATORIOS
         if (!isset($postVars['nome']) or !isset($postVars['email']) or !isset($postVars['senha'])) {
             throw new Exception("Os campos 'nome', 'email' e 'senha' são obrigatorios", 400);

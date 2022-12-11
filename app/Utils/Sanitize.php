@@ -115,4 +115,22 @@ class Sanitize {
         }
         return true;
     }
+
+    /**
+     * Método responsavel por verificar sé os parametros necessarios da $request existem
+     * @param array $keys
+     * @param array $array
+     * 
+     * @return boolean
+     */
+    public static function verifyParams(array $keys, array $array): bool {
+        // VERIFICA SE TODOS OS PARAMETROS EXISTEM
+        foreach ($keys as $key) {
+            // VERIFICA SE A CHAVE EXISTE
+            if (!array_key_exists($key, $array)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

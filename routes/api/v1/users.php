@@ -39,8 +39,7 @@ $obRouter->get('/api/v1/users/{id}', [
 // ROTA CADASTRO DE USUARIOS
 $obRouter->post('/api/v1/users/new', [
     'middlewares' => [
-        'api',
-        'user-basic-auth'
+        'api'
     ],
     function($request) {
         return new Response(201, Api\User::setNewUser($request), 'application/json');
