@@ -4,9 +4,11 @@ namespace App\Controller\Pages;
 
 use App\Http\Request;
 use App\Models\Turma as EntityGrade;
+use App\Models\Admin as EntityAdmin;
+use App\Models\Setor as EntitySector;
 use App\Models\Aluno as EntityStudent;
-use App\Models\Professor as EntityTeacher;
 use App\Models\Usuario as EntityUser;
+use App\Models\Professor as EntityTeacher;
 use App\Models\GrupoAluno as EntityGroupStudent;
 use App\Utils\Tools\Alert;
 use App\Utils\Sanitize;
@@ -61,24 +63,34 @@ class Profile extends Page {
                 break;
 
             case 3:
+                // DECLARAÇÃO DE VARIAVEIS
+                $text = 'Turma';
+                $hidden = '';
+
                 // CONSULTA A TURMA DO ALUNO
                 $class = $obUser->getUserClass($obUser->getId_usuario());
 
-                $text = 'Turma';
+                if (!empty($class)) {
+                    $hidden = parent::setHiddens($class);
+                }
+
                 $column = View::render('pages/components/profile/class', [
-                    'h-curso'  => $class['curso'],
-                    'h-modulo' => $class['modulo'],
-                    'h-grupo'  => $class['grupo'],
-                    'curso'  => self::getCourse($obUser),
-                    'modulo' => self::getModule($obUser),
-                    'grupo'  => self::getGroup($obUser)
+                    'hidden'   => $hidden,
+                    'curso'    => self::getCourse(),
+                    'modulo'   => self::getModule()
                 ]);
 
                 break;
 
             case 4:
+                // CONSULTA O SETOR DO SERVIDOR
+                $setor = $obUser->getUserSector($obUser->getId_usuario());
+
                 $text = 'Setor';
-                $column = View::render('pages/components/profile/sector');
+                $column = View::render('pages/components/profile/sector', [
+                    'h-setor' => $setor['setor'],
+                    'setor'   => self::getSector()
+                ]);
                 
                 break;
                 
@@ -127,28 +139,31 @@ class Profile extends Page {
                 $request->getRouter()->redirect("/profile?status=$key");
             }
         };
-
-        // NOVA INSTANCIA 
+        // NOVA INSTANCIA DE UPLOAD
         $obUpload = new Upload($files['foto']);
 
+        // OBTEM O NOME DA IMAGEM DO USUARIO
         $photo = $obUser->getImg_perfil();
 
-        // Valida a entrada do arquivo para verificar se não está vazio
+        // VERIFICA SE O ARQUIVO EXISTEM NO ARMAZENAMENTO TEMPORARIO
         if (file_exists($obUpload->getTpmName())) {
-            $info = pathinfo($photo);
-
+            // VERIFICA SE É O PRIMEIRO UPLOAD 
             if ($photo == 'user.png') {
                 $obUpload->generateNewName();
             } 
             else {
+                // OBTEM AS INFORMAÇÕES DO ARQUIVO
+                $info = pathinfo($photo);
+
                 if ($obUpload->getExtension() != $info['extension']) {
                     unlink(__DIR__."/../../../public/uploads/".$photo);
                 }
                 // ATRIBUI O NOME AO JA EXISTENTE DO USUARIO
                 $obUpload->setName($photo);
             }
-            $isError(self::updateProfilePicture($obUpload));
-        }    
+            $isError(Upload::profilePicture($obUpload));
+        }
+        // ATUALIZA A VARIAVEL COM O NOME DA FOTO     
         $photo = $obUpload->getBasename();
 
         // ATUALIZA O CAMPO DO TIPO USUARIO
@@ -182,35 +197,6 @@ class Profile extends Page {
         // REDIRECIONA O USUÁRIO
         $request->getRouter()->redirect('/profile?status=profile_updated');
     }
-
-    /**
-     * Método responsavel por realizar o upload da imagem enviada pelo usuario
-     * @param \App\Http\Request $request
-     * @param \App\Utils\Upload $photo
-     * @param array $file
-     * 
-     * @return string
-     */
-    private static function updateProfilePicture(Upload $obUpload): string {
-        $extensions = array("png", "jpg", "jpeg");
-
-        $status = '';
-
-        // VALIDA SE A EXTENSÃO DO ARQUIVO É PERMITIDA
-        if (!in_array($obUpload->getExtension(), $extensions)) {
-            $status = 'image_type';
-        }
-        // VALIDA SE O TAMANHO DA IMAGEM EXCEDEU O LIMITE
-        else if ($obUpload->getsize() > $_POST['MAX_FILE_SIZE']) {
-            $status = 'image_syze';
-        }
-        // VALIDA SE O UPLOAD OCORREU CORRETAMENTE
-        else if ((!$obUpload->upload(__DIR__.'/../../../public/uploads/'))){    
-            $status = 'image_erro';
-        } 
-        // RETORNA O STATUS
-        return $status;
-    } 
 
     /**
      * Método responsável por realizar uma operação relativo ao tipo de usuário atual
@@ -277,6 +263,15 @@ class Profile extends Page {
 
             // SERVIDOR
             case 4:
+                if (!empty($postVars['setor'])) {
+                    $obAdmin = new EntityAdmin;
+
+                    $obAdmin->setFk_id_usuario($obUser->getId_usuario());
+                    $obAdmin->setFk_id_setor($postVars['setor']);
+
+                    $obAdmin->updateAdmin();
+                }
+
                 break;
 
             // PROFESSOR
@@ -297,12 +292,31 @@ class Profile extends Page {
     }
 
     /**
-     * Método responsável por retornar a view dos cursos do usuário
-     * @param \App\Models\Usuario $obUser
-     * 
+     * Método responsável por retornar a view dos setores
      * @return string
      */
-    public static function getCourse(EntityUser $obUser) {
+    public static function getSector(): string {
+        // DECLARAÇÃO DE VARIÁVEIS
+        $content = '';
+
+        // ARRAY COM TODOS OS SETORES CADASTRADOS
+        $setores = EntitySector::getSector();
+
+        for ($i = 0; $i < count($setores); $i++) {
+            $content .= View::render('pages/components/profile/sector-item', [
+                'id'    => $setores[$i]['id_setor'],
+                'setor' => $setores[$i]['dsc_setor']
+            ]);
+        }
+        // RETORNA O CONTEÚDO
+        return $content;
+    }
+
+    /**
+     * Método responsável por retornar a view dos cursos
+     * @return string
+     */
+    public static function getCourse(): string {
         // DECLARAÇÃO DE VARIÁVEIS
         $content = '';
 
@@ -315,19 +329,15 @@ class Profile extends Page {
                 'curso'    => $cursos[$i]['dsc_curso']
             ]);
         }
-
         // RETORNA O CONTEÚDO
         return $content;
     }
 
     /**
-     * Método responsável por retornar a view dos módulos do usuário
-     *
-     * @param EntityUser $obUser
-     * 
+     * Método responsável por retornar a view dos módulos
      * @return string
      */
-    public static function getModule(EntityUser $obUser) {
+    public static function getModule(): string {
         // DECLARAÇÃO DE VARIÁVEIS
         $content = '';
 
@@ -337,56 +347,6 @@ class Profile extends Page {
                 'modulo'   => "$i"
             ]);
         }
-        // RETORNA O CONTEÚDO
-        return $content;
-    }
-
-    /**
-     * Método responsável por retornar a view dos grupos do usuário
-     * @param \App\Models\Usuario $obUser
-     * 
-     * @return string
-     */
-    public static function getGroup(EntityUser $obUser): string {
-        // DECLARAÇÃO DE VARIAVEIS
-        $content = '';
-
-        // ARRAY COM O CURSO E O MÓDULO DO USUÁRIO
-        $class = $obUser->getUserClass($obUser->getId_usuario());
-
-        // ARRAY COM OS GRUPOS DA TURMA DO USUÁRIO
-        $group = EntityGrade::getGroupsByClass($class['curso'], $class['modulo']);
-
-        if (count($group) > 1) {
-            $content .= View::render('pages/components/profile/group', [
-                'grupo' => self::getGroupItem($obUser, $group)
-            ]);
-        } 
-        // RETORNA O CONTEÚDO
-        return $content;
-    }
-
-    /**
-     * Método responsável por retonar a view das opções de grupo
-     * @param \App\Models\Usuario $obUser
-     * @param array $group
-     * 
-     * @return string
-     */
-    public static function getGroupItem(EntityUser $obUser, array $group) {
-        // DECLARAÇÃO DE VARIÁVEIS
-        $content = '';
-
-        // ARRAY COM O GRUPO DO USUÁRIO
-        $groupItem = $obUser->getUserGroup($obUser->getId_usuario());
-        
-        for($i = 0; $i < count($groupItem); $i++) {
-            $content .= View::render('pages/components/profile/group-item', [
-                'id'       => $group[$i]['id_grupo'],
-                'grupo'    => $group[$i]['dsc_grupo']
-            ]);
-        }
-
         // RETORNA O CONTEÚDO
         return $content;
     }

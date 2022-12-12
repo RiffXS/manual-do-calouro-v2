@@ -144,6 +144,28 @@ class Page {
             'footer'  => self::getFooter()
         ]);
     }
+
+    /**
+     * Método responsavel por renderizar os input hidden
+     * @param array $array
+     * 
+     * @return string
+     */
+    protected static function setHiddens(array $array): string {
+        // INICIALIZAÇÃO DE VARIAVEL
+        $content = '';
+
+        for ($i = 0; $i < count($array); $i++) {
+            $keys = array_keys($array);
+
+            $content .= View::render('/shared/hidden', [
+                'id'    => 'h-'.$keys[$i],
+                'value' => $array[$keys[$i]]
+            ]);
+        }
+        // RETORNA O CONTEUDO
+        return $content;
+    }
     
     /**
      * Método responsável por renderizar o layout de paginação

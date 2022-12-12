@@ -18,7 +18,11 @@ class Admin {
      */
     private $fk_setor_id_setor;
 
-    public function insertAdmin() {
+    /**
+     * Método responsável por cadastrar um usuário como servidor
+     * @return boolean
+     */
+    public function insertAdmin(): bool {
         (new Database('administrativo'))->insert([
             'fk_servidor_fk_usuario_id_usuario' => $this->fk_servidor_fk_usuario_id_usuario,
             'fk_setor_id_setor'                 => $this->fk_setor_id_setor
@@ -26,6 +30,17 @@ class Admin {
 
         // RETORNA VERDADEIRO
         return true;
+    }
+
+    /**
+     * Método responsável por atualizar o setor do servidor
+     * 
+     * @return bool
+     */
+    public function updateAdmin(): bool {
+        return (new Database('administrativo'))->update("fk_servidor_fk_usuario_id_usuario = {$this->fk_servidor_fk_usuario_id_usuario}", [
+            'fk_setor_id_setor' => $this->fk_setor_id_setor
+        ]);
     }
 
     /*

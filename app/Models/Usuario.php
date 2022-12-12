@@ -107,7 +107,7 @@ class Usuario {
     public static function getUserClass(int $id): mixed {
         $table  = "turma t JOIN grupo g ON (t.id_turma = g.fk_turma_id_turma) JOIN grupo_aluno ga ON (g.id_grupo = fk_grupo_id_grupo) JOIN aluno a ON (ga.fk_aluno_fk_usuario_id_usuario = a.fk_usuario_id_usuario)";
         $where  = "a.fk_usuario_id_usuario = $id";
-        $fields = "t.fk_curso_id_curso AS curso, t.num_modulo AS modulo, g.id_grupo AS grupo";
+        $fields = "t.fk_curso_id_curso AS curso, t.num_modulo AS modulo";
 
         // RETORNA UM ARRAY ASSOCIATIVO
         return (new Database($table))->select($where, null, null, $fields)->fetch(\PDO::FETCH_ASSOC);
@@ -122,10 +122,10 @@ class Usuario {
     public static function getUserGroup(int $id): mixed {
         $table  = "grupo g JOIN turma t ON (g.fk_turma_id_turma = t.id_turma) JOIN grupo_aluno ga ON (g.id_grupo = fk_grupo_id_grupo)";
         $where  = "ga.fk_aluno_fk_usuario_id_usuario = $id";
-        $fields = "dsc_grupo AS grupo";
+        $fields = "id_grupo, dsc_grupo";
 
         // RETORNA UM ARRAY ASSOCIATIVO
-        return (new Database($table))->select($where, null, null, $fields)->fetch(\PDO::FETCH_ASSOC);
+        return (new Database($table))->select($where, null, null, $fields)->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**
@@ -140,6 +140,13 @@ class Usuario {
 
         // RETORNA UM ARRAY ASSOCIATIVO
         return (new Database($table))->select($where, null, null, 'id_grupo')->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    public static function getUserSector(int $id): mixed {
+        $where = "fk_servidor_fk_usuario_id_usuario = $id";
+
+        // RETORNA UM ARRAY ASSOCIATIVO
+        return (new Database('administrativo'))->select($where, null, null, 'fk_setor_id_setor AS setor')->fetch(\PDO::FETCH_ASSOC);
     }
 
     /**

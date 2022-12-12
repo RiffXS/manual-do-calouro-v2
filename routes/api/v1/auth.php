@@ -12,5 +12,3 @@ $obRouter->post('/api/v1/auth', [
         return new Response(201, Api\Auth::generateToken($request), 'application/json');
     }
 ]);
-
-?>

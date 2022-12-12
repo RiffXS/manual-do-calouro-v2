@@ -6,9 +6,14 @@ use App\Http\Request;
 use App\Models\Aluno as EntityStudent;
 use App\Models\Usuario as EntityUser;
 use App\Utils\Sanitize;
+use App\Utils\Upload;
 
 Class Android {
 
+    /**
+     * Campos do cadastro
+     * @var array
+     */
     private static $p_cadastro = [
         'nome',
         'email',
@@ -22,24 +27,49 @@ Class Android {
      * 
      * @return array
      */
-    public static function CadastroActivity(Request $request): array {
+    public static function cadastroActivity(Request $request): array {
         // GET POSTVARS & FILES
         $postVars = $request->getPostVars();
         $files = $request->getUploadFiles();
 
         // VERIFICA SE TODOS OS PARAMETROS EXISTEM
-        if (!Sanitize::verifyParams(self::$p_cadastro, $postVars) or !isset($files['img'])) {
+        if (!Sanitize::verifyParams(self::$p_cadastro, $postVars)) {
             return [
                 'sucesso' => 0,
                 'erro'    => "Campo requerido não preenchido"
             ];
         }
+        // VERIFICA SE A IMAGEM FOI ENVIADA
+        if (!isset($files['img'])) {
+            return [
+                'sucesso' => 0,
+                'erro'    => "Imagem não enviada!"
+            ];
+        }
+
+
+        // NOVA INSTANCIA DE UPLOAD
+        $obUpload = new Upload($files['img']);
+    
+        $obUpload->generateNewName();
+        
+        // RELIZZA O PROCESSO DE UPLOAD
+        $status = Upload::profilePicture($obUpload);
+
+        // VERIFICA SE RETORNOU ALGUM STATUS DE ERRO
+        if (!empty($status)) {
+            return [
+                'sucesso' => 0,
+                'erro'    => $status
+            ];
+        }
         // NOVA INSTANCIA DE USUARIO
-        $obUser = new EntityUser;
+        $obUser = new EntityUser; 
 
         $obUser->setNom_usuario($postVars['nome']);
         $obUser->setEmail($postVars['email']);
         $obUser->setSenha($postVars['senha']);
+        $obUser->setImg_perfil($obUpload->getBasename());
         $obUser->setFk_acesso(3);
 
         // VERIFICA SE O USUARIO FOI INSERIDO COM SUCESSO
@@ -69,5 +99,9 @@ Class Android {
             'sucesso' => 1,
             'erro'    => 'Usuário cadastrado com sucesso!'
         ];
+    }
+
+    public static function loginActivity($request) {
+
     }
 }

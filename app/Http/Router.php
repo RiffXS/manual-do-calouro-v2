@@ -243,6 +243,7 @@ class Router {
     /**
      * Método responsável por retornar a mensagem de erro de acordo com o content type
      * @param string $message
+     * 
      * @return mixed
      */
     private function getErrorMesasage(string $message): mixed {

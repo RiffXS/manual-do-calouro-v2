@@ -5,6 +5,26 @@ namespace App\Utils;
 class Sanitize {
 
     /**
+     * Metodo responsavel por sanitizar todos os indices de um array
+     * @param  array $array
+     * 
+     * @return array
+     */
+    public static function sanitizeForm(array $array): array {
+        // PERCORRER OS PARES DE CHAVE VALOR
+        foreach ($array as $key => $value) {
+            // REMOVE CONTRA BARRA E ESPAÇO EM BRANCO
+            $value = stripslashes($value);
+            $value = trim($value);
+
+            // SOBRESCREVE O VALOR ORIGINAL
+            $array[$key] = $value;
+        }
+        // RETORNA O ARRAY SANITIZADO
+        return $array;
+    }
+
+    /**
      * Metodo responsavel por verificar injeção de HTML em um array
      * @param array $array a ser percorrido
      * 
@@ -29,25 +49,6 @@ class Sanitize {
         return $ok;
     }
 
-    /**
-     * Metodo responsavel por sanitizar todos os indices de um array
-     * @param  array $array
-     * 
-     * @return array
-     */
-    public static function sanitizeForm(array $array): array {
-        // PERCORRER OS PARES DE CHAVE VALOR
-        foreach ($array as $key => $value) {
-            // REMOVE CONTRA BARRA E ESPAÇO EM BRANCO
-            $value = stripslashes($value);
-            $value = trim($value);
-
-            // SOBRESCREVE O VALOR ORIGINAL
-            $array[$key] = $value;
-        }
-        // RETORNA O ARRAY SANITIZADO
-        return $array;
-    }
     
     /**
      * Metodo responsavel por verificar se o nome de entrada esta nos parametros do site
@@ -96,6 +97,23 @@ class Sanitize {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Método responsavel por verificar sé um telefone esta no formato requisitado
+     * @param string $number
+     * 
+     * @return boolean
+     */
+    function validatePhone($number): bool {
+        // PARAMETROS REGEX
+        $parametros = '/^\(+[0-9]{2,3}\) [0-9]{4}-[0-9]{4}$^/';
+
+        // VERIFICA SE E UM TELEFONE
+        if (preg_match($parametros, $number)) {
+            return false;
+        }
+        return true;
     }
 
 

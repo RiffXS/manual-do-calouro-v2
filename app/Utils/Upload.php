@@ -154,6 +154,35 @@ class Upload {
         return $uploads;
     }
 
+    /**
+     * Método responsavel por realizar o upload da imagem enviada pelo usuario
+     * @param \App\Utils\Upload $obUpload
+     * 
+     * @return string
+     */
+    public static function profilePicture(Upload $obUpload): string {
+        // EXTENÇÕES ACEITAS
+        $extensions = array("png", "jpg", "jpeg");
+
+        // MENSAGEM DE STATUS
+        $status = '';
+
+        // VALIDA SE A EXTENSÃO DO ARQUIVO É PERMITIDA
+        if (!in_array($obUpload->getExtension(), $extensions)) {
+            $status = 'image_type';
+        }
+        // VALIDA SE O TAMANHO DA IMAGEM EXCEDEU O LIMITE
+        else if ($obUpload->getsize() > 33554432) {
+            $status = 'image_size';
+        }
+        // VALIDA SE O UPLOAD OCORREU CORRETAMENTE
+        else if ((!$obUpload->upload(__DIR__.'/../../public/uploads/'))){    
+            $status = 'image_erro';
+        } 
+        // RETORNA O STATUS
+        return $status;
+    } 
+
     /*
      * Metodos GETTERS E SETTERS
      */

@@ -1,7 +1,11 @@
+<input type="hidden" id="h-setor" value="{{h-setor}}">
+
 <!-- SETOR -->
 <div class="mb-3">
-    <select class="form-select" name="setor" id="setor">
-        <option value="" selected>** Selecione uma opção **</option>
-        <option value="cae">CAE</option>
+    <select id="setor" name="setor" class="form-select">
+        <option selected value="">Selecione seu setor...</option>
+        {{setor}}
     </select>
 </div>
+
+<script src="{{URL}}/resources/js/perfil/admin.js"></script>

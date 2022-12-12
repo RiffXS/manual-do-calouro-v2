@@ -33,9 +33,9 @@ class GrupoAluno {
     /**
      * Método responsável por atualizar a turma do aluno
      * 
-     * @return \PDOStatement|bool
+     * @return bool
      */
-    public function updateGroupStudent(): mixed {
+    public function updateGroupStudent(): bool {
         return (new Database('grupo_aluno'))->update("fk_aluno_fk_usuario_id_usuario = {$this->fk_aluno_fk_usuario_id_usuario}", [
             'fk_grupo_id_grupo' => $this->fk_grupo_id_grupo
         ]);
