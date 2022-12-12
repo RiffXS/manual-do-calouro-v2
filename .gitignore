@@ -1,2 +1,3 @@
 .env
 ElephantSQL.session.sql
+/.vscode

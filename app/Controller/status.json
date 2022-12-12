@@ -139,5 +139,9 @@
     ,"schedule_deleted": {
         "type": "success",
         "text": "Aula excluido com sucesso!."
+    },
+    "non_existent": {
+        "type": "danger",
+        "text": "Sala de aula não encontrada :(."
     }
 }

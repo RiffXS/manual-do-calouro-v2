@@ -5,8 +5,10 @@ namespace App\Controller\Pages;
 use App\Http\Request;
 use App\Models\Constant\Curso as EntityCourse;
 use App\Models\Constant\HorarioAula as EntityTime;
+use App\Models\Constant\SalaAula as EntityClass;
 use App\Models\Aula as EntitySchedule;
 use App\Utils\Sanitize;
+use App\Utils\Tools\Alert;
 use App\Utils\View;
 
 class Schedule extends Page {
@@ -46,6 +48,8 @@ class Schedule extends Page {
         if (!empty($curso) and !empty($modulo)) {
             // RENDERIZA A PAGINA COM TABELA
             $content = View::render('pages/schedule', [
+                'status'   => Alert::getStatus($request),
+                'table'    => '',
                 'horarios' => self::getTable($curso, $modulo),
                 'curso'    => EntityCourse::getCursoById($curso)['sigla_curso'],
                 'modulo'   => $modulo,
@@ -53,15 +57,67 @@ class Schedule extends Page {
             ]);
         } else {
             // RENDERIZA O PAGINA SEM TABELA 
-            $content = View::render('pages/schedule', [
-                'horarios' => '',
-                'curso'    => '',
-                'modulo'   => '',
-                'hidden'   => 'd-none'
-            ]);
+            $content = self::getNoTable($request);
         }
         // RETORNA A VIEW DA PAGINA
         return parent::getPage('Horários', $content, 'schedule');
+    }
+
+    /**
+     * Método responsavel por renderizar a tabela de consulta de sala
+     * @param \App\Http\Request $request
+     * 
+     * @return string
+     */
+    public static function getAvailability(Request $request): string {
+        // POST VARS
+        $postVars = $request->getPostVars();
+        $content = '';
+  
+        // VERIFICA SE ALGUMA SALA FOI RECEBIDA
+        if (empty($postVars['sala'])) {
+            $request->getRouter()->redirect('/schedule?status=non_existent');
+        }
+        $result = EntityClass::getOccupiedClass($postVars['sala']);
+
+        // VERIFICA SE A CONSULTA OBTEVE RESULTADO
+        if (count($result) == 0) {
+            $request->getRouter()->redirect('/schedule?status=non_existent');
+        }
+        
+        foreach ($result as $class) {
+            $content .= View::render('pages/components/schedule/class', [
+                'dia' => $class['dia'],
+                'ini' => $class['hora_inicio'],
+                'fim' => $class['hora_fim']
+            ]);
+        }
+        // RENDERIZA A TABELA DE HORARIOS DA SALA
+        $table = View::render('pages/components/schedule/search', [
+            'items' => $content
+        ]);
+        $content = self::getNoTable($request, $table);
+
+        // RETORNA A VIEW DA PAGINA
+        return parent::getPage('Horários', $content, 'schedule');
+    }
+
+    /**
+     * Método responsavel por rendenizar a pagina sem a tabela principal
+     * @param \App\Http\Request $request
+     * @param string $table
+     * 
+     * @return string
+     */
+    private static function getNoTable(Request $request, string $table = ''): string {
+        return View::render('pages/schedule', [
+            'status'   => Alert::getStatus($request),
+            'table'    => $table,
+            'horarios' => '',
+            'curso'    => '',
+            'modulo'   => '',
+            'hidden'   => 'd-none'
+        ]);
     }
 
     /**
@@ -193,9 +249,5 @@ class Schedule extends Page {
             'materia' => $aula['materia'],
             'professor' => $aula['professor']
         ]);
-    }
-
-    public static function getAvailability(Request $request) {
-        
     }
 }
