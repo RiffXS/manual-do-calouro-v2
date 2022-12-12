@@ -4,7 +4,7 @@ use App\Http\Response;
 use App\Controller\Api;
 
 // ROTA DE CONSULTA DE DEPOIMENTO
-$obRouter->get('/admin/comments/view/{id}', [
+$obRouter->get('/api/v1/comments/view/{id}', [
     'middlewares' => [
         'api',
     ],

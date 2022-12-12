@@ -22,11 +22,6 @@
 </table>
 
 {{pagination}}
-
-<!-- Botão ver mais -->
-<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#verComentario">
-    <i class="fa-regular fa-eye text-light"></i>
-</button>
   
 <!-- Modal -->
 <div class="modal fade text-dark" id="verComentario" tabindex="-1" aria-labelledby="verComentarioLabel" aria-hidden="true">
@@ -47,12 +42,12 @@
                 
                 <div class="mb-3">
                     <label for="data" class="form-label">Data</label>
-                    <input type="date" class="form-control" id="data" value="YYYY-MM-DD" disabled>
+                    <input type="text" class="form-control" id="data" value="" disabled>
                 </div>
 
                 <div class="mb-3">
                     <label for="texto" class="form-label">Comentário</label>
-                    <textarea class="form-control" id="texto" rows="5" disabled>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae aut doloribus porro molestiae atque commodi cupiditate quod alias vero magnam ratione tempora vitae ullam similique odio autem natus, iste et! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure, illo. Obcaecati deserunt facere nemo architecto, quibusdam ea eius est ipsum perspiciatis. Minus tempora natus nostrum velit numquam, adipisci sunt dolorum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis molestias beatae vitae, sapiente eius possimus ut omnis fuga eaque ipsam voluptate maiores velit, accusamus optio modi, suscipit id qui amet?</textarea>
+                    <textarea class="form-control" id="texto" rows="5" disabled></textarea>
                 </div>
 
             </div>
@@ -63,3 +58,26 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="modal-delete" tabindex="-1" aria-labelledby="tituloModal" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title text-black">Deseja mesmo excluir esse item?</h5>
+				<button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-footer">
+				<form action="{{URL}}/admin/comments/del" method="POST">
+					<input type="hidden" name="id" id="id">
+
+					<button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Voltar</button>
+					<button class="btn btn-danger" type="submit">Deletar</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="{{URL}}/resources/js/admin.js"></script>
+
+<script src="{{URL}}/resources/js/comentario.js"></script>

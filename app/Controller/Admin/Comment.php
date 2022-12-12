@@ -38,6 +38,7 @@ class Comment extends Page {
         while ($obComment = $results->fetch(\PDO::FETCH_ASSOC)) {
             // VIEW De DEPOIMENTOSS
             $itens .= View::render('admin/modules/comments/item',[
+                'edit'  => "onclick=viewComment({$obComment['id_comentario']})",
                 'click' => "onclick=deleteItem({$obComment['id_comentario']})",
                 'id'       => $obComment['id_comentario'],
                 'user'     => $obComment['nom_usuario'],

@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Http\Request;
 use App\Models\Comentario as EntityComment;
+use Exception;
 
 class Comment {
 
@@ -20,14 +21,16 @@ class Comment {
 
         // VALIDA A INSTANCIA
         if (!$obComment instanceof EntityComment) {
-            $request->getRouter()->redirect('/admin/comments?status');
+            throw new Exception("O comentario ".$id." não foi encontrado", 404);
         }
         // RETORNA OS DADOS DO COMENTARIO
         return [
-            'id_comentario'  => $obComment->getId_comentario(),
-            'dsc_comentario' => $obComment->getDsc_comentario(),
-            'dt_comentario'  => $obComment->getDt_comentario(),
-            'fk_usuario'     => $obComment->getFK_id_usuario()
+            'dados' => [
+                'id_comentario'  => $obComment->getId_comentario(),
+                'dsc_comentario' => $obComment->getDsc_comentario(),
+                'dt_comentario'  => $obComment->getDt_comentario(),
+                'fk_usuario'     => $obComment->getFK_id_usuario()
+            ]
         ];
     }
 }
