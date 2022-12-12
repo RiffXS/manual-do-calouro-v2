@@ -111,37 +111,27 @@ Class Android {
      * Método responsável por processar o login de um usuário API-Android
      * @param \App\Http\Request $request
      * 
-     * @return array
+     * @return 
      */
-    public static function singInActivity(Request $request): array {
-        // PARAMETROS NECESSARIOS
-        $params = array('email', 'senha');
-
-        // POST VARS
-        $postVars = $request->getPostVars();
-
-        // VERIFICA SE TODOS OS PARAMETROS EXISTEM
-        if (!Sanitize::verifyParams($params, $postVars)) {
-            return self::sendResponse(0, "Campo requerido não preenchido");
+    public static function singInActivity(Request $request) {
+        // VERIFICA A EXISTENCIA DOS DADOS DE ACESSO
+        if (!isset($_SERVER['PHP_AUTH_USER']) or !isset($_SERVER['PHP_AUTH_PW'])) {
+            return false;
         }
         // BUSCA USUARIO PELO EMAIL
-        $obUser = EntityUser::getUserByEmail($postVars['email']);
-        
+        $obUser = EntityUser::getUserByEmail($_SERVER['PHP_AUTH_USER']);
+
         // VALIDA A INSTÂNCIA
         if (!$obUser instanceof EntityUser) {
             // senha ou usuario nao confere
             return self::sendResponse(0, 'Usuário ou senha não conferem');
         }
         // VERIFICA A SENHA DO USUARIO
-        if (!password_verify($postVars['senha'], $obUser->getSenha())) {
+        if (!password_verify($_SERVER['PHP_AUTH_PW'], $obUser->getSenha())) {
             return self::sendResponse(0, 'Usuário ou senha não conferem');
         }
-        // VERIFICA SE O USUARIO POSSUI O ACESSO NECESSÁRIO
-        if ($obUser->getFk_nivel() != 1) {
-            return self::sendResponse(0, 'Usuário inativo :(');
-        }
         // RETORNA SUCESSO
-        return self::sendResponse(1);
+        return self::sendResponse(1, 'Sessão iniciada :)');
     }
 
     /**

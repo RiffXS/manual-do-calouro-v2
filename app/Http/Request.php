@@ -47,7 +47,7 @@ class Request {
     private $uri;
 
     /**
-     * Instância de User
+     * Instância de Usuario na request
      * @var \App\Models\Usuario
      */
     public $user;
