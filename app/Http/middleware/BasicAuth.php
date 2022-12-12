@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Http\Request;
+use App\Http\Response;
 use App\Models\Usuario as EntityUser;
 use Closure;
 use Exception;
@@ -52,7 +53,7 @@ class BasicAuth {
      * 
      * @return \App\Http\Response
      */
-    public function handle(Request $request, Closure $next): Request { 
+    public function handle(Request $request, Closure $next): Response { 
         // REALIZA A VALIDAÇÃO DO ACESSO VIA BASIC AUTH
         $this->basicAuth($request);
 

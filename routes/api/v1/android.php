@@ -9,7 +9,7 @@ $obRouter->post('/api/v1/android/cadastro', [
         'api',
     ],
     function($request) {
-        return new Response(200, Api\Android::cadastroActivity($request), 'application/json');
+        return new Response(200, Api\Android::signUpActivity($request), 'application/json');
     }
 ]);
 
@@ -19,6 +19,28 @@ $obRouter->post('/api/v1/android/login', [
         'api',
     ],
     function($request) {
-        return new Response(200, Api\Android::loginActivity($request), 'application/json');
+        return new Response(200, Api\Android::singInActivity($request), 'application/json');
+    }
+]);
+
+// ACTIVITY HORARIO
+$obRouter->get('/api/v1/android/horario', [
+    'middlewares' => [
+        'api',
+        'basic-auth'
+    ],
+    function($request) {
+        return new Response(200, Api\Android::scheduleActivity($request), 'application/json');
+    }
+]);
+
+// ACTIVITY CONTATOS
+$obRouter->get('/api/v1/android/contatos', [
+    'middlewares' => [
+        'api',
+        'basic-auth'
+    ],
+    function($request) {
+        return new Response(200, Api\Android::contactsActivity($request), 'application/json');
     }
 ]);

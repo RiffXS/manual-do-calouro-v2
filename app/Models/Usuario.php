@@ -43,17 +43,17 @@ class Usuario {
     private $add_data;
 
     /**
-     * Identificador de status do usuário
-     * @var string
-     */
-    private $fk_nivel_id_nivel = 1;
-
-    /**
      * Nivel de acesso do usuário
      * @var integer
      */
     private $fk_acesso_id_acesso = 2;
 
+    /**
+     * Identificador de status do usuário
+     * @var string
+     */
+    private $fk_nivel_id_nivel = 1;
+    
     /**
      * Método responsável por cadastrar a instância atual no banco de dados
      * @return boolean
@@ -327,4 +327,20 @@ class Usuario {
     public function setFk_acesso(int $acesso = 2): void { 
         $this->fk_acesso_id_acesso = $acesso;
     }  
+    
+    /**
+     * Get fk_nivel_id_nivel
+     * @return integer
+     */
+    public function getFk_nivel(): int {
+        return $this->fk_nivel_id_nivel;
+    }
+    
+    /**
+     * Set fk_nivel_id_nivel
+     * @param integer $nivel
+     */
+    public function setFk_nivel(int $nivel): void {
+        $this->fk_nivel_id_nivel = $nivel;
+    }
 }
