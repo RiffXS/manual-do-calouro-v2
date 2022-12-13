@@ -111,9 +111,9 @@ Class Android {
      * Método responsável por processar o login de um usuário API-Android
      * @param \App\Http\Request $request
      * 
-     * @return 
+     * @return array|bool
      */
-    public static function singInActivity(Request $request) {
+    public static function singInActivity(Request $request): mixed {
         // VERIFICA A EXISTENCIA DOS DADOS DE ACESSO
         if (!isset($_SERVER['PHP_AUTH_USER']) or !isset($_SERVER['PHP_AUTH_PW'])) {
             return false;
@@ -165,7 +165,7 @@ Class Android {
      * 
      * @return array
      */
-    public static function contactsActivity(Request $request) {
+    public static function contactsActivity(Request $request): array {
         // RETORNA SUCESSO
         return self::sendResponse(1, '', [
             'professor' => EntityContact::getContactTeacher(),

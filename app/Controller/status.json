@@ -143,5 +143,9 @@
     "non_existent": {
         "type": "danger",
         "text": "Sala de aula não encontrada :(."
+    },
+    "delete_error": {
+        "type": "danger",
+        "text": "Erro ao excluir a conta."
     }
 }

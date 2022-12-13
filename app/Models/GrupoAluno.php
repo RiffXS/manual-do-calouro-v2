@@ -16,7 +16,7 @@ class GrupoAluno {
      * FK da tabela grupo
      * @var integer
      */
-    private $fk_grupo_id_grupo;
+    private $fk_grupo_id_grupo = 0;
 
     /**
      * Método responsável por inserir o aluno no grupo padrão
@@ -39,6 +39,25 @@ class GrupoAluno {
         return (new Database('grupo_aluno'))->update("fk_aluno_fk_usuario_id_usuario = {$this->fk_aluno_fk_usuario_id_usuario}", [
             'fk_grupo_id_grupo' => $this->fk_grupo_id_grupo
         ]);
+    }
+
+    /**
+     * Método responsavel por definir a fk_grupo do objeto
+     * @param integer $curso
+     * @param integer $modulo
+     * 
+     * @return void
+     */
+    public function findGroup(int $curso, int $modulo): void {
+        // PARAMETROS SQL
+        $where = "t.fk_curso_id_curso = $curso AND t.num_modulo = $modulo AND g.dsc_grupo = 'C'";
+        $table = "grupo g JOIN turma t ON (g.fk_turma_id_turma = t.id_turma)";
+
+        // CONSULTA O GRUPO
+        $grupo = (new Database($table))->select($where, null, null, 'id_grupo')->fetch(\PDO::FETCH_ASSOC);
+
+        // SET DO ATRIBUTO
+        $this->fk_grupo_id_grupo = $grupo['id_grupo'];
     }
 
     /*
@@ -65,7 +84,7 @@ class GrupoAluno {
      * Get fk_grupo_id_grupo
      * @return integer
      */
-    public function getFk_id_grupo(): string {
+    public function getFk_id_grupo(): int {
         return $this->fk_grupo_id_grupo;
     }
 

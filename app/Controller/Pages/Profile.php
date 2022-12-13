@@ -208,7 +208,7 @@ class Profile extends Page {
      */
     private static function updateProfileUser(Request $request, EntityUser $obUser, array $postVars): void {
         // REALIZA UMA AÇÃO DEPENDENDO DO TIPO DE USUÁRIO
-        switch (Session::getLv()) {
+        switch ($obUser->getFk_acesso()) {
             // USUÁRIO
             case 2:
                 if (!empty($postVars['matricula'])) {
@@ -235,28 +235,19 @@ class Profile extends Page {
             case 3:
                 // VERIFICA SE O CURSO E O MÓDULO FORAM RECEBIDOS
                 if (!empty($postVars['curso']) && !empty($postVars['modulo'])) {
-                    // BUSCA O ID DA TURMA POR CURSO E MODULO
-                    $gradeId = EntityGrade::getGradeId($postVars['curso'], $postVars['modulo']);
-
-                    if (!empty($postVars['grupo'])) {
-                        // NOVA INSTÂNCIA
-                        $obGroupStudent = new EntityGroupStudent;
-    
-                        $obGroupStudent->setFk_id_usuario($obUser->getId_usuario());
-                        $obGroupStudent->setFk_id_grupo($postVars['grupo']);
-
-                        $obGroupStudent->updateGroupStudent(); // ATUALIZA A TURMA DO ALUNO
-
-                        break;
-                    }
-
                     // NOVA INSTÂNCIA
                     $obGroupStudent = new EntityGroupStudent;
  
                     $obGroupStudent->setFk_id_usuario($obUser->getId_usuario());
-                    $obGroupStudent->setFk_id_grupo($gradeId['id_grupo']);
+                    $grupo = $obGroupStudent->getFk_id_grupo();
 
-                    $obGroupStudent->insertGroupStudent(); // ATUALIZA A TURMA DO ALUNO
+                    if ($grupo != 0) {
+                        $obGroupStudent->updateGroupStudent(); // ATUALIZA A TURMA DO ALUNO
+                    } else {
+                        $obGroupStudent->findGroup((int)$postVars['curso'], (int)$postVars['modulo']);
+
+                        $obGroupStudent->insertGroupStudent();
+                    }
                 }
 
                 break;

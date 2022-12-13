@@ -62,7 +62,7 @@ class Page {
         // VERIFICA SE O USUÁRIO ESTÁ LOGADO
         if (Session::isLogged()) {
             // OBTEM O ID DA SESSÃO ATUAL
-            $turma = EntityUser::getUserClass(Session::getId());
+            $turma = EntityUser::getUserClass(Session::getId()); // CONSULTA
 
             if (!empty($turma)) {
                 // ATRIBUI O LINK À PÁGINA DE HORÁRIO
