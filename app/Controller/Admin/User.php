@@ -210,8 +210,6 @@ class User extends Page {
 
         $obUser->updateUser();
 
-        self::registerByUserType($obUser);
-
         // REDIRECIONA O USUÁRIO
         $request->getRouter()->redirect('/admin/users/edit/'.$id.'?status=user_updated');
     }

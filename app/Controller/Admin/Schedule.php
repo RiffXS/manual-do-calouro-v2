@@ -103,6 +103,10 @@ class Schedule extends Page {
     public static function setNewSchedule(Request $request): void {
         $postvars = $request->getPostVars();
 
+        $obSchedule = new EntitySchedule;
+
+
+
         echo '<pre>'; print_r($postvars); echo '</pre>'; exit;
     }
 
@@ -128,7 +132,7 @@ class Schedule extends Page {
             'disciplina' => self::getSubjects($obDatabase),
             'professor'  => self::getTeachers($obDatabase)
          ]);
- 
+         // RETORNA O CONTEUDO
          return parent::getPanel('Editar Aula > MDC', $content, 'horario');
     }
 
