@@ -26,8 +26,7 @@ $obRouter->post('/api/v1/android/login', [
 // ACTIVITY HORARIO
 $obRouter->get('/api/v1/android/horario', [
     'middlewares' => [
-        'api',
-        'basic-auth'
+        'api'
     ],
     function($request) {
         return new Response(200, Api\Android::scheduleActivity($request), 'application/json');
@@ -37,8 +36,7 @@ $obRouter->get('/api/v1/android/horario', [
 // ACTIVITY CONTATOS
 $obRouter->get('/api/v1/android/contatos', [
     'middlewares' => [
-        'api',
-        'basic-auth'
+        'api'
     ],
     function($request) {
         return new Response(200, Api\Android::contactsActivity($request), 'application/json');
